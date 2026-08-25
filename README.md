@@ -88,6 +88,10 @@ Nav and footer are not sections. They come from `nav` and `footer` on the page o
 nav: { ...nav, links: [{ label: 'Features', href: '#features' }] },
 ```
 
+The footer follows the live billease.ph footer, reduced to one band: logo, a flat row of links, the regulatory statement, regulator badges, copyright and socials. Its keys are `links[]`, `legal[]`, `badges[]`, `social[]` and `copyright`. It sits on a light background, so it uses `brand.logo` rather than `brand.logoOnDark`.
+
+The regulatory statement is copied verbatim from the live site and must not be paraphrased. The NPC, SEC and BSP badge images are not in this repo; add them to `public/` and set each badge's `src`, or drop the entries.
+
 ## Images
 
 Every image slot accepts `{ src, alt, ratio, label }`. Leave `src` as `null` and the slot renders a labelled dashed placeholder at the right ratio, so the layout holds while assets are still being produced and it is obvious what is missing.

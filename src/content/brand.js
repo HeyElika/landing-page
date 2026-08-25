@@ -23,45 +23,45 @@ export const nav = {
 }
 
 export const footer = {
-  columns: [
-    {
-      title: 'Products',
-      links: [
-        { label: 'Pay later', href: '/pay-later' },
-        { label: 'Cash loan', href: '/cash-loan' },
-        { label: 'Partner stores', href: '#' },
-      ],
-    },
-    {
-      title: 'Company',
-      links: [
-        { label: 'About', href: '#' },
-        { label: 'Careers', href: '#' },
-        { label: 'Newsroom', href: '#' },
-      ],
-    },
-    {
-      title: 'Support',
-      links: [
-        { label: 'Help centre', href: '#' },
-        { label: 'Contact us', href: '#' },
-        { label: 'Report a concern', href: '#' },
-      ],
-    },
+  /**
+   * Modelled on the live billease.ph footer, trimmed to one flat row of links.
+   * Replace the placeholder hrefs with the real destinations before launch.
+   */
+  links: [
+    { label: 'FAQ', href: '#faq' },
+    { label: 'Contact us', href: '#' },
+    { label: 'Privacy', href: '#' },
+    { label: 'Terms and conditions', href: '#' },
+    { label: 'Blog', href: '#' },
+    { label: 'Careers', href: '#' },
   ],
+
   social: [
-    { name: 'Facebook', href: '#', icon: 'link' },
-    { name: 'Instagram', href: '#', icon: 'photo' },
-    { name: 'Support chat', href: '#', icon: 'chat-outline' },
+    { name: 'Facebook', href: '#' },
+    { name: 'Instagram', href: '#' },
+    { name: 'TikTok', href: '#' },
   ],
+
+  /**
+   * Regulatory statement, taken verbatim from the live billease.ph footer.
+   * CONTENT DEPENDENCY: confirm with Legal that this is the current approved
+   * wording and that the registration numbers are up to date. Never paraphrase
+   * or shorten it.
+   */
   legal: [
-    'Replace this block with the approved regulatory disclosure for the product on this page. Keep the wording exactly as legal signed it off.',
-    'Billease is a registered lending company. Certificate and registration numbers go here.',
+    'First Digital Finance Corporation doing business under the names and styles of FDFC, Balikbayad, and Billease is regulated by Securities and Exchange Commission as a financing company (CoA No.: 1101) and by the Bangko Sentral ng Pilipinas as Operator of Payment System (OPSCOR-2021-0007).',
   ],
-  bottomLinks: [
-    { label: 'Privacy policy', href: '#' },
-    { label: 'Terms of use', href: '#' },
-    { label: 'Cookie settings', href: '#' },
+
+  /**
+   * Regulator marks shown on the live site. CONTENT DEPENDENCY: the image
+   * files are not in this repo yet. Add them to public/ and set `src`, or
+   * remove the entries. Until then each renders as a small text label.
+   */
+  badges: [
+    { name: 'NPC', src: null },
+    { name: 'SEC', src: null },
+    { name: 'BSP', src: null },
   ],
-  copyright: `© ${new Date().getFullYear()} Billease. All rights reserved.`,
+
+  copyright: `Copyright ${new Date().getFullYear()} Billease`,
 }
