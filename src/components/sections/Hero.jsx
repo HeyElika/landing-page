@@ -40,7 +40,7 @@ export default function Hero({
       {ctas.length > 0 && (
         <div className="l-row" style={{ justifyContent: centered ? 'center' : 'flex-start' }}>
           {ctas.map((c, i) => (
-            <Cta key={c.label} {...c} type={c.type || (i === 0 ? 'gradient' : 'ghost')} onDark={onDark} />
+            <Cta key={c.label} {...c} type={c.type || (i === 0 ? 'primary' : 'ghost')} onDark={onDark} />
           ))}
         </div>
       )}

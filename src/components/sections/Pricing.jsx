@@ -50,7 +50,7 @@ export default function Pricing({ eyebrow, title, description, plans = [], note,
                 </ul>
               )}
 
-              {plan.cta && <Cta {...plan.cta} type={plan.featured ? 'gradient' : 'secondary'} block />}
+              {plan.cta && <Cta {...plan.cta} type={plan.featured ? 'primary' : 'secondary'} block />}
             </li>
           ))}
         </ul>

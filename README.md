@@ -110,7 +110,9 @@ Only mapped icons are bundled, so page weight stays proportional to use. Never h
 
 Buttons are the Billease library Button (Figma node `16:182`) in `src/components/ds/Button.jsx`, used through `src/components/ui/Cta.jsx`.
 
-The primary call to action uses the **gradient** variant, red 400 to red 500 top to bottom, which is the signature Billease action button and the first variant in the Figma set. On dark and brand bands the library `secondary` variant carries the action instead, since a red button on red has no contrast.
+The primary call to action uses the **primary** variant, flat Billease red. On dark and brand bands the library `secondary` variant carries the action instead, since a red button on red has no contrast.
+
+The `gradient` variant from the Figma set is implemented in `Button.jsx` and available, but is not used on these pages.
 
 ## Design tokens
 
