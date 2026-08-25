@@ -6,8 +6,8 @@
 export const brand = {
   name: 'Billease',
   href: '/',
-  logo: null,        // e.g. '/logo.svg' in public/ once the official asset is added
-  logoOnDark: null,
+  logo: '/billease-logo.png',              // official wordmark, from the brand assets folder
+  logoOnDark: '/billease-logo-on-dark.png',
   tagline: 'Buy now, pay later for everyday Filipinos.',
 }
 

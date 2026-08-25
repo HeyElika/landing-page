@@ -106,6 +106,19 @@ npm run icons     # regenerate src/assets/icons/icons.generated.js
 
 Only mapped icons are bundled, so page weight stays proportional to use. Never hand-write or redraw a path.
 
+## Logo
+
+The official wordmark is in `public/`, taken from the shared brand assets folder:
+
+| File | Use |
+|---|---|
+| `billease-logo.png` | light backgrounds (nav) |
+| `billease-logo-on-dark.png` | dark backgrounds (footer) |
+
+Both are 276x60, so they stay sharp at the 24px display height. `brand.logo` and `brand.logoOnDark` in `src/content/brand.js` point at them. Never redraw or recolour the logo.
+
+The `billease+billie` lockups with the mascot are also in the brand folder if a page needs them.
+
 ## Buttons
 
 Buttons are the Billease library Button (Figma node `16:182`) in `src/components/ds/Button.jsx`, used through `src/components/ui/Cta.jsx`.
@@ -200,5 +213,5 @@ Anything unconfirmed stays marked `CONTENT DEPENDENCY` and visible in the page, 
 - Replace the placeholder legal text in `src/content/brand.js` with the wording Legal signed off.
 - Set real `meta.title` and `meta.description`.
 - Swap every placeholder image for a real asset.
-- Add the official Billease logo to `public/` and set `brand.logo`, then replace `public/favicon.svg`.
+- Replace `public/favicon.svg`, which is still a placeholder mark rather than the official one.
 - Work through the design review checklist in DESIGN-RULES.md section 17.
