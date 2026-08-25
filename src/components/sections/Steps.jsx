@@ -25,8 +25,8 @@ export default function Steps({ eyebrow, title, description, items = [], backgro
               >
                 {i + 1}
               </span>
-              <h3 className="heading-sm-semibold">{item.title}</h3>
-              {item.description && <p className="body-sm-regular t-subtle">{item.description}</p>}
+              <h3 className="heading-md-semibold">{item.title}</h3>
+              {item.description && <p className="body-md-regular t-subtle">{item.description}</p>}
             </li>
           ))}
         </ol>

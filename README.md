@@ -149,21 +149,24 @@ Prefer semantic tokens over primitives. Use `--bg-primary`, not `--color-red-500
 
 ### Typography
 
-There is no marketing type scale. Type comes from the Figma text styles, generated as classes:
+Body and small-heading type comes from the Figma text styles, generated as classes. Section and hero headings use a **display scale** that grows with the viewport.
 
-| Role | Class | Size |
-|---|---|---|
-| Hero headline | `heading-xl-bold` | 32 |
-| Section heading | `heading-lg-bold` | 24 |
-| Subsection | `heading-md-semibold` | 20 |
-| Card heading | `heading-sm-semibold` | 16 |
-| Body copy | `body-md-regular` | 16 |
-| Supporting copy | `body-sm-regular` | 14 |
-| Labels, legal | `body-xs-regular`, `body-xxs-regular` | 13, 11 |
-| Links | `link-md`, `link-sm` | 16, 14 |
-| Eyebrow | `label-xs` | 13, small caps |
+| Role | Class | Mobile | Desktop |
+|---|---|---|---|
+| Hero headline | `display-lg` | 32 | 56 |
+| Section heading | `display-md` | 24 | 40 |
+| Subsection heading | `display-sm` | 20 | 28 |
+| Card heading | `heading-md-semibold` | 20 | 20 |
+| Body copy | `body-md-regular` | 16 | 16 |
+| Lead copy under a heading | `body-lg-regular` | 20 | 20 |
+| Supporting copy | `body-sm-regular` | 14 | 14 |
+| Labels, legal | `body-xs-regular`, `body-xxs-regular` | 13, 11 | |
+| Links | `link-md`, `link-sm` | 16, 14 | |
+| Eyebrow | `label-xs` | 13, small caps | |
 
-Never write `font-size`, `font-weight` or `line-height` in a component. `npm run check` fails if you do.
+The display scale is an approved extension past the token scale, documented in DESIGN-RULES.md section 3. Each step resolves to an exact token value at 360px, so phones render token sizes and only desktop goes beyond. `npm run check` fails if that stops holding.
+
+Never write `font-size`, `font-weight` or `line-height` in a component.
 
 ### Components
 

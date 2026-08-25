@@ -10,9 +10,9 @@ export default function SectionHead({ eyebrow, title, description, align = 'cent
   return (
     <header className={['c-section-head', align === 'center' ? 'c-section-head--center' : ''].filter(Boolean).join(' ')}>
       {eyebrow && <p className={['label-xs', onDark ? 't-on-dark-subtle' : 't-brand'].join(' ')}>{eyebrow}</p>}
-      {title && <h2 className={['heading-lg-bold', 't-balance', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{title}</h2>}
+      {title && <h2 className={['display-md', 't-balance', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{title}</h2>}
       {description && (
-        <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>{description}</p>
+        <p className={['body-lg-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>{description}</p>
       )}
     </header>
   )

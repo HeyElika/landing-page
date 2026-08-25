@@ -44,7 +44,12 @@ Sections render in array order. Reordering a page means moving an object in the 
 
 **tokens.css is generated.** It is built from `tokens/variables.json`, the Figma variables export. Never hand-edit it. To change a token, change it in Figma, re-export, replace `tokens/variables.json` and run `npm run tokens`.
 
-**Type comes from the generated style classes only:** `.heading-xl-bold`, `.heading-lg-bold`, `.heading-md-semibold`, `.heading-sm-semibold`, `.heading-xs-semibold`, `.body-{lg,md,sm,xs,xxs}-{regular,semibold}`, `.link-md`, `.link-sm`, `.label-xs`. Never write `font-size`, `font-weight` or `line-height` in a component. There is no marketing display scale: the hero headline is `heading-xl-bold` at 32px and that is deliberate.
+**Type comes from classes, never from `font-size` in a component.**
+
+- Section and hero headings use the display scale in `landing.css`: `.display-lg` (hero), `.display-md` (section), `.display-sm` (subsection). These grow with the viewport, from the token value at 360px to a fixed maximum at 1280px.
+- Everything else uses the generated token classes: `.heading-md-semibold`, `.heading-sm-semibold`, `.body-{lg,md,sm,xs,xxs}-{regular,semibold}`, `.link-md`, `.link-sm`, `.label-xs`.
+
+The display scale is an approved amendment to DESIGN-RULES.md section 3, valid for landing pages only. Do not widen it further, and do not copy it into product UI. `npm run check` verifies each step still resolves to its token at 360px.
 
 **Buttons come from the library.** `src/components/ds/Button.jsx` is the Figma Button (node `16:182`). Use it through `src/components/ui/Cta.jsx`. Do not build another button, and do not restyle this one.
 

@@ -21,9 +21,9 @@ export default function Features({ eyebrow, title, description, items = [], colu
             >
               <div className="l-stack l-stack--300">
                 <IconTile icon={item.icon} tone={onDark ? 'onDark' : item.tone} />
-                <h3 className={['heading-sm-semibold', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{item.title}</h3>
+                <h3 className={['heading-md-semibold', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{item.title}</h3>
                 {item.description && (
-                  <p className={['body-sm-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>{item.description}</p>
+                  <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>{item.description}</p>
                 )}
               </div>
             </li>

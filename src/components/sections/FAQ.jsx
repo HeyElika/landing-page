@@ -29,7 +29,7 @@ export default function FAQ({ eyebrow, title, description, items = [], backgroun
                   onClick={() => setOpenIndex(open ? -1 : i)}
                   aria-expanded={open}
                   aria-controls={panelId}
-                  className="heading-sm-semibold"
+                  className="heading-md-semibold"
                   style={{
                     width: '100%',
                     display: 'flex',
@@ -48,7 +48,7 @@ export default function FAQ({ eyebrow, title, description, items = [], backgroun
                   <Icon name={open ? 'chevron-up' : 'chevron-down'} size="sm" color="var(--icon-subtle)" />
                 </button>
                 {open && (
-                  <p id={panelId} className="body-sm-regular t-subtle" style={{ paddingBottom: 'var(--space-500)' }}>
+                  <p id={panelId} className="body-md-regular t-subtle" style={{ paddingBottom: 'var(--space-500)' }}>
                     {item.answer}
                   </p>
                 )}

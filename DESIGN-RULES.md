@@ -140,6 +140,29 @@ Default hierarchy:
 
 Do not create oversized marketing typography outside the current type scale unless explicitly approved.
 
+> **Approved amendment, 2026-08-25 (Eliso).** A marketing display scale is
+> approved for landing pages, because the token scale stops at 32px — it is
+> built for a 360px phone — and at desktop widths that left section headings
+> at roughly half what comparable pages use. Measured from shipped CSS:
+> Salmon runs its hero from 44px on mobile to 72px at 1280px and Atome sets
+> h1 at 72px with section headings at 48px and 36px.
+>
+> The extension is one-sided and bounded:
+>
+> | Role | Mobile (360px) | Desktop (1280px+) |
+> |---|---|---|
+> | Hero headline | 32px = `--text-3xl` | 56px |
+> | Section heading | 24px = `--text-2xl` | 40px |
+> | Subsection heading | 20px = `--text-xl` | 28px |
+>
+> Each curve passes exactly through the token value at 360px, so on a phone —
+> where this design system actually applies — the page renders token sizes and
+> nothing else. Only the desktop end goes beyond the scale, where the design
+> system has no opinion. `npm run check` fails if that stops being true.
+>
+> This applies to landing pages only. It is not a change to the design system,
+> and it must not be copied back into product UI.
+
 Keep line lengths readable. Long explanatory copy should not span the full viewport width.
 
 ---

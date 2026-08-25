@@ -21,6 +21,31 @@
   --page-gutter: var(--space-400);                        /* 16 */
   --nav-h: calc(var(--space-900) + var(--space-800));      /* 40 + 32 = 72 */
 
+  /* ── Marketing display scale ──────────────────────────────────────────
+   * DESIGN-RULES.md section 3 caps type at the token scale "unless explicitly
+   * approved". Approved by Eliso on 2026-08-25: the token scale stops at 32px
+   * because it is built for a 360px phone, and at desktop widths that leaves
+   * section headings at roughly half what comparable pages use. Measured from
+   * their shipped CSS: Salmon runs its hero 44px on mobile up to 72px at
+   * 1280px, Atome sets h1 at 72px and section headings at 48px and 36px.
+   *
+   * The extension is deliberately one-sided. Each step STARTS on a real token
+   * at mobile width, so on a phone — where the design system actually
+   * applies — the page renders exact token sizes. Only the desktop end goes
+   * past the scale, where the design system has no opinion.
+   *
+   *   --display-lg  32 (--text-3xl) -> 56   hero headline
+   *   --display-md  24 (--text-2xl) -> 40   section heading
+   *   --display-sm  20 (--text-xl)  -> 28   subsection heading
+   *
+   * Each curve is solved to pass exactly through the token size at 360px and
+   * the maximum at 1280px, so the mobile end is the token value and not an
+   * approximation of it. Verify with scripts/check-type.mjs after any change.
+   */
+  --display-lg: clamp(var(--text-3xl), 1.413rem + 2.609vw, 56px);
+  --display-md: clamp(var(--text-2xl), 1.109rem + 1.739vw, 40px);
+  --display-sm: clamp(var(--text-xl), 1.054rem + 0.87vw, 28px);
+
   /* Section rhythm: 40 on mobile per the spacing rules, composed larger on
    * wider screens. Every value is a sum of spacing tokens. */
   --band-y: var(--space-900);                              /* 40 */
@@ -111,9 +136,35 @@ button { font: inherit; }
   .l-grid--4 { grid-template-columns: repeat(4, 1fr); }
 }
 
+/* ── Display headings ───────────────────────────────────────────────────────
+ * Family and weight still come from the token system; only the size scales.
+ * Line height tightens as size grows, which is what the reference pages do:
+ * the token 125% is correct at 24px and too airy at 56px. */
+
+.display-lg {
+  font-family: var(--ds-font-family);
+  font-size: var(--display-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.display-md {
+  font-family: var(--ds-font-family);
+  font-size: var(--display-md);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.display-sm {
+  font-family: var(--ds-font-family);
+  font-size: var(--display-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.25;
+}
+
 /* ── Type helpers ───────────────────────────────────────────────────────────
- * Colour and alignment only. Size, weight and line-height always come from a
- * generated type style class in tokens.css. */
+ * Colour and alignment only. Size, weight and line-height otherwise come from
+ * a generated type style class in tokens.css. */
 
 .t-subtle { color: var(--text-subtle); }
 .t-on-dark { color: var(--text-on-dark); }

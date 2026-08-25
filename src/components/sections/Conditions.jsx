@@ -33,8 +33,8 @@ export default function Conditions({ eyebrow, title, description, items = [], ba
             >
               <Icon name={item.icon || 'document'} size="md" color="var(--icon-subtle)" />
               <span className="l-stack l-stack--100">
-                <span className="heading-sm-semibold">{item.title}</span>
-                <span className="body-sm-regular t-subtle">{item.detail}</span>
+                <span className="heading-md-semibold">{item.title}</span>
+                <span className="body-md-regular t-subtle">{item.detail}</span>
               </span>
             </li>
           ))}
