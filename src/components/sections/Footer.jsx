@@ -1,0 +1,63 @@
+import Logo from '../ui/Logo'
+import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+
+/**
+ * Footer. `columns` is an array of { title, links[] }, `legal` an array of
+ * paragraphs for regulatory copy, `social` an array of { icon, href, name }.
+ */
+export default function Footer({ brand = {}, columns = [], legal = [], social = [], bottomLinks = [], copyright }) {
+  return (
+    <footer className="l-band l-band--dark">
+      <div className="l-container l-stack l-stack--800">
+        <div className="footer-top" style={{ display: 'grid', gap: 'var(--space-800)' }}>
+          <div className="l-stack l-stack--300">
+            <Logo src={brand.logoOnDark || brand.logo} name={brand.name} onDark />
+            {brand.tagline && <p className="t-small t-on-dark-subtle" style={{ maxWidth: '32ch' }}>{brand.tagline}</p>}
+            {social.length > 0 && (
+              <ul className="l-row" style={{ gap: 'var(--space-300)' }}>
+                {social.map((s) => (
+                  <li key={s.name}>
+                    <a href={s.href} aria-label={s.name} target="_blank" rel="noreferrer noopener"
+                      style={{ display: 'grid', placeItems: 'center', width: 'var(--control-md)', height: 'var(--control-md)', borderRadius: 'var(--radius-full)', background: 'var(--alpha-white-10)' }}>
+                      <BilleaseIcon name={s.icon || 'link'} size="sm" color="var(--icon-on-dark)" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {columns.map((col) => (
+            <nav key={col.title} className="l-stack l-stack--300" aria-label={col.title}>
+              <h3 style={{ fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--text-on-dark)' }}>{col.title}</h3>
+              <ul className="l-stack l-stack--200">
+                {col.links.map((l) => (
+                  <li key={l.label}>
+                    <a href={l.href} className="t-small t-on-dark-subtle" style={{ display: 'inline-block' }}>{l.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+        </div>
+
+        {legal.length > 0 && (
+          <div className="l-stack l-stack--200" style={{ borderTop: 'var(--border-width-100) solid var(--alpha-white-20)', paddingTop: 'var(--space-600)' }}>
+            {legal.map((p, i) => <p key={i} className="t-caption t-on-dark-subtle">{p}</p>)}
+          </div>
+        )}
+
+        <div className="l-row" style={{ justifyContent: 'space-between', gap: 'var(--space-400)' }}>
+          <p className="t-caption t-on-dark-subtle">{copyright}</p>
+          {bottomLinks.length > 0 && (
+            <ul className="l-row" style={{ gap: 'var(--space-500)' }}>
+              {bottomLinks.map((l) => (
+                <li key={l.label}><a href={l.href} className="t-caption t-on-dark-subtle">{l.label}</a></li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    </footer>
+  )
+}
