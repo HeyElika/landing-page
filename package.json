@@ -9,7 +9,8 @@
     "lint": "eslint . && node scripts/check-tokens.mjs",
     "preview": "vite preview",
     "tokens": "node scripts/build-tokens.mjs",
-    "check": "node scripts/check-tokens.mjs"
+    "check": "node scripts/check-tokens.mjs",
+    "icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {
     "react": "^19.2.6",
@@ -18,6 +19,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@iconify-json/solar": "^1.2.9",
     "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.3.0",
     "eslint-plugin-react-hooks": "^7.1.1",

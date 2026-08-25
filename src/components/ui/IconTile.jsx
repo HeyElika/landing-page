@@ -1,4 +1,4 @@
-import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+import Icon from '../../assets/icons/Icon'
 
 /**
  * Icon container. Composed from foundations; icon colours come from the
@@ -16,7 +16,7 @@ export default function IconTile({ icon, tone = 'primary' }) {
   if (!icon) return null
   return (
     <span className={['c-icon-tile', t.cls].filter(Boolean).join(' ')}>
-      <BilleaseIcon name={icon} size="md" color={t.color} />
+      <Icon name={icon} size="md" color={t.color} />
     </span>
   )
 }

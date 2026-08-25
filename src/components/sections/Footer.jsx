@@ -1,5 +1,5 @@
 import Logo from '../ui/Logo'
-import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+import Icon from '../../assets/icons/Icon'
 
 /**
  * Footer. `legal` holds regulatory copy as an array of paragraphs; it must be
@@ -31,7 +31,7 @@ export default function Footer({ brand = {}, columns = [], legal = [], social = 
                         background: 'var(--alpha-white-10)',
                       }}
                     >
-                      <BilleaseIcon name={s.icon || 'link'} size="sm" color="var(--icon-on-dark)" />
+                      <Icon name={s.icon || 'link'} size="sm" color="var(--icon-on-dark)" />
                     </a>
                   </li>
                 ))}

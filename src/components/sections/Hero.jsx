@@ -1,7 +1,7 @@
 import Badge from '../ui/Badge'
 import Cta from '../ui/Cta'
 import Media from '../ui/Media'
-import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+import Icon from '../../assets/icons/Icon'
 
 /**
  * Hero. `layout: 'split'` places the product visual beside the copy,
@@ -40,7 +40,7 @@ export default function Hero({
       {ctas.length > 0 && (
         <div className="l-row" style={{ justifyContent: centered ? 'center' : 'flex-start' }}>
           {ctas.map((c, i) => (
-            <Cta key={c.label} {...c} type={c.type || (i === 0 ? 'primary' : 'ghost')} onDark={onDark} />
+            <Cta key={c.label} {...c} type={c.type || (i === 0 ? 'gradient' : 'ghost')} onDark={onDark} />
           ))}
         </div>
       )}
@@ -51,7 +51,7 @@ export default function Hero({
         <ul className="l-row" style={{ gap: 'var(--space-600)', justifyContent: centered ? 'center' : 'flex-start' }}>
           {highlights.map((h) => (
             <li key={h.label} className="l-row body-sm-semibold" style={{ gap: 'var(--space-200)' }}>
-              <BilleaseIcon name={h.icon || 'tick'} size="sm" color={onDark ? 'var(--icon-on-dark)' : 'var(--icon-success-bold)'} />
+              <Icon name={h.icon || 'tick'} size="sm" color={onDark ? 'var(--icon-on-dark)' : 'var(--icon-success-bold)'} />
               <span className={onDark ? 't-on-dark-subtle' : ''}>{h.label}</span>
             </li>
           ))}

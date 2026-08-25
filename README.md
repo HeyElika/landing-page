@@ -86,11 +86,21 @@ Put real assets in `public/` and reference them as `/hero.png`.
 
 ## Icons
 
-Icons come from the Billease icon library copied from Figma file `qESeTFW1GEEosrYnm4Hu3b`. Use a name from `src/assets/icons/index.js`, for example `wallet`, `installment-outline`, `security`, `store`, `tick`. An unknown name renders a visible dashed label instead of failing, so a typo is easy to spot.
+Icons are the **Solar Linear** set, and nothing else.
 
-Never add inline SVG paths. If the icon you want is not in the library, use the closest one and raise it against the design system.
+```bash
+npm run icons     # regenerate src/assets/icons/icons.generated.js
+```
 
-The full library is around 130 kB before compression. If page weight becomes a concern for a specific deployment, trim `src/assets/icons/index.js` to the icons that page actually uses.
+`scripts/build-icons.mjs` holds the mapping from a semantic name used in content files to a Solar icon, and extracts the path data straight from the `@iconify-json/solar` package. To add an icon, add a line to that map and rerun. The build fails if the mapped name is not a `-linear` variant, which keeps every page on one icon family.
+
+Only mapped icons are bundled, so page weight stays proportional to use. Never hand-write or redraw a path.
+
+## Buttons
+
+Buttons are the Billease library Button (Figma node `16:182`) in `src/components/ds/Button.jsx`, used through `src/components/ui/Cta.jsx`.
+
+The primary call to action uses the **gradient** variant, red 400 to red 500 top to bottom, which is the signature Billease action button and the first variant in the Figma set. On dark and brand bands the library `secondary` variant carries the action instead, since a red button on red has no contrast.
 
 ## Design tokens
 

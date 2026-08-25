@@ -11,10 +11,12 @@ import DSButton from '../ds/Button'
  * `type` accepts the Figma variant names: primary | secondary | gradient |
  * ghost | ghost-destructive.
  */
-export default function Cta({ label, href, type = 'primary', size = 'lg', icon, onDark = false, block = false, onClick }) {
-  // On a dark or brand band the filled red button loses contrast against the
-  // background, so the library's secondary variant carries the action instead.
-  const resolvedType = onDark && type === 'primary' ? 'secondary' : type
+export default function Cta({ label, href, type = 'gradient', size = 'lg', icon, onDark = false, block = false, onClick }) {
+  // Gradient is the signature Billease action button and the first variant in
+  // the Figma set, so it is the default for a primary call to action.
+  // On a dark or brand band a red button loses contrast, so the library's
+  // secondary variant carries the action there instead.
+  const resolvedType = onDark && (type === 'gradient' || type === 'primary') ? 'secondary' : type
 
   return (
     <DSButton

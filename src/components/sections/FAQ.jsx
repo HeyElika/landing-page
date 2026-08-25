@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import SectionHead from '../ui/SectionHead'
-import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+import Icon from '../../assets/icons/Icon'
 
 /**
  * Accordion. One panel open at a time, keyboard accessible through native
@@ -45,7 +45,7 @@ export default function FAQ({ eyebrow, title, description, items = [], backgroun
                   }}
                 >
                   {item.question}
-                  <BilleaseIcon name={open ? 'chevron-up' : 'chevron-down'} size="sm" color="var(--icon-subtle)" />
+                  <Icon name={open ? 'chevron-up' : 'chevron-down'} size="sm" color="var(--icon-subtle)" />
                 </button>
                 {open && (
                   <p id={panelId} className="body-sm-regular t-subtle" style={{ paddingBottom: 'var(--space-500)' }}>

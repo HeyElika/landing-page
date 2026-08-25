@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Logo from '../ui/Logo'
 import Cta from '../ui/Cta'
-import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+import Icon from '../../assets/icons/Icon'
 
 /**
  * Sticky top navigation. The bottom border appears only once the page is
@@ -77,7 +77,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
             cursor: 'pointer',
           }}
         >
-          <BilleaseIcon name={open ? 'close' : 'burger-menu'} size="md" color="var(--icon-base)" />
+          <Icon name={open ? 'close' : 'burger-menu'} size="md" color="var(--icon-base)" />
         </button>
       </div>
 

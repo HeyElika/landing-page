@@ -22,7 +22,7 @@
  *   disabled: color=var(--text-disabled) #B4BDC5
  */
 
-import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+import Icon from '../../assets/icons/Icon'
 
 const FONT_SIZE = { md: 16, sm: 14 }
 const TEXT_COLOR = {
@@ -64,7 +64,7 @@ export default function Link({
     >
       {label}
       {showIcon && (
-        <BilleaseIcon
+        <Icon
           name="chevron-right"
           size="xs"
           color={color}

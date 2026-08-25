@@ -1,5 +1,5 @@
 import SectionHead from '../ui/SectionHead'
-import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+import Icon from '../../assets/icons/Icon'
 
 /** Numbered "how it works" row. Each item: { title, description }. */
 export default function Steps({ eyebrow, title, description, items = [], background = 'default', cta }) {
@@ -34,7 +34,7 @@ export default function Steps({ eyebrow, title, description, items = [], backgro
           <div className="l-row" style={{ justifyContent: 'center' }}>
             <a className="c-link link-md" href={cta.href}>
               {cta.label}
-              <BilleaseIcon name="chevron-right" size="xs" color="var(--icon-active)" />
+              <Icon name="chevron-right" size="xs" color="var(--icon-active)" />
             </a>
           </div>
         )}

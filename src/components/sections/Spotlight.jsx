@@ -1,5 +1,5 @@
 import Media from '../ui/Media'
-import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+import Icon from '../../assets/icons/Icon'
 import SectionHead from '../ui/SectionHead'
 
 /**
@@ -24,7 +24,7 @@ export default function Spotlight({ eyebrow, title, description, rows = [], back
                   <ul className="l-stack l-stack--200">
                     {row.bullets.map((b) => (
                       <li key={b} className="l-row body-sm-regular" style={{ gap: 'var(--space-200)', alignItems: 'flex-start', flexWrap: 'nowrap' }}>
-                        <BilleaseIcon name="tick" size="sm" color="var(--icon-success-bold)" />
+                        <Icon name="tick" size="sm" color="var(--icon-success-bold)" />
                         <span>{b}</span>
                       </li>
                     ))}
@@ -33,7 +33,7 @@ export default function Spotlight({ eyebrow, title, description, rows = [], back
                 {row.link && (
                   <a className="c-link link-md" href={row.link.href}>
                     {row.link.label}
-                    <BilleaseIcon name="chevron-right" size="xs" color="var(--icon-active)" />
+                    <Icon name="chevron-right" size="xs" color="var(--icon-active)" />
                   </a>
                 )}
               </div>

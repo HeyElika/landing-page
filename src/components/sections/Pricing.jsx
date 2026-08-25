@@ -1,7 +1,7 @@
 import SectionHead from '../ui/SectionHead'
 import Cta from '../ui/Cta'
 import Badge from '../ui/Badge'
-import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+import Icon from '../../assets/icons/Icon'
 
 /**
  * Terms or plans.
@@ -43,14 +43,14 @@ export default function Pricing({ eyebrow, title, description, plans = [], note,
                 <ul className="l-stack l-stack--200" style={{ flex: 1 }}>
                   {plan.features.map((f) => (
                     <li key={f} className="l-row body-sm-regular" style={{ gap: 'var(--space-200)', alignItems: 'flex-start', flexWrap: 'nowrap' }}>
-                      <BilleaseIcon name="tick" size="xs" color="var(--icon-success-bold)" />
+                      <Icon name="tick" size="xs" color="var(--icon-success-bold)" />
                       <span>{f}</span>
                     </li>
                   ))}
                 </ul>
               )}
 
-              {plan.cta && <Cta {...plan.cta} type={plan.featured ? 'primary' : 'secondary'} block />}
+              {plan.cta && <Cta {...plan.cta} type={plan.featured ? 'gradient' : 'secondary'} block />}
             </li>
           ))}
         </ul>

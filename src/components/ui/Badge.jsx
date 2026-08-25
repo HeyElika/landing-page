@@ -1,4 +1,4 @@
-import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+import Icon from '../../assets/icons/Icon'
 
 /**
  * Chip. Composed from foundations: the Billease library has no chip component
@@ -15,7 +15,7 @@ export default function Badge({ label, tone = 'primary', icon }) {
   }
   return (
     <span className={['c-badge', 'body-sm-semibold', tones[tone] ?? ''].filter(Boolean).join(' ')}>
-      {icon && <BilleaseIcon name={icon} size="xs" />}
+      {icon && <Icon name={icon} size="xs" />}
       {label}
     </span>
   )

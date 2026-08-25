@@ -10,7 +10,7 @@
  *     a semantic change required for a web page and for accessibility; every
  *     visual spec is untouched.
  */
-import BilleaseIcon from '../../assets/icons/BilleaseIcon'
+import Icon from '../../assets/icons/Icon'
 
 /**
  * Button — Billease Design System
@@ -43,8 +43,14 @@ const GAP = { filled: 8, ghost: 4 }
 // cornerRadius: 9999 for all filled types; ghost has no background so radius is irrelevant
 const RADIUS_FILLED = 'var(--radius-full)'  // 9999px
 
+// Figma node 16:181: linear gradient, top to bottom, red 400 -> red 500 at 70%
+const GRADIENT_BG = 'linear-gradient(to bottom, var(--color-red-400) 0%, var(--color-red-500) 70%)'
+
+// Figma Effect "sm" applied to the gradient button only
+const GRADIENT_SHADOW = '0px 1px 1px var(--alpha-black-10)'
+
 // icon-placeholder size per button size (read from Figma node)
-// lg/md → size-[20px] → BilleaseIcon sm; sm → size-[16px] → BilleaseIcon xs
+// lg/md → size-[20px] → Icon sm; sm → size-[16px] → Icon xs
 const ICON_SIZE = { lg: 'sm', md: 'sm', sm: 'xs' }
 const ICON_SIZE_PX = { lg: 20, md: 20, sm: 16 }
 
@@ -71,6 +77,20 @@ const ICON_SIZE_PX = { lg: 20, md: 20, sm: 16 }
  *   disabled secondary → rgba(0,0,0,0.10) subtle darkening
  */
 const SPECS = {
+  /**
+   * Gradient — the signature Billease action button, and the first variant in
+   * the Figma component set. Read from node 16:181:
+   *   bg-gradient-to-b, from color/red/red 400, to color/red/red 500 at 70%
+   *   drop shadow: Effect sm, offset (0,1), radius 2, colour alpha-black 10
+   * State overlays follow the same pattern as the other filled types.
+   */
+  gradient: {
+    default:  { bg: GRADIENT_BG, overlay: null,                     text: 'var(--text-on-dark)'  },
+    active:   { bg: GRADIENT_BG, overlay: 'rgba(0,0,0,0.30)',       text: 'var(--text-on-dark)'  },
+    pressed:  { bg: GRADIENT_BG, overlay: 'rgba(0,0,0,0.50)',       text: 'var(--text-on-dark)'  },
+    disabled: { bg: GRADIENT_BG, overlay: 'rgba(255,255,255,0.30)', text: 'rgba(255,255,255,0.5)'},
+    loading:  { bg: GRADIENT_BG, overlay: null,                     text: 'var(--text-on-dark)'  },
+  },
   primary: {
     default:  { bg: 'var(--bg-primary)',   overlay: null,                    text: 'var(--text-on-dark)'  },
     active:   { bg: 'var(--bg-primary)',   overlay: 'rgba(0,0,0,0.30)',      text: 'var(--text-on-dark)'  },
@@ -261,6 +281,7 @@ export default function Button({
     fontWeight: FONT_WEIGHT_TOKEN,       // VariableID:2:374
     lineHeight: LINE_HEIGHT,             // 150% per Figma lineHeightPercentFontSize
     color: spec.text,
+    boxShadow: type === 'gradient' && state !== 'disabled' ? GRADIENT_SHADOW : undefined,
     textDecoration: 'none',
     whiteSpace: 'nowrap',
     transition: 'background 0.15s',
@@ -299,7 +320,7 @@ export default function Button({
         onClick={onClick}
       >
         {iconLeft && !isLoading && (
-          <BilleaseIcon name={iconName || 'arrow-left'} size={ICON_SIZE[size]} color={spec.text} />
+          <Icon name={iconName || 'arrow-left'} size={ICON_SIZE[size]} color={spec.text} />
         )}
         {isLoading ? (
           platform === 'ios'
@@ -309,7 +330,7 @@ export default function Button({
           <span>{label}</span>
         )}
         {iconRight && !isLoading && (
-          <BilleaseIcon
+          <Icon
             name={iconName || 'arrow-left'}
             size={ICON_SIZE[size]}
             color={spec.text}
@@ -325,7 +346,7 @@ export default function Button({
     return (
       <>
         {iconLeft && !isLoading && (
-          <BilleaseIcon name={iconName || 'arrow-left'} size={ICON_SIZE[size]} color={spec.text} />
+          <Icon name={iconName || 'arrow-left'} size={ICON_SIZE[size]} color={spec.text} />
         )}
         {isLoading ? (
           platform === 'ios' ? <IOSSpinner color={spec.text} /> : <AndroidSpinner color={spec.text} />
@@ -333,7 +354,7 @@ export default function Button({
           <span>{label}</span>
         )}
         {iconRight && !isLoading && (
-          <BilleaseIcon
+          <Icon
             name={iconName || 'arrow-left'}
             size={ICON_SIZE[size]}
             color={spec.text}

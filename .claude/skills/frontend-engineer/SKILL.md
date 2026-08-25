@@ -50,7 +50,7 @@ Sections render in array order. Reordering a page means moving an object in the 
 
 **landing.css is layout only:** page width, gutters, band rhythm, grids, and compositions for patterns the library does not have (card, chip, accordion, icon container). It declares four layout constants, documented in the file. Do not grow it into a second design system.
 
-**Icons.** `BilleaseIcon` with a name from `src/assets/icons/index.js`. Never an inline SVG path. An unknown name renders a visible dashed label instead of failing, so a typo shows up on the page. If the icon does not exist, use the closest one and say so.
+**Icons are Solar Linear, and only Solar Linear.** `src/assets/icons/icons.generated.js` is built by `npm run icons` from the `@iconify-json/solar` package. To add an icon, add a semantic name to the `MAP` in `scripts/build-icons.mjs` and rerun. The build fails if the mapped name is not a `-linear` variant, which is what keeps one icon family on the page. Never hand-write or redraw a path.
 
 **Components read content from props.** No fetching, no content literals inside a section component. If a section hardcodes a string, that string cannot be changed by whoever updates the copy.
 

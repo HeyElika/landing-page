@@ -16,7 +16,7 @@ export default function CtaBand({ title, description, ctas = [], stores = [], me
       </div>
       <div className="l-row" style={{ justifyContent: media ? 'flex-start' : 'center' }}>
         {ctas.map((c, i) => (
-          <Cta key={c.label} {...c} type={c.type || (i === 0 ? 'primary' : 'ghost')} onDark={onDark} />
+          <Cta key={c.label} {...c} type={c.type || (i === 0 ? 'gradient' : 'ghost')} onDark={onDark} />
         ))}
       </div>
       {stores.length > 0 && (
