@@ -60,6 +60,7 @@ Sections follow the Billease narrative in DESIGN-RULES.md section 10. **Keep the
 | # | `type` | Answers | Main keys |
 |---|---|---|---|
 | 1 | `hero` | What is this, and what do I do? | `layout` (`split`/`centered`), `badge`, `title`, `description`, `ctas[]`, `note`, `highlights[]`, `media` |
+| 1b | `trustBar` | Can I trust you? | `items[{ icon, value, label }]`, `badges[{ name, src }]`, `note` |
 | 2 | `features` | Why should I care? | `columns` (2, 3, 4), `variant` (`card`/`plain`), `items[{ icon, title, description }]` |
 | 3 | `useCases` | Where can I use it? | `items[{ icon, title, description }]`, `note` |
 | 4 | `steps` | What happens next? | `items[{ title, description }]`, `cta` |
@@ -80,7 +81,9 @@ Every section accepts `background`: `default`, `subtle`, `sunken`, `dark` or `br
 
 ### Deliberately absent
 
-There is no logo strip, testimonial wall or statistics band. They are generic marketing furniture, rule 2 warns against exactly that look, and the numbers they need are usually unconfirmed. Do not add them back without a product reason.
+There is no logo strip or testimonial wall. They are generic marketing furniture and rule 2 warns against exactly that look.
+
+`trustBar` is the one exception, added after checking how comparable card pages are actually built: Wise leads with a Trustpilot score, Salmon with an App Store rating plus BSP, SEC and AMLC seals, Atome with SEC and DTI marks. For a lending product, "can I trust you" is a real question that comes before "what does it cost". It is not a vanity metrics band: every figure must be real and current, so unconfirmed values stay marked and visible.
 
 Nav and footer are not sections. They come from `nav` and `footer` on the page object, both defaulting to the shared values in `src/content/brand.js`. Override per product by spreading:
 

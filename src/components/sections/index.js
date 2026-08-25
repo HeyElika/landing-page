@@ -5,6 +5,7 @@
  * DESIGN-RULES.md section 10:
  *
  *   1. hero          what this is and the one action to take
+ *   2. trustBar      rating and regulator marks, where trust gates the decision
  *   2. features      key benefits, three or four at most
  *   3. useCases      where and how the product can be used
  *   4. steps         how activation or sign-up works
@@ -26,6 +27,7 @@
  */
 import Hero from './Hero'
 import Features from './Features'
+import TrustBar from './TrustBar'
 import UseCases from './UseCases'
 import Steps from './Steps'
 import Spotlight from './Spotlight'
@@ -38,6 +40,7 @@ import CtaBand from './CtaBand'
 export const SECTIONS = {
   hero: Hero,
   features: Features,
+  trustBar: TrustBar,
   useCases: UseCases,
   steps: Steps,
   spotlight: Spotlight,

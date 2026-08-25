@@ -61,17 +61,23 @@ Sections render in array order. Reordering a page means moving an object in the 
 Sections follow DESIGN-RULES.md section 10, in this order:
 
 1. `hero` — what this is, one action
-2. `features` — key benefits, three or four at most
-3. `useCases` — where and how it can be used
-4. `steps` — how activation or sign-up works
-5. `pricing` — terms, where cost is a real question
-6. `conditions` — important things to know, **always before the FAQ**
-7. `security` — security and control
-8. `faq` — genuine conversion blockers
-9. `ctaBand` — repeat the single primary action
+2. `trustBar` — rating and regulator marks, where trust gates the decision
+3. `features` — key benefits, three or four at most
+4. `useCases` — where and how it can be used
+5. `steps` — how activation or sign-up works
+6. `spotlight` — one or two depth rows on the product itself
+7. `pricing` — terms, where cost is a real question
+8. `conditions` — important things to know, **always before the FAQ**
+9. `security` — security and control
+10. `faq` — genuine conversion blockers
+11. `ctaBand` — repeat the single primary action
 
-Do not add sections to pad a page. There is no logo strip, testimonial wall or
-stats band on purpose: rule 2 warns against generic marketing furniture.
+One primary action per page, worded identically everywhere it appears. Every
+reference page does this: Wise repeats "Order your card" three times and never
+introduces a competing label.
+
+Do not add sections to pad a page. There is no logo strip or testimonial wall
+on purpose: rule 2 warns against generic marketing furniture.
 
 ## Adding a product page
 

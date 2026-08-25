@@ -41,6 +41,14 @@ export default {
     },
 
     {
+      // 1b. Trust, where it gates the decision. Real figures only, or delete.
+      type: 'trustBar',
+      items: [{ icon: 'star', value: '', label: '' }],
+      badges: [{ name: 'SEC', src: null }],
+      note: '',
+    },
+
+    {
       // 2. Key benefits — three or four at most
       id: 'benefits',
       type: 'features',

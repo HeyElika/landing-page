@@ -19,11 +19,39 @@ export default function Hero({
   note,
   highlights = [],
   media,
+  mediaBackdrop = 'none',   // 'none' | 'subtle' | 'sunken' | 'brand' | 'info'
   background = 'default',
 }) {
   const onDark = background === 'dark' || background === 'brand'
   const bandTone = { default: '', subtle: 'l-band--subtle', dark: 'l-band--dark', brand: 'l-band--brand' }[background] || ''
   const centered = layout === 'centered'
+
+  // Reference fintech pages present the card or app on a tinted surface rather
+  // than bare on the page. Tokens only; no invented colour.
+  const BACKDROPS = {
+    none: null,
+    subtle: 'var(--bg-subtle)',
+    sunken: 'var(--bg-sunken)',
+    brand: 'var(--bg-error-subtle)',
+    info: 'var(--bg-info-subtle)',
+  }
+  const backdrop = BACKDROPS[mediaBackdrop] ?? null
+
+  const renderMedia = (ratio, label) => {
+    const el = <Media {...(media || {})} ratio={media?.ratio || ratio} label={media?.label || label} />
+    if (!backdrop) return el
+    return (
+      <div
+        style={{
+          background: backdrop,
+          borderRadius: 'var(--radius-2xl)',
+          padding: 'var(--space-600)',
+        }}
+      >
+        {el}
+      </div>
+    )
+  }
 
   const copy = (
     <div className={['l-stack', 'l-stack--600', centered ? 'c-section-head--center' : ''].filter(Boolean).join(' ')}>
@@ -66,12 +94,12 @@ export default function Hero({
         {centered ? (
           <>
             {copy}
-            <Media {...(media || {})} ratio={media?.ratio || '16 / 9'} label={media?.label || 'Product visual'} />
+            {renderMedia('16 / 9', 'Product visual')}
           </>
         ) : (
           <div className="hero-split" style={{ display: 'grid', gap: 'var(--space-900)', alignItems: 'center' }}>
             {copy}
-            <Media {...(media || {})} ratio={media?.ratio || '4 / 5'} label={media?.label || 'Product visual'} />
+            {renderMedia('4 / 5', 'Product visual')}
           </div>
         )}
       </div>
