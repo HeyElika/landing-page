@@ -6,10 +6,8 @@
 export const brand = {
   name: 'Billease',
   href: '/',
-  // TODO: point these at the official wordmark once the file is in public/.
-  // A corrupt copy was reverted; see README "Logo".
-  logo: null,
-  logoOnDark: null,
+  logo: '/billease-logo.svg',              // official wordmark, exported from Figma
+  logoOnDark: '/billease-logo-on-dark.svg',
   tagline: 'Buy now, pay later for everyday Filipinos.',
 }
 
