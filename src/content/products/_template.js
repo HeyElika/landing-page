@@ -1,11 +1,17 @@
 import { brand, nav, footer } from '../brand'
 
 /**
- * Blank product page. Copy this file, rename it, set a slug, fill in the copy,
- * then register it in `src/content/index.js`.
+ * Blank product page, in the Billease narrative order from DESIGN-RULES.md
+ * section 10. Copy this file, rename it, set a slug, fill in the copy, then
+ * register it in `src/content/index.js`.
  *
- * Every section object is optional. Delete what the product does not need and
- * reorder the rest. Full key reference is in README.md.
+ * Every section is optional, but keep the ORDER. It answers the user's
+ * questions in the sequence they ask them: what is this, why should I care,
+ * where can I use it, what happens next, what should I know, is it safe,
+ * what else, what do I do now.
+ *
+ * Delete what the product does not need. Do not add sections to make the page
+ * feel longer, and do not move important conditions into the FAQ.
  */
 export default {
   slug: 'new-product',
@@ -21,28 +27,40 @@ export default {
 
   sections: [
     {
+      // 1. What this is, and the single action to take
       type: 'hero',
       layout: 'split',                  // 'split' | 'centered'
       background: 'default',            // 'default' | 'subtle' | 'dark' | 'brand'
-      badge: { label: '', icon: '' },   // optional
-      title: '',
+      badge: { label: '' },             // optional
+      title: '',                        // benefit-led, not a feature name
       description: '',
-      ctas: [
-        { label: '', href: '#get-started' },
-        { label: '', href: '#how-it-works' },
-      ],
+      ctas: [{ label: '', href: '#get-started' }],   // one primary action
       note: '',
       highlights: [{ label: '', icon: 'tick' }],
-      media: { src: null, label: 'Product image', ratio: '4 / 5' },
+      media: { src: null, label: 'Product visual', ratio: '4 / 5' },
     },
 
     {
-      type: 'logoStrip',
+      // 2. Key benefits — three or four at most
+      id: 'benefits',
+      type: 'features',
+      eyebrow: '',
       title: '',
-      items: [{ name: '' }],
+      columns: 3,                        // 2 | 3 | 4
+      items: [{ icon: 'wallet', title: '', description: '' }],
     },
 
     {
+      // 3. Where and how the product can be used — confirmed cases only
+      id: 'use-cases',
+      type: 'useCases',
+      eyebrow: '',
+      title: '',
+      items: [{ icon: 'store', title: '', description: '' }],
+    },
+
+    {
+      // 4. How activation or sign-up works — never imply instant if it is not
       id: 'how-it-works',
       type: 'steps',
       eyebrow: '',
@@ -52,39 +70,8 @@ export default {
     },
 
     {
-      id: 'features',
-      type: 'features',
-      eyebrow: '',
-      title: '',
-      description: '',
-      columns: 3,                        // 2 | 3 | 4
-      items: [{ icon: 'wallet', title: '', description: '' }],
-    },
-
-    {
-      type: 'spotlight',
-      eyebrow: '',
-      title: '',
-      rows: [
-        {
-          title: '',
-          description: '',
-          bullets: [''],
-          link: { label: '', href: '#' },
-          media: { src: null, label: 'Feature image', ratio: '4 / 3' },
-        },
-      ],
-    },
-
-    {
-      type: 'stats',
-      background: 'dark',
-      title: '',
-      items: [{ value: '', label: '' }],
-    },
-
-    {
-      id: 'pricing',
+      // 5. Terms, where cost is a genuine user question. Delete otherwise.
+      id: 'terms',
       type: 'pricing',
       eyebrow: '',
       title: '',
@@ -101,17 +88,29 @@ export default {
           cta: { label: '', href: '#get-started' },
         },
       ],
-      note: 'Regulatory disclosure approved by legal goes here.',
+      note: 'Regulatory disclosure approved by Legal goes here.',
     },
 
     {
-      type: 'testimonials',
+      // 6. Important things to know — MUST appear before the FAQ
+      id: 'conditions',
+      type: 'conditions',
+      eyebrow: '',
+      title: 'Important things to know',
+      description: '',
+      items: [{ icon: 'document', title: '', detail: '' }],
+    },
+
+    {
+      // 7. Security and control — only capabilities that actually exist
+      type: 'security',
       eyebrow: '',
       title: '',
-      items: [{ quote: '', name: '', role: '' }],
+      items: [{ icon: 'security', title: '', description: '' }],
     },
 
     {
+      // 8. FAQ — genuine conversion blockers, not filler
       id: 'faq',
       type: 'faq',
       background: 'subtle',
@@ -122,6 +121,7 @@ export default {
     },
 
     {
+      // 9. Repeat the single primary action
       id: 'get-started',
       type: 'ctaBand',
       background: 'brand',
@@ -131,6 +131,9 @@ export default {
       stores: [{ name: 'App Store', href: '#' }, { name: 'Google Play', href: '#' }],
       note: '',
     },
+
+    // Available but not part of the default narrative:
+    // { type: 'spotlight', rows: [{ title: '', description: '', bullets: [''], media: {} }] }
   ],
 
   footer,

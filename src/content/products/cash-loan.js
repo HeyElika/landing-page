@@ -1,8 +1,11 @@
 import { brand, nav, footer } from '../brand'
 
 /**
- * Second example, kept deliberately short. It shows that a product page does
- * not have to use every section: this one is hero, features, FAQ and CTA only.
+ * Second example, deliberately short. A page does not have to use every
+ * section: this one is hero, benefits, how it works, conditions, FAQ and CTA.
+ *
+ * FINANCIAL GUARDRAIL: see DESIGN-RULES.md section 16. Unconfirmed values stay
+ * marked CONTENT DEPENDENCY.
  */
 export default {
   slug: 'cash-loan',
@@ -14,7 +17,14 @@ export default {
   },
 
   brand,
-  nav: { ...nav, links: [{ label: 'Features', href: '#features' }, { label: 'FAQ', href: '#faq' }] },
+  nav: {
+    ...nav,
+    links: [
+      { label: 'Benefits', href: '#benefits' },
+      { label: 'How it works', href: '#how-it-works' },
+      { label: 'FAQ', href: '#faq' },
+    ],
+  },
 
   sections: [
     {
@@ -28,8 +38,9 @@ export default {
       media: { src: null, label: 'Loan screen', ratio: '16 / 9' },
     },
     {
-      id: 'features',
+      id: 'benefits',
       type: 'features',
+      eyebrow: 'Why Billease',
       title: 'What you get',
       columns: 3,
       variant: 'plain',
@@ -40,9 +51,30 @@ export default {
       ],
     },
     {
+      id: 'how-it-works',
+      type: 'steps',
+      eyebrow: 'How it works',
+      title: 'From application to payout',
+      items: [
+        { title: 'Apply in the app', description: 'You need one valid ID and your bank or e-wallet details.' },
+        { title: 'We assess your application', description: 'CONTENT DEPENDENCY: confirm how long a decision takes.' },
+        { title: 'Funds reach your account', description: 'CONTENT DEPENDENCY: confirm payout timing with Product.' },
+      ],
+    },
+    {
+      type: 'conditions',
+      eyebrow: 'Before you apply',
+      title: 'Important things to know',
+      items: [
+        { icon: 'document', title: 'Interest and fees', detail: 'CONTENT DEPENDENCY: confirm the full cost structure with Risk and Legal.' },
+        { icon: 'cash', title: 'Repayment', detail: 'CONTENT DEPENDENCY: confirm the repayment schedule and what happens if a payment is late.' },
+        { icon: 'user', title: 'Who can apply', detail: 'CONTENT DEPENDENCY: confirm eligibility criteria with Risk.' },
+      ],
+    },
+    {
       id: 'faq',
       type: 'faq',
-      title: 'Before you apply',
+      title: 'Common questions',
       background: 'subtle',
       items: [
         { question: 'Who can apply?', answer: 'CONTENT DEPENDENCY: confirm eligibility criteria with Risk.' },

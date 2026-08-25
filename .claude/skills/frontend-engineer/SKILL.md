@@ -56,6 +56,23 @@ Sections render in array order. Reordering a page means moving an object in the 
 
 **Images degrade gracefully.** Every media slot takes `{ src, alt, ratio, label }`. A `null` src renders a labelled placeholder at the right ratio. Never let a missing asset collapse the layout.
 
+## The narrative
+
+Sections follow DESIGN-RULES.md section 10, in this order:
+
+1. `hero` — what this is, one action
+2. `features` — key benefits, three or four at most
+3. `useCases` — where and how it can be used
+4. `steps` — how activation or sign-up works
+5. `pricing` — terms, where cost is a real question
+6. `conditions` — important things to know, **always before the FAQ**
+7. `security` — security and control
+8. `faq` — genuine conversion blockers
+9. `ctaBand` — repeat the single primary action
+
+Do not add sections to pad a page. There is no logo strip, testimonial wall or
+stats band on purpose: rule 2 warns against generic marketing furniture.
+
 ## Adding a product page
 
 1. Copy `src/content/products/_template.js`, rename it, set `slug`, `name`, `meta`

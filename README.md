@@ -55,22 +55,32 @@ That is the whole workflow. You should not need to touch a component or a styles
 
 ## Section reference
 
-Every section object needs a `type`. Add an `id` when the section is a link target from the nav. Most sections accept `eyebrow`, `title`, `description` and `background`.
+Sections follow the Billease narrative in DESIGN-RULES.md section 10. **Keep the order.** It answers the user's questions in the sequence they ask them.
 
-`background` accepts `default`, `subtle`, `sunken`, `dark` or `brand` depending on the section. Alternate bands rather than stacking two of the same tone.
+| # | `type` | Answers | Main keys |
+|---|---|---|---|
+| 1 | `hero` | What is this, and what do I do? | `layout` (`split`/`centered`), `badge`, `title`, `description`, `ctas[]`, `note`, `highlights[]`, `media` |
+| 2 | `features` | Why should I care? | `columns` (2, 3, 4), `variant` (`card`/`plain`), `items[{ icon, title, description }]` |
+| 3 | `useCases` | Where can I use it? | `items[{ icon, title, description }]`, `note` |
+| 4 | `steps` | What happens next? | `items[{ title, description }]`, `cta` |
+| 5 | `pricing` | What does it cost? | `plans[{ name, price, unit, description, badge, featured, features[], cta }]`, `note` |
+| 6 | `conditions` | What should I know? | `items[{ icon, title, detail }]`, `note` |
+| 7 | `security` | Is it safe? | `items[{ icon, title, description }]` |
+| 8 | `faq` | Anything else? | `items[{ question, answer }]`, `footerLink` |
+| 9 | `ctaBand` | What do I do now? | `title`, `description`, `ctas[]`, `stores[]`, `media`, `note` |
 
-| `type` | Purpose | Main keys |
-|---|---|---|
-| `hero` | Opening statement | `layout` (`split` or `centered`), `badge`, `title`, `description`, `ctas[]`, `note`, `highlights[]`, `media` |
-| `logoStrip` | Partner or merchant proof | `title`, `items[{ name, src }]` |
-| `steps` | How it works | `items[{ title, description }]`, `cta` |
-| `features` | Benefit grid | `columns` (2, 3, 4), `variant` (`card` or `plain`), `items[{ icon, title, description, tone }]` |
-| `spotlight` | Alternating image and copy rows | `rows[{ title, description, bullets[], media, link, reverse }]` |
-| `stats` | Number band | `items[{ value, label }]` |
-| `pricing` | Plans or terms | `plans[{ name, price, unit, description, badge, featured, features[], cta }]`, `note` |
-| `testimonials` | Quote cards | `items[{ quote, name, role, avatar }]` |
-| `faq` | Accordion | `items[{ question, answer }]`, `footerLink` |
-| `ctaBand` | Closing call to action | `title`, `description`, `ctas[]`, `stores[]`, `media`, `note` |
+`spotlight` is also available for explaining one feature in depth: `rows[{ title, description, bullets[], media, link, reverse }]`.
+
+Two rules that are not negotiable:
+
+- **`conditions` must come before `faq`.** Fees, limits and timing belong on the page, not buried in an accordion. Rule 16 puts transparency ahead of conversion.
+- **One primary action per page**, repeated in the nav, the hero and the closing band, worded identically each time.
+
+Every section accepts `background`: `default`, `subtle`, `sunken`, `dark` or `brand`. Alternate meaningfully rather than mechanically.
+
+### Deliberately absent
+
+There is no logo strip, testimonial wall or statistics band. They are generic marketing furniture, rule 2 warns against exactly that look, and the numbers they need are usually unconfirmed. Do not add them back without a product reason.
 
 Nav and footer are not sections. They come from `nav` and `footer` on the page object, both defaulting to the shared values in `src/content/brand.js`. Override per product by spreading:
 
