@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# SSR smoke test scratch
+.ssr-tmp

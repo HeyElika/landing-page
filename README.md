@@ -120,6 +120,17 @@ Layout classes worth knowing when adding a section component:
 
 Use existing layout and type classes. A new section should not need new colours, spacing values or type sizes.
 
+## Project skills
+
+`.claude/skills/` holds two skills scoped to this repo, so they travel with a clone:
+
+| Skill | Use it for |
+|---|---|
+| `frontend-engineer` | Adding a page or a section type, layout and styling work, the verification and deploy loop |
+| `ux-designer` | Reviewing a page: hierarchy, the conversion path, accessibility, responsive behaviour |
+
+Both encode the rules above, so an agent working in this repo will not invent tokens or components.
+
 ## Deploying
 
 The repo is set up for Vercel. `vercel.json` rewrites all paths to `index.html` so client-side routes work on refresh.
