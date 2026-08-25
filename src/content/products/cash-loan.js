@@ -22,7 +22,7 @@ export default {
       layout: 'centered',
       background: 'subtle',
       title: 'Cash in your account, repaid on your schedule',
-      description: 'Apply in the app, get a decision the same day and repay in fixed monthly instalments.',
+      description: 'Apply in the app and repay in fixed monthly instalments.',
       ctas: [{ label: 'Apply now', href: '#get-started' }],
       note: 'Subject to credit assessment.',
       media: { src: null, label: 'Loan screen', ratio: '16 / 9' },
@@ -34,9 +34,9 @@ export default {
       columns: 3,
       variant: 'plain',
       items: [
-        { icon: 'cash', title: 'Up to ₱30,000', description: 'Your limit depends on your assessment and repayment history.' },
+        { icon: 'cash', title: 'A limit that fits you', description: 'CONTENT DEPENDENCY: confirm limit range with Product before publishing.' },
         { icon: 'calendar-outline', title: 'Fixed due dates', description: 'The same amount on the same day each month.' },
-        { icon: 'repayment', title: 'Early repayment', description: 'Settle the balance any time with no extra cost.' },
+        { icon: 'repayment', title: 'Early repayment', description: 'CONTENT DEPENDENCY: confirm early repayment terms.' },
       ],
     },
     {
@@ -45,8 +45,8 @@ export default {
       title: 'Before you apply',
       background: 'subtle',
       items: [
-        { question: 'Who can apply?', answer: 'Filipino citizens aged 21 and above with a valid ID and a source of income.' },
-        { question: 'How long does approval take?', answer: 'Most applications get a decision the same day.' },
+        { question: 'Who can apply?', answer: 'CONTENT DEPENDENCY: confirm eligibility criteria with Risk.' },
+        { question: 'How long does approval take?', answer: 'CONTENT DEPENDENCY: confirm approval timing with Product.' },
       ],
     },
     {

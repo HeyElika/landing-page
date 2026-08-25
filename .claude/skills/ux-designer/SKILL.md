@@ -9,11 +9,15 @@ Review pages in this repo against how people actually read a landing page. Fix w
 
 ## Before you start
 
+**Read `DESIGN-RULES.md`.** It is the authoritative guardrail, and its section 17
+is a design review checklist you should work through as part of any review.
+
 Read `README.md` and the page you are reviewing in `src/content/products/`. The content file is the page. Most UX problems here are content problems wearing a layout costume.
 
 Two constraints that are not negotiable:
 
-- **Tokens only.** Colour, spacing, radius and type come from `src/styles/tokens.css`, which mirrors Figma. Never introduce a hex value, a new spacing number or a new type size. If a fix seems to need one, the fix is wrong.
+- **Tokens only.** `tokens.css` is generated from the Figma export. Never introduce a hex value, a spacing number or a type size. Type comes from the generated style classes (`.heading-*`, `.body-*`, `.link-*`, `.label-xs`). `npm run lint` fails if you break this.
+- **Library components first.** Buttons are the Figma Button via `ui/Cta.jsx`. Never propose a restyled button.
 - **Icons come from the library.** Names in `src/assets/icons/index.js` only. Never write an SVG path.
 
 ## What you can and cannot verify
@@ -76,13 +80,15 @@ Read only the hero. Can you answer what this is, who it is for, and what it cost
 - `features` items are parallel in grammar and roughly equal in length
 - Body copy sits under about 75 characters per line, which `t-lead` and `t-body` handle when you do not override the width
 
-### 4. Content honesty
+### 4. Content honesty and financial guardrails
 
 Landing pages for a lending product carry legal weight.
 
 - Placeholder legal text in `src/content/brand.js` must be replaced before launch, never paraphrased by you
 - The pricing `note` is a regulatory disclosure. Flag it, do not write it
 - No invented statistics, testimonials or partner names in anything shipping
+- Never invent fees, interest, eligibility, limits, repayment terms, merchant acceptance, security capabilities or activation timing. Unconfirmed values stay marked `CONTENT DEPENDENCY`, visible, until Product, Risk or Legal confirm them
+- Important conditions must appear on the page before the FAQ, not hidden inside it
 
 ### 5. Accessibility
 

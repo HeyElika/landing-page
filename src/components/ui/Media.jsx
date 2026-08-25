@@ -1,12 +1,14 @@
 /**
- * Image slot. When a product file has no image yet it renders a labelled
- * placeholder with the expected ratio, so the layout never collapses and it
- * is obvious what asset is still missing.
+ * Image slot. A product file with no image yet renders a labelled placeholder
+ * at the expected ratio, so the layout holds and the missing asset is obvious.
  */
 export default function Media({ src, alt = '', ratio = '4 / 3', label = 'Image', className = '' }) {
   if (!src) {
     return (
-      <div className={['c-placeholder', className].filter(Boolean).join(' ')} style={{ '--ratio': ratio }}>
+      <div
+        className={['c-placeholder', 'body-sm-regular', className].filter(Boolean).join(' ')}
+        style={{ '--ratio': ratio }}
+      >
         <span>{label}</span>
         <span>{ratio.replace(/\s/g, '')}</span>
       </div>

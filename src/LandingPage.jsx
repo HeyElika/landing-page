@@ -41,7 +41,7 @@ export default function LandingPage({ page }) {
           if (!Component) {
             return (
               <div key={`${type}-${i}`} className="l-band l-container">
-                <p className="t-small" style={{ color: 'var(--text-error)' }}>
+                <p className="body-sm-semibold" style={{ color: 'var(--text-error)' }}>
                   Unknown section type: {String(type)}
                 </p>
               </div>

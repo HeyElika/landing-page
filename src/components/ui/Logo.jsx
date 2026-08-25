@@ -1,23 +1,17 @@
 /**
- * Wordmark. Replace `src/assets/logo.svg` with the official export and set
- * `brand.logo` in the product file to use it; this text lockup is the
- * fallback so a new page is never blocked on an asset.
+ * Wordmark.
+ *
+ * CONTENT DEPENDENCY: the official Billease logo has not been added to this
+ * repo yet. Drop the export into `public/` and set `brand.logo` in
+ * src/content/brand.js to use it. Until then this text lockup stands in, so a
+ * page is never blocked on the asset.
  */
-export default function Logo({ src, name = 'billease', onDark = false, height = 28 }) {
-  if (src) return <img src={src} alt={name} style={{ height }} />
+export default function Logo({ src, name = 'Billease', onDark = false }) {
+  if (src) return <img src={src} alt={name} style={{ height: 'var(--space-700)' }} />
   return (
-    <span
-      style={{
-        fontFamily: 'var(--ds-font-family)',
-        fontSize: 'var(--text-2xl)',
-        fontWeight: 700,
-        letterSpacing: '-0.02em',
-        color: onDark ? 'var(--text-on-dark)' : 'var(--text-base)',
-        lineHeight: 1,
-      }}
-    >
+    <span className="heading-lg-bold" style={{ color: onDark ? 'var(--text-on-dark)' : 'var(--text-base)' }}>
       {name}
-      <span style={{ color: 'var(--text-primary)' }}>.</span>
+      <span style={{ color: 'var(--text-brand-primary)' }}>.</span>
     </span>
   )
 }

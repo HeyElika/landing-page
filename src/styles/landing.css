@@ -1,46 +1,45 @@
 /* ─────────────────────────────────────────────────────────────────────────
- * landing.css — marketing layer
+ * landing.css — layout layer
  *
- * Rules for this file:
- *  1. Every colour, radius, spacing and border value must reference a token
- *     from tokens.css. No raw hex, no invented spacing.
- *  2. The only values defined here are the marketing display type scale and
- *     the layout rhythm, because the product design system stops at 32px
- *     (--text-3xl) and has no page-level grid. Both are derived from the
- *     token scale, not invented independently.
- *  3. Layout is section-based: every section is a full-bleed band with a
- *     centred container inside it.
+ * Governed by DESIGN-RULES.md. In short:
+ *  - Type comes from the generated style classes in tokens.css only
+ *    (.heading-*, .body-*, .link-*, .label-xs). Never set font-size here.
+ *  - Colour, spacing, radius, border width and elevation come from tokens.
+ *  - This file adds layout only: page width, gutters, band rhythm, grids.
+ *
+ * The four layout constants below are the single documented exception. The
+ * Billease token set covers a phone screen and has no page-width or
+ * section-rhythm variables, so they are defined here, derived from the
+ * spacing scale wherever arithmetic allows. Nothing else in this file
+ * introduces a value.
  * ───────────────────────────────────────────────────────────────────────── */
 
 :root {
-  /* Marketing display scale — continues the product scale past --text-3xl.
-   * Each step is the token value at the small end, scaling up on wide screens. */
-  --display-sm: clamp(var(--text-xl), 1.4rem + 1vw, var(--text-2xl));   /* 20 → 24 */
-  --display-md: clamp(var(--text-2xl), 1.6rem + 1.4vw, var(--text-3xl)); /* 24 → 32 */
-  --display-lg: clamp(var(--text-3xl), 2rem + 2vw, 44px);                /* 32 → 44 */
-  --display-xl: clamp(34px, 2.2rem + 3.2vw, 60px);                       /* 34 → 60 */
+  /* Layout constants — see note above */
+  --page-max: 1200px;                                     /* readable desktop measure */
+  --measure: 68ch;                                        /* max line length for prose */
+  --page-gutter: var(--space-400);                        /* 16 */
+  --nav-h: calc(var(--space-900) + var(--space-800));      /* 40 + 32 = 72 */
 
-  /* Body copy sizes for marketing (product scale tops out at 16px) */
-  --copy-md: var(--text-lg);                       /* 16 */
-  --copy-lg: clamp(var(--text-lg), 1rem + 0.4vw, 18px);
-
-  /* Page rhythm — multiples of the 8px spacing scale */
-  --page-max: 1160px;
-  --page-gutter: var(--space-500);                 /* 20 */
-  --band-y: clamp(var(--space-900), 4vw, 80px);    /* 40 → 80 vertical band padding */
-  --band-y-lg: clamp(56px, 6vw, 104px);
-  --nav-h: 72px;
-
-  /* Control sizes. 48 and 40 are the lg/md Button heights in the product
-   * design system; the rest are marketing-only element sizes. */
-  --control-lg: 48px;
-  --control-md: 40px;
-  --logo-h: 28px;
-  --store-badge-h: 44px;
+  /* Section rhythm: 40 on mobile per the spacing rules, composed larger on
+   * wider screens. Every value is a sum of spacing tokens. */
+  --band-y: var(--space-900);                              /* 40 */
+  --band-y-lg: var(--space-1000);                          /* 48 */
 }
 
 @media (min-width: 768px) {
-  :root { --page-gutter: var(--space-800); }       /* 32 */
+  :root {
+    --page-gutter: var(--space-800);                       /* 32 */
+    --band-y: var(--space-1000);                           /* 48 */
+    --band-y-lg: calc(var(--space-1000) + var(--space-800)); /* 80 */
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --band-y: calc(var(--space-1000) + var(--space-400));   /* 64 */
+    --band-y-lg: calc(var(--space-1000) * 2);               /* 96 */
+  }
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -50,10 +49,11 @@ html, body { margin: 0; }
 
 body {
   font-family: var(--ds-font-family);
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.5;
   background: var(--bg-base);
   color: var(--text-base);
-  font-size: var(--copy-md);
-  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -65,12 +65,12 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; }
 
 :focus-visible {
-  outline: var(--border-width-200) solid var(--border-active);
+  outline: var(--border-width-sm) solid var(--border-active);
   outline-offset: var(--space-050);
   border-radius: var(--radius-sm);
 }
 
-/* ── Layout primitives ──────────────────────────────────────────────────── */
+/* ── Bands and containers ───────────────────────────────────────────────── */
 
 .l-band {
   padding-block: var(--band-y);
@@ -80,11 +80,14 @@ button { font: inherit; }
 .l-band--tight { padding-block: var(--space-800); }
 .l-band--subtle { background: var(--bg-subtle); }
 .l-band--sunken { background: var(--bg-sunken); }
-.l-band--dark { background: var(--neutral-900); color: var(--text-on-dark); }
+.l-band--dark { background: var(--color-neutral-900); color: var(--text-on-dark); }
 .l-band--brand { background: var(--bg-primary); color: var(--text-on-dark); }
 
 .l-container { width: 100%; max-width: var(--page-max); margin-inline: auto; }
 .l-container--narrow { max-width: 760px; }
+
+/* Prose never spans the full container. */
+.l-measure { max-width: var(--measure); }
 
 .l-stack { display: flex; flex-direction: column; }
 .l-stack--100 { gap: var(--space-100); }
@@ -108,29 +111,27 @@ button { font: inherit; }
   .l-grid--4 { grid-template-columns: repeat(4, 1fr); }
 }
 
-/* ── Type ───────────────────────────────────────────────────────────────── */
+/* ── Type helpers ───────────────────────────────────────────────────────────
+ * Colour and alignment only. Size, weight and line-height always come from a
+ * generated type style class in tokens.css. */
 
-.t-display   { font-size: var(--display-xl); font-weight: 700; line-height: 1.1;  letter-spacing: -0.02em; }
-.t-h2        { font-size: var(--display-lg); font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
-.t-h3        { font-size: var(--display-md); font-weight: 600; line-height: 1.25; }
-.t-h4        { font-size: var(--display-sm); font-weight: 600; line-height: 1.3; }
-.t-lead      { font-size: var(--copy-lg); color: var(--text-subtle); line-height: 1.6; }
-.t-body      { font-size: var(--copy-md); color: var(--text-subtle); line-height: 1.6; }
-.t-small     { font-size: var(--text-md); color: var(--text-subtle); line-height: 1.5; }
-.t-caption   { font-size: var(--text-sm); color: var(--text-subtle); line-height: 1.5; }
-.t-eyebrow   { font-size: var(--text-sm); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); }
-.t-on-dark   { color: var(--text-on-dark); }
+.t-subtle { color: var(--text-subtle); }
+.t-on-dark { color: var(--text-on-dark); }
 .t-on-dark-subtle { color: var(--text-on-dark-subtle); }
-.t-center    { text-align: center; }
-.t-balance   { text-wrap: balance; }
+.t-brand { color: var(--text-brand-primary); }
+.t-center { text-align: center; }
+.t-balance { text-wrap: balance; }
 
-/* ── Surfaces ───────────────────────────────────────────────────────────── */
+/* ── Surfaces ───────────────────────────────────────────────────────────────
+ * Composed from foundations. The Billease library has no card, chip, accordion
+ * or icon-container component to reuse, so these follow the radius, border and
+ * elevation rules rather than inventing a look. */
 
 .c-card {
   background: var(--bg-base);
-  border: var(--border-width-100) solid var(--border-subtle);
-  border-radius: var(--radius-xl);
-  padding: var(--space-600);
+  border: var(--border-width-xs) solid var(--border-subtle);
+  border-radius: var(--radius-lg);          /* 12, standard card */
+  padding: var(--space-600);                /* 24, within 16–24 guidance */
 }
 .c-card--flat { border-color: transparent; background: var(--bg-subtle); }
 .c-card--raised { box-shadow: var(--shadow-xs); }
@@ -141,67 +142,28 @@ button { font: inherit; }
 }
 
 .c-media {
-  border-radius: var(--radius-2xl);
+  border-radius: var(--radius-xl);          /* 16, large promotional container */
   overflow: hidden;
   background: var(--bg-subtle);
-  border: var(--border-width-100) solid var(--border-subtle);
+  border: var(--border-width-xs) solid var(--border-subtle);
 }
 .c-media img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Placeholder shown where a product image has not been supplied yet. */
+/* Placeholder for an asset that has not been supplied yet. */
 .c-placeholder {
   display: grid;
   place-items: center;
   gap: var(--space-200);
-  min-height: 240px;
   aspect-ratio: var(--ratio, 4 / 3);
   background: var(--bg-subtle);
-  border: var(--border-width-100) dashed var(--border-default);
-  border-radius: var(--radius-2xl);
+  border: var(--border-width-xs) dashed var(--border-bold);
+  border-radius: var(--radius-xl);
   color: var(--text-disabled);
-  font-size: var(--text-sm);
   text-align: center;
   padding: var(--space-400);
 }
 
-/* ── Buttons (marketing sizing, DS colour + radius) ─────────────────────── */
-
-.c-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-200);
-  height: var(--control-lg);
-  padding-inline: var(--space-600);
-  border-radius: var(--radius-full);
-  border: var(--border-width-100) solid transparent;
-  font-size: var(--text-lg);
-  font-weight: 600;
-  line-height: 1.5;
-  cursor: pointer;
-  transition: filter 120ms ease, background-color 120ms ease, border-color 120ms ease;
-  white-space: nowrap;
-}
-.c-btn:hover { filter: brightness(0.94); }
-.c-btn:active { filter: brightness(0.86); }
-.c-btn--primary { background: var(--bg-primary); color: var(--text-on-dark); }
-.c-btn--secondary { background: var(--bg-sunken); color: var(--text-base); }
-.c-btn--outline { background: transparent; color: var(--text-base); border-color: var(--border-default); }
-.c-btn--on-dark { background: var(--bg-base); color: var(--text-base); }
-.c-btn--on-dark-outline { background: transparent; color: var(--text-on-dark); border-color: var(--border-on-dark); }
-.c-btn--sm { height: var(--control-md); padding-inline: var(--space-400); font-size: var(--text-md); }
-.c-btn--block { width: 100%; }
-
-.c-link {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-100);
-  color: var(--text-secondary);
-  font-weight: 600;
-}
-.c-link:hover { text-decoration: underline; }
-
-/* ── Badge / pill ───────────────────────────────────────────────────────── */
+/* ── Chip / badge ───────────────────────────────────────────────────────── */
 
 .c-badge {
   display: inline-flex;
@@ -210,22 +172,20 @@ button { font: inherit; }
   padding: var(--space-100) var(--space-300);
   border-radius: var(--radius-full);
   background: var(--bg-error-subtle);
-  color: var(--text-primary);
-  font-size: var(--text-sm);
-  font-weight: 600;
+  color: var(--text-brand-primary);
 }
 .c-badge--neutral { background: var(--bg-subtle); color: var(--text-subtle); }
 .c-badge--success { background: var(--bg-success-subtle); color: var(--text-success); }
 .c-badge--info { background: var(--bg-info-subtle); color: var(--text-info); }
 .c-badge--on-dark { background: var(--alpha-white-10); color: var(--text-on-dark); }
 
-/* ── Icon tile ──────────────────────────────────────────────────────────── */
+/* ── Icon container ─────────────────────────────────────────────────────── */
 
 .c-icon-tile {
   display: grid;
   place-items: center;
-  width: var(--control-lg);
-  height: var(--control-lg);
+  width: var(--icon-size-2xl);
+  height: var(--icon-size-2xl);
   border-radius: var(--radius-lg);
   background: var(--bg-error-subtle);
   flex-shrink: 0;
@@ -235,9 +195,19 @@ button { font: inherit; }
 .c-icon-tile--success { background: var(--bg-success-subtle); }
 .c-icon-tile--on-dark { background: var(--alpha-white-10); }
 
+/* ── Inline link ────────────────────────────────────────────────────────── */
+
+.c-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-100);
+  color: var(--text-active);
+}
+.c-link--on-dark { color: var(--text-on-dark); }
+
 /* ── Section header ─────────────────────────────────────────────────────── */
 
-.c-section-head { display: flex; flex-direction: column; gap: var(--space-300); max-width: 680px; }
+.c-section-head { display: flex; flex-direction: column; gap: var(--space-300); max-width: var(--measure); }
 .c-section-head--center { margin-inline: auto; text-align: center; align-items: center; }
 
 /* ── Section-specific responsive rules ──────────────────────────────────── */
@@ -249,10 +219,7 @@ button { font: inherit; }
   .nav-desktop { display: flex !important; }
   .nav-mobile-toggle { display: none; }
   .nav-mobile-panel { display: none; }
-}
-
-@media (min-width: 900px) {
-  .hero-split { grid-template-columns: 1.05fr 0.95fr; }
+  .hero-split { grid-template-columns: 1fr 1fr; }
   .spotlight-row { grid-template-columns: 1fr 1fr; gap: var(--space-900); }
   .footer-top { grid-template-columns: 1.4fr repeat(auto-fit, minmax(140px, 1fr)); }
 }
@@ -261,7 +228,7 @@ button { font: inherit; }
   .footer-top { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* On small screens the media always follows the copy, whatever the row order. */
+/* Copy always precedes media on small screens, whatever the row order. */
 @media (max-width: 899px) {
   .spotlight-row > * { order: 0 !important; }
 }

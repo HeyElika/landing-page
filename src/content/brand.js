@@ -4,7 +4,7 @@
  */
 
 export const brand = {
-  name: 'billease',
+  name: 'Billease',
   href: '/',
   logo: null,        // e.g. '/logo.svg' in public/ once the official asset is added
   logoOnDark: null,

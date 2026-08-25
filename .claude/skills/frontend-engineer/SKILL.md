@@ -5,6 +5,10 @@ description: Build and modify Billease landing pages in this repo — add a prod
 
 # Frontend engineer — Billease landing pages
 
+**Read `DESIGN-RULES.md` before changing any UI.** It is the authoritative
+guardrail and it overrides anything below that conflicts with it. The Billease
+component library overrides both.
+
 This repo is a content-driven landing page template. The layout is fixed; pages are data. Most requests here are content changes, and reaching for a component or a stylesheet usually means the request was misread.
 
 ## Decide what kind of change this is
@@ -14,7 +18,9 @@ Work down this list and stop at the first match.
 1. **New page, or new copy for a page.** Edit a file in `src/content/products/`. Touch nothing else.
 2. **A section exists but needs a different arrangement.** Check the section's props first. `hero` has `layout`, `features` has `columns` and `variant`, most have `background`.
 3. **A genuinely new kind of section.** Add a component and register it. See below.
-4. **A token needs to change.** It does not. Tokens mirror Figma. Raise it against the design system instead.
+4. **A token needs to change.** Change it in Figma, re-export the variables, then run `npm run tokens`. Never edit `tokens.css`.
+
+**Financial content is never yours to write.** Fees, interest, limits, eligibility, timings, merchant acceptance and security claims must come from Product, Risk or Legal. If a figure is not confirmed, mark it `CONTENT DEPENDENCY` and leave it visible. See DESIGN-RULES.md section 16.
 
 ## Architecture
 
@@ -34,11 +40,15 @@ Sections render in array order. Reordering a page means moving an object in the 
 
 ## Rules
 
-**Tokens.** Every colour, spacing, radius and font size resolves to a variable from `tokens.css`. No hex, no bare pixel numbers for spacing. Element sizes use `--control-lg`, `--control-md`, `--logo-h`, `--store-badge-h`.
+**Tokens.** Every colour, spacing, radius and border width resolves to a variable from `tokens.css`. Prefer semantic tokens over primitives: `--bg-primary`, not `--color-red-500`.
 
-**tokens.css is read-only here.** It is copied verbatim from `Billease-app/src/index.css`. If a token is wrong, fix it in the design system and re-copy the file. Never patch it locally, or this repo silently forks from Figma.
+**tokens.css is generated.** It is built from `tokens/variables.json`, the Figma variables export. Never hand-edit it. To change a token, change it in Figma, re-export, replace `tokens/variables.json` and run `npm run tokens`.
 
-**landing.css holds two things only:** the display type scale above `--text-3xl`, because the product scale stops at 32px for a phone screen, and page rhythm such as container width, gutters and band padding. Everything else in it resolves to a token. Do not grow it into a second design system.
+**Type comes from the generated style classes only:** `.heading-xl-bold`, `.heading-lg-bold`, `.heading-md-semibold`, `.heading-sm-semibold`, `.heading-xs-semibold`, `.body-{lg,md,sm,xs,xxs}-{regular,semibold}`, `.link-md`, `.link-sm`, `.label-xs`. Never write `font-size`, `font-weight` or `line-height` in a component. There is no marketing display scale: the hero headline is `heading-xl-bold` at 32px and that is deliberate.
+
+**Buttons come from the library.** `src/components/ds/Button.jsx` is the Figma Button (node `16:182`). Use it through `src/components/ui/Cta.jsx`. Do not build another button, and do not restyle this one.
+
+**landing.css is layout only:** page width, gutters, band rhythm, grids, and compositions for patterns the library does not have (card, chip, accordion, icon container). It declares four layout constants, documented in the file. Do not grow it into a second design system.
 
 **Icons.** `BilleaseIcon` with a name from `src/assets/icons/index.js`. Never an inline SVG path. An unknown name renders a visible dashed label instead of failing, so a typo shows up on the page. If the icon does not exist, use the closest one and say so.
 
@@ -71,6 +81,10 @@ Always, before reporting done:
 npm run build && npm run lint
 ```
 
+`npm run lint` runs ESLint and then the token checker, which fails the build if
+any file references a token that does not exist, reintroduces a raw hex colour,
+or hardcodes a font size. That check is the guardrail; do not skip it.
+
 To confirm every route renders and no icon name is broken, without a browser:
 
 ```bash
@@ -99,14 +113,7 @@ rm -rf .ssr-tmp src/ssr-check.jsx
 
 This proves nothing crashes. It proves nothing about how the page looks. Say which one you checked.
 
-Check for drift after any styling work:
-
-```bash
-grep -rn "#[0-9A-Fa-f]\{6\}" src/components src/content
-grep -rnE "(width|height): *[0-9]+,?$" src/components
-```
-
-Both should return nothing.
+Drift is caught automatically by `npm run check` (also part of `npm run lint`).
 
 ## Deploying
 

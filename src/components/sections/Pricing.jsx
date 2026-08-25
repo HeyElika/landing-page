@@ -1,11 +1,14 @@
 import SectionHead from '../ui/SectionHead'
-import Button from '../ui/Button'
+import Cta from '../ui/Cta'
 import Badge from '../ui/Badge'
 import BilleaseIcon from '../../assets/icons/BilleaseIcon'
 
 /**
- * Plans or terms. Each plan: { name, price, unit, description, features[],
- * cta, featured?, badge? }. Use `note` for the required rate disclosure.
+ * Terms or plans.
+ *
+ * FINANCIAL GUARDRAIL: never generate figures here. Fees, interest, limits and
+ * repayment terms must come from confirmed product content, and `note` must
+ * carry the disclosure approved by Legal. See DESIGN-RULES.md section 16.
  */
 export default function Pricing({ eyebrow, title, description, plans = [], note, background = 'subtle' }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
@@ -17,41 +20,41 @@ export default function Pricing({ eyebrow, title, description, plans = [], note,
           {plans.map((plan) => (
             <li
               key={plan.name}
-              className="c-card c-card--raised l-stack l-stack--400"
+              className="c-card l-stack l-stack--400"
               style={{
-                borderColor: plan.featured ? 'var(--border-primary)' : undefined,
-                borderWidth: plan.featured ? 'var(--border-width-200)' : undefined,
+                borderColor: plan.featured ? 'var(--border-brand-primary)' : undefined,
+                borderWidth: plan.featured ? 'var(--border-width-sm)' : undefined,
               }}
             >
               <div className="l-stack l-stack--200">
                 <div className="l-row" style={{ justifyContent: 'space-between' }}>
-                  <h3 className="t-h4">{plan.name}</h3>
+                  <h3 className="heading-sm-semibold">{plan.name}</h3>
                   {plan.badge && <Badge label={plan.badge} />}
                 </div>
-                {plan.description && <p className="t-small">{plan.description}</p>}
+                {plan.description && <p className="body-sm-regular t-subtle">{plan.description}</p>}
               </div>
 
               <div className="l-row" style={{ gap: 'var(--space-100)', alignItems: 'baseline' }}>
-                <span className="t-h2">{plan.price}</span>
-                {plan.unit && <span className="t-small">{plan.unit}</span>}
+                <span className="heading-lg-bold">{plan.price}</span>
+                {plan.unit && <span className="body-sm-regular t-subtle">{plan.unit}</span>}
               </div>
 
               {plan.features?.length > 0 && (
                 <ul className="l-stack l-stack--200" style={{ flex: 1 }}>
                   {plan.features.map((f) => (
-                    <li key={f} className="l-row" style={{ gap: 'var(--space-200)', alignItems: 'flex-start', flexWrap: 'nowrap' }}>
-                      <BilleaseIcon name="tick" size="xs" color="var(--icon-success)" style={{ marginTop: 5 }} />
-                      <span className="t-small" style={{ color: 'var(--text-base)' }}>{f}</span>
+                    <li key={f} className="l-row body-sm-regular" style={{ gap: 'var(--space-200)', alignItems: 'flex-start', flexWrap: 'nowrap' }}>
+                      <BilleaseIcon name="tick" size="xs" color="var(--icon-success-bold)" />
+                      <span>{f}</span>
                     </li>
                   ))}
                 </ul>
               )}
 
-              {plan.cta && <Button {...plan.cta} variant={plan.featured ? 'primary' : 'outline'} block />}
+              {plan.cta && <Cta {...plan.cta} type={plan.featured ? 'primary' : 'secondary'} block />}
             </li>
           ))}
         </ul>
-        {note && <p className="t-caption t-center" style={{ maxWidth: 680, marginInline: 'auto' }}>{note}</p>}
+        {note && <p className="body-xs-regular t-subtle t-center" style={{ maxWidth: 'var(--measure)', marginInline: 'auto' }}>{note}</p>}
       </div>
     </section>
   )

@@ -2,6 +2,8 @@
 
 A content-driven landing page template in the Billease visual language. The layout, spacing, colour and typography are fixed. Launching a new product page means writing one content file, not writing CSS.
 
+**`DESIGN-RULES.md` is the authoritative guardrail for this repo.** Read it before changing any UI. Where it conflicts with anything here, it wins; where the Billease component library conflicts with it, the library wins.
+
 Built with React 19, Vite and React Router. No CSS framework, no component library, no build steps beyond Vite.
 
 ```bash
@@ -92,25 +94,52 @@ The full library is around 130 kB before compression. If page weight becomes a c
 
 ## Design tokens
 
-`src/styles/tokens.css` is copied verbatim from the Billease design system (`Billease-app/src/index.css`), which mirrors Figma. Do not edit it here. If a token changes, change it in the design system first and re-copy the file.
+`src/styles/tokens.css` is **generated** from `tokens/variables.json`, the Figma variables export. Never hand-edit it.
 
-`src/styles/landing.css` is the marketing layer. It adds only two things the product system does not cover:
+```bash
+npm run tokens    # regenerate tokens.css from tokens/variables.json
+npm run check     # fail on undefined tokens, raw hex, hardcoded font sizes
+```
 
-- a display type scale above `--text-3xl` (32px), because the product scale is built for a phone screen and stops there
-- page rhythm: container width, gutters and band padding
+To change a token: change it in Figma, re-export the variables, replace `tokens/variables.json`, run `npm run tokens`.
 
-Everything else in that file resolves to a token. No raw hex, no invented spacing, no second type scale.
+Prefer semantic tokens over primitives. Use `--bg-primary`, not `--color-red-500`.
 
-Layout classes worth knowing when adding a section component:
+### Typography
+
+There is no marketing type scale. Type comes from the Figma text styles, generated as classes:
+
+| Role | Class | Size |
+|---|---|---|
+| Hero headline | `heading-xl-bold` | 32 |
+| Section heading | `heading-lg-bold` | 24 |
+| Subsection | `heading-md-semibold` | 20 |
+| Card heading | `heading-sm-semibold` | 16 |
+| Body copy | `body-md-regular` | 16 |
+| Supporting copy | `body-sm-regular` | 14 |
+| Labels, legal | `body-xs-regular`, `body-xxs-regular` | 13, 11 |
+| Links | `link-md`, `link-sm` | 16, 14 |
+| Eyebrow | `label-xs` | 13, small caps |
+
+Never write `font-size`, `font-weight` or `line-height` in a component. `npm run check` fails if you do.
+
+### Components
+
+Buttons are the Billease library Button (Figma node `16:182`) in `src/components/ds/`, used through `src/components/ui/Cta.jsx`. Do not build another button.
+
+The library has no card, chip, accordion or icon-container component, so those are composed from foundations in `landing.css` following the radius, border and elevation rules. If you need a pattern that does not exist, compose it from foundations rather than inventing a component.
+
+### Layout classes
 
 | Class | Does |
 |---|---|
-| `l-band` | Full-bleed section with vertical padding and gutters. Modifiers: `--lg`, `--tight`, `--subtle`, `--sunken`, `--dark`, `--brand` |
-| `l-container` | Centres content at 1160px. `--narrow` for 760px |
+| `l-band` | Full-bleed section with band padding and gutters. Modifiers: `--lg`, `--tight`, `--subtle`, `--sunken`, `--dark`, `--brand` |
+| `l-container` | Centres content at 1200px. `--narrow` for 760px |
+| `l-measure` | Caps prose at a readable line length |
 | `l-stack l-stack--400` | Vertical flex with a spacing token gap |
 | `l-grid l-grid--3` | Responsive grid, 1 column on mobile |
-| `t-display`, `t-h2`, `t-h3`, `t-h4`, `t-lead`, `t-body`, `t-caption`, `t-eyebrow` | Type roles |
-| `c-card`, `c-btn`, `c-badge`, `c-icon-tile` | Surfaces and controls |
+| `c-card`, `c-badge`, `c-icon-tile`, `c-media` | Compositions from foundations |
+| `t-subtle`, `t-on-dark`, `t-brand`, `t-center` | Colour and alignment helpers only |
 
 ## Adding a new section type
 
@@ -137,10 +166,17 @@ The repo is set up for Vercel. `vercel.json` rewrites all paths to `index.html` 
 
 Vercel settings: framework Vite, build command `npm run build`, output directory `dist`. Pushing to `main` deploys production; every other branch gets a preview URL, which is the easiest way to review new product copy before it goes live.
 
+## Financial content
+
+Never write fees, interest, eligibility, limits, repayment terms, merchant acceptance, security capabilities or activation timing. These come from Product, Risk or Legal.
+
+Anything unconfirmed stays marked `CONTENT DEPENDENCY` and visible in the page, so it cannot ship by accident. Both example pages currently carry these markers where figures would go. See DESIGN-RULES.md section 16.
+
 ## Before a page goes live
 
-- Replace the placeholder legal text in `src/content/brand.js` with the wording legal signed off.
-- Replace the pricing `note` with the approved rate disclosure.
+- Replace every `CONTENT DEPENDENCY` marker with confirmed content.
+- Replace the placeholder legal text in `src/content/brand.js` with the wording Legal signed off.
 - Set real `meta.title` and `meta.description`.
 - Swap every placeholder image for a real asset.
-- Replace `public/favicon.svg` and set `brand.logo` with the official wordmark export.
+- Add the official Billease logo to `public/` and set `brand.logo`, then replace `public/favicon.svg`.
+- Work through the design review checklist in DESIGN-RULES.md section 17.

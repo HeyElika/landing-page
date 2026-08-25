@@ -1,7 +1,11 @@
 import SectionHead from '../ui/SectionHead'
 import IconTile from '../ui/IconTile'
 
-/** Card grid. `columns` accepts 2, 3 or 4. Each item: { icon, title, description }. */
+/**
+ * Benefit grid. `columns` accepts 2, 3 or 4.
+ * DESIGN-RULES.md caps benefits at three or four on an activation page, so
+ * prefer a short list over a full grid when the page is conversion-focused.
+ */
 export default function Features({ eyebrow, title, description, items = [], columns = 3, align = 'center', background = 'default', variant = 'card' }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken', dark: 'l-band--dark' }[background] || ''
   const onDark = background === 'dark'
@@ -17,8 +21,10 @@ export default function Features({ eyebrow, title, description, items = [], colu
             >
               <div className="l-stack l-stack--300">
                 <IconTile icon={item.icon} tone={onDark ? 'onDark' : item.tone} />
-                <h3 className={['t-h4', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{item.title}</h3>
-                {item.description && <p className={onDark ? 't-body t-on-dark-subtle' : 't-body'}>{item.description}</p>}
+                <h3 className={['heading-sm-semibold', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{item.title}</h3>
+                {item.description && (
+                  <p className={['body-sm-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>{item.description}</p>
+                )}
               </div>
             </li>
           ))}

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import Logo from '../ui/Logo'
-import Button from '../ui/Button'
+import Cta from '../ui/Cta'
 import BilleaseIcon from '../../assets/icons/BilleaseIcon'
 
 /**
- * Sticky top navigation. The bottom border only appears once the page is
- * scrolled, matching the NavHeader behaviour in the product.
+ * Sticky top navigation. The bottom border appears only once the page is
+ * scrolled, matching NavHeader behaviour in the Billease app.
  */
 export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
   const [scrolled, setScrolled] = useState(false)
@@ -30,7 +30,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
         top: 0,
         zIndex: 50,
         background: 'var(--bg-base)',
-        borderBottom: `var(--border-width-100) solid ${scrolled ? 'var(--border-subtle)' : 'transparent'}`,
+        borderBottom: `var(--border-width-xs) solid ${scrolled ? 'var(--border-subtle)' : 'transparent'}`,
         transition: 'border-color 160ms ease',
       }}
     >
@@ -49,17 +49,15 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
           <Logo src={brand.logo} name={brand.name} />
         </a>
 
-        <nav aria-label="Primary" className="nav-desktop" style={{ display: 'none', gap: 'var(--space-600)' }}>
+        <nav aria-label="Primary" className="nav-desktop" style={{ gap: 'var(--space-600)' }}>
           {links.map((l) => (
-            <a key={l.href} href={l.href} style={{ fontSize: 'var(--text-md)', fontWeight: 600, color: 'var(--text-subtle)' }}>
-              {l.label}
-            </a>
+            <a key={l.href} href={l.href} className="body-sm-semibold t-subtle">{l.label}</a>
           ))}
         </nav>
 
-        <div className="nav-desktop" style={{ display: 'none', gap: 'var(--space-300)', alignItems: 'center' }}>
-          {secondaryCta && <Button {...secondaryCta} variant="outline" size="sm" />}
-          {cta && <Button {...cta} size="sm" />}
+        <div className="nav-desktop" style={{ gap: 'var(--space-300)', alignItems: 'center' }}>
+          {secondaryCta && <Cta {...secondaryCta} type="secondary" size="md" />}
+          {cta && <Cta {...cta} size="md" />}
         </div>
 
         <button
@@ -69,11 +67,10 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
           style={{
-            display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: 'var(--control-md)',
-            height: 'var(--control-md)',
+            width: 'var(--icon-size-xl)',
+            height: 'var(--icon-size-xl)',
             borderRadius: 'var(--radius-full)',
             border: 'none',
             background: 'var(--bg-subtle)',
@@ -88,7 +85,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
         <div
           className="nav-mobile-panel"
           style={{
-            borderTop: 'var(--border-width-100) solid var(--border-subtle)',
+            borderTop: 'var(--border-width-xs) solid var(--border-subtle)',
             padding: 'var(--space-400) var(--page-gutter) var(--space-600)',
             background: 'var(--bg-base)',
           }}
@@ -99,15 +96,16 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                style={{ padding: 'var(--space-300) 0', fontSize: 'var(--text-lg)', fontWeight: 600 }}
+                className="heading-sm-semibold"
+                style={{ padding: 'var(--space-300) 0' }}
               >
                 {l.label}
               </a>
             ))}
           </nav>
           <div className="l-stack l-stack--200">
-            {cta && <Button {...cta} block />}
-            {secondaryCta && <Button {...secondaryCta} variant="outline" block />}
+            {cta && <Cta {...cta} block />}
+            {secondaryCta && <Cta {...secondaryCta} type="secondary" block />}
           </div>
         </div>
       )}

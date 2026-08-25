@@ -1,7 +1,14 @@
 import { brand, nav, footer } from '../brand'
 
 /**
- * Example product page. Every string here is placeholder copy: replace it,
+ * Example product page.
+ *
+ * FINANCIAL GUARDRAIL: rates, fees, limits, timings and merchant claims on this
+ * page are placeholders marked CONTENT DEPENDENCY or shown as em-less dashes.
+ * Do not replace them with guesses. Get the figures from Product, Risk and
+ * Legal. See DESIGN-RULES.md section 16.
+ *
+ * Every other string is placeholder copy: replace it,
  * keep the structure. Reorder `sections` to reorder the page, delete a section
  * object to drop it, or copy one to repeat it.
  */
@@ -22,9 +29,9 @@ export default {
       type: 'hero',
       layout: 'split',
       badge: { label: 'New for 2026', icon: 'rocket' },
-      title: 'Split any purchase into four easy payments',
+      title: 'Split any purchase into easy monthly payments',
       description:
-        'Shop with over 1,000 partner stores, pay a quarter today and the rest over the next three months. No credit card needed.',
+        'Shop at partner stores and pay over time. No credit card needed.',
       ctas: [
         { label: 'Get started', href: '#get-started' },
         { label: 'See how it works', href: '#how-it-works', icon: 'chevron-right' },
@@ -33,7 +40,7 @@ export default {
       highlights: [
         { label: 'No credit card', icon: 'tick' },
         { label: 'Zero hidden fees', icon: 'tick' },
-        { label: '1,000+ stores', icon: 'tick' },
+        { label: 'Partner stores nationwide', icon: 'tick' },
       ],
       media: { src: null, label: 'App screen', ratio: '4 / 5' },
     },
@@ -54,9 +61,9 @@ export default {
       title: 'Three steps from checkout to done',
       description: 'The whole flow happens inside the app, so there is nothing to print, sign or queue for.',
       items: [
-        { title: 'Create your account', description: 'Sign up with a valid ID and get your limit in minutes.' },
+        { title: 'Create your account', description: 'Sign up with a valid ID to get your limit.' },
         { title: 'Shop and choose Billease', description: 'Pick Billease at checkout or pay in store using your QR code.' },
-        { title: 'Pay in instalments', description: 'Pay a quarter up front, then three equal monthly payments.' },
+        { title: 'Pay in instalments', description: 'Pay the down payment, then fixed monthly payments.' },
       ],
       cta: { label: 'Read the full guide', href: '#faq' },
     },
@@ -69,11 +76,11 @@ export default {
       description: 'Every part of the product is designed around cash flow, not credit scores.',
       columns: 3,
       items: [
-        { icon: 'installment-outline', title: 'Flexible terms', description: 'Choose 3, 6, 9 or 12 months at checkout and see the exact cost before you confirm.' },
+        { icon: 'installment-outline', title: 'Flexible terms', description: 'Choose your term at checkout and see the exact cost before you confirm.' },
         { icon: 'wallet', title: 'One place to pay', description: 'Track every instalment, due date and receipt in a single dashboard.' },
         { icon: 'security', title: 'Bank level security', description: 'Your data is encrypted end to end and never sold to third parties.' },
         { icon: 'auto-debit', title: 'Auto debit', description: 'Link a bank account or e-wallet and never miss a due date.' },
-        { icon: 'store', title: '1,000+ partner stores', description: 'Online and in store, from groceries to gadgets.' },
+        { icon: 'store', title: 'Partner stores', description: 'Online and in store, from groceries to gadgets.' },
         { icon: 'chat-outline', title: 'Real support', description: 'Talk to a person in the app, seven days a week.' },
       ],
     },
@@ -86,7 +93,7 @@ export default {
         {
           title: 'Know your cost before you commit',
           description: 'The checkout screen shows the full schedule up front, including every fee.',
-          bullets: ['Full payment schedule before you confirm', 'No compounding interest', 'Early payment any time at no extra cost'],
+          bullets: ['Full payment schedule before you confirm', 'Fixed monthly amount', 'CONTENT DEPENDENCY: confirm early-payment terms'],
           link: { label: 'See a sample schedule', href: '#pricing' },
           media: { src: null, label: 'Checkout screen', ratio: '4 / 3' },
         },
@@ -104,10 +111,10 @@ export default {
       background: 'dark',
       title: 'Where we are today',
       items: [
-        { value: '5M+', label: 'Approved customers' },
-        { value: '1,000+', label: 'Partner stores' },
-        { value: '₱50,000', label: 'Maximum limit' },
-        { value: '4.6★', label: 'Average app rating' },
+        { value: '—', label: 'Approved customers (confirm)' },
+        { value: '—', label: 'Partner stores (confirm)' },
+        { value: '—', label: 'Maximum limit (confirm)' },
+        { value: '—', label: 'App rating (confirm)' },
       ],
     },
 
@@ -116,32 +123,32 @@ export default {
       type: 'pricing',
       eyebrow: 'Terms',
       title: 'Pick the term that fits your budget',
-      description: 'Rates shown are examples on a ₱10,000 purchase. Your actual rate depends on your assessment.',
+      description: 'CONTENT DEPENDENCY: all figures below are placeholders. Replace with terms confirmed by Product, Risk and Legal.',
       plans: [
         {
           name: '3 months',
-          price: '₱3,450',
+          price: '₱0,000',
           unit: '/ month',
           description: 'Shortest term, lowest total cost.',
-          features: ['25% down payment', 'Fixed monthly amount', 'No early payment fee'],
+          features: ['Down payment: confirm', 'Fixed monthly amount', 'Fees: confirm'],
           cta: { label: 'Get started', href: '#get-started' },
         },
         {
           name: '6 months',
-          price: '₱1,820',
+          price: '₱0,000',
           unit: '/ month',
           description: 'The balance most customers choose.',
           badge: 'Most picked',
           featured: true,
-          features: ['25% down payment', 'Fixed monthly amount', 'No early payment fee', 'Auto debit available'],
+          features: ['Down payment: confirm', 'Fixed monthly amount', 'Fees: confirm', 'Auto debit available'],
           cta: { label: 'Get started', href: '#get-started' },
         },
         {
           name: '12 months',
-          price: '₱980',
+          price: '₱0,000',
           unit: '/ month',
           description: 'Smallest monthly payment.',
-          features: ['25% down payment', 'Fixed monthly amount', 'No early payment fee'],
+          features: ['Down payment: confirm', 'Fixed monthly amount', 'Fees: confirm'],
           cta: { label: 'Get started', href: '#get-started' },
         },
       ],
@@ -167,9 +174,9 @@ export default {
       background: 'subtle',
       items: [
         { question: 'Do I need a credit card?', answer: 'No. Billease works with a valid ID and a bank account or e-wallet.' },
-        { question: 'How fast is approval?', answer: 'Most applications are decided in minutes. Some need extra documents, which adds a day at most.' },
+        { question: 'How fast is approval?', answer: 'CONTENT DEPENDENCY: confirm approval timing with Product before publishing.' },
         { question: 'What happens if I pay late?', answer: 'A late fee applies and it is shown in your schedule before you confirm the purchase. Replace this answer with the approved wording.' },
-        { question: 'Can I pay early?', answer: 'Yes. You can settle the remaining balance any time in the app at no extra cost.' },
+        { question: 'Can I pay early?', answer: 'CONTENT DEPENDENCY: confirm early settlement terms with Product and Legal.' },
       ],
       footerLink: { text: 'Still need help?', label: 'Visit the help centre', href: '#' },
     },

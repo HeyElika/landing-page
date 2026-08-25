@@ -14,7 +14,7 @@ export default function BilleaseIcon({ name, size = 'sm', color = 'currentColor'
         fontSize: 10,
         fontFamily: 'monospace',
         color: 'var(--text-subtle)',
-        border: '1px dashed var(--border-default)',
+        border: '1px dashed var(--border-bold)',
         borderRadius: 4,
         padding: '1px 4px',
         whiteSpace: 'nowrap',

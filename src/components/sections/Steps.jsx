@@ -1,4 +1,5 @@
 import SectionHead from '../ui/SectionHead'
+import BilleaseIcon from '../../assets/icons/BilleaseIcon'
 
 /** Numbered "how it works" row. Each item: { title, description }. */
 export default function Steps({ eyebrow, title, description, items = [], background = 'default', cta }) {
@@ -11,28 +12,30 @@ export default function Steps({ eyebrow, title, description, items = [], backgro
           {items.map((item, i) => (
             <li key={item.title} className="l-stack l-stack--300">
               <span
+                className="heading-sm-semibold"
                 style={{
                   display: 'grid',
                   placeItems: 'center',
-                  width: 'var(--control-md)',
-                  height: 'var(--control-md)',
+                  width: 'var(--icon-size-xl)',
+                  height: 'var(--icon-size-xl)',
                   borderRadius: 'var(--radius-full)',
                   background: 'var(--bg-primary)',
                   color: 'var(--text-on-dark)',
-                  fontSize: 'var(--text-lg)',
-                  fontWeight: 700,
                 }}
               >
                 {i + 1}
               </span>
-              <h3 className="t-h4">{item.title}</h3>
-              {item.description && <p className="t-body">{item.description}</p>}
+              <h3 className="heading-sm-semibold">{item.title}</h3>
+              {item.description && <p className="body-sm-regular t-subtle">{item.description}</p>}
             </li>
           ))}
         </ol>
         {cta && (
           <div className="l-row" style={{ justifyContent: 'center' }}>
-            <a className="c-link" href={cta.href}>{cta.label}</a>
+            <a className="c-link link-md" href={cta.href}>
+              {cta.label}
+              <BilleaseIcon name="chevron-right" size="xs" color="var(--icon-active)" />
+            </a>
           </div>
         )}
       </div>
