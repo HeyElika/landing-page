@@ -38,7 +38,7 @@ export default function Hero({
   const backdrop = BACKDROPS[mediaBackdrop] ?? null
 
   const renderMedia = (ratio, label) => {
-    const el = <Media {...(media || {})} ratio={media?.ratio || ratio} label={media?.label || label} />
+    const el = <Media {...(media || {})} ratio={media?.ratio || ratio} label={media?.label || label} priority />
     if (!backdrop) return el
     return (
       <div

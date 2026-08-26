@@ -18,7 +18,6 @@ export const nav = {
     { label: 'Pricing', href: '#pricing' },
     { label: 'FAQ', href: '#faq' },
   ],
-  secondaryCta: { label: 'Log in', href: 'https://app.billease.ph' },
   cta: { label: 'Get started', href: '#get-started' },
 }
 

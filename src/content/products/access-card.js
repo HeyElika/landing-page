@@ -67,8 +67,14 @@ export default {
         { label: 'No new application', icon: 'tick' },
         { label: 'Ready in up to 24 hours', icon: 'clock' },
       ],
-      media: { src: null, label: 'Access Card', ratio: '1.586 / 1' },
-      mediaBackdrop: 'subtle',
+      media: {
+        src: '/access-card.jpg',
+        alt: 'Three Billease Access Cards',
+        ratio: '3 / 4',
+      },
+      // No tinted panel behind it: the photograph carries its own background,
+      // and a tint would read as a box inside a box.
+      mediaBackdrop: 'none',
     },
 
     {
