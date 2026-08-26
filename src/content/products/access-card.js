@@ -138,7 +138,7 @@ export default {
       type: 'security',
       background: 'subtle',
       title: 'Safe by default, and in your control',
-      description: 'CONTENT DEPENDENCY: confirm with Engineering and Risk what protects the card, then say it plainly here.',
+      description: 'Get notified when your card is used, manage it from the Billease app, and act quickly if something doesn\u2019t look right.',
       media: { src: null, label: 'Security visual', ratio: '4 / 3' },
       items: [
         {
