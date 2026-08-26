@@ -197,6 +197,13 @@ button { font: inherit; }
 .l-container { width: 100%; max-width: var(--page-max); margin-inline: auto; }
 .l-container--narrow { max-width: 760px; }
 
+/* A reading column for text-only sections. 640px rather than the 600 it looks
+ * like, for two measured reasons: at 48px the heading "Frequently asked
+ * questions" is 610px and the longest answer is 624px, so 600 wraps both for
+ * the sake of 40px. At 640 the line runs about 70 characters, inside the
+ * 60-75 that reads comfortably. */
+.l-container--reading { max-width: 640px; }
+
 /* Prose never spans the full container. */
 .l-measure { max-width: var(--measure); }
 

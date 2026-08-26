@@ -42,7 +42,7 @@ export default function FAQ({ title, description, groups, items = [], background
 
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
-      <div className="l-container l-stack l-stack--900">
+      <div className="l-container l-container--reading l-stack l-stack--900">
         <SectionHead title={title} description={description} align="start" />
 
         <ul className="l-stack l-stack--100">
@@ -72,7 +72,7 @@ export default function FAQ({ title, description, groups, items = [], background
                       {group.items.map((item, n) => (
                         <div key={item.question} className="l-stack l-stack--100">
                           <p className="body-md-semibold">{`${n + 1}. ${item.question}`}</p>
-                          <p className="body-md-regular l-measure">{item.answer}</p>
+                          <p className="body-md-regular">{item.answer}</p>
                         </div>
                       ))}
                     </div>
