@@ -86,7 +86,6 @@ export default {
       // above them only ate the height the cards want. `label` still names the
       // section for screen readers and for the nav link that points here.
       label: 'What the card gives you',
-      background: 'subtle',   // white cards need a tinted band to sit on
       fit: 'viewport',        // one screen, three identical cards
       columns: 3,
       items: [
@@ -144,10 +143,13 @@ export default {
       // and security stay one section: split in two they said the same thing
       // twice. No CTA here — the action belongs to the header and the hero.
       type: 'security',
-      background: 'subtle',
       title: 'Safe by default, and in your control',
       description: 'Get notified when your card is used, manage it from the Billease app, and act quickly if something doesn\u2019t look right.',
-      media: { src: null, label: 'Security visual', ratio: '4 / 3' },
+      media: {
+        src: '/app-card-locked.jpg',
+        alt: 'The Billease app showing a locked Access Card',
+        ratio: '1 / 1',   // the file's own ratio, so nothing is cropped or stretched
+      },
       items: [
         {
           // Was 'Protected transactions', which claimed a protection nobody had
