@@ -23,61 +23,14 @@ export const nav = {
 
 export const footer = {
   /**
-   * Structured like the footers of comparable regulated lenders: link columns,
-   * app stores, contact, the regulatory statement, then copyright.
-   *
-   * Replace the placeholder hrefs with real destinations before launch.
+   * Deliberately small: contact and the regulatory statement, then copyright
+   * and the legal links. Navigation, app links and social live higher up the
+   * page, and repeating them here only made the footer a second page.
    */
-  columns: [
-    {
-      title: 'Products',
-      links: [
-        { label: 'Access Card', href: '/' },
-        { label: 'Pay later', href: '/pay-later' },
-        { label: 'Cash loan', href: '/cash-loan' },
-        { label: 'Partner stores', href: '#' },
-      ],
-    },
-    {
-      title: 'Company',
-      links: [
-        { label: 'About us', href: '#' },
-        { label: 'Careers', href: '#' },
-        { label: 'Newsroom', href: '#' },
-      ],
-    },
-    {
-      title: 'Support',
-      links: [
-        { label: 'Help centre', href: '#' },
-        { label: 'Contact us', href: '#' },
-        { label: 'Report a concern', href: '#' },
-        { label: 'FAQ', href: '#faq' },
-      ],
-    },
-  ],
 
-  /**
-   * CONTENT DEPENDENCY: swap these for the official App Store and Google Play
-   * badge artwork. Both stores publish brand guidelines that require their own
-   * badges, so a text button is a placeholder, not a shipping asset. Set `src`
-   * on each entry and the image replaces the button.
-   */
-  appsTitle: 'Get the Billease app',
-  apps: [
-    { name: 'App Store', href: '#', src: null },
-    { name: 'Google Play', href: '#', src: null },
-  ],
-
-  /** CONTENT DEPENDENCY: confirm the public support number and address. */
+  /** CONTENT DEPENDENCY: confirm the public support address. */
   contact: [
     { label: 'support@billease.ph', href: 'mailto:support@billease.ph' },
-  ],
-
-  social: [
-    { name: 'Facebook', href: '#' },
-    { name: 'Instagram', href: '#' },
-    { name: 'TikTok', href: '#' },
   ],
 
   /**
@@ -88,17 +41,6 @@ export const footer = {
    */
   legal: [
     'First Digital Finance Corporation doing business under the names and styles of FDFC, Balikbayad, and Billease is regulated by Securities and Exchange Commission as a financing company (CoA No.: 1101) and by the Bangko Sentral ng Pilipinas as Operator of Payment System (OPSCOR-2021-0007).',
-  ],
-
-  /**
-   * Regulator marks shown on the live site. CONTENT DEPENDENCY: the image
-   * files are not in this repo yet. Add them to public/ and set `src`, or
-   * remove the entries. Until then each renders as a small text label.
-   */
-  badges: [
-    { name: 'NPC', src: null },
-    { name: 'SEC', src: null },
-    { name: 'BSP', src: null },
   ],
 
   bottomLinks: [

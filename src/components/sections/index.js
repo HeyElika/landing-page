@@ -40,6 +40,7 @@ import ChoicePair from './ChoicePair'
 import Security from './Security'
 import FAQ from './FAQ'
 import CtaBand from './CtaBand'
+import AppDownload from './AppDownload'
 
 export const SECTIONS = {
   hero: Hero,
@@ -53,6 +54,7 @@ export const SECTIONS = {
   conditions: Conditions,
   choicePair: ChoicePair,
   security: Security,
+  appDownload: AppDownload,
   faq: FAQ,
   ctaBand: CtaBand,
 }

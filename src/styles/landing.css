@@ -167,8 +167,12 @@ button { font: inherit; }
 
   .l-band--viewport .c-media,
   .l-band--viewport .c-placeholder {
-    height: calc(100vh - var(--nav-h) - var(--space-1000) * 2);
-    height: calc(100svh - var(--nav-h) - var(--space-1000) * 2);
+    /* A band's worth of height short of the full screen: at the full height
+     * the card render ran the whole viewport and read as a poster rather than
+     * as one half of a hero. The section centres, so the height it gives up is
+     * shared evenly above and below. */
+    height: calc(100vh - var(--nav-h) - var(--space-1000) * 2 - var(--space-900));
+    height: calc(100svh - var(--nav-h) - var(--space-1000) * 2 - var(--space-900));
     max-width: min(600px, 36vw);
     width: auto;
     margin-inline: auto;
@@ -824,33 +828,59 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
  * then contact and the regulatory statement, then copyright.
  */
 
-/* A deep blue surface: the one section on the page that is not part of the
- * reading flow, so it separates itself by tone rather than by a border. */
-.c-footer { background: var(--color-blue-700); }
-
-/* Logo, then the link columns, then the app links. A flex row rather than one
- * grid: the number of link columns is content-driven, and an auto-repeat track
- * cannot sit in the same template as the fixed tracks either side of it. */
-.c-footer__top {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-800);
-}
-
-.c-footer__links {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: var(--space-600) var(--space-800);
-}
-
-.c-footer__mid,
+/* ── Footer ─────────────────────────────────────────────────────────────────
+ * White and small: contact and the regulatory statement, then copyright and
+ * the legal links.
+ */
 .c-footer__bottom {
   display: grid;
-  gap: var(--space-600);
+  gap: var(--space-400);
   grid-template-columns: 1fr;
 }
 
-.c-footer__app {
+@media (min-width: 768px) {
+  .c-footer__bottom {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+}
+
+/* ── App download panel ─────────────────────────────────────────────────────
+ * A contained blue block above the footer: image on one side, copy and store
+ * links on the other.
+ *
+ * Contained rather than full-bleed. It sits directly above the footer, and two
+ * full-width colour blocks stacked read as one very large one.
+ *
+ * The radius is deliberately twice the largest token. At this size the 24px
+ * corner all but disappears — the block is wide enough that the curve has to
+ * grow with it to read as a rounded container at all.
+ */
+.c-appcta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-800);
+  align-items: center;
+  padding: var(--space-800);
+  border-radius: calc(var(--radius-2xl) * 2);
+  background: var(--color-blue-700);
+  overflow: hidden;
+}
+
+.c-appcta__media { align-self: end; }
+.c-appcta__media .c-media,
+.c-appcta__media .c-placeholder { border-radius: var(--radius-2xl); }
+
+/* The image slot sits on blue, so a light placeholder would read as a second
+ * panel inside the block. */
+.c-appcta .c-placeholder {
+  background: var(--alpha-white-10);
+  border-color: var(--alpha-white-30);
+  color: var(--text-on-dark-disabled);
+}
+
+/* Store links: white on the blue block, and in the footer if they return. */
+.c-store-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -863,43 +893,16 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   color: var(--text-base);
   white-space: nowrap;
 }
-.c-footer__app:hover { background: var(--bg-subtle); }
+.c-store-btn:hover { background: var(--bg-subtle); }
 
-@media (min-width: 768px) {
-  .c-footer__top {
-    flex-direction: row;
-    align-items: flex-start;
+@media (min-width: 900px) {
+  .c-appcta {
+    grid-template-columns: 5fr 6fr;
     gap: var(--space-1000);
+    padding: var(--space-1000);
+    padding-block-end: 0;          /* the visual can run to the bottom edge */
   }
-  .c-footer__links { flex: 1; }
-  .c-footer__apps-block { flex: 0 0 auto; }
-  .c-footer__mid,
-  .c-footer__bottom {
-    grid-template-columns: 1fr auto;
-    align-items: end;
-  }
-  .c-footer__social { justify-content: flex-end; }
-}
-
-/* ── Sticky header ──────────────────────────────────────────────────────────
- * Frosted rather than solid: the page reads as continuing underneath the
- * header instead of being cut off by it.
- *
- * The blur needs something to blur, so the fill is translucent white. Where
- * backdrop-filter is unsupported that translucency would leave text sitting on
- * whatever scrolled behind it, so those browsers get the solid fill back.
- */
-.c-nav {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--alpha-white-70);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  backdrop-filter: blur(16px) saturate(180%);
-}
-
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .c-nav { background: var(--bg-base); }
+  .c-appcta__copy { padding-block-end: var(--space-1000); }
 }
 
 /* ── Section header ─────────────────────────────────────────────────────── */

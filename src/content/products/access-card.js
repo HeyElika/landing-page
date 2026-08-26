@@ -233,6 +233,23 @@ export default {
       ],
     },
 
+    {
+      // Sits between the FAQ and the footer: the last thing on the page is
+      // getting the app, which is where activation actually happens.
+      type: 'appDownload',
+      title: 'Download the app',
+      description: 'Open the App Store on your iPhone, or the Google Play Store on your Android device. Search for Billease, then tap Install or Get.',
+      media: { src: null, label: 'App screen', ratio: '3 / 4' },
+      apps: [
+        // CONTENT DEPENDENCY: the store links, and the official App Store and
+        // Google Play badge artwork. Both stores require their own badges, so
+        // these labelled buttons are a placeholder. Set `src` on an entry and
+        // the image replaces the button.
+        { name: 'App Store', href: '#', src: null },
+        { name: 'Google Play', href: '#', src: null },
+      ],
+    },
+
   ],
 
   footer,
