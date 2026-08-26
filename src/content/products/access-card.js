@@ -15,14 +15,19 @@ import { brand, nav, footer } from '../brand'
  *    decision.
  *  - Control and security are one section, not two. Split across a panel and a
  *    band they said the same thing twice.
- *  - "Important things to know" stays on the page, above the FAQ.
+ *  - RULE EXCEPTION, approved by Eliso on 2026-08-26: the "Important things to
+ *    know" section and the closing CTA band were removed at their request.
+ *    DESIGN-RULES.md section 16 says important conditions must not live only
+ *    inside the FAQ, so fees, limits and timing are now carried by the FAQ
+ *    alone. Restore the conditions section before this page goes to Legal.
  *
  * Surface rhythm alternates white, tinted, white, tinted, white, dark, tinted,
  * brand. Cards are flat and borderless, so each one needs a band tone
  * different from its own fill — that is the pattern the reference pages use.
  *
- * CTA placement is exactly three: sticky header, hero, closing band, plus the
- * mobile sticky bar which carries the same action rather than adding a new one.
+ * CTA placement is the sticky header, the hero, and the mobile sticky bar.
+ * With the closing band removed there is no in-page anchor left, so every
+ * activation action links straight to the app.
  *
  * FINANCIAL GUARDRAIL: DESIGN-RULES.md section 16 forbids inventing activation
  * timing, fees, limits, acceptance or security capabilities. Anything
@@ -44,14 +49,13 @@ export default {
       { label: 'Why activate', href: '#benefits' },
       { label: 'Where to use', href: '#use-cases' },
       { label: 'How it works', href: '#how-it-works' },
-      { label: 'Good to know', href: '#conditions' },
       { label: 'FAQ', href: '#faq' },
     ],
-    cta: { label: 'Activate card', href: '#activate' },
+    cta: { label: 'Activate card', href: 'https://app.billease.ph' },
   },
 
   // Mobile only, and the same action as the hero. Not a fourth CTA.
-  stickyCta: { label: 'Activate card', href: '#activate' },
+  stickyCta: { label: 'Activate card', href: 'https://app.billease.ph' },
 
   sections: [
     {
@@ -61,7 +65,7 @@ export default {
       title: ['Your Billease limit,', 'now on a card'],
       description:
         'Activate your Access Card and use your existing Billease limit online and in store.',
-      ctas: [{ label: 'Activate card', href: '#activate' }],
+      ctas: [{ label: 'Activate card', href: 'https://app.billease.ph' }],
       // The activation-cost question is tracked in the FAQ, not in the hero:
       // an unresolved marker directly under the primary action undermines it.
       highlights: [
@@ -154,35 +158,6 @@ export default {
     },
 
     {
-      // Stays on the page, above the FAQ. Section 16 requires it.
-      id: 'conditions',
-      type: 'conditions',
-      title: 'Important things to know',
-      items: [
-        {
-          icon: 'clock',
-          title: 'Activation can take up to 24 hours',
-          detail: 'Your part finishes in minutes; processing on our side can take up to a day. Confirm this timing before launch.',
-        },
-        {
-          icon: 'cash',
-          title: 'How the card uses your funds',
-          detail: 'CONTENT DEPENDENCY: confirm whether spending draws on the Billease limit, a balance, or both.',
-        },
-        {
-          icon: 'document',
-          title: 'Fees and repayment',
-          detail: 'CONTENT DEPENDENCY: confirm fees and repayment implications with Risk and Legal.',
-        },
-        {
-          icon: 'card',
-          title: 'Spending limits',
-          detail: 'CONTENT DEPENDENCY: confirm any per transaction or daily limits.',
-        },
-      ],
-    },
-
-    {
       // Control and security merged. No CTA here: the action belongs to the
       // header, the hero and the closing band.
       type: 'security',
@@ -234,15 +209,6 @@ export default {
       footerLink: { text: 'Still deciding?', label: 'Contact support', href: '#' },
     },
 
-    {
-      id: 'activate',
-      type: 'ctaBand',
-      background: 'brand',
-      title: 'Ready to activate your card?',
-      description: "A few minutes now. We'll let you know as soon as it's ready to use.",
-      ctas: [{ label: 'Activate card', href: 'https://app.billease.ph' }],
-      note: 'CONTENT DEPENDENCY: confirm any terms that must appear next to the activation action.',
-    },
   ],
 
   footer,
