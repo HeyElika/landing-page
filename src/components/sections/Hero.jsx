@@ -66,6 +66,17 @@ export default function Hero({
     <div className={['l-stack', 'l-stack--600', centered ? 'c-section-head--center' : ''].filter(Boolean).join(' ')}>
       <div className="l-stack l-stack--400">
         {badge && <span><Badge {...badge} /></span>}
+        {/* Sits above the headline as a standfirst: the two facts that decide
+            whether the rest of the page is worth reading. Italic is not in the
+            type scale, so it is set here rather than as a new style class. */}
+        {note && (
+          <p
+            className={['body-sm-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].filter(Boolean).join(' ')}
+            style={{ fontStyle: 'italic' }}
+          >
+            {note}
+          </p>
+        )}
         {title && (
           <h1
             className={[
@@ -102,12 +113,6 @@ export default function Hero({
         <p className="body-md-regular t-subtle">
           {appLink.text}{' '}
           <a className="c-link link-md" href={appLink.href}>{appLink.label}</a>
-        </p>
-      )}
-
-      {note && (
-        <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].filter(Boolean).join(' ')}>
-          {note}
         </p>
       )}
 
