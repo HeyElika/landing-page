@@ -908,37 +908,24 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   .spotlight-row > * { order: 0 !important; }
 }
 
-/* ── Section snapping ───────────────────────────────────────────────────────
- * Sections settle to the top of the screen as you scroll, so the page reads as
- * a sequence of panels rather than one long ribbon.
+/* ── Section snapping: removed ──────────────────────────────────────────────
+ * Sections used to snap to the top of the screen (`scroll-snap-type: y
+ * proximity`). It trapped the footer.
  *
- * `proximity`, never `mandatory`. Mandatory snapping fights the reader on any
- * section taller than the viewport — the FAQ with two groups open, or a long
- * card grid — because the browser keeps pulling the scroll back to a boundary
- * the reader is trying to move through. Proximity only engages when a boundary
- * is already close, so a deliberate scroll always wins.
+ * The last content section starts within a screen-and-a-bit of the end of the
+ * document, so once the reader scrolls past it the nearest snap point is still
+ * that section's top — and proximity snapping pulls the page back to it. The
+ * footer could never be reached, whatever `scroll-snap-align` the footer
+ * itself carried, because the trap is the section above it.
  *
- * Snap padding matches the sticky header, otherwise a snapped section starts
- * underneath it.
+ * There is no CSS that says "stop snapping within the last screen of the
+ * document", so the feature goes. Reveal-on-scroll below still gives the page
+ * its sense of one section arriving after another.
  *
- * Desktop only, and off entirely under reduced motion: snapping moves the page
- * without the reader asking, which is exactly what that preference is about.
+ * `scroll-padding-top` stays: it is what keeps an anchored section from
+ * landing underneath the sticky header.
  */
-@media (min-width: 900px) and (min-height: 700px) {
-  @media (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-snap-type: y proximity;
-      /* Same offset the anchor jumps use, so a snapped section and a linked
-       * section land in the same place. */
-      scroll-padding-top: calc(var(--nav-h) + var(--space-400));
-    }
-    .l-band { scroll-snap-align: start; }
-    /* A section taller than the screen must never trap the reader at its top. */
-    .l-band--fit,
-    .l-band--viewport { scroll-snap-stop: normal; }
-    footer.l-band { scroll-snap-align: none; }
-  }
-}
+html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
 
 /* ── Reveal on scroll ───────────────────────────────────────────────────────
  * Content lifts in gently as it enters the viewport.
