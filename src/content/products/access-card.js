@@ -132,10 +132,14 @@ export default {
     },
 
     {
-      // Control and security merged. No CTA here: the action belongs to the
-      // header, the hero and the closing band.
+      // Intro with a visual, then the supporting points below a rule. Control
+      // and security stay one section: split in two they said the same thing
+      // twice. No CTA here — the action belongs to the header and the hero.
       type: 'security',
+      background: 'subtle',
       title: 'Safe by default, and in your control',
+      description: 'CONTENT DEPENDENCY: confirm with Engineering and Risk what protects the card, then say it plainly here.',
+      media: { src: null, label: 'Security visual', ratio: '4 / 3' },
       items: [
         {
           icon: 'security',

@@ -66,7 +66,7 @@ Sections follow the Billease narrative in DESIGN-RULES.md section 10. **Keep the
 | 4 | `stepsSplit` | What happens next, listed beside a visual | `steps[{ title, description }]`, `media`, `reverse` |
 | 5 | `pricing` | What does it cost? | `plans[{ name, price, unit, description, badge, featured, features[], cta }]`, `note` |
 | 6 | `conditions` | What should I know? | `items[{ icon, title, detail }]`, `note` |
-| 7 | `security` | Is it safe? | `items[{ icon, title, description }]` |
+| 7 | `security` | Is it safe? | `title`, `description`, `media`, `link`, `items[{ icon, title, description }]` |
 | 8 | `faq` | Anything else? | `items[{ question, answer }]`, `footerLink` |
 | 9 | `ctaBand` | What do I do now? | `title`, `description`, `ctas[]`, `stores[]`, `media`, `note` |
 
