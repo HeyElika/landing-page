@@ -21,15 +21,21 @@ import Icon from '../../assets/icons/Icon'
 // ─── Specs from Figma ────────────────────────────────────────────────────────
 
 // absoluteBoundingBox.height per size
-const HEIGHT = { lg: 48, md: 40, sm: 32 }
+//
+// `xl` is NOT in the Figma component set. It was added for the landing pages,
+// where 48 sits too small against display type. Everything about it follows
+// the lg spec except the height and the horizontal padding, which steps up by
+// the same amount lg steps up from md. Add it to node 16:182 and this comment
+// goes away; until then it is the one value on this page with no Figma source.
+const HEIGHT = { xl: 52, lg: 48, md: 40, sm: 32 }
 
 // paddingLeft / paddingRight per size (filled types only; ghost has no padding)
-const PADDING_H = { lg: 20, md: 16, sm: 12 }
+const PADDING_H = { xl: 24, lg: 20, md: 16, sm: 12 }
 
 // text child style.fontSize per size
 // Figma: boundVariables.fontSize → VariableID:2:388 (--text-lg = 16px, --text-md = 14px)
-const FONT_SIZE = { lg: 16, md: 16, sm: 14 }                  // px values for spec table
-const FONT_SIZE_TOKEN = { lg: 'var(--text-lg)', md: 'var(--text-lg)', sm: 'var(--text-md)' }
+const FONT_SIZE = { xl: 16, lg: 16, md: 16, sm: 14 }          // px values for spec table
+const FONT_SIZE_TOKEN = { xl: 'var(--text-lg)', lg: 'var(--text-lg)', md: 'var(--text-lg)', sm: 'var(--text-md)' }
 
 // Figma: boundVariables.fontStyle → VariableID:2:374 (SemiBold = 600)
 const FONT_WEIGHT_TOKEN = 600   // no separate CSS variable; resolved from token
@@ -51,8 +57,8 @@ const GRADIENT_SHADOW = '0px 1px 1px var(--alpha-black-10)'
 
 // icon-placeholder size per button size (read from Figma node)
 // lg/md → size-[20px] → Icon sm; sm → size-[16px] → Icon xs
-const ICON_SIZE = { lg: 'sm', md: 'sm', sm: 'xs' }
-const ICON_SIZE_PX = { lg: 20, md: 20, sm: 16 }
+const ICON_SIZE = { xl: 'sm', lg: 'sm', md: 'sm', sm: 'xs' }
+const ICON_SIZE_PX = { xl: 20, lg: 20, md: 20, sm: 16 }
 
 /**
  * Per-variant, per-state fill specs.
@@ -224,7 +230,7 @@ export function MissingSpec({ label = 'Missing specification' }) {
 
 export default function Button({
   type = 'primary',       // primary | secondary | gradient | ghost | ghost-destructive
-  size = 'lg',            // lg | md | sm
+  size = 'lg',            // xl | lg | md | sm
   state = 'default',      // default | active | pressed | disabled | loading
   label = 'Button',
   iconLeft = false,

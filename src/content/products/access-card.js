@@ -53,11 +53,11 @@ export default {
     //   { label: 'How it works', href: '#how-it-works' },
     //   { label: 'FAQ', href: '#faq' },
     // ],
-    // cta: { label: 'Open Billease app', href: 'https://app.billease.ph' },
+    // cta: { label: 'Open Billease app', href: 'https://app.billease.ph', size: 'xl' },
   },
 
   // Mobile only, and the same action as the hero. Not a fourth CTA.
-  stickyCta: { label: 'Open Billease app', href: 'https://app.billease.ph' },
+  stickyCta: { label: 'Open Billease app', href: 'https://app.billease.ph', size: 'xl' },
 
   sections: [
     {
@@ -66,7 +66,7 @@ export default {
       fit: 'viewport',   // the card render must not be cut off at the fold
       title: ['Your Access Card', 'is ready to activate.'],
       description: 'Finish setting it up in just a minute.',
-      ctas: [{ label: 'Open Billease app', href: 'https://app.billease.ph' }],
+      ctas: [{ label: 'Open Billease app', href: 'https://app.billease.ph', size: 'xl' }],
       note: 'No new application. Ready in up to 24 hours.',
       media: {
         src: '/access-card.jpg',
