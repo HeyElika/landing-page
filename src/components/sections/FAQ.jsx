@@ -74,7 +74,7 @@ export default function FAQ({ title, description, groups, items = [], background
                       >
                         <span>{item.question}</span>
                         <span className="c-faq__icon">
-                          <Icon name="chevron-down" size="md" color="var(--icon-subtle)" />
+                          <Icon name="chevron-down" size="sm" color="var(--icon-disabled)" />
                         </span>
                       </button>
 
