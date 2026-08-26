@@ -185,30 +185,49 @@ export default {
       title: 'Frequently asked questions',
       // A flat list, in the order a reader asks these things: where it works,
       // then what it costs, then what happens when something goes wrong.
+      //
+      // DRAFT ANSWERS. Written at the user's request in place of the content
+      // dependencies that stood here. Each describes how the product behaves
+      // and deliberately carries no rate, fee amount or timeframe, because
+      // those are the parts nobody has confirmed. Every one still needs a
+      // sign-off before launch — the owners are named per answer.
       items: [
         {
           question: 'Where can I use the card?',
-          answer: 'Online and in store. CONTENT DEPENDENCY: confirm the card network and the exact acceptance wording.',
+          // Verify with Product: the network, and whether acceptance really is
+          // both online and in store from day one.
+          answer: 'Online and in store, anywhere Mastercard is accepted. It works like any other card at checkout, so you can pay by chip or by tapping.',
         },
         {
           question: 'Can I use it abroad?',
-          answer: 'CONTENT DEPENDENCY: confirm international acceptance and any related fees.',
+          // Verify with Product and Risk: whether international use is enabled
+          // at launch, and how conversion is handled.
+          answer: 'The card is built for spending in the Philippines. If you need to pay a merchant based overseas, check the Billease app first — support can tell you whether that purchase will go through.',
         },
         {
           question: 'Are there fees for using the card?',
-          answer: 'CONTENT DEPENDENCY: confirm the fee structure with Risk and Legal.',
+          // Verify with Risk and Legal. This says only that the card does not
+          // introduce a separate fee structure; it makes no claim about the
+          // Credit Line's own charges, which belong in the T&Cs.
+          answer: 'Your Access Card does not add a separate set of charges. What you pay follows the terms of the Billease Credit Line you already have, and you can see the full breakdown in the app before you confirm a purchase.',
         },
         {
           question: 'How does repayment work?',
-          answer: 'CONTENT DEPENDENCY: confirm the repayment schedule and whether it matches the existing Billease experience.',
+          // Verify with Product: that card purchases really do fall under the
+          // existing Credit Line schedule rather than a separate one.
+          answer: 'Exactly as it does today. Card purchases draw on your existing Billease Credit Line and appear alongside your other transactions, so you repay them on the same schedule, in the same place in the app.',
         },
         {
           question: 'What should I do if I lose my card?',
-          answer: 'CONTENT DEPENDENCY: confirm the lost and stolen process and the fastest way to report it.',
+          // Verify with Ops: the replacement process, and whether locking is
+          // the correct first step in the lost and stolen flow.
+          answer: 'Lock the card in the Billease app straight away, which stops it being used while you look for it. If it does not turn up, contact Billease support from the app to report it and arrange a replacement.',
         },
         {
           question: 'How is my card protected?',
-          answer: 'CONTENT DEPENDENCY: confirm the exact protection claim with Engineering and Risk.',
+          // Verify with Engineering and Risk before adding anything stronger.
+          // This claims only what the app visibly does.
+          answer: 'You can see every card transaction in the Billease app as it happens, and lock the card yourself at any time. If a payment appears that you do not recognise, lock the card and contact support from the app.',
         },
       ],
     },
