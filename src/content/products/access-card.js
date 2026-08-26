@@ -82,7 +82,10 @@ export default {
       // Reasons to act, not a restatement of the hero.
       id: 'benefits',
       type: 'features',
-      title: 'What the card gives you',
+      // No visible heading: the three cards say what they are, and a heading
+      // above them only ate the height the cards want. `label` still names the
+      // section for screen readers and for the nav link that points here.
+      label: 'What the card gives you',
       background: 'subtle',   // white cards need a tinted band to sit on
       fit: 'viewport',        // one screen, three identical cards
       columns: 3,

@@ -14,6 +14,7 @@ import Icon from '../../assets/icons/Icon'
  */
 export default function Features({
   title,
+  label,
   description,
   items = [],
   columns = 3,
@@ -25,7 +26,10 @@ export default function Features({
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken', dark: 'l-band--dark' }[background] || ''
   const onDark = background === 'dark'
   return (
-    <section className={['l-band', fit === 'viewport' ? 'l-band--fit' : '', bandTone].filter(Boolean).join(' ')}>
+    <section
+      className={['l-band', fit === 'viewport' ? 'l-band--fit' : '', bandTone].filter(Boolean).join(' ')}
+      aria-label={!title ? (label || undefined) : undefined}
+    >
       <div className="l-container l-stack l-stack--900">
         <SectionHead title={title} description={description} align={align} onDark={onDark} />
         <ul className={`l-grid l-grid--${columns}`}>
@@ -39,7 +43,7 @@ export default function Features({
                 <li key={item.title} className="c-feature" style={{ '--ratio': ratio }}>
                   <Media {...media} ratio={ratio} label={label || item.title} className="c-feature__img" />
                   <div className="c-feature__copy l-stack l-stack--200">
-                    <h3 className="heading-lg-semibold t-on-dark">{item.title}</h3>
+                    <h3 className="display-sm t-on-dark">{item.title}</h3>
                     {item.description && (
                       <p className="body-md-regular t-on-dark-subtle">{item.description}</p>
                     )}

@@ -530,11 +530,14 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
    * row still fits one screen. The cap is on the width — capping the height
    * as well would make both axes definite, which discards the ratio and
    * stretches the card to whatever space is left. */
-  .l-band--fit .l-grid:has(.c-feature) { flex: 0 0 auto; }
+  .l-band--fit .l-grid:has(.c-feature) { flex: 1; min-height: 0; }
+  /* The cards take the whole band, so the section is exactly one screen and a
+   * scroll moves from this section to the next. The ratio is what sizes them
+   * everywhere else; here the available height does, and the grid keeps all
+   * three identical. */
   .l-band--fit .c-feature {
-    width: 100%;
-    max-width: min(100%, 44vh);
-    margin-inline: auto;
+    aspect-ratio: auto;
+    min-height: 0;
   }
 
   .l-band--fit .c-steps-split {
