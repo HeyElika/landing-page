@@ -36,6 +36,7 @@ import Spotlight from './Spotlight'
 import Panel from './Panel'
 import Pricing from './Pricing'
 import Conditions from './Conditions'
+import ChoicePair from './ChoicePair'
 import Security from './Security'
 import FAQ from './FAQ'
 import CtaBand from './CtaBand'
@@ -50,6 +51,7 @@ export const SECTIONS = {
   panel: Panel,
   pricing: Pricing,
   conditions: Conditions,
+  choicePair: ChoicePair,
   security: Security,
   faq: FAQ,
   ctaBand: CtaBand,

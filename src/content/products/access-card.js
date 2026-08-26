@@ -138,7 +138,8 @@ export default {
     {
       id: 'how-it-works',
       type: 'stepsSplit',
-      fit: 'viewport',   // hold the section to one screen, as the hero does
+      fit: 'viewport',        // hold the section to one screen, as the hero does
+      background: 'subtle',   // keeps the bands alternating either side of it
       title: 'Activate your card in a few steps',
       media: { src: null, label: 'App screen', ratio: '4 / 5' },
       steps: [
@@ -157,6 +158,27 @@ export default {
         {
           title: 'Set up your 4-digit card PIN',
           description: 'Last step, then your card is ready to use.',
+        },
+      ],
+    },
+
+    {
+      // Two routes, side by side. Cards are neutral surfaces for now; artwork
+      // drops into `media` when it exists.
+      type: 'choicePair',
+      title: 'Choose whatever fits you',
+      items: [
+        {
+          badge: 'Pay later',
+          title: 'Split a purchase into monthly payments',
+          description: 'CONTENT DEPENDENCY: confirm how this is positioned alongside the card.',
+          href: '/pay-later',
+        },
+        {
+          badge: 'Cash loan',
+          title: 'Borrow what you need, repay monthly',
+          description: 'CONTENT DEPENDENCY: confirm how this is positioned alongside the card.',
+          href: '/cash-loan',
         },
       ],
     },
