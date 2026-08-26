@@ -40,8 +40,8 @@ export default function StepsSplit({
           <SectionHead title={title} description={description} align="start" />
           <ol className="c-steps-split__list l-stack l-stack--600">
             {steps.map((step, i) => (
-              <li key={step.title} className="l-row" style={{ gap: 'var(--space-400)', alignItems: 'flex-start', flexWrap: 'nowrap' }}>
-                <span className="c-steps-split__num body-md-semibold">{i + 1}</span>
+              <li key={step.title} className="l-row" style={{ gap: 'var(--space-500)', alignItems: 'flex-start', flexWrap: 'nowrap' }}>
+                <span className="c-steps-split__num body-md-regular">{i + 1}</span>
                 <span className="l-stack l-stack--100">
                   <span className="heading-md-semibold">{step.title}</span>
                   {step.description && <span className="body-md-regular">{step.description}</span>}

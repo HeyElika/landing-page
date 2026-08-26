@@ -448,7 +448,7 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
  * with the copy beside it.
  *
  * Neutral, not brand: red is for actions and emphasis. */
-.c-steps-split__list { --step-dot: var(--space-800); }      /* 32 */
+.c-steps-split__list { --step-dot: var(--space-1000); }     /* 48 */
 
 .c-steps-split__num {
   position: relative;
@@ -460,10 +460,10 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   flex-shrink: 0;
   border-radius: var(--radius-full);
   background: var(--bg-base);
-  /* A hairline in the same neutral as every other line on the page, rather
-   * than a 2px ring in a darker grey that read as an outline drawn around
-   * the number. */
-  border: var(--border-width-xs) solid var(--border-subtle);
+  /* A hairline, but in a dark neutral rather than a pale one: at 48px across
+   * a --border-subtle ring all but vanished, and the numbers stopped reading
+   * as a sequence. */
+  border: var(--border-width-xs) solid var(--border-heavy);
   color: var(--text-base);
 }
 
