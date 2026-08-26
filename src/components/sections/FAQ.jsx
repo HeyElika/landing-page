@@ -12,9 +12,9 @@ import Icon from '../../assets/icons/Icon'
  * without becoming the thing you open — a row that expands into more questions
  * makes the reader open twice to read one answer.
  *
- * The rows run the full width of the page while the answers inside them stay
- * on a reading measure — a row is a control and reads better wide, a paragraph
- * does not.
+ * The section sits in an 800px column: wide enough that a question and its
+ * chevron do not look stranded at either end of the page, narrow enough that
+ * the answers underneath stay readable.
  *
  * `answer` may be a string or an array of strings, one per paragraph.
  *
@@ -49,7 +49,7 @@ export default function FAQ({ title, description, groups, items = [], background
 
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
-      <div className="l-container l-stack l-stack--900">
+      <div className="l-container l-container--list l-stack l-stack--900">
         <SectionHead title={title} description={description} align="start" />
 
         <div className="l-stack l-stack--800">

@@ -201,6 +201,11 @@ button { font: inherit; }
 .l-container { width: 100%; max-width: var(--page-max); margin-inline: auto; }
 .l-container--narrow { max-width: 760px; }
 
+/* A column for a list of controls: wider than prose wants, narrower than the
+ * page. The FAQ rows read as a stack rather than as lines running the full
+ * width of the screen. */
+.l-container--list { max-width: 800px; }
+
 /* A reading column for text-only sections. 640px rather than the 600 it looks
  * like, for two measured reasons: at 48px the heading "Frequently asked
  * questions" is 610px and the longest answer is 624px, so 600 wraps both for
