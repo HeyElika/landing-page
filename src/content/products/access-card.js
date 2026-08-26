@@ -142,19 +142,23 @@ export default {
       media: { src: null, label: 'Security visual', ratio: '4 / 3' },
       items: [
         {
-          icon: 'security',
-          title: 'Protected transactions',
-          description: 'CONTENT DEPENDENCY: confirm the exact protection claim with Engineering and Risk.',
+          // Was 'Protected transactions', which claimed a protection nobody had
+          // confirmed. This says only what the app demonstrably does. If
+          // Engineering and Risk confirm a specific protection, the stronger
+          // title can come back with their wording.
+          icon: 'document',
+          title: 'Track every transaction',
+          description: 'See your card activity in the Billease app and review payments whenever you need to.',
         },
         {
           icon: 'lock',
           title: 'Freeze your card',
-          description: 'CONTENT DEPENDENCY: confirm whether freeze and unfreeze exist before claiming it.',
+          description: 'Temporarily freeze your card in the Billease app if it\u2019s lost, stolen, or you notice something unusual.',
         },
         {
           icon: 'chat-outline',
           title: 'Get help quickly',
-          description: 'Reach support in the app if something does not look right.',
+          description: 'Contact Billease support from the app if you don\u2019t recognize a payment or need help with your card.',
         },
       ],
     },
