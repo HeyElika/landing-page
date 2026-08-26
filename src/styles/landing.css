@@ -297,8 +297,8 @@ button { font: inherit; }
  * belong on a tinted band, tinted tiles on a white one. */
 .c-card {
   background: var(--bg-base);
-  border-radius: var(--radius-xl);          /* 16, top of the card range */
-  padding: var(--space-600);                /* 24, within 16–24 guidance */
+  border-radius: var(--radius-2xl);         /* one radius for every container and image slot */
+  padding: var(--space-600);
 }
 .c-card--tinted { background: var(--bg-subtle); }
 .c-card--on-dark {
@@ -355,7 +355,7 @@ button { font: inherit; }
   grid-template-columns: 1fr;
 }
 
-.c-panel__media { border-radius: var(--radius-xl); overflow: hidden; }
+.c-panel__media { border-radius: var(--radius-2xl); overflow: hidden; }
 
 @media (min-width: 768px) {
   .c-panel { --panel-pad: var(--space-800); }                 /* 32 */
@@ -728,7 +728,7 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
 
 .c-choice__media { margin-top: auto; }
 .c-choice__media .c-media,
-.c-choice__media .c-placeholder { border-radius: var(--radius-xl); }
+.c-choice__media .c-placeholder { border-radius: var(--radius-2xl); }
 
 .c-choice__go {
   position: absolute;
@@ -851,9 +851,9 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
  * Contained rather than full-bleed. It sits directly above the footer, and two
  * full-width colour blocks stacked read as one very large one.
  *
- * The radius is deliberately twice the largest token. At this size the 24px
- * corner all but disappears — the block is wide enough that the curve has to
- * grow with it to read as a rounded container at all.
+ * Its corner matches every other container and image slot on the page. A
+ * larger one reads better at this width in isolation, but next to the image
+ * slots beside it the mismatch is the thing you notice.
  */
 .c-appcta {
   --appcta-visual: calc(var(--space-1000) * 6.5);   /* 312 */
@@ -862,7 +862,7 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   gap: var(--space-800);
   align-items: center;
   padding: var(--space-800);
-  border-radius: calc(var(--radius-2xl) * 2);
+  border-radius: var(--radius-2xl);
   background: var(--color-blue-700);
   overflow: hidden;
 }
