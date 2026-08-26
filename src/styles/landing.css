@@ -171,8 +171,8 @@ button { font: inherit; }
      * the card render ran the whole viewport and read as a poster rather than
      * as one half of a hero. The section centres, so the height it gives up is
      * shared evenly above and below. */
-    height: calc(100vh - var(--nav-h) - var(--space-1000) * 2 - var(--space-900));
-    height: calc(100svh - var(--nav-h) - var(--space-1000) * 2 - var(--space-900));
+    height: calc(100vh - var(--nav-h) - var(--space-1000) * 2 - var(--space-900) - var(--space-1000));
+    height: calc(100svh - var(--nav-h) - var(--space-1000) * 2 - var(--space-900) - var(--space-1000));
     max-width: min(600px, 36vw);
     width: auto;
     margin-inline: auto;
