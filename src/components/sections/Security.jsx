@@ -13,7 +13,7 @@ export default function Security({ eyebrow, title, description, items = [], back
   const onDark = background === 'dark'
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
-      <div className="l-container l-stack l-stack--800">
+      <div className="l-container l-stack l-stack--900">
         <SectionHead eyebrow={eyebrow} title={title} description={description} onDark={onDark} />
         <ul className={`l-grid l-grid--${Math.min(items.length, 3) || 3}`}>
           {items.map((item) => (

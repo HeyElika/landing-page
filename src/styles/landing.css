@@ -46,24 +46,40 @@
   --display-md: clamp(var(--text-2xl), 1.109rem + 1.739vw, 40px);
   --display-sm: clamp(var(--text-xl), 1.054rem + 0.87vw, 28px);
 
-  /* Section rhythm: 40 on mobile per the spacing rules, composed larger on
-   * wider screens. Every value is a sum of spacing tokens. */
-  --band-y: var(--space-900);                              /* 40 */
-  --band-y-lg: var(--space-1000);                          /* 48 */
+  /* Section rhythm.
+   *
+   * DESIGN-RULES.md section 5 asks for 40-48px minimum on mobile and "larger
+   * through layout composition on desktop". Measured from what comparable
+   * pages actually ship, a standard desktop band is 80-96px: Atome sits at
+   * 80-96 and Salmon at 56-96. An earlier 64px maximum here read as stacked.
+   *
+   * Every value is a sum of spacing tokens, never a new number.
+   *   48  = --space-1000
+   *   56  = 1000 + 200
+   *   64  = 1000 + 400
+   *   80  = 1000 + 800
+   *   96  = 1000 x 2
+   *   128 = 1000 x 2 + 800
+   */
+  --band-y-tight: var(--space-800);                        /* 32 */
+  --band-y: var(--space-1000);                             /* 48 */
+  --band-y-lg: calc(var(--space-1000) + var(--space-200));  /* 56 */
 }
 
 @media (min-width: 768px) {
   :root {
-    --page-gutter: var(--space-800);                       /* 32 */
-    --band-y: var(--space-1000);                           /* 48 */
+    --page-gutter: var(--space-800);                        /* 32 */
+    --band-y-tight: calc(var(--space-1000) - var(--space-200)); /* 40 */
+    --band-y: calc(var(--space-1000) + var(--space-400));    /* 64 */
     --band-y-lg: calc(var(--space-1000) + var(--space-800)); /* 80 */
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --band-y: calc(var(--space-1000) + var(--space-400));   /* 64 */
-    --band-y-lg: calc(var(--space-1000) * 2);               /* 96 */
+    --band-y-tight: var(--space-1000);                      /* 48 */
+    --band-y: calc(var(--space-1000) * 2);                  /* 96 */
+    --band-y-lg: calc(var(--space-1000) * 2 + var(--space-800)); /* 128 */
   }
 }
 
@@ -102,7 +118,7 @@ button { font: inherit; }
   padding-inline: var(--page-gutter);
 }
 .l-band--lg { padding-block: var(--band-y-lg); }
-.l-band--tight { padding-block: var(--space-800); }
+.l-band--tight { padding-block: var(--band-y-tight); }
 .l-band--subtle { background: var(--bg-subtle); }
 .l-band--sunken { background: var(--bg-sunken); }
 .l-band--dark { background: var(--color-neutral-900); color: var(--text-on-dark); }
@@ -130,7 +146,7 @@ button { font: inherit; }
   .l-grid--2, .l-grid--4 { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 960px) {
-  .l-grid { gap: var(--space-600); }
+  .l-grid { gap: var(--space-800); }
   .l-grid--2 { grid-template-columns: repeat(2, 1fr); }
   .l-grid--3 { grid-template-columns: repeat(3, 1fr); }
   .l-grid--4 { grid-template-columns: repeat(4, 1fr); }

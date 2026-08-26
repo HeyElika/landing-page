@@ -14,7 +14,7 @@ export default function Pricing({ eyebrow, title, description, plans = [], note,
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
-      <div className="l-container l-stack l-stack--800">
+      <div className="l-container l-stack l-stack--900">
         <SectionHead eyebrow={eyebrow} title={title} description={description} />
         <ul className={`l-grid l-grid--${Math.min(plans.length, 4) || 3}`} style={{ alignItems: 'stretch' }}>
           {plans.map((plan) => (

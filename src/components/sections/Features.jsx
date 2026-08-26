@@ -11,7 +11,7 @@ export default function Features({ eyebrow, title, description, items = [], colu
   const onDark = background === 'dark'
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
-      <div className="l-container l-stack l-stack--800">
+      <div className="l-container l-stack l-stack--900">
         <SectionHead eyebrow={eyebrow} title={title} description={description} align={align} onDark={onDark} />
         <ul className={`l-grid l-grid--${columns}`}>
           {items.map((item) => (

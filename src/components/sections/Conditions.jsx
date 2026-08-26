@@ -16,7 +16,7 @@ export default function Conditions({ eyebrow, title, description, items = [], ba
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
-      <div className="l-container l-container--narrow l-stack l-stack--800">
+      <div className="l-container l-container--narrow l-stack l-stack--900">
         <SectionHead eyebrow={eyebrow} title={title} description={description} align="start" />
         <ul className="l-stack l-stack--400">
           {items.map((item) => (

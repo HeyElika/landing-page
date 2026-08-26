@@ -179,6 +179,7 @@ The library has no card, chip, accordion or icon-container component, so those a
 | Class | Does |
 |---|---|
 | `l-band` | Full-bleed section with band padding and gutters. Modifiers: `--lg`, `--tight`, `--subtle`, `--sunken`, `--dark`, `--brand` |
+| | Vertical rhythm: `--tight` 32→48, standard 48→96, `--lg` 56→128 (mobile→desktop) |
 | `l-container` | Centres content at 1200px. `--narrow` for 760px |
 | `l-measure` | Caps prose at a readable line length |
 | `l-stack l-stack--400` | Vertical flex with a spacing token gap |

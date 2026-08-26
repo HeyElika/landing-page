@@ -6,7 +6,7 @@ export default function Steps({ eyebrow, title, description, items = [], backgro
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
-      <div className="l-container l-stack l-stack--800">
+      <div className="l-container l-stack l-stack--900">
         <SectionHead eyebrow={eyebrow} title={title} description={description} />
         <ol className={`l-grid l-grid--${Math.min(items.length, 4) || 3}`}>
           {items.map((item, i) => (

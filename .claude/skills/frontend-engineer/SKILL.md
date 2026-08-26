@@ -53,6 +53,11 @@ The display scale is an approved amendment to DESIGN-RULES.md section 3, valid f
 
 **Buttons come from the library.** `src/components/ds/Button.jsx` is the Figma Button (node `16:182`). Use it through `src/components/ui/Cta.jsx`. Do not build another button, and do not restyle this one.
 
+**Section rhythm.** Bands run 48px on mobile to 96px on desktop, and `--lg`
+bands 56 to 128. That is calibrated against what comparable pages ship: Atome
+uses 80-96px, Salmon 56-96px. Sections that sit too close read as stacked. All
+values are sums of `--space-*` tokens and `npm run check` fails on a raw px.
+
 **landing.css is layout only:** page width, gutters, band rhythm, grids, and compositions for patterns the library does not have (card, chip, accordion, icon container). It declares four layout constants, documented in the file. Do not grow it into a second design system.
 
 **Icons are Solar Linear, and only Solar Linear.** `src/assets/icons/icons.generated.js` is built by `npm run icons` from the `@iconify-json/solar` package. To add an icon, add a semantic name to the `MAP` in `scripts/build-icons.mjs` and rerun. The build fails if the mapped name is not a `-linear` variant, which is what keeps one icon family on the page. Never hand-write or redraw a path.

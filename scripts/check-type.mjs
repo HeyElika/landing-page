@@ -39,3 +39,22 @@ for (const [name, { token, max }] of Object.entries(EXPECT)) {
 
 if (failed) { console.error(`\ntype scale check failed: ${failed} issue(s)`); process.exit(1) }
 console.log('type scale check passed')
+
+// ── Section rhythm ─────────────────────────────────────────────────────────
+// The bands are the other half of the page's vertical rhythm. Every value must
+// still be a sum of spacing tokens, never a raw number.
+const bandDecls = [...css.matchAll(/(--band-y(?:-tight|-lg)?):\s*([^;]+);/g)]
+if (!bandDecls.length) { console.error('  no --band-y declarations found'); process.exit(1) }
+
+let bandFailed = 0
+for (const [, name, value] of bandDecls) {
+  const v = value.trim()
+  const usesTokens = /var\(--space-\d+\)/.test(v)
+  const rawNumber = /(?<![\d.])\d+px/.test(v)
+  if (!usesTokens || rawNumber) {
+    console.error(`  ${name}: ${v} — must be composed from --space-* tokens, no raw px`)
+    bandFailed++
+  }
+}
+if (bandFailed) { console.error(`\nband rhythm check failed: ${bandFailed} issue(s)`); process.exit(1) }
+console.log(`band rhythm check passed: ${bandDecls.length} declarations, all token-composed`)
