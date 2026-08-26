@@ -790,6 +790,10 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   scroll-margin-top: calc(var(--nav-h) + var(--space-400));
   border-bottom: var(--border-width-xs) solid var(--alpha-black-10);
 }
+/* The rules separate one row from the next, so the list needs none at either
+ * end: a line under the last row closes off a section that has already
+ * ended. */
+.c-faq:last-child { border-bottom: none; }
 
 .c-faq__q {
   width: 100%;
