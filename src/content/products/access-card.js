@@ -193,19 +193,56 @@ export default {
       title: 'Frequently asked questions',
       groups: [
         {
-          label: 'Activating your card',
+          label: 'Getting started',
           items: [
+            {
+              question: 'Do I need to apply again?',
+              answer: 'No. Activating uses the Billease limit you already have, so there is no new application.',
+            },
             { question: 'Does activating cost anything?', answer: 'CONTENT DEPENDENCY: confirm with Product and Legal, then state it plainly.' },
-            { question: 'How long until I can use the card?', answer: 'Activation can take up to 24 hours after you finish your steps. We notify you when it is ready.' },
-            { question: 'Do I need to do anything while I wait?', answer: 'No. Once you have completed your steps there is nothing else to do.' },
+            {
+              question: 'How long until I can use the card?',
+              answer: 'Activation can take up to 24 hours after you finish your steps. We notify you when it is ready.',
+            },
+            {
+              question: 'Do I need to do anything while I wait?',
+              answer: 'No. Once you have completed your steps there is nothing else to do.',
+            },
             { question: 'What if my activation does not go through?', answer: 'CONTENT DEPENDENCY: confirm the failure path and what the user should do.' },
           ],
         },
         {
           label: 'Using your card',
           items: [
-            { question: 'Where is the card accepted?', answer: 'CONTENT DEPENDENCY: confirm the card network and where it is accepted online and in store.' },
+            {
+              question: 'Where can I use the card?',
+              answer: 'Online and in store. CONTENT DEPENDENCY: confirm the card network and the exact acceptance wording.',
+            },
             { question: 'Can I use it abroad?', answer: 'CONTENT DEPENDENCY: confirm international acceptance and any related fees.' },
+            { question: 'Can I add it to a digital wallet?', answer: 'CONTENT DEPENDENCY: confirm whether Apple Pay and Google Pay are supported.' },
+            { question: 'Is there a physical card, or is it digital only?', answer: 'CONTENT DEPENDENCY: confirm which forms of the card exist and how a physical one is delivered.' },
+          ],
+        },
+        {
+          label: 'Payments and fees',
+          items: [
+            { question: 'How does repayment work?', answer: 'CONTENT DEPENDENCY: confirm the repayment schedule and whether it matches the existing Billease experience.' },
+            { question: 'Are there fees for using the card?', answer: 'CONTENT DEPENDENCY: confirm the fee structure with Risk and Legal.' },
+            { question: 'How does the card use my limit?', answer: 'CONTENT DEPENDENCY: confirm whether spending draws on the Billease limit, a balance, or both.' },
+            { question: 'Is there a limit per transaction?', answer: 'CONTENT DEPENDENCY: confirm any per transaction or daily limits.' },
+            { question: 'Where do I see my transactions?', answer: 'CONTENT DEPENDENCY: confirm where card activity appears in the app.' },
+          ],
+        },
+        {
+          label: 'Security and control',
+          items: [
+            { question: 'Can I freeze my card?', answer: 'CONTENT DEPENDENCY: confirm whether freeze and unfreeze exist before claiming it.' },
+            { question: 'What should I do if I lose my card?', answer: 'CONTENT DEPENDENCY: confirm the lost and stolen process and the fastest way to report it.' },
+            { question: 'How is my card protected?', answer: 'CONTENT DEPENDENCY: confirm the exact protection claim with Engineering and Risk.' },
+            {
+              question: 'How do I get help?',
+              answer: 'Contact support in the Billease app. That is the fastest route if something does not look right.',
+            },
           ],
         },
       ],
