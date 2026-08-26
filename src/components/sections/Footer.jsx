@@ -1,103 +1,119 @@
 import Logo from '../ui/Logo'
 
 /**
- * Footer, modelled on billease.ph but reduced to essentials.
+ * Footer.
  *
- * The live site uses a light footer with one flat row of links, the
- * regulatory statement, regulator badges, socials and a copyright line.
- * This keeps that shape and drops the parts a product landing page does not
- * need, so it stays a single readable band rather than a four-column block.
+ * Structured like a bank's: identity and link columns across the top with the
+ * app links beside them, then contact and the regulatory statement, then the
+ * copyright row.
  *
- * `legal` must be the approved regulatory wording. `badges` renders the
- * regulator marks (NPC, SEC, BSP) when their image files are supplied.
+ * `legal` must be the approved regulatory wording, never a paraphrase.
+ * `badges` renders the regulator marks when their image files are supplied,
+ * and `apps` the store links.
  *
- * No rules between the blocks: spacing separates them. On a white footer the
- * hairlines were doing nothing the gaps were not already doing.
+ * No rules between the blocks: spacing separates them.
  */
 export default function Footer({
   brand = {},
-  links = [],
+  columns = [],
+  appsTitle,
+  apps = [],
+  contact = [],
   legal = [],
   badges = [],
   social = [],
+  bottomLinks = [],
   copyright,
 }) {
   return (
-    <footer
-      className="l-band l-band--tight"
-      style={{
-        background: 'var(--bg-base)',
-      }}
-    >
-      <div className="l-container l-stack l-stack--600">
-        {/* Logo and primary links */}
-        <div
-          className="l-row"
-          style={{ justifyContent: 'space-between', gap: 'var(--space-600)', alignItems: 'center' }}
-        >
+    <footer className="l-band l-band--tight" style={{ background: 'var(--bg-base)' }}>
+      <div className="l-container l-stack l-stack--900">
+
+        {/* Identity, links, app stores */}
+        <div className="c-footer__top">
           <a href={brand.href || '/'} aria-label={brand.name || 'Home'} style={{ display: 'flex' }}>
             <Logo src={brand.logo} name={brand.name} />
           </a>
 
-          {links.length > 0 && (
-            <nav aria-label="Footer">
-              <ul className="l-row" style={{ gap: 'var(--space-500)', rowGap: 'var(--space-300)' }}>
-                {links.map((l) => (
-                  <li key={l.label}>
-                    <a href={l.href} className="body-sm-regular t-subtle">{l.label}</a>
-                  </li>
-                ))}
-              </ul>
+          {columns.map((col) => (
+            <nav key={col.title} className="l-stack l-stack--300" aria-label={col.title}>
+              {col.links.map((l) => (
+                <a key={l.label} href={l.href} className="body-sm-regular t-subtle">{l.label}</a>
+              ))}
             </nav>
+          ))}
+
+          {apps.length > 0 && (
+            <div className="l-stack l-stack--300">
+              {appsTitle && <p className="body-sm-semibold">{appsTitle}</p>}
+              <ul className="c-footer__apps l-stack l-stack--200">
+              {apps.map((app) => (
+                <li key={app.name}>
+                  <a
+                    href={app.href}
+                    className="c-footer__app body-sm-semibold"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {app.src
+                      ? <img src={app.src} alt={app.name} style={{ height: 'var(--space-900)' }} loading="lazy" />
+                      : app.name}
+                  </a>
+                </li>
+              ))}
+              </ul>
+            </div>
           )}
         </div>
 
-        {/* Regulatory statement and regulator badges */}
-        {(legal.length > 0 || badges.length > 0) && (
-          <div
-            className="l-stack l-stack--400"
-            style={{ paddingTop: 'var(--space-500)' }}
-          >
+        {/* Contact, regulatory statement, socials */}
+        <div className="c-footer__mid">
+          <div className="l-stack l-stack--300">
+            {contact.length > 0 && (
+              <ul className="l-stack l-stack--100">
+                {contact.map((c) => (
+                  <li key={c.label}>
+                    <a href={c.href} className="body-md-semibold">{c.label}</a>
+                  </li>
+                ))}
+              </ul>
+            )}
             {legal.map((p, i) => (
               <p key={i} className="body-xs-regular t-subtle">{p}</p>
             ))}
             {badges.length > 0 && (
-              <ul className="l-row" style={{ gap: 'var(--space-500)' }}>
+              <ul className="l-row" style={{ gap: 'var(--space-400)' }}>
                 {badges.map((b) => (
                   <li key={b.name}>
                     {b.src
-                      ? <img src={b.src} alt={b.name} style={{ height: 'var(--space-900)' }} loading="lazy" />
-                      : <span className="body-xxs-regular" style={{ color: 'var(--text-disabled)' }}>{b.name}</span>}
+                      ? <img src={b.src} alt={b.name} style={{ height: 'var(--space-800)' }} loading="lazy" />
+                      : <span className="body-xxs-semibold t-subtle">{b.name}</span>}
                   </li>
                 ))}
               </ul>
             )}
           </div>
-        )}
 
-        {/* Copyright and socials */}
-        <div
-          className="l-row"
-          style={{
-            justifyContent: 'space-between',
-            gap: 'var(--space-400)',
-            paddingTop: 'var(--space-400)',
-          }}
-        >
-          <p className="body-xs-regular t-subtle">{copyright}</p>
           {social.length > 0 && (
-            <ul className="l-row" style={{ gap: 'var(--space-400)' }}>
+            <ul className="l-row c-footer__social" style={{ gap: 'var(--space-400)' }}>
               {social.map((s) => (
                 <li key={s.name}>
-                  <a
-                    href={s.href}
-                    className="body-xs-regular t-subtle"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
+                  <a href={s.href} className="body-sm-regular t-subtle" target="_blank" rel="noreferrer noopener">
                     {s.name}
                   </a>
                 </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* Copyright and legal links */}
+        <div className="c-footer__bottom">
+          <p className="body-xs-regular t-subtle">{copyright}</p>
+          {bottomLinks.length > 0 && (
+            <ul className="l-row" style={{ gap: 'var(--space-500)' }}>
+              {bottomLinks.map((l) => (
+                <li key={l.label}><a href={l.href} className="body-xs-regular t-subtle">{l.label}</a></li>
               ))}
             </ul>
           )}

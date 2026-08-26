@@ -31,10 +31,13 @@ export default function StepsSplit({
 
   return (
     <section className={['l-band', fit === 'viewport' ? 'l-band--fit' : '', bandTone].filter(Boolean).join(' ')}>
-      <div className="l-container l-stack l-stack--900">
-        <SectionHead title={title} description={description} align="start" />
-
+      <div className="l-container">
         <div className={['c-steps-split', reverse ? 'c-steps-split--reverse' : ''].filter(Boolean).join(' ')}>
+          {/* Heading and steps share a column so the two stay close and the
+            * group can centre against the visual. With the heading above the
+            * split instead, centring the columns opened a gap beneath it. */}
+          <div className="c-steps-split__col l-stack l-stack--800">
+          <SectionHead title={title} description={description} align="start" />
           <ol className="c-steps-split__list l-stack l-stack--600">
             {steps.map((step, i) => (
               <li key={step.title} className="l-row" style={{ gap: 'var(--space-400)', alignItems: 'flex-start', flexWrap: 'nowrap' }}>
@@ -46,6 +49,7 @@ export default function StepsSplit({
               </li>
             ))}
           </ol>
+          </div>
 
           <div className="c-steps-split__media">
             <Media {...(media || {})} ratio={media?.ratio || '4 / 5'} label={media?.label || 'App screen'} />

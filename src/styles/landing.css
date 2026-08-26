@@ -446,7 +446,14 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   left: calc(var(--step-dot) / 2 - 1px);
   top: calc(var(--step-dot) + var(--space-100));
   bottom: calc((var(--space-600) + var(--space-100)) * -1);
-  border-left: var(--border-width-sm) dashed var(--border-bold);
+  width: var(--border-width-sm);
+  /* Painted rather than a dashed border: `dashed` gives no control over the
+   * gap, and the line wants a longer one than the browser default. */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--border-brand-primary) 0 var(--space-100),
+    transparent var(--space-100) var(--space-300)
+  );
 }
 
 .c-steps-split__num {
@@ -458,8 +465,9 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   height: var(--step-dot);
   flex-shrink: 0;
   border-radius: var(--radius-full);
-  background: var(--bg-primary);
-  color: var(--text-on-dark);
+  background: var(--bg-base);
+  border: var(--border-width-sm) solid var(--border-brand-primary);
+  color: var(--text-brand-primary);
 }
 
 /* Same corner as the hero visual. */
@@ -543,10 +551,9 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   .l-band--fit .c-steps-split {
     flex: 1;
     min-height: 0;
-    /* Start the columns at the top. Centring them in a full-height row left a
-     * large gap under the heading, which read as the heading belonging to
-     * nothing. */
-    align-items: start;
+    /* Both columns centre in the full-height row. Safe now that the heading
+     * travels with the steps: there is no gap for centring to open. */
+    align-items: center;
   }
   .l-band--fit .c-steps-split__media {
     min-height: 0;
@@ -579,8 +586,14 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
 .l-band--sunken .c-feature__media { background: var(--bg-base); }
 .l-band--dark .c-feature__media { background: var(--alpha-white-10); }
 
-.c-feature__media .c-media,
-.c-feature__media .c-placeholder { border-radius: var(--radius-2xl); border: none; }
+.c-feature__media .c-media { border-radius: var(--radius-2xl); border: none; }
+
+/* The placeholder keeps its outline: without it an empty panel on a tinted
+ * band is invisible, and the layout gives no sign of where the image goes. */
+.c-feature__media .c-placeholder {
+  border-radius: var(--radius-2xl);
+  background: transparent;
+}
 
 /* ── Security section ───────────────────────────────────────────────────────
  * An intro with a visual, a rule, then a row of supporting points. The rule is
@@ -768,6 +781,47 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   .c-faq__icon,
   .c-faq__panel,
   .c-faq__panel > div { transition: none; }
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────────
+ * Identity and link columns across the top with the app links beside them,
+ * then contact and the regulatory statement, then copyright.
+ */
+
+.c-footer__top,
+.c-footer__mid,
+.c-footer__bottom {
+  display: grid;
+  gap: var(--space-600);
+  grid-template-columns: 1fr;
+}
+
+.c-footer__app {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-200);
+  height: var(--space-900);
+  min-width: calc(var(--space-1000) * 3);
+  padding-inline: var(--space-400);
+  border-radius: var(--radius-md);
+  background: var(--color-neutral-900);
+  color: var(--text-on-dark);
+  white-space: nowrap;
+}
+.c-footer__app:hover { background: var(--color-neutral-800); }
+
+@media (min-width: 768px) {
+  .c-footer__top {
+    grid-template-columns: 1.2fr repeat(auto-fit, minmax(120px, 1fr)) auto;
+    gap: var(--space-800);
+  }
+  .c-footer__mid,
+  .c-footer__bottom {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+  .c-footer__social { justify-content: flex-end; }
 }
 
 /* ── Section header ─────────────────────────────────────────────────────── */

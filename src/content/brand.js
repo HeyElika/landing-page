@@ -23,16 +23,55 @@ export const nav = {
 
 export const footer = {
   /**
-   * Modelled on the live billease.ph footer, trimmed to one flat row of links.
-   * Replace the placeholder hrefs with the real destinations before launch.
+   * Structured like the footers of comparable regulated lenders: link columns,
+   * app stores, contact, the regulatory statement, then copyright.
+   *
+   * Replace the placeholder hrefs with real destinations before launch.
    */
-  links: [
-    { label: 'FAQ', href: '#faq' },
-    { label: 'Contact us', href: '#' },
-    { label: 'Privacy', href: '#' },
-    { label: 'Terms and conditions', href: '#' },
-    { label: 'Blog', href: '#' },
-    { label: 'Careers', href: '#' },
+  columns: [
+    {
+      title: 'Products',
+      links: [
+        { label: 'Access Card', href: '/' },
+        { label: 'Pay later', href: '/pay-later' },
+        { label: 'Cash loan', href: '/cash-loan' },
+        { label: 'Partner stores', href: '#' },
+      ],
+    },
+    {
+      title: 'Company',
+      links: [
+        { label: 'About us', href: '#' },
+        { label: 'Careers', href: '#' },
+        { label: 'Newsroom', href: '#' },
+      ],
+    },
+    {
+      title: 'Support',
+      links: [
+        { label: 'Help centre', href: '#' },
+        { label: 'Contact us', href: '#' },
+        { label: 'Report a concern', href: '#' },
+        { label: 'FAQ', href: '#faq' },
+      ],
+    },
+  ],
+
+  /**
+   * CONTENT DEPENDENCY: swap these for the official App Store and Google Play
+   * badge artwork. Both stores publish brand guidelines that require their own
+   * badges, so a text button is a placeholder, not a shipping asset. Set `src`
+   * on each entry and the image replaces the button.
+   */
+  appsTitle: 'Get the Billease app',
+  apps: [
+    { name: 'App Store', href: '#', src: null },
+    { name: 'Google Play', href: '#', src: null },
+  ],
+
+  /** CONTENT DEPENDENCY: confirm the public support number and address. */
+  contact: [
+    { label: 'support@billease.ph', href: 'mailto:support@billease.ph' },
   ],
 
   social: [
@@ -60,6 +99,12 @@ export const footer = {
     { name: 'NPC', src: null },
     { name: 'SEC', src: null },
     { name: 'BSP', src: null },
+  ],
+
+  bottomLinks: [
+    { label: 'Privacy policy', href: '#' },
+    { label: 'Terms and conditions', href: '#' },
+    { label: 'Cookie settings', href: '#' },
   ],
 
   copyright: `Copyright ${new Date().getFullYear()} Billease`,
