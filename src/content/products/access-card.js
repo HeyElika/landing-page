@@ -50,11 +50,11 @@ export default {
       { label: 'How it works', href: '#how-it-works' },
       { label: 'FAQ', href: '#faq' },
     ],
-    cta: { label: 'Activate card', href: 'https://app.billease.ph' },
+    cta: { label: 'Open Billease app', href: 'https://app.billease.ph' },
   },
 
   // Mobile only, and the same action as the hero. Not a fourth CTA.
-  stickyCta: { label: 'Activate card', href: 'https://app.billease.ph' },
+  stickyCta: { label: 'Open Billease app', href: 'https://app.billease.ph' },
 
   sections: [
     {
@@ -64,7 +64,7 @@ export default {
       title: ['Your Billease limit,', 'now on a card'],
       description:
         'Activate your Access Card and use your existing Billease limit online and in store.',
-      ctas: [{ label: 'Activate card', href: 'https://app.billease.ph' }],
+      ctas: [{ label: 'Open Billease app', href: 'https://app.billease.ph' }],
       note: 'No new application. Ready in up to 24 hours.',
       media: {
         src: '/access-card.jpg',
