@@ -9,15 +9,28 @@ import Media from '../ui/Media'
  * whether to start actually wants. A scroll sequence reveals one step at a
  * time and hides the length of the process behind a gesture.
  *
+ * `fit: 'viewport'` holds the section to a single screen on desktop. The
+ * heading and the step list take the height they need and the visual takes
+ * what is left, so the image scales to the space instead of pushing the
+ * section past the fold.
+ *
  * Content shape:
  *   steps: [{ title, description }]
  *   media: { src, alt, label, ratio }   — one visual for the whole section
  */
-export default function StepsSplit({ title, description, steps = [], media, reverse = false, background = 'default' }) {
+export default function StepsSplit({
+  title,
+  description,
+  steps = [],
+  media,
+  reverse = false,
+  fit = 'auto',          // 'auto' | 'viewport' — hold the section to one screen
+  background = 'default',
+}) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
 
   return (
-    <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
+    <section className={['l-band', fit === 'viewport' ? 'l-band--fit' : '', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-stack l-stack--900">
         <SectionHead title={title} description={description} align="start" />
 

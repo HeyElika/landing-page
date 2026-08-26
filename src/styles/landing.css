@@ -443,6 +443,52 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   .c-steps-split { gap: calc(var(--space-1000) + var(--space-600)); }
 }
 
+/* Hold the section to one screen.
+ *
+ * Unlike the hero, this section has a heading above the split, so the visual
+ * cannot be sized from the viewport alone. The section becomes a flex column:
+ * the heading and the step list take the height they need, and the visual
+ * takes whatever is left. No hardcoded allowance for the title, which would
+ * break the moment the heading wrapped to another line.
+ *
+ * Guarded on height as well as width: on a short window the step list alone
+ * needs most of the screen, and squeezing the image to nothing helps nobody.
+ */
+@media (min-width: 900px) and (min-height: 700px) {
+  .l-band--fit {
+    display: flex;
+    flex-direction: column;
+    padding-block: var(--space-1000);
+    height: calc(100vh - var(--nav-h));
+    height: calc(100svh - var(--nav-h));
+  }
+  .l-band--fit > .l-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .l-band--fit .c-steps-split {
+    flex: 1;
+    min-height: 0;
+    align-items: center;
+  }
+  .l-band--fit .c-steps-split__media {
+    min-height: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .l-band--fit .c-steps-split__media .c-media,
+  .l-band--fit .c-steps-split__media .c-placeholder {
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+}
+
 /* ── FAQ accordion ──────────────────────────────────────────────────────────
  * Rows keep one left edge in every state. The open card carries padding and is
  * pulled back out by an equal negative margin, so its background extends past
