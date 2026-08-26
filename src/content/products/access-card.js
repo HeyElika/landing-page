@@ -44,16 +44,14 @@ export default {
 
   brand,
   nav: {
-    // Header is the logo alone. The links and the action are kept here,
-    // commented, so restoring them means uncommenting them (and re-importing
-    // `nav` from ../brand if the shared defaults are wanted instead).
-    //
-    // links: [
-    //   { label: 'Why activate', href: '#benefits' },
-    //   { label: 'How it works', href: '#how-it-works' },
-    //   { label: 'FAQ', href: '#faq' },
-    // ],
-    // cta: { label: 'Open Billease app', href: 'https://app.billease.ph', size: 'xl' },
+    links: [
+      { label: 'Why activate', href: '#benefits' },
+      { label: 'How it works', href: '#how-it-works' },
+      { label: 'FAQ', href: '#faq' },
+    ],
+    // lg, not the hero's xl: a 52px button in a 72px bar leaves almost no
+    // room around it.
+    cta: { label: 'Open Billease app', href: 'https://app.billease.ph' },
   },
 
   // Mobile only, and the same action as the hero. Not a fourth CTA.
