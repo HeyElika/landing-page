@@ -25,6 +25,7 @@ export default function Hero({
   description,
   ctas = [],
   note,
+  appLink,
   media,
   mediaBackdrop = 'none',   // 'none' | 'subtle' | 'sunken' | 'brand' | 'info'
   fit = 'auto',             // 'auto' | 'viewport' — fit the hero into one screen
@@ -92,6 +93,16 @@ export default function Hero({
             <Cta key={c.label} {...c} type={c.type || (i === 0 ? 'primary' : 'ghost')} onDark={onDark} />
           ))}
         </div>
+      )}
+
+      {/* For the reader who does not have the app yet. It sits directly under
+          the action rather than in the note below, because it is an
+          alternative route to the same goal, not a caveat about it. */}
+      {appLink && (
+        <p className="body-md-regular t-subtle">
+          {appLink.text}{' '}
+          <a className="c-link link-md" href={appLink.href}>{appLink.label}</a>
+        </p>
       )}
 
       {note && (
