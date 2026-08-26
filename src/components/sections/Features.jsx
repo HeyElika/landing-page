@@ -1,5 +1,6 @@
 import SectionHead from '../ui/SectionHead'
 import IconTile from '../ui/IconTile'
+import Media from '../ui/Media'
 
 /**
  * Benefit grid. `columns` accepts 2, 3 or 4.
@@ -27,22 +28,34 @@ export default function Features({
       <div className="l-container l-stack l-stack--900">
         <SectionHead title={title} description={description} align={align} onDark={onDark} />
         <ul className={`l-grid l-grid--${columns}`}>
-          {items.map((item) => (
-            <li
-              key={item.title}
-              className={variant === 'card'
-                ? ['c-card', onDark ? 'c-card--on-dark' : '', background === 'default' ? 'c-card--tinted' : ''].filter(Boolean).join(' ')
-                : ''}
-            >
-              <div className="l-stack l-stack--300">
-                <IconTile icon={item.icon} tone={onDark ? 'onDark' : item.tone} />
-                <h3 className={['heading-md-semibold', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{item.title}</h3>
-                {item.description && (
-                  <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : ''].filter(Boolean).join(' ')}>{item.description}</p>
-                )}
-              </div>
-            </li>
-          ))}
+          {items.map((item) => {
+            // An item with a visual leads with it: panel on top, copy beneath.
+            // The panel is the surface, so the copy sits on the band rather
+            // than inside a second box — two nested surfaces read as clutter.
+            const mediaLed = Boolean(item.media)
+            return (
+              <li
+                key={item.title}
+                className={!mediaLed && variant === 'card'
+                  ? ['c-card', onDark ? 'c-card--on-dark' : '', background === 'default' ? 'c-card--tinted' : ''].filter(Boolean).join(' ')
+                  : ''}
+              >
+                <div className="l-stack l-stack--300">
+                  {mediaLed ? (
+                    <div className="c-feature__media">
+                      <Media {...item.media} ratio={item.media.ratio || '1 / 1'} label={item.media.label || item.title} />
+                    </div>
+                  ) : (
+                    <IconTile icon={item.icon} tone={onDark ? 'onDark' : item.tone} />
+                  )}
+                  <h3 className={['heading-md-semibold', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{item.title}</h3>
+                  {item.description && (
+                    <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : ''].filter(Boolean).join(' ')}>{item.description}</p>
+                  )}
+                </div>
+              </li>
+            )
+          })}
         </ul>
       </div>
     </section>

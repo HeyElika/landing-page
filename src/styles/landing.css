@@ -497,6 +497,29 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
     aspect-ratio: 1 / 1;
     height: auto;
   }
+
+  /* Media-led items are driven the other way: the copy takes the height it
+   * needs and the panel takes the rest, so the row always fits the screen
+   * whatever the window height. A fixed proportion cannot do that — at 800px
+   * tall a square panel plus its copy overflowed. */
+  .l-band--fit .l-grid:has(.c-feature__media) { flex: 1; min-height: 0; }
+  .l-band--fit .l-grid > li:has(.c-feature__media) {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .l-band--fit .l-grid > li:has(.c-feature__media) > .l-stack {
+    flex: 1;
+    min-height: 0;
+  }
+  .l-band--fit .c-feature__media {
+    flex: 1;
+    min-height: 0;
+  }
+  .l-band--fit .c-feature__media > * {
+    height: 100%;
+    aspect-ratio: auto;
+  }
   .l-band--fit .c-steps-split {
     flex: 1;
     min-height: 0;
@@ -517,6 +540,24 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
     margin-inline: auto;
   }
 }
+
+/* ── Media-led feature ──────────────────────────────────────────────────────
+ * A tinted panel holding the visual, with the copy beneath it on the band.
+ * The panel is the surface, so the copy does not get a second box around it —
+ * nested surfaces read as clutter and flatten the hierarchy.
+ */
+
+.c-feature__media {
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  background: var(--bg-subtle);
+}
+.l-band--subtle .c-feature__media,
+.l-band--sunken .c-feature__media { background: var(--bg-base); }
+.l-band--dark .c-feature__media { background: var(--alpha-white-10); }
+
+.c-feature__media .c-media,
+.c-feature__media .c-placeholder { border-radius: var(--radius-2xl); border: none; }
 
 /* ── Security section ───────────────────────────────────────────────────────
  * An intro with a visual, a rule, then a row of supporting points. The rule is

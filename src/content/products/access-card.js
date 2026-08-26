@@ -88,17 +88,17 @@ export default {
       columns: 3,
       items: [
         {
-          icon: 'card',
+          media: { src: null, label: 'Card in the app', ratio: '1 / 1' },
           title: 'Use the limit you already have',
           description: 'CONTENT DEPENDENCY: confirm with Product that no separate credit application is needed.',
         },
         {
-          icon: 'store',
+          media: { src: null, label: 'Paying in store', ratio: '1 / 1' },
           title: 'Spend in more places',
           description: 'CONTENT DEPENDENCY: confirm where the card is accepted before describing wider acceptance.',
         },
         {
-          icon: 'installment-outline',
+          media: { src: null, label: 'Repayment screen', ratio: '1 / 1' },
           title: 'Keep repayment familiar',
           description: 'CONTENT DEPENDENCY: confirm that repayment behaves like the existing Billease experience.',
         },

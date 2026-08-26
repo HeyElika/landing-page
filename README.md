@@ -60,7 +60,7 @@ Sections follow the Billease narrative in DESIGN-RULES.md section 10. **Keep the
 | # | `type` | Answers | Main keys |
 |---|---|---|---|
 | 1 | `hero` | What is this, and what do I do? | `layout` (`split`/`centered`), `fit` (`auto`/`viewport`), `badge`, `title`, `description`, `ctas[]`, `note`, `media`, `mediaBackdrop` |
-| 2 | `features` | Why should I care? | `columns` (2, 3, 4), `variant` (`card`/`plain`), `items[{ icon, title, description }]` |
+| 2 | `features` | Why should I care? | `columns` (2, 3, 4), `fit`, `variant` (`card`/`plain`), `items[{ icon \| media, title, description }]` |
 | 3 | `useCases` | Where can I use it? | `items[{ icon, title, description }]`, `note` |
 | 4 | `steps` | What happens next? | `items[{ title, description }]`, `cta` |
 | 4 | `stepsSplit` | What happens next, listed beside a visual | `steps[{ title, description }]`, `media`, `reverse` |
@@ -105,6 +105,12 @@ Two rules that are not negotiable:
 - **One primary action per page**, repeated in the nav, the hero and the closing band, worded identically each time.
 
 Every section accepts `background`: `default`, `subtle`, `sunken`, `dark` or `brand`. Alternate meaningfully rather than mechanically.
+
+### Media-led features
+
+Give a `features` item a `media` object instead of an `icon` and it leads with the visual: a tinted panel on top, copy beneath it on the band. The copy deliberately gets no card of its own — the panel is already a surface, and nesting one inside another flattens the hierarchy rather than adding to it.
+
+Under `fit: 'viewport'` those panels are height-driven: the copy takes what it needs and the panel takes the rest, so the row fits any window. A fixed proportion cannot do that — a square panel plus its copy overflows an 800px-tall window.
 
 ### stepsSplit
 
