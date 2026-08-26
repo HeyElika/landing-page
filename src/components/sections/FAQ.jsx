@@ -22,7 +22,22 @@ import Icon from '../../assets/icons/Icon'
  */
 export default function FAQ({ title, description, groups, items = [], background = 'default', footerLink }) {
   const resolved = groups?.length ? groups : (items.length ? [{ label: null, items }] : [])
-  const [openIndex, setOpenIndex] = useState(0)
+
+  // Groups open and close independently, and opening one never closes another.
+  //
+  // A single-open accordion is what made the page jump: opening a lower group
+  // collapsed the one above it, so the row under the cursor slid upward while
+  // its own panel expanded, and the reader lost their place. Here nothing above
+  // the clicked row ever changes height, so the row stays exactly where it is
+  // and the page only grows downward.
+  const [openIds, setOpenIds] = useState(() => new Set([0]))
+  const toggle = (i) =>
+    setOpenIds((prev) => {
+      const next = new Set(prev)
+      if (next.has(i)) next.delete(i)
+      else next.add(i)
+      return next
+    })
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
 
   return (
@@ -32,19 +47,21 @@ export default function FAQ({ title, description, groups, items = [], background
 
         <ul className="l-stack l-stack--100">
           {resolved.map((group, i) => {
-            const open = openIndex === i
+            const open = openIds.has(i)
             const panelId = `faq-panel-${i}`
             return (
               <li key={group.label ?? i} className={open ? 'c-faq c-faq--open' : 'c-faq'}>
                 <button
                   type="button"
-                  onClick={() => setOpenIndex(open ? -1 : i)}
+                  onClick={() => toggle(i)}
                   aria-expanded={open}
                   aria-controls={panelId}
                   className="c-faq__q heading-md-semibold"
                 >
                   <span>{group.label ?? title}</span>
-                  <Icon name={open ? 'minus' : 'plus'} size="md" color="var(--icon-base)" />
+                  <span className="c-faq__icon">
+                    <Icon name={open ? 'minus' : 'plus'} size="md" color="var(--icon-base)" />
+                  </span>
                 </button>
 
                 {/* Always rendered so the panel can animate open and closed.

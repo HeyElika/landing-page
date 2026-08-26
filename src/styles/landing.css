@@ -517,6 +517,7 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
  */
 
 .c-faq {
+  scroll-margin-top: calc(var(--nav-h) + var(--space-400));
   border-radius: var(--radius-2xl);
   padding-inline: var(--space-600);
   margin-inline: calc(var(--space-600) * -1);
@@ -553,21 +554,36 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
 .c-faq__panel {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 320ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: grid-template-rows 380ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .c-faq--open .c-faq__panel { grid-template-rows: 1fr; }
 
 .c-faq__panel > div {
   overflow: hidden;
   visibility: hidden;
-  transition: visibility 320ms;
+  opacity: 0;
+  transition: visibility 380ms, opacity 260ms ease;
 }
-.c-faq--open .c-faq__panel > div { visibility: visible; }
+.c-faq--open .c-faq__panel > div {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 380ms, opacity 320ms ease 120ms;   /* fade after the open begins */
+}
+
+/* The plus turns over as it becomes a minus, so the control reads as one
+ * element changing rather than two icons swapping. */
+.c-faq__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.c-faq--open .c-faq__icon { transform: rotate(180deg); }
 
 .c-faq__a { padding-bottom: var(--space-600); }
 
 @media (prefers-reduced-motion: reduce) {
   .c-faq,
+  .c-faq__icon,
   .c-faq__panel,
   .c-faq__panel > div { transition: none; }
 }
