@@ -650,6 +650,33 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   .c-feature:hover .c-feature__img img { transform: scale(1.04); }
 }
 
+/* Feature cards on a small screen: one row you swipe rather than a column you
+ * scroll past. Three portrait cards stacked ran to nearly three screens, and
+ * the third was never seen.
+ *
+ * The row bleeds to both screen edges so a card can sit flush with the side of
+ * the display, with the gutter restored as padding inside the scroller. Snap
+ * is horizontal and scoped to this element — the page-level snapping that
+ * trapped the footer was vertical and on the document.
+ */
+@media (max-width: 899px) {
+  .l-grid:has(.c-feature) {
+    grid-auto-flow: column;
+    grid-auto-columns: 78%;
+    grid-template-columns: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    margin-inline: calc(var(--page-gutter) * -1);
+    padding-inline: var(--page-gutter);
+    scroll-padding-inline: var(--page-gutter);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .l-grid:has(.c-feature)::-webkit-scrollbar { display: none; }
+  .l-grid > .c-feature { scroll-snap-align: start; }
+}
+
 /* ── Security section ───────────────────────────────────────────────────────
  * An intro with a visual, then a row of supporting points beneath it. They are
  * separated by space alone — a rule between them read as a divider dropped
