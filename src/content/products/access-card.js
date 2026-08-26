@@ -93,7 +93,7 @@ export default {
           description: 'No new limit to manage. Your Access Card uses the Credit Line you already have.',
         },
         {
-          media: { src: null, label: 'Paying in store', ratio: '2 / 3' },
+          media: { src: '/card-in-store.jpg', alt: 'Paying in store by tapping a Billease card on a card terminal', ratio: '2 / 3' },
           title: 'Pay with chip or tap',
           // CONTENT DEPENDENCY: the Mastercard acceptance claim. The supplied
           // copy carried the caveat inside the sentence; a caveat addressed to
