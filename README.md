@@ -181,7 +181,7 @@ Body and small-heading type comes from the Figma text styles, generated as class
 
 | Role | Class | Mobile | Desktop |
 |---|---|---|---|
-| Hero headline | `display-lg` | 32 | 72 |
+| Hero headline | `display-lg` | 32 | 60 |
 | Section heading | `display-md` | 24 | 48 |
 | Subsection heading | `display-sm` | 20 | 32 |
 | Card heading | `heading-md-semibold` | 20 | 20 |

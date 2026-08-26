@@ -64,7 +64,7 @@ export default function Hero({
   }
 
   const copy = (
-    <div className={['hero-copy', 'l-stack', 'l-stack--600', centered ? 'c-section-head--center' : ''].filter(Boolean).join(' ')}>
+    <div className={['l-stack', 'l-stack--600', centered ? 'c-section-head--center' : ''].filter(Boolean).join(' ')}>
       <div className="l-stack l-stack--400">
         {badge && <span><Badge {...badge} /></span>}
         {title && (

@@ -46,7 +46,7 @@ Sections render in array order. Reordering a page means moving an object in the 
 
 **Type comes from classes, never from `font-size` in a component.**
 
-- Section and hero headings use the display scale in `landing.css`: `.display-lg` (hero, 32→72), `.display-md` (section, 24→48), `.display-sm` (subsection, 20→32). These grow with the viewport, from the token value at 360px to the maximum at 1280px.
+- Section and hero headings use the display scale in `landing.css`: `.display-lg` (hero, 32→60), `.display-md` (section, 24→48), `.display-sm` (subsection, 20→32). These grow with the viewport, from the token value at 360px to the maximum at 1280px.
 - The typeface is Overused Grotesk, self-hosted and applied by overriding `--ds-font-family` once in `landing.css`. Never edit `tokens.css` to change it.
 - Everything else uses the generated token classes: `.heading-md-semibold`, `.heading-sm-semibold`, `.body-{lg,md,sm,xs,xxs}-{regular,semibold}`, `.link-md`, `.link-sm`, `.label-xs`.
 
@@ -58,6 +58,11 @@ The display scale is an approved amendment to DESIGN-RULES.md section 3, valid f
 bands 56 to 144. Calibrated against what comparable pages ship: Klarna 120px,
 Atome 80-96px, Salmon 56-96px. Sections that sit too close read as stacked. All
 values are sums of `--space-*` tokens and `npm run check` fails on a raw px.
+
+**Headline width.** Before changing the hero type scale, measure. The font is
+in `public/fonts`, and `fontTools` will give exact string widths at weight 700
+— guessing here produced a headline that wrapped and broke an authored line
+break. The hero maximum of 60px is set by that measurement, not by taste.
 
 **Hero fit.** A tall product visual can push the hero past the fold — a 3:4
 image in a 600px column is 800px tall before padding. `fit: 'viewport'` caps

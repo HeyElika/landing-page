@@ -34,7 +34,7 @@
    * applies — the page renders exact token sizes. Only the desktop end goes
    * past the scale, where the design system has no opinion.
    *
-   *   --display-lg  32 (--text-3xl) -> 72   hero headline
+   *   --display-lg  32 (--text-3xl) -> 60   hero headline
    *   --display-md  24 (--text-2xl) -> 48   section heading
    *   --display-sm  20 (--text-xl)  -> 32   subsection heading
    *
@@ -42,7 +42,7 @@
    * the maximum at 1280px, so the mobile end is the token value and not an
    * approximation of it. Verify with scripts/check-type.mjs after any change.
    */
-  --display-lg: clamp(var(--text-3xl), 1.022rem + 4.348vw, 72px);
+  --display-lg: clamp(var(--text-3xl), 1.315rem + 3.043vw, 60px);
   --display-md: clamp(var(--text-2xl), 0.913rem + 2.609vw, 48px);
   --display-sm: clamp(var(--text-xl), 0.956rem + 1.304vw, 32px);
 
@@ -169,26 +169,9 @@ button { font: inherit; }
   .l-band--viewport .c-placeholder {
     height: calc(100vh - var(--nav-h) - var(--space-1000) * 2);
     height: calc(100svh - var(--nav-h) - var(--space-1000) * 2);
-    max-width: min(520px, 42vw);
+    max-width: min(600px, 36vw);
     width: auto;
     margin-inline: auto;
-  }
-
-  /* The headline is sized from the copy column, not the viewport.
-   *
-   * An authored line break only holds if the line actually fits. Measured in
-   * Overused Grotesk Bold, "Your Billease limit," is 598px at 72px — wider
-   * than the column the split layout leaves — so it wrapped and the authored
-   * break became three lines.
-   *
-   * 100cqi is the copy column. The longest line needs column / 8.31 px of font
-   * size; 11.8cqi is that with a small margin, capped at the display maximum.
-   * If a browser does not support cqi the declaration is dropped and the
-   * viewport-based size in .display-lg applies, which is the current behaviour.
-   */
-  .l-band--viewport .hero-copy { container-type: inline-size; }
-  .l-band--viewport .hero-copy .display-lg {
-    font-size: clamp(var(--text-3xl), 11.8cqi, 72px);
   }
 }
 

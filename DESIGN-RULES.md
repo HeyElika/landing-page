@@ -161,12 +161,15 @@ Do not create oversized marketing typography outside the current type scale unle
 >
 > | Role | Mobile (360px) | Desktop (1280px+) |
 > |---|---|---|
-> | Hero headline | 32px = `--text-3xl` | 72px |
+> | Hero headline | 32px = `--text-3xl` | 60px |
 > | Section heading | 24px = `--text-2xl` | 48px |
 > | Subsection heading | 20px = `--text-xl` | 32px |
 >
 > Sized against Klarna (hero 66px, sections 52/35), Atome (72px, 48/36) and
-> Salmon (44px scaling to 72px).
+> Salmon (44px scaling to 72px). The hero maximum is held at 60px rather than
+> 72px so an authored headline break stays on one line: measured in Overused
+> Grotesk Bold, the longest line is 498px at 60px and 598px at 72px, and the
+> split hero leaves roughly 530-650px of column.
 >
 > Each curve passes exactly through the token value at 360px, so on a phone —
 > where this design system actually applies — the page renders token sizes and
