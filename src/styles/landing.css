@@ -530,14 +530,14 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
    * row still fits one screen. The cap is on the width — capping the height
    * as well would make both axes definite, which discards the ratio and
    * stretches the card to whatever space is left. */
-  .l-band--fit .l-grid:has(.c-feature) { flex: 1; min-height: 0; }
-  /* The cards take the whole band, so the section is exactly one screen and a
-   * scroll moves from this section to the next. The ratio is what sizes them
-   * everywhere else; here the available height does, and the grid keeps all
-   * three identical. */
+  .l-band--fit .l-grid:has(.c-feature) { flex: 0 0 auto; }
+  /* The card keeps its portrait proportion — filling the band height stretched
+   * it well past the reference shape. The section still fits one screen
+   * because the cap is on the width, which shrinks the whole card. */
   .l-band--fit .c-feature {
-    aspect-ratio: auto;
-    min-height: 0;
+    width: 100%;
+    max-width: min(100%, 50vh);
+    margin-inline: auto;
   }
 
   .l-band--fit .c-steps-split {
@@ -881,6 +881,27 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
     align-items: end;
   }
   .c-footer__social { justify-content: flex-end; }
+}
+
+/* ── Sticky header ──────────────────────────────────────────────────────────
+ * Frosted rather than solid: the page reads as continuing underneath the
+ * header instead of being cut off by it.
+ *
+ * The blur needs something to blur, so the fill is translucent white. Where
+ * backdrop-filter is unsupported that translucency would leave text sitting on
+ * whatever scrolled behind it, so those browsers get the solid fill back.
+ */
+.c-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--alpha-white-70);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  backdrop-filter: blur(16px) saturate(180%);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .c-nav { background: var(--bg-base); }
 }
 
 /* ── Section header ─────────────────────────────────────────────────────── */

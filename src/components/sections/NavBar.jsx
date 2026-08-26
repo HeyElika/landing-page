@@ -47,11 +47,8 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
 
   return (
     <header
+      className="c-nav"
       style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
-        background: 'var(--bg-base)',
         borderBottom: `var(--border-width-xs) solid ${scrolled ? 'var(--border-subtle)' : 'transparent'}`,
         transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
         transition: 'transform 260ms ease, border-color 160ms ease',
