@@ -80,9 +80,14 @@
 
 @media (min-width: 1024px) {
   :root {
-    --band-y-tight: var(--space-1000);                      /* 48 */
-    --band-y: calc(var(--space-1000) * 2 + var(--space-400)); /* 112 */
-    --band-y-lg: calc(var(--space-1000) * 3);               /* 144 */
+    /* Sized against the fitted sections, not in isolation. A viewport-fitted
+     * band is height-constrained and can only give 48 to each edge, so a
+     * free-standing band at 112 produced a 224px gap next to a 96px one. At
+     * 64/80/112 the gaps across the page run 96, 96, 128, 160, 144, 128 —
+     * a rhythm rather than a set of unrelated numbers. */
+    --band-y-tight: calc(var(--space-1000) + var(--space-400)); /* 64 */
+    --band-y: calc(var(--space-1000) + var(--space-800));    /* 80 */
+    --band-y-lg: calc(var(--space-1000) * 2 + var(--space-400)); /* 112 */
   }
 }
 
@@ -686,7 +691,11 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
 
 /* No rule above the points: the spacing already separates them from the intro,
  * and the line was the only border left on the page. */
-.c-security__items { padding-top: var(--space-900); }
+/* The container's own gap already puts 40 here; this adds 24 on top of it for
+ * a total of 64, which is what a change of subject needs without a rule to
+ * mark it. Expressed as the extra rather than the total, so it tracks the
+ * container gap if that ever changes. */
+.c-security__items { padding-top: var(--space-600); }
 
 .c-security__icon {
   display: grid;

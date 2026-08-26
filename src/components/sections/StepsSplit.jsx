@@ -38,7 +38,7 @@ export default function StepsSplit({
             * split instead, centring the columns opened a gap beneath it. */}
           <div className="c-steps-split__col l-stack l-stack--800">
           <SectionHead title={title} description={description} align="start" />
-          <ol className="c-steps-split__list l-stack l-stack--600">
+          <ol className="c-steps-split__list l-stack l-stack--800">
             {steps.map((step, i) => (
               <li key={step.title} className="l-row" style={{ gap: 'var(--space-400)', alignItems: 'flex-start', flexWrap: 'nowrap' }}>
                 <span className="c-steps-split__num heading-sm-semibold">{i + 1}</span>

@@ -42,7 +42,7 @@ export default function Features({
               return (
                 <li key={item.title} className="c-feature" style={{ '--ratio': ratio }}>
                   <Media {...media} ratio={ratio} label={label || item.title} className="c-feature__img" />
-                  <div className="c-feature__copy l-stack l-stack--200">
+                  <div className="c-feature__copy l-stack l-stack--300">
                     <h3 className="display-sm t-on-dark">{item.title}</h3>
                     {item.description && (
                       <p className="body-md-regular t-on-dark-subtle">{item.description}</p>
