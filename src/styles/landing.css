@@ -443,29 +443,12 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   grid-template-columns: 1fr;
 }
 
-/* The steps read as one process, not four items: a smaller marker with a
- * dashed line running between them. The line is drawn from each step to the
- * next rather than as one element behind the list, so it stops correctly at
- * the last step however many there are. */
+/* The markers are numbers, not a diagram: no connector between them. The list
+ * already reads as a sequence, and a line drawn down the side only competed
+ * with the copy beside it.
+ *
+ * Neutral, not brand: red is for actions and emphasis. */
 .c-steps-split__list { --step-dot: var(--space-800); }      /* 32 */
-
-.c-steps-split__list > li { position: relative; }
-
-.c-steps-split__list > li:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  left: calc(var(--step-dot) / 2 - 1px);
-  top: calc(var(--step-dot) + var(--space-100));
-  bottom: calc((var(--space-600) + var(--space-100)) * -1);
-  width: var(--border-width-sm);
-  /* Painted rather than a dashed border: `dashed` gives no control over the
-   * gap, and the line wants a longer one than the browser default. */
-  background-image: repeating-linear-gradient(
-    to bottom,
-    var(--border-brand-primary) 0 var(--space-100),
-    transparent var(--space-100) var(--space-300)
-  );
-}
 
 .c-steps-split__num {
   position: relative;
@@ -477,8 +460,8 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   flex-shrink: 0;
   border-radius: var(--radius-full);
   background: var(--bg-base);
-  border: var(--border-width-sm) solid var(--border-brand-primary);
-  color: var(--text-brand-primary);
+  border: var(--border-width-sm) solid var(--border-default);
+  color: var(--text-subtle);
 }
 
 /* Same corner as the hero visual. */

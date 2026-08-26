@@ -14,7 +14,7 @@ import Cta from './Cta'
  * Watches the hero via IntersectionObserver rather than a scroll offset, so it
  * stays correct whatever the hero's height is.
  */
-export default function StickyCta({ label, href, watch = '#top' }) {
+export default function StickyCta({ watch = '#top', ...cta }) {
   const [visible, setVisible] = useState(false)
   const barRef = useRef(null)
 
@@ -46,7 +46,7 @@ export default function StickyCta({ label, href, watch = '#top' }) {
 
   return (
     <div ref={barRef} className={['c-sticky-cta', visible ? 'is-visible' : ''].filter(Boolean).join(' ')}>
-      <Cta label={label} href={href} block />
+      <Cta {...cta} block />
     </div>
   )
 }
