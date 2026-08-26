@@ -90,17 +90,21 @@ export default {
         {
           media: { src: null, label: 'Card in the app', ratio: '2 / 3' },
           title: 'Use the limit you already have',
-          description: 'CONTENT DEPENDENCY: confirm with Product that no separate credit application is needed.',
+          description: 'No new limit to manage. Your Access Card uses the Credit Line you already have.',
         },
         {
           media: { src: null, label: 'Paying in store', ratio: '2 / 3' },
-          title: 'Spend in more places',
-          description: 'CONTENT DEPENDENCY: confirm where the card is accepted before describing wider acceptance.',
+          title: 'Pay with chip or tap',
+          // CONTENT DEPENDENCY: the Mastercard acceptance claim. The supplied
+          // copy carried the caveat inside the sentence; a caveat addressed to
+          // us does not belong on the page, so it lives here. Confirm the
+          // network with Product before this ships.
+          description: 'Use your physical card wherever Mastercard is accepted.',
         },
         {
-          media: { src: null, label: 'Repayment screen', ratio: '2 / 3' },
-          title: 'Keep repayment familiar',
-          description: 'CONTENT DEPENDENCY: confirm that repayment behaves like the existing Billease experience.',
+          media: { src: null, label: 'Card ready in the app', ratio: '2 / 3' },
+          title: 'Ready once activated',
+          description: 'Your card is ready to use as soon as Billease confirms activation.',
         },
       ],
     },
