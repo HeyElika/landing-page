@@ -861,6 +861,7 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
  * grow with it to read as a rounded container at all.
  */
 .c-appcta {
+  --appcta-visual: calc(var(--space-1000) * 8);   /* 384 */
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-800);
@@ -901,12 +902,30 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
 
 @media (min-width: 900px) {
   .c-appcta {
-    grid-template-columns: 5fr 6fr;
+    grid-template-columns: 4fr 7fr;
     gap: var(--space-1000);
     padding: var(--space-1000);
-    padding-block-end: 0;          /* the visual can run to the bottom edge */
+    padding-block-end: 0;          /* the visual runs to the bottom edge */
   }
   .c-appcta__copy { padding-block-end: var(--space-1000); }
+
+  /* The visual is capped and cropped at the panel's bottom edge rather than
+   * setting the panel's height. Letting a portrait image size the block made
+   * it three times taller than the copy inside it needed. */
+  .c-appcta__media {
+    align-self: end;
+    max-height: var(--appcta-visual);
+    overflow: hidden;
+  }
+  .c-appcta__media .c-media,
+  .c-appcta__media .c-placeholder {
+    height: var(--appcta-visual);
+    width: auto;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+  /* Anchored to the top, so what gets cropped is the bottom of the device. */
+  .c-appcta__media .c-media img { object-position: top; }
 }
 
 /* ── Section header ─────────────────────────────────────────────────────── */
