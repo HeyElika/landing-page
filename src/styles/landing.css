@@ -230,6 +230,49 @@ button { font: inherit; }
   padding: var(--space-400);
 }
 
+/* ── Panel ──────────────────────────────────────────────────────────────────
+ * A self-contained tinted container holding copy beside an image. Used for a
+ * single moment on the page rather than as a general layout: it reads as one
+ * object, so it stops a long page feeling like an unbroken column of bands.
+ *
+ * Padding is generous by design — the container only works if the copy has
+ * room inside it. Values are sums of spacing tokens:
+ *   24 = --space-600, 32 = --space-800, 64 = --space-1000 + --space-400
+ */
+
+.c-panel {
+  --panel-pad: var(--space-600);                              /* 24 */
+  border-radius: var(--radius-2xl);
+  padding: var(--panel-pad);
+  background: var(--bg-subtle);
+}
+.c-panel--brand { background: var(--bg-error-subtle); }
+.c-panel--info { background: var(--bg-info-subtle); }
+.c-panel--success { background: var(--bg-success-subtle); }
+.c-panel--sunken { background: var(--bg-sunken); }
+
+.c-panel__grid {
+  display: grid;
+  gap: var(--space-600);
+  align-items: center;
+  grid-template-columns: 1fr;
+}
+
+.c-panel__media { border-radius: var(--radius-xl); overflow: hidden; }
+
+@media (min-width: 768px) {
+  .c-panel { --panel-pad: var(--space-800); }                 /* 32 */
+  .c-panel__grid { gap: var(--space-800); }
+}
+
+@media (min-width: 960px) {
+  .c-panel { --panel-pad: calc(var(--space-1000) + var(--space-400)); } /* 64 */
+  .c-panel__grid { grid-template-columns: 1fr 1fr; gap: var(--space-900); }
+  /* Copy always reads first on small screens, whatever the desktop order. */
+  .c-panel__grid--reverse .c-panel__copy { order: 2; }
+  .c-panel__grid--reverse .c-panel__media { order: 1; }
+}
+
 /* ── Chip / badge ───────────────────────────────────────────────────────── */
 
 .c-badge {

@@ -15,7 +15,9 @@
  *   8. faq           genuine conversion blockers
  *   9. ctaBand       repeat the single primary action
  *
- * `spotlight` is available for pages that need to explain a feature in depth.
+ * `spotlight` is available for pages that need to explain a feature in depth,
+ * and `panel` for lifting one idea out of the flow as a contained, tinted
+ * container with copy beside an image.
  *
  * Deliberately absent: logo strips, testimonial walls and statistic bands.
  * They are generic marketing furniture, rule 2 warns against exactly that
@@ -31,6 +33,7 @@ import TrustBar from './TrustBar'
 import UseCases from './UseCases'
 import Steps from './Steps'
 import Spotlight from './Spotlight'
+import Panel from './Panel'
 import Pricing from './Pricing'
 import Conditions from './Conditions'
 import Security from './Security'
@@ -44,6 +47,7 @@ export const SECTIONS = {
   useCases: UseCases,
   steps: Steps,
   spotlight: Spotlight,
+  panel: Panel,
   pricing: Pricing,
   conditions: Conditions,
   security: Security,

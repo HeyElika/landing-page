@@ -70,7 +70,12 @@ Sections follow the Billease narrative in DESIGN-RULES.md section 10. **Keep the
 | 8 | `faq` | Anything else? | `items[{ question, answer }]`, `footerLink` |
 | 9 | `ctaBand` | What do I do now? | `title`, `description`, `ctas[]`, `stores[]`, `media`, `note` |
 
-`spotlight` is also available for explaining one feature in depth: `rows[{ title, description, bullets[], media, link, reverse }]`.
+Two more are available outside the default narrative:
+
+- **`panel`** — a contained moment: tinted rounded container, copy beside an image, generous internal padding. Use it to lift one idea out of the flow so a long page does not read as an unbroken column of bands. Keys: `eyebrow`, `title`, `description`, `paragraphs[]`, `bullets[]`, `cta`, `link`, `media`, `tone` (`subtle`/`brand`/`info`/`success`/`sunken`), `reverse`.
+- **`spotlight`** — the same idea without the container, for two or more feature rows in sequence: `rows[{ title, description, bullets[], media, link, reverse }]`.
+
+If a `panel` carries a `cta` it must be the page's single primary action, worded identically to the hero. Use `link` for anything softer.
 
 Two rules that are not negotiable:
 

@@ -11,7 +11,7 @@ import { brand, nav, footer } from '../brand'
  *   features    3-4 benefits as icon cards, the near-universal pattern
  *   useCases    where the card is accepted
  *   steps       activation in three steps, with honest timing
- *   spotlight   two depth rows showing the app doing the thing
+ *   panel x2    two contained moments: the app doing the thing
  *   conditions  fees, limits and timing ON the page, before the FAQ
  *   security    short reassurance, three points
  *   faq         real conversion blockers
@@ -143,32 +143,40 @@ export default {
     },
 
     {
-      // Wise and Atome both give the product two depth rows after the summary
-      // grid: one on control, one on everyday use.
-      type: 'spotlight',
+      // A contained moment rather than another full-width band. Copy beside
+      // an image inside a tinted panel, the Monzo pattern: it breaks a long
+      // column of sections and gives one idea room to breathe.
+      type: 'panel',
+      tone: 'brand',
       eyebrow: 'Inside the app',
-      title: 'Everything about the card lives in one place',
-      rows: [
-        {
-          title: 'See the card and what it can do',
-          description: 'Your card details, limit and recent spending sit on one screen.',
-          bullets: [
-            'Card details when you need them',
-            'CONTENT DEPENDENCY: confirm what limit information is shown',
-            'Every transaction in one list',
-          ],
-          media: { src: null, label: 'Card screen', ratio: '4 / 3' },
-        },
-        {
-          title: 'Stay in control of spending',
-          description: 'Notifications as you spend, and the controls to stop a card you no longer trust.',
-          bullets: [
-            'CONTENT DEPENDENCY: confirm which notifications exist',
-            'CONTENT DEPENDENCY: confirm whether freeze and unfreeze exist',
-          ],
-          media: { src: null, label: 'Card controls', ratio: '4 / 3' },
-        },
+      title: 'Your card and your spending, on one screen',
+      description:
+        'Card details, your limit and every transaction sit together, so you never have to go looking.',
+      bullets: [
+        'Card details when you need them',
+        'CONTENT DEPENDENCY: confirm what limit information is shown',
+        'Every transaction in one list',
       ],
+      media: { src: null, label: 'Card screen', ratio: '4 / 3' },
+    },
+
+    {
+      // Reversed, and carrying the page's single action. Repeating the primary
+      // CTA mid-page is what Wise does with "Order your card"; the label must
+      // stay identical to the hero and closing band.
+      type: 'panel',
+      tone: 'info',
+      reverse: true,
+      eyebrow: 'Control',
+      title: 'Stay in control of every payment',
+      description:
+        'Notifications as you spend, and the controls to stop a card you no longer trust.',
+      bullets: [
+        'CONTENT DEPENDENCY: confirm which notifications exist',
+        'CONTENT DEPENDENCY: confirm whether freeze and unfreeze exist',
+      ],
+      cta: { label: 'Activate card', href: '#activate' },
+      media: { src: null, label: 'Card controls', ratio: '4 / 3' },
     },
 
     {

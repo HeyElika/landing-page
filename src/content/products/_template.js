@@ -141,6 +141,22 @@ export default {
     },
 
     // Available but not part of the default narrative:
+    //
+    // A contained moment — tinted panel, copy beside an image. Good for
+    // breaking up a long page. `cta` must be the page's primary action.
+    // {
+    //   type: 'panel',
+    //   tone: 'brand',        // subtle | brand | info | success | sunken
+    //   reverse: false,       // media on the left at desktop width
+    //   eyebrow: '',
+    //   title: '',
+    //   description: '',
+    //   bullets: [''],
+    //   cta: { label: '', href: '#get-started' },
+    //   media: { src: null, label: 'Photo', ratio: '4 / 3' },
+    // }
+    //
+    // The same idea without the container, for several rows in sequence:
     // { type: 'spotlight', rows: [{ title: '', description: '', bullets: [''], media: {} }] }
   ],
 

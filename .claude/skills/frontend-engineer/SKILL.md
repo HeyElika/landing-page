@@ -75,7 +75,9 @@ Sections follow DESIGN-RULES.md section 10, in this order:
 3. `features` — key benefits, three or four at most
 4. `useCases` — where and how it can be used
 5. `steps` — how activation or sign-up works
-6. `spotlight` — one or two depth rows on the product itself
+6. `panel` or `spotlight` — one or two depth moments on the product itself.
+   `panel` is contained (tinted rounded container, copy beside an image) and
+   breaks up a long page; `spotlight` is the same content without the box.
 7. `pricing` — terms, where cost is a real question
 8. `conditions` — important things to know, **always before the FAQ**
 9. `security` — security and control
