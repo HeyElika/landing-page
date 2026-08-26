@@ -47,7 +47,6 @@ export default {
     ...nav,
     links: [
       { label: 'Why activate', href: '#benefits' },
-      { label: 'Where to use', href: '#use-cases' },
       { label: 'How it works', href: '#how-it-works' },
       { label: 'FAQ', href: '#faq' },
     ],
@@ -111,35 +110,9 @@ export default {
     },
 
     {
-      // Concrete acceptance, not product language. "In the app" was dropped:
-      // the card is not meaningfully used in the app, so it was filler.
-      id: 'use-cases',
-      type: 'useCases',
-      title: 'Online and in store',
-      items: [
-        {
-          icon: 'store',
-          title: 'In store',
-          description: 'CONTENT DEPENDENCY: confirm in-store acceptance and whether contactless is supported.',
-        },
-        {
-          icon: 'phone',
-          title: 'Online',
-          description: 'CONTENT DEPENDENCY: confirm online acceptance.',
-        },
-        {
-          icon: 'card',
-          title: 'International use',
-          description: 'CONTENT DEPENDENCY: confirm whether the card works abroad and any currency or fee implications. Remove this card if it is not supported.',
-        },
-      ],
-    },
-
-    {
       id: 'how-it-works',
       type: 'stepsSplit',
-      fit: 'viewport',        // hold the section to one screen, as the hero does
-      background: 'subtle',   // keeps the bands alternating either side of it
+      fit: 'viewport',   // hold the section to one screen, as the hero does
       title: 'Activate your card in a few steps',
       media: { src: null, label: 'App screen', ratio: '4 / 5' },
       steps: [
@@ -166,6 +139,7 @@ export default {
       // Two routes, side by side. Cards are neutral surfaces for now; artwork
       // drops into `media` when it exists.
       type: 'choicePair',
+      background: 'subtle',   // cards fill white on a tinted band
       title: 'Choose whatever fits you',
       items: [
         {

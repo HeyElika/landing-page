@@ -534,6 +534,12 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
 }
 a.c-choice__card:hover { background: var(--bg-sunken); }
 
+/* On a tinted band the neutral card fills white instead, so it still
+ * separates by fill rather than disappearing into the band. */
+.l-band--subtle .c-choice__card,
+.l-band--sunken .c-choice__card { background: var(--bg-base); }
+a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
+
 .c-choice__card--info { background: var(--bg-info-subtle); }
 .c-choice__card--success { background: var(--bg-success-subtle); }
 .c-choice__card--dark { background: var(--color-neutral-900); color: var(--text-on-dark); }
