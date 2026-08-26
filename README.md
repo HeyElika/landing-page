@@ -139,6 +139,10 @@ The primary call to action uses the **primary** variant, flat Billease red. On d
 
 The `gradient` variant from the Figma set is implemented in `Button.jsx` and available, but is not used on these pages.
 
+## Typeface
+
+Landing pages use **Overused Grotesk**, self-hosted from `public/fonts/` as a single variable file (92 kB, weights 300–900, SIL Open Font License 1.1, licence shipped alongside it). It is applied by overriding `--ds-font-family` once in `landing.css`; `tokens.css` stays generated and untouched, and Source Sans Pro remains the fallback. See DESIGN-RULES.md section 3 for the approval and how to revert.
+
 ## Design tokens
 
 `src/styles/tokens.css` is **generated** from `tokens/variables.json`, the Figma variables export. Never hand-edit it.
@@ -158,9 +162,9 @@ Body and small-heading type comes from the Figma text styles, generated as class
 
 | Role | Class | Mobile | Desktop |
 |---|---|---|---|
-| Hero headline | `display-lg` | 32 | 56 |
-| Section heading | `display-md` | 24 | 40 |
-| Subsection heading | `display-sm` | 20 | 28 |
+| Hero headline | `display-lg` | 32 | 72 |
+| Section heading | `display-md` | 24 | 48 |
+| Subsection heading | `display-sm` | 20 | 32 |
 | Card heading | `heading-md-semibold` | 20 | 20 |
 | Body copy | `body-md-regular` | 16 | 16 |
 | Lead copy under a heading | `body-lg-regular` | 20 | 20 |
@@ -184,7 +188,7 @@ The library has no card, chip, accordion or icon-container component, so those a
 | Class | Does |
 |---|---|
 | `l-band` | Full-bleed section with band padding and gutters. Modifiers: `--lg`, `--tight`, `--subtle`, `--sunken`, `--dark`, `--brand` |
-| | Vertical rhythm: `--tight` 32→48, standard 48→96, `--lg` 56→128 (mobile→desktop) |
+| | Vertical rhythm: `--tight` 32→48, standard 48→112, `--lg` 56→144 (mobile→desktop) |
 | `l-container` | Centres content at 1200px. `--narrow` for 760px |
 | `l-measure` | Caps prose at a readable line length |
 | `l-stack l-stack--400` | Vertical flex with a spacing token gap |

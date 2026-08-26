@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . && node scripts/check-tokens.mjs && node scripts/check-type.mjs",
+    "lint": "eslint . && node scripts/check-tokens.mjs && node scripts/check-type.mjs && node scripts/check-layout.mjs",
     "preview": "vite preview",
     "tokens": "node scripts/build-tokens.mjs",
-    "check": "node scripts/check-tokens.mjs && node scripts/check-type.mjs",
+    "check": "node scripts/check-tokens.mjs && node scripts/check-type.mjs && node scripts/check-layout.mjs",
     "icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {

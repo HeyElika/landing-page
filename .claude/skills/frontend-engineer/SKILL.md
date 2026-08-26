@@ -46,17 +46,23 @@ Sections render in array order. Reordering a page means moving an object in the 
 
 **Type comes from classes, never from `font-size` in a component.**
 
-- Section and hero headings use the display scale in `landing.css`: `.display-lg` (hero), `.display-md` (section), `.display-sm` (subsection). These grow with the viewport, from the token value at 360px to a fixed maximum at 1280px.
+- Section and hero headings use the display scale in `landing.css`: `.display-lg` (hero, 32→72), `.display-md` (section, 24→48), `.display-sm` (subsection, 20→32). These grow with the viewport, from the token value at 360px to the maximum at 1280px.
+- The typeface is Overused Grotesk, self-hosted and applied by overriding `--ds-font-family` once in `landing.css`. Never edit `tokens.css` to change it.
 - Everything else uses the generated token classes: `.heading-md-semibold`, `.heading-sm-semibold`, `.body-{lg,md,sm,xs,xxs}-{regular,semibold}`, `.link-md`, `.link-sm`, `.label-xs`.
 
 The display scale is an approved amendment to DESIGN-RULES.md section 3, valid for landing pages only. Do not widen it further, and do not copy it into product UI. `npm run check` verifies each step still resolves to its token at 360px.
 
 **Buttons come from the library.** `src/components/ds/Button.jsx` is the Figma Button (node `16:182`). Use it through `src/components/ui/Cta.jsx`. Do not build another button, and do not restyle this one.
 
-**Section rhythm.** Bands run 48px on mobile to 96px on desktop, and `--lg`
-bands 56 to 128. That is calibrated against what comparable pages ship: Atome
-uses 80-96px, Salmon 56-96px. Sections that sit too close read as stacked. All
+**Section rhythm.** Bands run 48px on mobile to 112px on desktop, and `--lg`
+bands 56 to 144. Calibrated against what comparable pages ship: Klarna 120px,
+Atome 80-96px, Salmon 56-96px. Sections that sit too close read as stacked. All
 values are sums of `--space-*` tokens and `npm run check` fails on a raw px.
+
+**One content box.** `.l-band` puts the page gutter outside `.l-container`.
+Anything that sets its own horizontal padding on an `.l-container` drifts by a
+gutter once the viewport passes the container width. `npm run check` fails on
+it.
 
 **landing.css is layout only:** page width, gutters, band rhythm, grids, and compositions for patterns the library does not have (card, chip, accordion, icon container). It declares four layout constants, documented in the file. Do not grow it into a second design system.
 

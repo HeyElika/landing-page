@@ -66,6 +66,16 @@ Use:
 
 Do not substitute another font unless explicitly requested.
 
+> **Approved trial, 2026-08-26 (Eliso).** Landing pages use **Overused
+> Grotesk**, self-hosted as one variable file (92 kB, weight axis 300-900,
+> SIL Open Font License 1.1). It is a closer match to the display-led look of
+> comparable card pages than Source Sans Pro, which was drawn for app UI.
+>
+> Applied by overriding `--ds-font-family` once in `landing.css`, so
+> `tokens.css` stays generated from Figma and untouched. Source Sans Pro
+> remains the fallback. Delete that one `:root` block and the `@font-face`
+> above it to revert. Product UI is unaffected.
+
 ### Approved heading styles
 
 Use only existing typography tokens:
@@ -151,9 +161,12 @@ Do not create oversized marketing typography outside the current type scale unle
 >
 > | Role | Mobile (360px) | Desktop (1280px+) |
 > |---|---|---|
-> | Hero headline | 32px = `--text-3xl` | 56px |
-> | Section heading | 24px = `--text-2xl` | 40px |
-> | Subsection heading | 20px = `--text-xl` | 28px |
+> | Hero headline | 32px = `--text-3xl` | 72px |
+> | Section heading | 24px = `--text-2xl` | 48px |
+> | Subsection heading | 20px = `--text-xl` | 32px |
+>
+> Sized against Klarna (hero 66px, sections 52/35), Atome (72px, 48/36) and
+> Salmon (44px scaling to 72px).
 >
 > Each curve passes exactly through the token value at 360px, so on a phone —
 > where this design system actually applies — the page renders token sizes and

@@ -12,9 +12,9 @@ const css = readFileSync(join(root, 'src/styles/landing.css'), 'utf8')
 
 const TOKENS = { '--text-xl': 20, '--text-2xl': 24, '--text-3xl': 32 }
 const EXPECT = {
-  '--display-lg': { token: '--text-3xl', max: 56 },
-  '--display-md': { token: '--text-2xl', max: 40 },
-  '--display-sm': { token: '--text-xl', max: 28 },
+  '--display-lg': { token: '--text-3xl', max: 72 },
+  '--display-md': { token: '--text-2xl', max: 48 },
+  '--display-sm': { token: '--text-xl', max: 32 },
 }
 
 const at = (rem, vw, w) => rem * 16 + (vw * w) / 100

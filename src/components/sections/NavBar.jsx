@@ -32,13 +32,16 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
         background: 'var(--bg-base)',
         borderBottom: `var(--border-width-xs) solid ${scrolled ? 'var(--border-subtle)' : 'transparent'}`,
         transition: 'border-color 160ms ease',
+        // The gutter sits on the header, not on .l-container, so the nav shares
+        // exactly the content box every l-band uses. Putting it inside the
+        // container instead offsets the nav by one gutter above 1264px.
+        paddingInline: 'var(--page-gutter)',
       }}
     >
       <div
         className="l-container"
         style={{
           height: 'var(--nav-h)',
-          paddingInline: 'var(--page-gutter)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -86,11 +89,11 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
           className="nav-mobile-panel"
           style={{
             borderTop: 'var(--border-width-xs) solid var(--border-subtle)',
-            padding: 'var(--space-400) var(--page-gutter) var(--space-600)',
+            paddingBlock: 'var(--space-400) var(--space-600)',
             background: 'var(--bg-base)',
           }}
         >
-          <nav aria-label="Primary" className="l-stack l-stack--200" style={{ marginBottom: 'var(--space-400)' }}>
+          <nav aria-label="Primary" className="l-container l-stack l-stack--200" style={{ marginBottom: 'var(--space-400)' }}>
             {links.map((l) => (
               <a
                 key={l.href}
@@ -103,7 +106,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
               </a>
             ))}
           </nav>
-          <div className="l-stack l-stack--200">
+          <div className="l-container l-stack l-stack--200">
             {cta && <Cta {...cta} block />}
             {secondaryCta && <Cta {...secondaryCta} type="secondary" block />}
           </div>

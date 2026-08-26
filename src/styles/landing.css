@@ -34,24 +34,25 @@
    * applies — the page renders exact token sizes. Only the desktop end goes
    * past the scale, where the design system has no opinion.
    *
-   *   --display-lg  32 (--text-3xl) -> 56   hero headline
-   *   --display-md  24 (--text-2xl) -> 40   section heading
-   *   --display-sm  20 (--text-xl)  -> 28   subsection heading
+   *   --display-lg  32 (--text-3xl) -> 72   hero headline
+   *   --display-md  24 (--text-2xl) -> 48   section heading
+   *   --display-sm  20 (--text-xl)  -> 32   subsection heading
    *
    * Each curve is solved to pass exactly through the token size at 360px and
    * the maximum at 1280px, so the mobile end is the token value and not an
    * approximation of it. Verify with scripts/check-type.mjs after any change.
    */
-  --display-lg: clamp(var(--text-3xl), 1.413rem + 2.609vw, 56px);
-  --display-md: clamp(var(--text-2xl), 1.109rem + 1.739vw, 40px);
-  --display-sm: clamp(var(--text-xl), 1.054rem + 0.87vw, 28px);
+  --display-lg: clamp(var(--text-3xl), 1.022rem + 4.348vw, 72px);
+  --display-md: clamp(var(--text-2xl), 0.913rem + 2.609vw, 48px);
+  --display-sm: clamp(var(--text-xl), 0.956rem + 1.304vw, 32px);
 
   /* Section rhythm.
    *
    * DESIGN-RULES.md section 5 asks for 40-48px minimum on mobile and "larger
    * through layout composition on desktop". Measured from what comparable
-   * pages actually ship, a standard desktop band is 80-96px: Atome sits at
-   * 80-96 and Salmon at 56-96. An earlier 64px maximum here read as stacked.
+   * pages actually ship, a standard desktop band is 80-120px: Atome sits at
+   * 80-96, Salmon at 56-96 and Klarna at 120. An earlier 64px maximum here
+   * read as stacked, and the larger display type needs the extra room.
    *
    * Every value is a sum of spacing tokens, never a new number.
    *   48  = --space-1000
@@ -78,9 +79,31 @@
 @media (min-width: 1024px) {
   :root {
     --band-y-tight: var(--space-1000);                      /* 48 */
-    --band-y: calc(var(--space-1000) * 2);                  /* 96 */
-    --band-y-lg: calc(var(--space-1000) * 2 + var(--space-800)); /* 128 */
+    --band-y: calc(var(--space-1000) * 2 + var(--space-400)); /* 112 */
+    --band-y-lg: calc(var(--space-1000) * 3);               /* 144 */
   }
+}
+
+/* ── Typeface ───────────────────────────────────────────────────────────────
+ * Overused Grotesk, self-hosted as a single variable file (92 kB, weight axis
+ * 300-900). SIL Open Font License 1.1; the licence ships alongside it in
+ * public/fonts/.
+ *
+ * This overrides --ds-font-family for landing pages only. tokens.css is
+ * untouched and still regenerates from Figma; this line is the single point of
+ * change. To go back to the design system face, delete this :root block and
+ * the @font-face above it.
+ */
+@font-face {
+  font-family: 'Overused Grotesk';
+  src: url('/fonts/OverusedGrotesk-VF.woff2') format('woff2-variations');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ds-font-family: 'Overused Grotesk', 'Source Sans Pro', sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
