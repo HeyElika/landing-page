@@ -460,8 +460,11 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   flex-shrink: 0;
   border-radius: var(--radius-full);
   background: var(--bg-base);
-  border: var(--border-width-sm) solid var(--border-bold);
-  color: var(--text-subtle);
+  /* A hairline in the same neutral as every other line on the page, rather
+   * than a 2px ring in a darker grey that read as an outline drawn around
+   * the number. */
+  border: var(--border-width-xs) solid var(--border-subtle);
+  color: var(--text-base);
 }
 
 /* Same corner as the hero visual. */
