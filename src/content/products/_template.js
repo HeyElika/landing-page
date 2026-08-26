@@ -44,7 +44,6 @@ export default {
       // 2. Key benefits — three or four at most
       id: 'benefits',
       type: 'features',
-      eyebrow: '',
       title: '',
       columns: 3,                        // 2 | 3 | 4
       items: [{ icon: 'wallet', title: '', description: '' }],
@@ -54,7 +53,6 @@ export default {
       // 3. Where and how the product can be used — confirmed cases only
       id: 'use-cases',
       type: 'useCases',
-      eyebrow: '',
       title: '',
       items: [{ icon: 'store', title: '', description: '' }],
     },
@@ -63,7 +61,6 @@ export default {
       // 4. How activation or sign-up works — never imply instant if it is not
       id: 'how-it-works',
       type: 'steps',
-      eyebrow: '',
       title: '',
       description: '',
       items: [{ title: '', description: '' }],
@@ -73,7 +70,6 @@ export default {
       // 5. Terms, where cost is a genuine user question. Delete otherwise.
       id: 'terms',
       type: 'pricing',
-      eyebrow: '',
       title: '',
       description: '',
       plans: [
@@ -95,7 +91,6 @@ export default {
       // 6. Important things to know — MUST appear before the FAQ
       id: 'conditions',
       type: 'conditions',
-      eyebrow: '',
       title: 'Important things to know',
       description: '',
       items: [{ icon: 'document', title: '', detail: '' }],
@@ -104,7 +99,6 @@ export default {
     {
       // 7. Security and control — only capabilities that actually exist
       type: 'security',
-      eyebrow: '',
       title: '',
       items: [{ icon: 'security', title: '', description: '' }],
     },
@@ -114,7 +108,6 @@ export default {
       id: 'faq',
       type: 'faq',
       background: 'subtle',
-      eyebrow: '',
       title: '',
       items: [{ question: '', answer: '' }],
       footerLink: { text: '', label: '', href: '#' },
@@ -140,7 +133,6 @@ export default {
     //   type: 'panel',
     //   tone: 'brand',        // subtle | brand | info | success | sunken
     //   reverse: false,       // media on the left at desktop width
-    //   eyebrow: '',
     //   title: '',
     //   description: '',
     //   bullets: [''],

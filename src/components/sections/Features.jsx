@@ -6,13 +6,13 @@ import IconTile from '../ui/IconTile'
  * DESIGN-RULES.md caps benefits at three or four on an activation page, so
  * prefer a short list over a full grid when the page is conversion-focused.
  */
-export default function Features({ eyebrow, title, description, items = [], columns = 3, align = 'center', background = 'default', variant = 'card' }) {
+export default function Features({ title, description, items = [], columns = 3, align = 'center', background = 'default', variant = 'card' }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken', dark: 'l-band--dark' }[background] || ''
   const onDark = background === 'dark'
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-stack l-stack--900">
-        <SectionHead eyebrow={eyebrow} title={title} description={description} align={align} onDark={onDark} />
+        <SectionHead title={title} description={description} align={align} onDark={onDark} />
         <ul className={`l-grid l-grid--${columns}`}>
           {items.map((item) => (
             <li

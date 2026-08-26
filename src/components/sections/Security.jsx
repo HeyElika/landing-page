@@ -8,13 +8,13 @@ import Icon from '../../assets/icons/Icon'
  * Short, benefit-led reassurance. Only list capabilities that actually exist:
  * security claims are on the never-invent list in rule 16.
  */
-export default function Security({ eyebrow, title, description, items = [], background = 'dark' }) {
+export default function Security({ title, description, items = [], background = 'dark' }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', dark: 'l-band--dark' }[background] || ''
   const onDark = background === 'dark'
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-stack l-stack--900">
-        <SectionHead eyebrow={eyebrow} title={title} description={description} onDark={onDark} />
+        <SectionHead title={title} description={description} onDark={onDark} />
         <ul className={`l-grid l-grid--${Math.min(items.length, 3) || 3}`}>
           {items.map((item) => (
             <li key={item.title} className="l-stack l-stack--300">

@@ -48,7 +48,6 @@ export default {
     {
       id: 'benefits',
       type: 'features',
-      eyebrow: 'Why Billease',
       title: 'Built for how Filipinos actually pay',
       columns: 4,
       items: [
@@ -61,7 +60,6 @@ export default {
 
     {
       type: 'useCases',
-      eyebrow: 'Where you can use it',
       title: 'Shop online or in store',
       items: [
         { icon: 'store', title: 'Partner stores', description: 'Choose Billease at checkout with participating merchants.' },
@@ -74,7 +72,6 @@ export default {
     {
       id: 'how-it-works',
       type: 'steps',
-      eyebrow: 'How it works',
       title: 'Three steps from checkout to done',
       items: [
         { title: 'Create your account', description: 'Sign up with a valid ID to get your limit.' },
@@ -86,7 +83,6 @@ export default {
     {
       id: 'terms',
       type: 'pricing',
-      eyebrow: 'Terms',
       title: 'Pick the term that fits your budget',
       description: 'CONTENT DEPENDENCY: all figures below are placeholders. Replace with terms confirmed by Product, Risk and Legal.',
       plans: [
@@ -121,7 +117,6 @@ export default {
 
     {
       type: 'conditions',
-      eyebrow: 'Before you start',
       title: 'Important things to know',
       description: 'These apply to every purchase, so they belong here rather than buried in the FAQ.',
       items: [
@@ -134,7 +129,6 @@ export default {
 
     {
       type: 'security',
-      eyebrow: 'Security',
       title: 'You stay in control',
       items: [
         { icon: 'security', title: 'Encrypted end to end', description: 'CONTENT DEPENDENCY: confirm the exact security claim with Engineering.' },
@@ -146,7 +140,6 @@ export default {
     {
       id: 'faq',
       type: 'faq',
-      eyebrow: 'FAQ',
       title: 'Questions we get a lot',
       background: 'subtle',
       items: [

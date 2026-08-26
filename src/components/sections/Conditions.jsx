@@ -12,12 +12,12 @@ import Icon from '../../assets/icons/Icon'
  * Styling is deliberately plain. Status colours are not used decoratively
  * here; a condition is information, not a warning.
  */
-export default function Conditions({ eyebrow, title, description, items = [], background = 'default', note }) {
+export default function Conditions({ title, description, items = [], background = 'default', note }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-container--narrow l-stack l-stack--900">
-        <SectionHead eyebrow={eyebrow} title={title} description={description} align="start" />
+        <SectionHead title={title} description={description} align="start" />
         <ul className="l-stack l-stack--400">
           {items.map((item) => (
             <li

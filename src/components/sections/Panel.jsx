@@ -11,7 +11,7 @@ import Icon from '../../assets/icons/Icon'
  * to stop.
  *
  * Content keys:
- *   eyebrow, title, paragraphs[] (or description), bullets[], cta, link, media
+ *   title, paragraphs[] (or description), bullets[], cta, link, media
  *   tone     'subtle' | 'brand' | 'info' | 'success' | 'sunken'
  *   reverse  put the media on the left at desktop width
  *
@@ -20,7 +20,6 @@ import Icon from '../../assets/icons/Icon'
  * anything softer.
  */
 export default function Panel({
-  eyebrow,
   title,
   description,
   paragraphs = [],
@@ -41,7 +40,6 @@ export default function Panel({
         <div className={['c-panel', tone !== 'subtle' ? `c-panel--${tone}` : ''].filter(Boolean).join(' ')}>
           <div className={['c-panel__grid', reverse ? 'c-panel__grid--reverse' : ''].filter(Boolean).join(' ')}>
             <div className="c-panel__copy l-stack l-stack--400">
-              {eyebrow && <p className="label-xs t-subtle">{eyebrow}</p>}
               {title && <h2 className="display-sm t-balance">{title}</h2>}
 
               {copy.map((p) => (

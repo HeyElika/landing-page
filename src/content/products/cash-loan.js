@@ -40,7 +40,6 @@ export default {
     {
       id: 'benefits',
       type: 'features',
-      eyebrow: 'Why Billease',
       title: 'What you get',
       columns: 3,
       variant: 'plain',
@@ -53,7 +52,6 @@ export default {
     {
       id: 'how-it-works',
       type: 'steps',
-      eyebrow: 'How it works',
       title: 'From application to payout',
       items: [
         { title: 'Apply in the app', description: 'You need one valid ID and your bank or e-wallet details.' },
@@ -63,7 +61,6 @@ export default {
     },
     {
       type: 'conditions',
-      eyebrow: 'Before you apply',
       title: 'Important things to know',
       items: [
         { icon: 'document', title: 'Interest and fees', detail: 'CONTENT DEPENDENCY: confirm the full cost structure with Risk and Legal.' },

@@ -14,7 +14,6 @@ function ProductRoute() {
 function NotFound() {
   return (
     <div className="l-band l-band--lg l-container l-container--narrow l-stack l-stack--400 t-center">
-      <p className="label-xs t-subtle">404</p>
       <h1 className="heading-lg-bold">We could not find that page</h1>
       <p className="body-md-regular t-subtle">The link may be out of date. Head back to the main page to keep going.</p>
       <p><Cta label="Back to home" href="/" /></p>

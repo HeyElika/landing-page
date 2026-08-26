@@ -82,7 +82,6 @@ export default {
       // Reasons to act, not a restatement of the hero.
       id: 'benefits',
       type: 'features',
-      eyebrow: 'Why activate',
       title: 'What the card gives you',
       background: 'subtle',   // white cards need a tinted band to sit on
       columns: 3,
@@ -110,7 +109,6 @@ export default {
       // the card is not meaningfully used in the app, so it was filler.
       id: 'use-cases',
       type: 'useCases',
-      eyebrow: 'Where you can use it',
       title: 'Online and in store',
       items: [
         {
@@ -134,7 +132,6 @@ export default {
     {
       id: 'how-it-works',
       type: 'steps',
-      eyebrow: 'How activation works',
       title: 'Your part takes just a few minutes',
       background: 'subtle',
       description: 'Once verification is done, there is nothing else for you to do.',
@@ -158,7 +155,6 @@ export default {
       // Stays on the page, above the FAQ. Section 16 requires it.
       id: 'conditions',
       type: 'conditions',
-      eyebrow: 'Good to know',
       title: 'Important things to know',
       description: "Here's what to expect before you activate.",
       items: [
@@ -189,7 +185,6 @@ export default {
       // Control and security merged. No CTA here: the action belongs to the
       // header, the hero and the closing band.
       type: 'security',
-      eyebrow: 'Security & control',
       title: 'Safe by default, and in your control',
       items: [
         {
@@ -213,7 +208,6 @@ export default {
     {
       id: 'faq',
       type: 'faq',
-      eyebrow: 'FAQ',
       title: 'Before you activate',
       background: 'subtle',
       items: [

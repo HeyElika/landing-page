@@ -10,14 +10,14 @@ import Icon from '../../assets/icons/Icon'
  * Important conditions must appear on the page BEFORE this section, never
  * only inside it.
  */
-export default function FAQ({ eyebrow, title, description, items = [], background = 'default', footerLink }) {
+export default function FAQ({ title, description, items = [], background = 'default', footerLink }) {
   const [openIndex, setOpenIndex] = useState(0)
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
 
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-container--narrow l-stack l-stack--900">
-        <SectionHead eyebrow={eyebrow} title={title} description={description} />
+        <SectionHead title={title} description={description} />
         <ul className="l-stack">
           {items.map((item, i) => {
             const open = openIndex === i

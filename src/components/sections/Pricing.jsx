@@ -10,12 +10,12 @@ import Icon from '../../assets/icons/Icon'
  * repayment terms must come from confirmed product content, and `note` must
  * carry the disclosure approved by Legal. See DESIGN-RULES.md section 16.
  */
-export default function Pricing({ eyebrow, title, description, plans = [], note, background = 'subtle' }) {
+export default function Pricing({ title, description, plans = [], note, background = 'subtle' }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-stack l-stack--900">
-        <SectionHead eyebrow={eyebrow} title={title} description={description} />
+        <SectionHead title={title} description={description} />
         <ul className={`l-grid l-grid--${Math.min(plans.length, 4) || 3}`} style={{ alignItems: 'stretch' }}>
           {plans.map((plan) => (
             <li

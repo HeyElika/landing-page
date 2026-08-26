@@ -6,18 +6,17 @@ import SectionHead from '../ui/SectionHead'
  * Alternating media and copy rows. Rows flip sides automatically; set
  * `reverse: true` on a row to force it. On mobile copy always comes first.
  */
-export default function Spotlight({ eyebrow, title, description, rows = [], background = 'default' }) {
+export default function Spotlight({ title, description, rows = [], background = 'default' }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
   return (
     <section className={['l-band', 'l-band--lg', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-stack l-stack--900">
-        <SectionHead eyebrow={eyebrow} title={title} description={description} />
+        <SectionHead title={title} description={description} />
         {rows.map((row, i) => {
           const flipped = row.reverse ?? i % 2 === 1
           return (
             <div key={row.title} className="spotlight-row" style={{ display: 'grid', gap: 'var(--space-800)', alignItems: 'center' }}>
               <div className="l-stack l-stack--400" style={{ order: flipped ? 2 : 1 }}>
-                {row.eyebrow && <p className="label-xs t-subtle">{row.eyebrow}</p>}
                 <h3 className="display-sm t-balance">{row.title}</h3>
                 {row.description && <p className="body-md-regular t-subtle l-measure">{row.description}</p>}
                 {row.bullets?.length > 0 && (
