@@ -115,6 +115,7 @@ export default {
     {
       id: 'how-it-works',
       type: 'stepsSplit',
+      reverse: true,   // visual first, steps beside it
       fit: 'viewport',   // hold the section to one screen, as the hero does
       title: 'Activate your card in a few steps',
       media: { src: null, label: 'App screen', ratio: '1 / 1' },

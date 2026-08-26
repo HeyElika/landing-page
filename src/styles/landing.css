@@ -483,7 +483,9 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
     grid-template-columns: 1fr 1fr;
     gap: var(--space-1000);
   }
-  .c-steps-split--reverse .c-steps-split__list { order: 2; }
+  /* Targets the column, not the list: the heading travels with the steps, so
+   * ordering the list alone left the heading on the far side. */
+  .c-steps-split--reverse .c-steps-split__col { order: 2; }
   .c-steps-split--reverse .c-steps-split__media { order: 1; }
 }
 
