@@ -134,7 +134,6 @@ export default {
       // Two routes, side by side. Cards are neutral surfaces for now; artwork
       // drops into `media` when it exists.
       type: 'choicePair',
-      background: 'subtle',   // cards fill white on a tinted band
       title: 'Choose whatever fits you',
       items: [
         {

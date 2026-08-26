@@ -82,8 +82,11 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
         </nav>
 
         <div className="nav-desktop" style={{ gap: 'var(--space-300)', alignItems: 'center' }}>
-          {secondaryCta && <Cta {...secondaryCta} type="secondary" size="md" />}
-          {cta && <Cta {...cta} size="md" />}
+          {/* Same size as every other primary action on the page. The header
+              was the only place using md, so the button changed shape when the
+              reader scrolled past the hero. */}
+          {secondaryCta && <Cta {...secondaryCta} type="secondary" />}
+          {cta && <Cta {...cta} />}
         </div>
 
         <button
