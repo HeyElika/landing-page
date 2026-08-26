@@ -893,7 +893,7 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   grid-template-columns: 1fr;
   gap: var(--space-800);
   align-items: center;
-  padding: var(--space-800);
+  padding: var(--space-600);
   border-radius: var(--radius-2xl);
   background: var(--color-blue-700);
   overflow: hidden;
@@ -941,8 +941,16 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
  * the same for both so they read as a pair. */
 .c-store-badge { display: inline-flex; }
 .c-store-badge img {
-  height: calc(var(--space-1000) - var(--space-100));   /* 44 */
+  /* 40 on a phone, 44 above it. Two badges plus their gap need 291px at 44,
+   * and the panel offers 286 at a 390px viewport, so they wrapped one per
+   * line — which reads as two separate offers rather than a choice of two
+   * stores. */
+  height: var(--space-900);   /* 40 */
   width: auto;
+}
+
+@media (min-width: 768px) {
+  .c-store-badge img { height: calc(var(--space-1000) - var(--space-100)); }   /* 44 */
 }
 
 @media (min-width: 900px) {
