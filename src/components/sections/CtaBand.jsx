@@ -11,7 +11,7 @@ export default function CtaBand({ title, description, ctas = [], stores = [], me
       <div className="l-stack l-stack--300">
         {title && <h2 className={['display-md', 't-balance', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{title}</h2>}
         {description && (
-          <p className={['body-lg-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>{description}</p>
+          <p className={['body-lg-regular', onDark ? 't-on-dark-subtle' : ''].filter(Boolean).join(' ')}>{description}</p>
         )}
       </div>
       <div className="l-row" style={{ justifyContent: media ? 'flex-start' : 'center' }}>

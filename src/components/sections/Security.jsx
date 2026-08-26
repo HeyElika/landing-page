@@ -25,7 +25,7 @@ export default function Security({ title, description, items = [], background = 
               />
               <h3 className={['heading-md-semibold', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{item.title}</h3>
               {item.description && (
-                <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>{item.description}</p>
+                <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : ''].filter(Boolean).join(' ')}>{item.description}</p>
               )}
             </li>
           ))}

@@ -17,6 +17,9 @@ Read `README.md` and the page you are reviewing in `src/content/products/`. The 
 Two constraints that are not negotiable:
 
 - **Tokens only.** `tokens.css` is generated from the Figma export. Never introduce a hex value, a spacing number or a type size. Section and hero headings use the display scale (`.display-lg`, `.display-md`, `.display-sm`); everything else uses the generated token classes (`.heading-*`, `.body-*`, `.link-*`, `.label-xs`). `npm run lint` fails if you break this.
+- **Reading copy is `text/base`, not `text/subtle`.** Grey is for notes,
+  captions, legal and chrome. Body copy set in `text/subtle` throughout makes a
+  page look washed out and costs contrast for no reason.
 - **No eyebrows.** Sections have a heading and supporting copy, nothing above
   them. A small-caps label on every section is repetition, not hierarchy.
 - **Chips are not pills.** `Badge` uses the design system `default` shape at

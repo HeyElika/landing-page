@@ -213,7 +213,9 @@ The library has no card, chip, accordion or icon-container component, so those a
 | `l-stack l-stack--400` | Vertical flex with a spacing token gap |
 | `l-grid l-grid--3` | Responsive grid, 1 column on mobile |
 | `c-card`, `c-badge`, `c-icon-tile`, `c-media` | Compositions from foundations |
-| `t-subtle`, `t-on-dark`, `t-brand`, `t-center` | Colour and alignment helpers only |
+| `t-subtle`, `t-on-dark`, `t-on-dark-subtle`, `t-brand`, `t-center` | Colour and alignment helpers only |
+
+Text colour: headings and reading copy inherit `text/base` from `body` and need no class. `t-subtle` (`text/subtle`) is for notes, captions, legal text and chrome only — not a default for non-heading text. On dark and brand bands use `t-on-dark` and `t-on-dark-subtle`.
 
 ## Adding a new section type
 

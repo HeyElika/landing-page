@@ -31,7 +31,7 @@ export default function Pricing({ title, description, plans = [], note, backgrou
                   <h3 className="heading-sm-semibold">{plan.name}</h3>
                   {plan.badge && <Badge label={plan.badge} type="secondary-subtle" />}
                 </div>
-                {plan.description && <p className="body-sm-regular t-subtle">{plan.description}</p>}
+                {plan.description && <p className="body-md-regular">{plan.description}</p>}
               </div>
 
               <div className="l-row" style={{ gap: 'var(--space-100)', alignItems: 'baseline' }}>

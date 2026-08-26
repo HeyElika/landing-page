@@ -26,7 +26,7 @@ export default function Steps({ title, description, items = [], background = 'de
                 {i + 1}
               </span>
               <h3 className="heading-md-semibold">{item.title}</h3>
-              {item.description && <p className="body-md-regular t-subtle">{item.description}</p>}
+              {item.description && <p className="body-md-regular">{item.description}</p>}
             </li>
           ))}
         </ol>

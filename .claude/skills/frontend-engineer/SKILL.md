@@ -73,6 +73,20 @@ different from its own: white `c-card` on a tinted band, `c-card--tinted` on a
 white one. Section surfaces alternate for exactly this reason. Chips are not
 pills — `Badge` defaults to the design system `default` shape at `--radius-sm`.
 
+**Text colour comes from the semantic text tokens, and the mapping matters.**
+
+| Use | Token | Class |
+|---|---|---|
+| Headings and reading copy | `text/base` | none — inherits from `body` |
+| Notes, captions, legal, nav and footer links, units | `text/subtle` | `t-subtle` |
+| Placeholder and empty states | `text/disabled` | — |
+| On a dark or brand band | `text/on-dark`, `text/on-dark-subtle` | `t-on-dark`, `t-on-dark-subtle` |
+| Links | `text/active` | `c-link` |
+
+`t-subtle` is for genuinely secondary text, not a default for anything that is
+not a heading. Body copy, card copy, FAQ answers and condition detail are all
+primary reading and belong on `text/base`.
+
 **Colour discipline.** Brand red is for primary actions and brand emphasis
 only. It is never an icon colour and never a chip background — `Badge` mirrors
 the Figma `badge/item` set, whose only red variant is a solid fill with white

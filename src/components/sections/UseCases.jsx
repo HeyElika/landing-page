@@ -32,7 +32,7 @@ export default function UseCases({ title, description, items = [], background = 
               <Icon name={item.icon || 'card'} size="md" color="var(--icon-base)" />
               <span className="l-stack l-stack--100">
                 <span className="heading-sm-semibold">{item.title}</span>
-                {item.description && <span className="body-sm-regular t-subtle">{item.description}</span>}
+                {item.description && <span className="body-md-regular">{item.description}</span>}
               </span>
             </li>
           ))}

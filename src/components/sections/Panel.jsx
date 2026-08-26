@@ -43,7 +43,7 @@ export default function Panel({
               {title && <h2 className="display-sm t-balance">{title}</h2>}
 
               {copy.map((p) => (
-                <p key={p} className="body-md-regular t-subtle">{p}</p>
+                <p key={p} className="body-md-regular">{p}</p>
               ))}
 
               {bullets.length > 0 && (

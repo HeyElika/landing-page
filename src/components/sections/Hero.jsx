@@ -64,7 +64,7 @@ export default function Hero({
         {badge && <span><Badge {...badge} /></span>}
         {title && <h1 className={['display-lg', 't-balance', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{title}</h1>}
         {description && (
-          <p className={['body-lg-regular', 'l-measure', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>
+          <p className={['body-lg-regular', 'l-measure', onDark ? 't-on-dark-subtle' : ''].filter(Boolean).join(' ')}>
             {description}
           </p>
         )}

@@ -34,7 +34,7 @@ export default function Conditions({ title, description, items = [], background 
               <Icon name={item.icon || 'document'} size="md" color="var(--icon-subtle)" />
               <span className="l-stack l-stack--100">
                 <span className="heading-md-semibold">{item.title}</span>
-                <span className="body-md-regular t-subtle">{item.detail}</span>
+                <span className="body-md-regular">{item.detail}</span>
               </span>
             </li>
           ))}

@@ -18,7 +18,7 @@ export default function Spotlight({ title, description, rows = [], background = 
             <div key={row.title} className="spotlight-row" style={{ display: 'grid', gap: 'var(--space-800)', alignItems: 'center' }}>
               <div className="l-stack l-stack--400" style={{ order: flipped ? 2 : 1 }}>
                 <h3 className="display-sm t-balance">{row.title}</h3>
-                {row.description && <p className="body-md-regular t-subtle l-measure">{row.description}</p>}
+                {row.description && <p className="body-md-regular l-measure">{row.description}</p>}
                 {row.bullets?.length > 0 && (
                   <ul className="l-stack l-stack--200">
                     {row.bullets.map((b) => (

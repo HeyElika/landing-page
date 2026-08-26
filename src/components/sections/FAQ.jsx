@@ -48,7 +48,7 @@ export default function FAQ({ title, description, items = [], background = 'defa
                   <Icon name={open ? 'chevron-up' : 'chevron-down'} size="sm" color="var(--icon-subtle)" />
                 </button>
                 {open && (
-                  <p id={panelId} className="body-md-regular t-subtle" style={{ paddingBottom: 'var(--space-500)' }}>
+                  <p id={panelId} className="body-md-regular" style={{ paddingBottom: 'var(--space-500)' }}>
                     {item.answer}
                   </p>
                 )}

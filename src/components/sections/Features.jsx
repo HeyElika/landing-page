@@ -25,7 +25,7 @@ export default function Features({ title, description, items = [], columns = 3, 
                 <IconTile icon={item.icon} tone={onDark ? 'onDark' : item.tone} />
                 <h3 className={['heading-md-semibold', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{item.title}</h3>
                 {item.description && (
-                  <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>{item.description}</p>
+                  <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : ''].filter(Boolean).join(' ')}>{item.description}</p>
                 )}
               </div>
             </li>
