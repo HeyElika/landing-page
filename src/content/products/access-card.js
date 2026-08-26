@@ -84,6 +84,7 @@ export default {
       type: 'features',
       title: 'What the card gives you',
       background: 'subtle',   // white cards need a tinted band to sit on
+      fit: 'viewport',        // one screen, three identical cards
       columns: 3,
       items: [
         {

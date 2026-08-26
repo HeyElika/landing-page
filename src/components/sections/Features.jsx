@@ -3,14 +3,27 @@ import IconTile from '../ui/IconTile'
 
 /**
  * Benefit grid. `columns` accepts 2, 3 or 4.
+ *
+ * `fit: 'viewport'` holds the section to one screen and squares the cards, so
+ * the row reads as one set of identical objects rather than three boxes of
+ * whatever height their copy happened to need.
  * DESIGN-RULES.md caps benefits at three or four on an activation page, so
  * prefer a short list over a full grid when the page is conversion-focused.
  */
-export default function Features({ title, description, items = [], columns = 3, align = 'center', background = 'default', variant = 'card' }) {
+export default function Features({
+  title,
+  description,
+  items = [],
+  columns = 3,
+  align = 'center',
+  fit = 'auto',            // 'auto' | 'viewport' — hold the section to one screen
+  background = 'default',
+  variant = 'card',
+}) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken', dark: 'l-band--dark' }[background] || ''
   const onDark = background === 'dark'
   return (
-    <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
+    <section className={['l-band', fit === 'viewport' ? 'l-band--fit' : '', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-stack l-stack--900">
         <SectionHead title={title} description={description} align={align} onDark={onDark} />
         <ul className={`l-grid l-grid--${columns}`}>
