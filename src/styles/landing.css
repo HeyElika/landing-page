@@ -761,14 +761,16 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
  * makes a max-height accordion feel either clipped or slow.
  */
 
+/* The rule sits on the row, not on the button, so it stays put when the row
+ * opens and always falls below the answer rather than between the question and
+ * its own answer. Lighter than --border-subtle for the same reason as the
+ * footer rule: a hairline calibrated for component edges reads heavy stretched
+ * across a column this wide. */
 .c-faq {
   scroll-margin-top: calc(var(--nav-h) + var(--space-400));
-  border-radius: var(--radius-2xl);
-  padding-inline: var(--space-600);
-  margin-inline: calc(var(--space-600) * -1);
-  background: transparent;
-  transition: background-color 280ms ease;
+  border-bottom: var(--border-width-xs) solid var(--alpha-black-10);
 }
+.c-faq:first-child { border-top: var(--border-width-xs) solid var(--alpha-black-10); }
 
 .c-faq__q {
   width: 100%;
@@ -779,25 +781,10 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   padding: var(--space-500) 0;
   background: none;
   border: none;
-  /* Lighter than --border-subtle, for the same reason as the footer rule: a
-   * hairline that reads correctly at component scale reads heavy stretched
-   * across the full container. */
-  border-bottom: var(--border-width-xs) solid var(--alpha-black-10);
   cursor: pointer;
   text-align: left;
   color: var(--text-base);
 }
-.c-faq:first-child .c-faq__q { border-top: var(--border-width-xs) solid var(--alpha-black-10); }
-.c-faq--open .c-faq__q,
-.c-faq--open + .c-faq .c-faq__q { border-color: transparent; }
-.c-faq--open:first-child .c-faq__q { border-top-color: transparent; }
-
-/* On a white band the open group does not fill: the section stays one white
- * surface and the hairlines plus the minus carry the open state. On a tinted
- * band it fills white, so it still separates by fill rather than by a border. */
-.c-faq--open { background: transparent; }
-.l-band--subtle .c-faq--open,
-.l-band--sunken .c-faq--open { background: var(--bg-base); }
 
 /* Animated panel. The inner element must be the one that clips. */
 .c-faq__panel {
@@ -827,12 +814,7 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
 }
 .c-faq--open .c-faq__icon { transform: rotate(180deg); }
 
-.c-faq__a {
-  padding-bottom: var(--space-600);
-  /* The row is full width; the prose inside it is not. A 1200px line is
-   * unreadable however wide the control above it is. */
-  max-width: var(--measure);
-}
+.c-faq__a { padding-bottom: var(--space-600); }
 
 @media (prefers-reduced-motion: reduce) {
   .c-faq,

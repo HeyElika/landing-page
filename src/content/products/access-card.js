@@ -202,7 +202,7 @@ export default {
           question: 'Can I use it abroad?',
           // Verify with Product and Risk: whether international use is enabled
           // at launch, and how conversion is handled.
-          answer: 'The card is built for spending in the Philippines. If you need to pay a merchant based overseas, check the Billease app first — support can tell you whether that purchase will go through.',
+          answer: 'The card is built for spending in the Philippines. If you need to pay a merchant based overseas, check the Billease app first. Support can tell you whether that purchase will go through.',
         },
         {
           question: 'Are there fees for using the card?',
