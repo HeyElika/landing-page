@@ -811,8 +811,7 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   transition: visibility 380ms, opacity 320ms ease 120ms;   /* fade after the open begins */
 }
 
-/* The plus turns over as it becomes a minus, so the control reads as one
- * element changing rather than two icons swapping. */
+/* One chevron that turns over, rather than two icons swapping. */
 .c-faq__icon {
   display: inline-flex;
   flex-shrink: 0;
@@ -820,7 +819,12 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
 }
 .c-faq--open .c-faq__icon { transform: rotate(180deg); }
 
-.c-faq__a { padding-bottom: var(--space-600); }
+.c-faq__a {
+  padding-bottom: var(--space-600);
+  /* The row is full width; the prose inside it is not. A 1200px line is
+   * unreadable however wide the control above it is. */
+  max-width: var(--measure);
+}
 
 @media (prefers-reduced-motion: reduce) {
   .c-faq,
@@ -828,11 +832,6 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   .c-faq__panel,
   .c-faq__panel > div { transition: none; }
 }
-
-/* ── Footer ─────────────────────────────────────────────────────────────────
- * Identity and link columns across the top with the app links beside them,
- * then contact and the regulatory statement, then copyright.
- */
 
 /* ── Footer ─────────────────────────────────────────────────────────────────
  * White and small: the regulatory statement, then copyright and the legal

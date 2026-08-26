@@ -5,11 +5,14 @@ import Icon from '../../assets/icons/Icon'
 /**
  * FAQ accordion, following the Klarna pattern.
  *
- * Questions are organised into groups. A collapsed group is a quiet row with a
- * plus; the open one becomes a card carrying the group label and its questions
- * numbered inside, with the plus turning into a minus. Grouping is the point:
- * it keeps the section to a few scannable rows however many questions sit
- * behind them, instead of a long ladder of individual questions.
+ * Questions are organised into groups. Each group is a quiet row with a
+ * chevron; opening one drops its questions in beneath, numbered. Grouping is
+ * the point: it keeps the section to a few scannable rows however many
+ * questions sit behind them, instead of a long ladder of individual questions.
+ *
+ * The rows run the full width of the page while the answers inside them stay
+ * on a reading measure — a row is a control and reads better wide, a paragraph
+ * does not.
  *
  * Content shape:
  *   groups: [{ label, items: [{ question, answer }] }]
@@ -42,7 +45,7 @@ export default function FAQ({ title, description, groups, items = [], background
 
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
-      <div className="l-container l-container--reading l-stack l-stack--900">
+      <div className="l-container l-stack l-stack--900">
         <SectionHead title={title} description={description} align="start" />
 
         <ul className="l-stack l-stack--100">
@@ -60,7 +63,7 @@ export default function FAQ({ title, description, groups, items = [], background
                 >
                   <span>{group.label ?? title}</span>
                   <span className="c-faq__icon">
-                    <Icon name={open ? 'minus' : 'plus'} size="md" color="var(--icon-base)" />
+                    <Icon name="chevron-down" size="md" color="var(--icon-subtle)" />
                   </span>
                 </button>
 
