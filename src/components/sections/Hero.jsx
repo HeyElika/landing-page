@@ -56,7 +56,7 @@ export default function Hero({
   const copy = (
     <div className={['l-stack', 'l-stack--600', centered ? 'c-section-head--center' : ''].filter(Boolean).join(' ')}>
       <div className="l-stack l-stack--400">
-        {badge && <span><Badge {...badge} tone={onDark ? 'onDark' : badge.tone} /></span>}
+        {badge && <span><Badge {...badge} /></span>}
         {title && <h1 className={['display-lg', 't-balance', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{title}</h1>}
         {description && (
           <p className={['body-lg-regular', 'l-measure', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>

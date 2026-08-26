@@ -17,7 +17,7 @@ export default function Spotlight({ eyebrow, title, description, rows = [], back
           return (
             <div key={row.title} className="spotlight-row" style={{ display: 'grid', gap: 'var(--space-800)', alignItems: 'center' }}>
               <div className="l-stack l-stack--400" style={{ order: flipped ? 2 : 1 }}>
-                {row.eyebrow && <p className="label-xs t-brand">{row.eyebrow}</p>}
+                {row.eyebrow && <p className="label-xs t-subtle">{row.eyebrow}</p>}
                 <h3 className="display-sm t-balance">{row.title}</h3>
                 {row.description && <p className="body-md-regular t-subtle l-measure">{row.description}</p>}
                 {row.bullets?.length > 0 && (

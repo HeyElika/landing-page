@@ -59,6 +59,11 @@ bands 56 to 144. Calibrated against what comparable pages ship: Klarna 120px,
 Atome 80-96px, Salmon 56-96px. Sections that sit too close read as stacked. All
 values are sums of `--space-*` tokens and `npm run check` fails on a raw px.
 
+**Colour discipline.** Brand red is for primary actions and brand emphasis
+only. It is never an icon colour and never a chip background — `Badge` mirrors
+the Figma `badge/item` set, whose only red variant is a solid fill with white
+text. `IconTile` has no red tone at all.
+
 **One content box.** `.l-band` puts the page gutter outside `.l-container`.
 Anything that sets its own horizontal padding on an `.l-container` drifts by a
 gutter once the viewport passes the container width. `npm run check` fails on
@@ -77,10 +82,9 @@ it.
 Sections follow DESIGN-RULES.md section 10, in this order:
 
 1. `hero` — what this is, one action
-2. `trustBar` — rating and regulator marks, where trust gates the decision
-3. `features` — key benefits, three or four at most
-4. `useCases` — where and how it can be used
-5. `steps` — how activation or sign-up works
+2. `features` — key benefits, three or four at most
+3. `useCases` — where and how it can be used
+4. `steps` — how activation or sign-up works
 6. `panel` or `spotlight` — one or two depth moments on the product itself.
    `panel` is contained (tinted rounded container, copy beside an image) and
    breaks up a long page; `spotlight` is the same content without the box.

@@ -296,21 +296,8 @@ button { font: inherit; }
   .c-panel__grid--reverse .c-panel__media { order: 1; }
 }
 
-/* ── Chip / badge ───────────────────────────────────────────────────────── */
-
-.c-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-100);
-  padding: var(--space-100) var(--space-300);
-  border-radius: var(--radius-full);
-  background: var(--bg-error-subtle);
-  color: var(--text-brand-primary);
-}
-.c-badge--neutral { background: var(--bg-subtle); color: var(--text-subtle); }
-.c-badge--success { background: var(--bg-success-subtle); color: var(--text-success); }
-.c-badge--info { background: var(--bg-info-subtle); color: var(--text-info); }
-.c-badge--on-dark { background: var(--alpha-white-10); color: var(--text-on-dark); }
+/* Badge styles live in components/ui/Badge.jsx, which mirrors the Figma
+ * `badge/item` component set directly. No .c-badge classes here. */
 
 /* ── Icon container ─────────────────────────────────────────────────────── */
 
@@ -320,7 +307,8 @@ button { font: inherit; }
   width: var(--icon-size-2xl);
   height: var(--icon-size-2xl);
   border-radius: var(--radius-lg);
-  background: var(--bg-error-subtle);
+  /* Neutral by default. Brand red is for actions and emphasis, not icons. */
+  background: var(--bg-subtle);
   flex-shrink: 0;
 }
 .c-icon-tile--neutral { background: var(--bg-subtle); }

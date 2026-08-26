@@ -31,21 +31,13 @@ export default {
       type: 'hero',
       layout: 'split',                  // 'split' | 'centered'
       background: 'default',            // 'default' | 'subtle' | 'dark' | 'brand'
-      badge: { label: '' },             // optional
+      badge: { label: '', type: 'secondary-subtle', size: 'md' },  // optional
       title: '',                        // benefit-led, not a feature name
       description: '',
       ctas: [{ label: '', href: '#get-started' }],   // one primary action
       note: '',
       highlights: [{ label: '', icon: 'tick' }],
       media: { src: null, label: 'Product visual', ratio: '4 / 5' },
-    },
-
-    {
-      // 1b. Trust, where it gates the decision. Real figures only, or delete.
-      type: 'trustBar',
-      items: [{ icon: 'star', value: '', label: '' }],
-      badges: [{ name: 'SEC', src: null }],
-      note: '',
     },
 
     {

@@ -29,7 +29,7 @@ export default function Pricing({ eyebrow, title, description, plans = [], note,
               <div className="l-stack l-stack--200">
                 <div className="l-row" style={{ justifyContent: 'space-between' }}>
                   <h3 className="heading-sm-semibold">{plan.name}</h3>
-                  {plan.badge && <Badge label={plan.badge} />}
+                  {plan.badge && <Badge label={plan.badge} type="secondary-subtle" />}
                 </div>
                 {plan.description && <p className="body-sm-regular t-subtle">{plan.description}</p>}
               </div>

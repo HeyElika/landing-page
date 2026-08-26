@@ -41,7 +41,7 @@ export default function Panel({
         <div className={['c-panel', tone !== 'subtle' ? `c-panel--${tone}` : ''].filter(Boolean).join(' ')}>
           <div className={['c-panel__grid', reverse ? 'c-panel__grid--reverse' : ''].filter(Boolean).join(' ')}>
             <div className="c-panel__copy l-stack l-stack--400">
-              {eyebrow && <p className="label-xs t-brand">{eyebrow}</p>}
+              {eyebrow && <p className="label-xs t-subtle">{eyebrow}</p>}
               {title && <h2 className="display-sm t-balance">{title}</h2>}
 
               {copy.map((p) => (

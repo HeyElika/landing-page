@@ -7,7 +7,6 @@ import { brand, nav, footer } from '../brand'
  * card pages are actually built (Wise, Atome, Salmon, monobank, Banco Plata):
  *
  *   hero        product named, one benefit-led claim, one action, card visual
- *   trustBar    rating and regulator marks — trust gates a lending decision
  *   features    3-4 benefits as icon cards, the near-universal pattern
  *   useCases    where the card is accepted
  *   steps       activation in three steps, with honest timing
@@ -50,7 +49,7 @@ export default {
       // shows the card. One action only: a second equal CTA splits intent.
       type: 'hero',
       layout: 'split',
-      badge: { label: 'Access Card' },
+      badge: { label: 'Access Card', type: 'secondary-subtle', size: 'md' },
       title: 'Your Billease limit, ready to spend',
       description:
         'Activate your Access Card and pay with the limit you already have. Your part takes a few minutes.',
@@ -61,23 +60,7 @@ export default {
         { label: 'Ready in up to 24 hours', icon: 'clock' },
       ],
       media: { src: null, label: 'Access Card', ratio: '1.586 / 1' },
-      mediaBackdrop: 'brand',
-    },
-
-    {
-      // Wise leads with a Trustpilot score, Salmon with an App Store rating and
-      // BSP/SEC/AMLC seals. Numbers must be real before this ships.
-      type: 'trustBar',
-      items: [
-        { icon: 'star', value: '—', label: 'App rating (confirm)' },
-        { icon: 'user', value: '—', label: 'Customers (confirm)' },
-      ],
-      badges: [
-        { name: 'SEC', src: null },
-        { name: 'BSP', src: null },
-        { name: 'NPC', src: null },
-      ],
-      note: 'CONTENT DEPENDENCY: supply real figures and the regulator badge files, or delete this section. Never estimate.',
+      mediaBackdrop: 'subtle',
     },
 
     {
@@ -147,7 +130,7 @@ export default {
       // an image inside a tinted panel, the Monzo pattern: it breaks a long
       // column of sections and gives one idea room to breathe.
       type: 'panel',
-      tone: 'brand',
+      tone: 'info',
       eyebrow: 'Inside the app',
       title: 'Your card and your spending, on one screen',
       description:
@@ -165,7 +148,7 @@ export default {
       // CTA mid-page is what Wise does with "Order your card"; the label must
       // stay identical to the hero and closing band.
       type: 'panel',
-      tone: 'info',
+      tone: 'subtle',
       reverse: true,
       eyebrow: 'Control',
       title: 'Stay in control of every payment',
