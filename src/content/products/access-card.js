@@ -58,9 +58,9 @@ export default {
       type: 'hero',
       layout: 'split',
       fit: 'viewport',   // the card render must not be cut off at the fold
-      title: 'Your Billease limit, ready to spend',
+      title: 'Your Billease limit, now on a card',
       description:
-        'Activate your Access Card and pay with the limit you already have. Your part takes a few minutes.',
+        'Activate your Access Card to use your existing Billease limit for everyday spending, online and in store.',
       ctas: [{ label: 'Activate card', href: '#activate' }],
       note: 'CONTENT DEPENDENCY: confirm whether activation itself creates any charge.',
       highlights: [

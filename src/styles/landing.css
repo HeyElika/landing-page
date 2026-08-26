@@ -135,36 +135,49 @@ button { font: inherit; }
 }
 
 /* ── Viewport-height hero ───────────────────────────────────────────────────
- * Fits the first section into the screen so nothing important is cut off at
- * the fold. Desktop only: on a phone the hero stacks, and forcing it into one
- * screen would crush the copy.
+ * Fits the first section into one screen, centred, with equal space above and
+ * below. Desktop only: on a phone the hero stacks and forcing one screen would
+ * crush the copy.
  *
- * The media is bounded by height as well as width. With aspect-ratio set and
- * width:auto, the image shrinks its width to preserve the ratio instead of
- * being cropped — the card render must never be cut.
+ * Selectors are doubled (.l-band.l-band--viewport) on purpose. A single class
+ * ties with .l-band, which is declared later in this file, so .l-band's much
+ * larger padding-block silently won and the hero kept a 112px top gap.
  *
- * Padding drops to --space-1000 here; the full --band-y-lg would eat the room
- * the image needs.
+ * The media fills the available height rather than merely being capped by it,
+ * so the leftover space stays small and splits evenly top and bottom. Its
+ * width is capped so the headline column keeps a usable measure.
  */
-/* Mobile keeps the normal large-hero padding; the fitting rules below are
- * desktop only. */
 .l-band--viewport { padding-block: var(--band-y-lg); }
 
 @media (min-width: 900px) {
-  .l-band--viewport {
+  .l-band.l-band--viewport {
+    display: flex;
+    align-items: center;
     padding-block: var(--space-1000);
+    min-height: calc(100vh - var(--nav-h));
+    min-height: calc(100svh - var(--nav-h));
   }
-  /* No min-height. Forcing the section to a full screen when its content is
-   * shorter parks the difference as empty space above the copy. Capping the
-   * media height is enough on its own: the section can then never exceed one
-   * screen, and when the image is narrower than the cap the section simply
-   * ends, with no slack to distribute. */
+  .l-band--viewport > .l-container { width: 100%; }
+
+  /* More air between the copy and the image than a standard split row. */
+  .l-band--viewport .hero-split {
+    grid-template-columns: 1fr auto;
+    gap: var(--space-1000);
+  }
+
   .l-band--viewport .c-media,
   .l-band--viewport .c-placeholder {
-    max-height: calc(100vh - var(--nav-h) - var(--space-1000) * 2);
-    max-height: calc(100svh - var(--nav-h) - var(--space-1000) * 2);
+    height: calc(100vh - var(--nav-h) - var(--space-1000) * 2);
+    height: calc(100svh - var(--nav-h) - var(--space-1000) * 2);
+    max-width: 600px;
     width: auto;
     margin-inline: auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  .l-band--viewport .hero-split {
+    gap: calc(var(--space-1000) + var(--space-600));   /* 72 */
   }
 }
 
