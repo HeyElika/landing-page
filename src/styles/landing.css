@@ -790,7 +790,6 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   scroll-margin-top: calc(var(--nav-h) + var(--space-400));
   border-bottom: var(--border-width-xs) solid var(--alpha-black-10);
 }
-.c-faq:first-child { border-top: var(--border-width-xs) solid var(--alpha-black-10); }
 
 .c-faq__q {
   width: 100%;
