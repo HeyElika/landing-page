@@ -169,9 +169,26 @@ button { font: inherit; }
   .l-band--viewport .c-placeholder {
     height: calc(100vh - var(--nav-h) - var(--space-1000) * 2);
     height: calc(100svh - var(--nav-h) - var(--space-1000) * 2);
-    max-width: 600px;
+    max-width: min(520px, 42vw);
     width: auto;
     margin-inline: auto;
+  }
+
+  /* The headline is sized from the copy column, not the viewport.
+   *
+   * An authored line break only holds if the line actually fits. Measured in
+   * Overused Grotesk Bold, "Your Billease limit," is 598px at 72px — wider
+   * than the column the split layout leaves — so it wrapped and the authored
+   * break became three lines.
+   *
+   * 100cqi is the copy column. The longest line needs column / 8.31 px of font
+   * size; 11.8cqi is that with a small margin, capped at the display maximum.
+   * If a browser does not support cqi the declaration is dropped and the
+   * viewport-based size in .display-lg applies, which is the current behaviour.
+   */
+  .l-band--viewport .hero-copy { container-type: inline-size; }
+  .l-band--viewport .hero-copy .display-lg {
+    font-size: clamp(var(--text-3xl), 11.8cqi, 72px);
   }
 }
 
