@@ -63,9 +63,8 @@ export default {
       type: 'hero',
       layout: 'split',
       fit: 'viewport',   // the card render must not be cut off at the fold
-      title: ['Your Billease limit,', 'now on a card'],
-      description:
-        'Activate your Access Card and use your existing Billease limit online and in store.',
+      title: ['Your Access Card', 'is ready to activate.'],
+      description: 'Finish setting it up in just a minute.',
       ctas: [{ label: 'Open Billease app', href: 'https://app.billease.ph' }],
       note: 'No new application. Ready in up to 24 hours.',
       media: {

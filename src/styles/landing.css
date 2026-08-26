@@ -42,7 +42,9 @@
    * the maximum at 1280px, so the mobile end is the token value and not an
    * approximation of it. Verify with scripts/check-type.mjs after any change.
    */
-  --display-lg: clamp(var(--text-3xl), 1.315rem + 3.043vw, 60px);
+  /* Capped at 56 rather than 60: at 60 the hero's second line measures 534px
+   * against a 528px column and wraps to a third line. */
+  --display-lg: clamp(var(--text-3xl), 1.315rem + 3.043vw, 56px);
   --display-md: clamp(var(--text-2xl), 0.913rem + 2.609vw, 48px);
   --display-sm: clamp(var(--text-xl), 0.956rem + 1.304vw, 32px);
 
