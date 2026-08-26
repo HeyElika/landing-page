@@ -18,7 +18,7 @@
   /* Layout constants — see note above */
   --page-max: 1200px;                                     /* readable desktop measure */
   --measure: 68ch;                                        /* max line length for prose */
-  --page-gutter: var(--space-400);                        /* 16 */
+  --page-gutter: var(--space-500);                        /* 20, phones */
   --nav-h: calc(var(--space-900) + var(--space-800));      /* 40 + 32 = 72 */
 
   /* ── Marketing display scale ──────────────────────────────────────────
