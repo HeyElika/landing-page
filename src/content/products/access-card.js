@@ -187,7 +187,6 @@ export default {
       id: 'faq',
       type: 'faq',
       title: 'Frequently asked questions',
-      background: 'subtle',
       groups: [
         {
           label: 'Activating your card',
@@ -206,7 +205,6 @@ export default {
           ],
         },
       ],
-      footerLink: { text: 'Still deciding?', label: 'Contact support', href: '#' },
     },
 
   ],

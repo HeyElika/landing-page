@@ -20,7 +20,7 @@ import Icon from '../../assets/icons/Icon'
  * Important conditions belong on the page before this section, never only
  * inside it.
  */
-export default function FAQ({ title, description, groups, items = [], background = 'subtle', footerLink }) {
+export default function FAQ({ title, description, groups, items = [], background = 'default', footerLink }) {
   const resolved = groups?.length ? groups : (items.length ? [{ label: null, items }] : [])
   const [openIndex, setOpenIndex] = useState(0)
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
@@ -47,16 +47,20 @@ export default function FAQ({ title, description, groups, items = [], background
                   <Icon name={open ? 'minus' : 'plus'} size="md" color="var(--icon-base)" />
                 </button>
 
-                {open && (
-                  <div id={panelId} className="c-faq__a l-stack l-stack--400">
-                    {group.items.map((item, n) => (
-                      <div key={item.question} className="l-stack l-stack--100">
-                        <p className="body-md-semibold">{`${n + 1}. ${item.question}`}</p>
-                        <p className="body-md-regular l-measure">{item.answer}</p>
-                      </div>
-                    ))}
+                {/* Always rendered so the panel can animate open and closed.
+                    It is hidden from assistive tech while collapsed. */}
+                <div className="c-faq__panel" aria-hidden={!open}>
+                  <div>
+                    <div id={panelId} className="c-faq__a l-stack l-stack--400">
+                      {group.items.map((item, n) => (
+                        <div key={item.question} className="l-stack l-stack--100">
+                          <p className="body-md-semibold">{`${n + 1}. ${item.question}`}</p>
+                          <p className="body-md-regular l-measure">{item.answer}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                )}
+                </div>
               </li>
             )
           })}

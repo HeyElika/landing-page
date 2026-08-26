@@ -403,13 +403,26 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
 }
 
 /* ── FAQ accordion ──────────────────────────────────────────────────────────
- * Collapsed rows are quiet, separated by a hairline. The open one becomes a
- * card: on a tinted band it fills with bg/base, so it lifts by fill rather
- * than by a border, the same rule the rest of the page follows.
+ * Rows keep one left edge in every state. The open card carries padding and is
+ * pulled back out by an equal negative margin, so its background extends past
+ * the text rather than pushing the text inward — without that, opening a row
+ * shunts its label sideways and the list appears to jump.
+ *
+ * The hairline sits on the button, not the row, so it tracks the text rather
+ * than the card's wider edge.
+ *
+ * Expansion animates with the grid 0fr -> 1fr technique: it transitions to the
+ * content's natural height without measuring it in JavaScript, which is what
+ * makes a max-height accordion feel either clipped or slow.
  */
 
-.c-faq { border-bottom: var(--border-width-xs) solid var(--border-subtle); }
-.c-faq:first-child { border-top: var(--border-width-xs) solid var(--border-subtle); }
+.c-faq {
+  border-radius: var(--radius-2xl);
+  padding-inline: var(--space-600);
+  margin-inline: calc(var(--space-600) * -1);
+  background: transparent;
+  transition: background-color 280ms ease;
+}
 
 .c-faq__q {
   width: 100%;
@@ -420,30 +433,44 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   padding: var(--space-500) 0;
   background: none;
   border: none;
+  border-bottom: var(--border-width-xs) solid var(--border-subtle);
   cursor: pointer;
   text-align: left;
   color: var(--text-base);
 }
+.c-faq:first-child .c-faq__q { border-top: var(--border-width-xs) solid var(--border-subtle); }
+.c-faq--open .c-faq__q,
+.c-faq--open + .c-faq .c-faq__q { border-color: transparent; }
+.c-faq--open:first-child .c-faq__q { border-top-color: transparent; }
+
+/* Open row becomes a card. On a white band it tints; on a tinted band it goes
+ * white. Either way it separates by fill, never by a border. */
+.c-faq--open { background: var(--bg-subtle); }
+.l-band--subtle .c-faq--open,
+.l-band--sunken .c-faq--open { background: var(--bg-base); }
+
+/* Animated panel. The inner element must be the one that clips. */
+.c-faq__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.c-faq--open .c-faq__panel { grid-template-rows: 1fr; }
+
+.c-faq__panel > div {
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 320ms;
+}
+.c-faq--open .c-faq__panel > div { visibility: visible; }
 
 .c-faq__a { padding-bottom: var(--space-600); }
 
-/* The group label repeats quietly at the top of the open card, as Klarna's
- * does, so the open group still announces what it is once the row heading has
- * become the card heading. */
-.c-faq__label { padding-bottom: var(--space-200); }
-
-/* Open state: the row becomes a card. */
-.c-faq--open {
-  background: var(--bg-base);
-  border-radius: var(--radius-2xl);
-  border-bottom-color: transparent;
-  padding-inline: var(--space-600);
+@media (prefers-reduced-motion: reduce) {
+  .c-faq,
+  .c-faq__panel,
+  .c-faq__panel > div { transition: none; }
 }
-.c-faq--open + .c-faq { border-top: var(--border-width-xs) solid var(--border-subtle); }
-.c-faq--open:first-child { border-top-color: transparent; }
-
-/* On a white band the open card tints instead, so it still separates by fill. */
-.l-band:not(.l-band--subtle):not(.l-band--sunken) .c-faq--open { background: var(--bg-subtle); }
 
 /* ── Section header ─────────────────────────────────────────────────────── */
 

@@ -23,7 +23,7 @@ export default function Footer({
     <footer
       className="l-band l-band--tight"
       style={{
-        background: 'var(--bg-subtle)',
+        background: 'var(--bg-base)',
         borderTop: 'var(--border-width-xs) solid var(--border-subtle)',
       }}
     >
