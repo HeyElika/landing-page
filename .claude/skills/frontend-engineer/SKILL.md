@@ -59,6 +59,12 @@ bands 56 to 144. Calibrated against what comparable pages ship: Klarna 120px,
 Atome 80-96px, Salmon 56-96px. Sections that sit too close read as stacked. All
 values are sums of `--space-*` tokens and `npm run check` fails on a raw px.
 
+**Hero fit.** A tall product visual can push the hero past the fold — a 3:4
+image in a 600px column is 800px tall before padding. `fit: 'viewport'` caps
+the hero to one screen on desktop and bounds the media by height, so the image
+shrinks instead of cropping. Check the maths before assuming an image fits:
+`viewport height - nav height - padding`.
+
 **Surfaces are flat.** No borders on cards, no box-shadows anywhere. Cards are
 separated from the band by fill, so a card must always sit on a band tone
 different from its own: white `c-card` on a tinted band, `c-card--tinted` on a

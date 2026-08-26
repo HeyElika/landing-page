@@ -57,6 +57,7 @@ export default {
     {
       type: 'hero',
       layout: 'split',
+      fit: 'viewport',   // the card render must not be cut off at the fold
       badge: { label: 'Access Card', type: 'secondary-subtle', size: 'md', shape: 'default' },
       title: 'Your Billease limit, ready to spend',
       description:

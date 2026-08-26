@@ -59,7 +59,7 @@ Sections follow the Billease narrative in DESIGN-RULES.md section 10. **Keep the
 
 | # | `type` | Answers | Main keys |
 |---|---|---|---|
-| 1 | `hero` | What is this, and what do I do? | `layout` (`split`/`centered`), `badge`, `title`, `description`, `ctas[]`, `note`, `highlights[]`, `media` |
+| 1 | `hero` | What is this, and what do I do? | `layout` (`split`/`centered`), `fit` (`auto`/`viewport`), `badge`, `title`, `description`, `ctas[]`, `note`, `highlights[]`, `media`, `mediaBackdrop` |
 | 2 | `features` | Why should I care? | `columns` (2, 3, 4), `variant` (`card`/`plain`), `items[{ icon, title, description }]` |
 | 3 | `useCases` | Where can I use it? | `items[{ icon, title, description }]`, `note` |
 | 4 | `steps` | What happens next? | `items[{ title, description }]`, `cta` |
@@ -75,6 +75,8 @@ Two more are available outside the default narrative:
 - **`spotlight`** — the same idea without the container, for two or more feature rows in sequence: `rows[{ title, description, bullets[], media, link, reverse }]`.
 
 If a `panel` carries a `cta` it must be the page's single primary action, worded identically to the hero. Use `link` for anything softer.
+
+`fit: 'viewport'` sizes the hero to one screen on desktop so the product visual is never cut off at the fold. The image is bounded by height as well as width, so it shrinks rather than crops — important for a card render, where cropping would cut the product. Mobile is unaffected: the hero stacks there, and forcing it into one screen would crush the copy.
 
 ### Calls to action
 

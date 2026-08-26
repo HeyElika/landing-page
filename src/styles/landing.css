@@ -134,6 +134,40 @@ button { font: inherit; }
   border-radius: var(--radius-sm);
 }
 
+/* ── Viewport-height hero ───────────────────────────────────────────────────
+ * Fits the first section into the screen so nothing important is cut off at
+ * the fold. Desktop only: on a phone the hero stacks, and forcing it into one
+ * screen would crush the copy.
+ *
+ * The media is bounded by height as well as width. With aspect-ratio set and
+ * width:auto, the image shrinks its width to preserve the ratio instead of
+ * being cropped — the card render must never be cut.
+ *
+ * Padding drops to --space-1000 here; the full --band-y-lg would eat the room
+ * the image needs.
+ */
+/* Mobile keeps the normal large-hero padding; the fitting rules below are
+ * desktop only. */
+.l-band--viewport { padding-block: var(--band-y-lg); }
+
+@media (min-width: 900px) {
+  .l-band--viewport {
+    display: flex;
+    align-items: center;
+    padding-block: var(--space-1000);
+    min-height: calc(100vh - var(--nav-h));
+    min-height: calc(100svh - var(--nav-h));
+  }
+  .l-band--viewport > .l-container { width: 100%; }
+  .l-band--viewport .c-media,
+  .l-band--viewport .c-placeholder {
+    max-height: calc(100vh - var(--nav-h) - var(--space-1000) * 2);
+    max-height: calc(100svh - var(--nav-h) - var(--space-1000) * 2);
+    width: auto;
+    margin-inline: auto;
+  }
+}
+
 /* ── Bands and containers ───────────────────────────────────────────────── */
 
 .l-band {

@@ -7,6 +7,10 @@ import Icon from '../../assets/icons/Icon'
  * Hero. `layout: 'split'` places the product visual beside the copy,
  * `'centered'` stacks it underneath.
  *
+ * `fit: 'viewport'` sizes the section to one screen on desktop, so the product
+ * visual is never cut off at the fold. The image is bounded by height as well
+ * as width, so it shrinks rather than crops.
+ *
  * Per DESIGN-RULES.md the headline is heading-xl-bold and there is one
  * primary call to action. Any second action is visually subordinate.
  */
@@ -20,6 +24,7 @@ export default function Hero({
   highlights = [],
   media,
   mediaBackdrop = 'none',   // 'none' | 'subtle' | 'sunken' | 'brand' | 'info'
+  fit = 'auto',             // 'auto' | 'viewport' — fit the hero into one screen
   background = 'default',
 }) {
   const onDark = background === 'dark' || background === 'brand'
@@ -89,7 +94,10 @@ export default function Hero({
   )
 
   return (
-    <section id="top" className={['l-band', 'l-band--lg', bandTone].filter(Boolean).join(' ')}>
+    <section
+      id="top"
+      className={['l-band', fit === 'viewport' ? 'l-band--viewport' : 'l-band--lg', bandTone].filter(Boolean).join(' ')}
+    >
       <div className={['l-container', centered ? 'l-stack l-stack--800' : ''].filter(Boolean).join(' ')}>
         {centered ? (
           <>
