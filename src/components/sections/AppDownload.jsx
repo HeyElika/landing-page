@@ -12,8 +12,10 @@ import Media from '../ui/Media'
  *   { title, description, media: { src, alt, label, ratio },
  *     apps: [{ name, href, src }] }
  *
- * `apps[].src` takes the official store badge artwork when it is available.
- * Until then each renders as a labelled button.
+ * `apps[].src` is the official store badge. Apple and Google both supply the
+ * artwork and forbid redrawing it, so a badge renders as the image alone — a
+ * white button around it would be a container the badge already has. Without
+ * a `src` the entry falls back to a labelled button.
  */
 export default function AppDownload({ title, description, media, apps = [] }) {
   return (
@@ -36,13 +38,11 @@ export default function AppDownload({ title, description, media, apps = [] }) {
                   <li key={app.name}>
                     <a
                       href={app.href}
-                      className="c-store-btn body-sm-semibold"
+                      className={app.src ? 'c-store-badge' : 'c-store-btn body-sm-semibold'}
                       target="_blank"
                       rel="noreferrer noopener"
                     >
-                      {app.src
-                        ? <img src={app.src} alt={app.name} style={{ height: 'var(--space-900)' }} loading="lazy" />
-                        : app.name}
+                      {app.src ? <img src={app.src} alt={app.name} loading="lazy" /> : app.name}
                     </a>
                   </li>
                 ))}

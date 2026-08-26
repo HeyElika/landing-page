@@ -838,7 +838,9 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
  * White and small: the regulatory statement, then copyright and the legal
  * links, with a hairline marking where the page ends.
  */
-.c-footer { border-top: var(--border-width-xs) solid var(--border-subtle); }
+/* Lighter than --border-subtle: at full width even a hairline reads as a
+ * heavy line, and this one only has to suggest a separation. */
+.c-footer { border-top: var(--border-width-xs) solid var(--alpha-black-10); }
 
 .c-footer__bottom {
   display: grid;
@@ -865,7 +867,7 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
  * grow with it to read as a rounded container at all.
  */
 .c-appcta {
-  --appcta-visual: calc(var(--space-1000) * 8);   /* 384 */
+  --appcta-visual: calc(var(--space-1000) * 6.5);   /* 312 */
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-800);
@@ -903,6 +905,15 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   white-space: nowrap;
 }
 .c-store-btn:hover { background: var(--bg-subtle); }
+
+/* Official store badges. Both are supplied with their own padding and
+ * background, so they get no container of their own — only a height, which is
+ * the same for both so they read as a pair. */
+.c-store-badge { display: inline-flex; }
+.c-store-badge img {
+  height: calc(var(--space-1000) - var(--space-100));   /* 44 */
+  width: auto;
+}
 
 @media (min-width: 900px) {
   .c-appcta {

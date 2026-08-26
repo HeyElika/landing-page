@@ -160,8 +160,8 @@ export default {
         },
         {
           icon: 'lock',
-          title: 'Freeze your card',
-          description: 'Temporarily freeze your card in the Billease app if it\u2019s lost, stolen, or you notice something unusual.',
+          title: 'Lock your card',
+          description: 'Temporarily lock your card in the Billease app if it\u2019s lost, stolen, or you notice something unusual.',
         },
         {
           icon: 'chat-outline',
@@ -222,7 +222,7 @@ export default {
         {
           label: 'Security and control',
           items: [
-            { question: 'Can I freeze my card?', answer: 'CONTENT DEPENDENCY: confirm whether freeze and unfreeze exist before claiming it.' },
+            { question: 'Can I lock my card?', answer: 'CONTENT DEPENDENCY: confirm whether lock and unlock exist before claiming it.' },
             { question: 'What should I do if I lose my card?', answer: 'CONTENT DEPENDENCY: confirm the lost and stolen process and the fastest way to report it.' },
             { question: 'How is my card protected?', answer: 'CONTENT DEPENDENCY: confirm the exact protection claim with Engineering and Risk.' },
             {
@@ -242,12 +242,12 @@ export default {
       description: 'Open the App Store on your iPhone, or the Google Play Store on your Android device. Search for Billease, then tap Install or Get.',
       media: { src: null, label: 'App screen', ratio: '3 / 4' },
       apps: [
-        // CONTENT DEPENDENCY: the store links, and the official App Store and
-        // Google Play badge artwork. Both stores require their own badges, so
-        // these labelled buttons are a placeholder. Set `src` on an entry and
-        // the image replaces the button.
-        { name: 'App Store', href: '#', src: null },
-        { name: 'Google Play', href: '#', src: null },
+        // Official badge artwork, taken from Apple's and Google's own brand
+        // resources. Both stores require their own badge and forbid redrawing
+        // it, so these files are used as supplied.
+        // CONTENT DEPENDENCY: the store listing URLs.
+        { name: 'Download on the App Store', href: '#', src: '/badge-app-store.svg' },
+        { name: 'Get it on Google Play', href: '#', src: '/badge-google-play.png' },
       ],
     },
 
