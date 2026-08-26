@@ -692,6 +692,38 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   .spotlight-row > * { order: 0 !important; }
 }
 
+/* ── Section snapping ───────────────────────────────────────────────────────
+ * Sections settle to the top of the screen as you scroll, so the page reads as
+ * a sequence of panels rather than one long ribbon.
+ *
+ * `proximity`, never `mandatory`. Mandatory snapping fights the reader on any
+ * section taller than the viewport — the FAQ with two groups open, or a long
+ * card grid — because the browser keeps pulling the scroll back to a boundary
+ * the reader is trying to move through. Proximity only engages when a boundary
+ * is already close, so a deliberate scroll always wins.
+ *
+ * Snap padding matches the sticky header, otherwise a snapped section starts
+ * underneath it.
+ *
+ * Desktop only, and off entirely under reduced motion: snapping moves the page
+ * without the reader asking, which is exactly what that preference is about.
+ */
+@media (min-width: 900px) and (min-height: 700px) {
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-snap-type: y proximity;
+      /* Same offset the anchor jumps use, so a snapped section and a linked
+       * section land in the same place. */
+      scroll-padding-top: calc(var(--nav-h) + var(--space-400));
+    }
+    .l-band { scroll-snap-align: start; }
+    /* A section taller than the screen must never trap the reader at its top. */
+    .l-band--fit,
+    .l-band--viewport { scroll-snap-stop: normal; }
+    footer.l-band { scroll-snap-align: none; }
+  }
+}
+
 /* ── Reveal on scroll ───────────────────────────────────────────────────────
  * Content lifts in gently as it enters the viewport.
  *
@@ -705,9 +737,9 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
 @media (prefers-reduced-motion: no-preference) {
   [data-reveal-ready] [data-reveal] {
     opacity: 0;
-    transform: translateY(var(--space-500));
-    transition: opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
-                transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(var(--space-600));
+    transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
     will-change: opacity, transform;
   }
   [data-reveal-ready] [data-reveal][data-revealed] {
