@@ -117,7 +117,7 @@ export default {
       type: 'stepsSplit',
       fit: 'viewport',   // hold the section to one screen, as the hero does
       title: 'Activate your card in a few steps',
-      media: { src: null, label: 'App screen', ratio: '4 / 5' },
+      media: { src: null, label: 'App screen', ratio: '1 / 1' },
       steps: [
         {
           title: 'Open your Billease app',

@@ -558,11 +558,15 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
     align-items: center;
     justify-content: center;
   }
+  /* Sized from the column, not from the leftover height. Taking the full
+   * height made the visual the tallest thing on the page and left the steps
+   * beside it looking like a caption. The height cap only bites on a short
+   * window, where it shrinks the whole square. */
   .l-band--fit .c-steps-split__media .c-media,
   .l-band--fit .c-steps-split__media .c-placeholder {
-    height: 100%;
-    width: auto;
-    max-width: 100%;
+    width: 100%;
+    height: auto;
+    max-width: min(100%, 62vh);
     margin-inline: auto;
   }
 }
