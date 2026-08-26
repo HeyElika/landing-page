@@ -432,11 +432,30 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   grid-template-columns: 1fr;
 }
 
+/* The steps read as one process, not four items: a smaller marker with a
+ * dashed line running between them. The line is drawn from each step to the
+ * next rather than as one element behind the list, so it stops correctly at
+ * the last step however many there are. */
+.c-steps-split__list { --step-dot: var(--space-800); }      /* 32 */
+
+.c-steps-split__list > li { position: relative; }
+
+.c-steps-split__list > li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--step-dot) / 2 - 1px);
+  top: calc(var(--step-dot) + var(--space-100));
+  bottom: calc((var(--space-600) + var(--space-100)) * -1);
+  border-left: var(--border-width-sm) dashed var(--border-bold);
+}
+
 .c-steps-split__num {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
-  width: var(--icon-size-xl);
-  height: var(--icon-size-xl);
+  width: var(--step-dot);
+  height: var(--step-dot);
   flex-shrink: 0;
   border-radius: var(--radius-full);
   background: var(--bg-primary);
@@ -484,6 +503,7 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: var(--space-800);
     min-height: 0;
   }
 
@@ -523,7 +543,10 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   .l-band--fit .c-steps-split {
     flex: 1;
     min-height: 0;
-    align-items: center;
+    /* Start the columns at the top. Centring them in a full-height row left a
+     * large gap under the heading, which read as the heading belonging to
+     * nothing. */
+    align-items: start;
   }
   .l-band--fit .c-steps-split__media {
     min-height: 0;
