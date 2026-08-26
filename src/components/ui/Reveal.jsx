@@ -30,7 +30,10 @@ export default function Reveal({ children, immediate = false }) {
         entry.target.setAttribute('data-revealed', '')
         io.unobserve(entry.target)   // reveal once; never re-hide on scroll back
       },
-      { threshold: 0.08, rootMargin: '0px 0px -8% 0px' },
+      // Starts once the block is a little way into the viewport, so the
+      // movement reads as a response to scrolling rather than something that
+      // already happened off-screen.
+      { threshold: 0.12, rootMargin: '0px 0px -12% 0px' },
     )
     io.observe(el)
     return () => io.disconnect()

@@ -974,6 +974,42 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
     transform: none;
     will-change: auto;
   }
+
+  /* Items inside a section arrive one after another rather than as one slab.
+   * Each travels a little further than the section around it and starts a beat
+   * later than the item before it, so a row of cards reads left to right as it
+   * comes in. Four delays covers every row on these pages; a fifth item simply
+   * arrives with the fourth, which is better than a row that keeps stretching
+   * the wait. */
+  [data-reveal-ready] [data-reveal] .l-grid > li,
+  [data-reveal-ready] [data-reveal] .c-security__items > li,
+  [data-reveal-ready] [data-reveal] .c-steps-split__list > li {
+    opacity: 0;
+    transform: translateY(var(--space-800));
+    transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  [data-reveal-ready] [data-reveal][data-revealed] .l-grid > li,
+  [data-reveal-ready] [data-reveal][data-revealed] .c-security__items > li,
+  [data-reveal-ready] [data-reveal][data-revealed] .c-steps-split__list > li {
+    opacity: 1;
+    transform: none;
+  }
+  [data-reveal-ready] [data-reveal][data-revealed] .l-grid > li:nth-child(2),
+  [data-reveal-ready] [data-reveal][data-revealed] .c-security__items > li:nth-child(2),
+  [data-reveal-ready] [data-reveal][data-revealed] .c-steps-split__list > li:nth-child(2) {
+    transition-delay: 90ms;
+  }
+  [data-reveal-ready] [data-reveal][data-revealed] .l-grid > li:nth-child(3),
+  [data-reveal-ready] [data-reveal][data-revealed] .c-security__items > li:nth-child(3),
+  [data-reveal-ready] [data-reveal][data-revealed] .c-steps-split__list > li:nth-child(3) {
+    transition-delay: 180ms;
+  }
+  [data-reveal-ready] [data-reveal][data-revealed] .l-grid > li:nth-child(n + 4),
+  [data-reveal-ready] [data-reveal][data-revealed] .c-security__items > li:nth-child(n + 4),
+  [data-reveal-ready] [data-reveal][data-revealed] .c-steps-split__list > li:nth-child(n + 4) {
+    transition-delay: 270ms;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
