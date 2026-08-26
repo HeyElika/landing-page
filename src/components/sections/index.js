@@ -8,6 +8,7 @@
  *   2. features      key benefits, three or four at most
  *   3. useCases      where and how the product can be used
  *   4. steps         how activation or sign-up works
+ *      stepScroller  the same, advanced by scroll on desktop
  *   5. pricing       terms, where cost is a real user question
  *   6. conditions    important things to know, BEFORE the FAQ
  *   7. security      security and control
@@ -30,6 +31,7 @@ import Hero from './Hero'
 import Features from './Features'
 import UseCases from './UseCases'
 import Steps from './Steps'
+import StepScroller from './StepScroller'
 import Spotlight from './Spotlight'
 import Panel from './Panel'
 import Pricing from './Pricing'
@@ -43,6 +45,7 @@ export const SECTIONS = {
   features: Features,
   useCases: UseCases,
   steps: Steps,
+  stepScroller: StepScroller,
   spotlight: Spotlight,
   panel: Panel,
   pricing: Pricing,

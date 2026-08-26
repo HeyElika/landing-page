@@ -63,6 +63,7 @@ Sections follow the Billease narrative in DESIGN-RULES.md section 10. **Keep the
 | 2 | `features` | Why should I care? | `columns` (2, 3, 4), `variant` (`card`/`plain`), `items[{ icon, title, description }]` |
 | 3 | `useCases` | Where can I use it? | `items[{ icon, title, description }]`, `note` |
 | 4 | `steps` | What happens next? | `items[{ title, description }]`, `cta` |
+| 4 | `stepScroller` | What happens next, in sequence | `steps[{ title, description, media }]` |
 | 5 | `pricing` | What does it cost? | `plans[{ name, price, unit, description, badge, featured, features[], cta }]`, `note` |
 | 6 | `conditions` | What should I know? | `items[{ icon, title, detail }]`, `note` |
 | 7 | `security` | Is it safe? | `items[{ icon, title, description }]` |
@@ -104,6 +105,14 @@ Two rules that are not negotiable:
 - **One primary action per page**, repeated in the nav, the hero and the closing band, worded identically each time.
 
 Every section accepts `background`: `default`, `subtle`, `sunken`, `dark` or `brand`. Alternate meaningfully rather than mechanically.
+
+### The step scroller
+
+`stepScroller` is a tall track holding a sticky stage: while the track passes the viewport the stage stays put and the active step changes, so one scroll gesture walks the reader through the sequence rather than past four separate blocks.
+
+It does not hijack scrolling — the page keeps moving at its normal speed and the step index is derived from progress through the track, so a fast flick or an anchor jump never traps the reader. Height is `steps × 80svh + 100svh`, so add or remove a step and the track resizes itself.
+
+Below 900px the mechanism switches off entirely and the steps render as a plain stacked list. A sticky sequence in a short viewport hides content behind a gesture, and every step is worth reading on a phone.
 
 ### Deliberately absent
 

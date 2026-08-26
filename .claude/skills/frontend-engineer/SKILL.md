@@ -117,7 +117,8 @@ Sections follow DESIGN-RULES.md section 10, in this order:
 1. `hero` — what this is, one action
 2. `features` — key benefits, three or four at most
 3. `useCases` — where and how it can be used
-4. `steps` — how activation or sign-up works
+4. `steps` — how activation or sign-up works, or `stepScroller` for the same
+   content advanced by scroll on desktop and stacked on mobile
 6. `panel` or `spotlight` — one or two depth moments on the product itself.
    `panel` is contained (tinted rounded container, copy beside an image) and
    breaks up a long page; `spotlight` is the same content without the box.

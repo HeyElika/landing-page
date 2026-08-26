@@ -136,23 +136,31 @@ export default {
     },
 
     {
+      // Scroll-driven: one gesture walks through the four steps instead of
+      // scrolling past four blocks. Falls back to a stacked list on mobile.
       id: 'how-it-works',
-      type: 'steps',
-      title: 'Your part takes just a few minutes',
-      background: 'subtle',
-      description: 'Once verification is done, there is nothing else for you to do.',
-      items: [
+      type: 'stepScroller',
+      title: 'Activate your card in a few steps',
+      steps: [
         {
-          title: 'Complete verification',
-          description: 'CONTENT DEPENDENCY: confirm exactly which steps the user completes.',
+          title: 'Open your Billease app',
+          description: 'Log in with your existing account, no new sign-up needed.',
+          media: { src: null, label: 'App login screen', ratio: '4 / 5' },
         },
         {
-          title: 'We process the activation',
-          description: 'This can take up to 24 hours.',
+          title: 'Click Scan QR',
+          description: "You'll find it on your account home screen.",
+          media: { src: null, label: 'Account home screen', ratio: '4 / 5' },
         },
         {
-          title: 'We tell you it is ready',
-          description: 'Nothing else to do. We notify you when the card can be used.',
+          title: 'Scan the QR code on the back of your card',
+          description: "Same code, this time inside the app. It's single-use, so this finishes the bind.",
+          media: { src: null, label: 'QR scanner', ratio: '4 / 5' },
+        },
+        {
+          title: 'Set up your 4-digit card PIN',
+          description: 'Last step, then your card is ready to use.',
+          media: { src: null, label: 'PIN setup screen', ratio: '4 / 5' },
         },
       ],
     },
