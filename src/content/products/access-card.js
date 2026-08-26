@@ -121,7 +121,7 @@ export default {
       type: 'stepsSplit',
       reverse: true,   // visual first, steps beside it
       fit: 'viewport',   // hold the section to one screen, as the hero does
-      title: 'Activate your card in a few steps',
+      title: 'Activate your card in a few steps.',
       media: {
         src: '/card-in-hand.jpg',
         alt: 'A Billease Access Card held up to the camera',
@@ -152,7 +152,7 @@ export default {
       // and security stay one section: split in two they said the same thing
       // twice. No CTA here — the action belongs to the header and the hero.
       type: 'security',
-      title: 'Safe by default, and in your control',
+      title: 'Safe by default, and in your control.',
       description: 'Get notified when your card is used, manage it from the Billease app, and act quickly if something doesn\u2019t look right.',
       media: {
         src: '/app-card-locked.jpg',
