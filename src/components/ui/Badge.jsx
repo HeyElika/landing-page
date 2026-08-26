@@ -11,7 +11,10 @@ import Icon from '../../assets/icons/Icon'
  *   primary           bg/primary      + text/on-dark
  *
  * Sizes: sm = 22px tall, body-xxs-semibold. md = 29px tall, body-sm-semibold.
- * Shapes: default = radius/sm, round = radius/full. Inline padding spacing/200.
+ * Shapes: default = radius/sm (4px), round = radius/full. `default` is the
+ * default here — Billease does not use fully rounded chips. Only pass
+ * shape="round" if a specific design calls for it.
+ * Inline padding spacing/200.
  *
  * There is no pale-red variant. An earlier version of this file invented one;
  * if a page needs red it uses `primary`, which is a solid fill with white text.
@@ -27,7 +30,7 @@ const SIZES = {
   md: { height: 29, cls: 'body-sm-semibold', icon: 'xs' },
 }
 
-export default function Badge({ label, type = 'tertriary', shape = 'round', size = 'sm', icon }) {
+export default function Badge({ label, type = 'tertriary', shape = 'default', size = 'sm', icon }) {
   const t = TYPES[type] ?? TYPES.tertriary
   const s = SIZES[size] ?? SIZES.sm
 

@@ -59,6 +59,12 @@ bands 56 to 144. Calibrated against what comparable pages ship: Klarna 120px,
 Atome 80-96px, Salmon 56-96px. Sections that sit too close read as stacked. All
 values are sums of `--space-*` tokens and `npm run check` fails on a raw px.
 
+**Surfaces are flat.** No borders on cards, no box-shadows anywhere. Cards are
+separated from the band by fill, so a card must always sit on a band tone
+different from its own: white `c-card` on a tinted band, `c-card--tinted` on a
+white one. Section surfaces alternate for exactly this reason. Chips are not
+pills — `Badge` defaults to the design system `default` shape at `--radius-sm`.
+
 **Colour discipline.** Brand red is for primary actions and brand emphasis
 only. It is never an icon colour and never a chip background — `Badge` mirrors
 the Figma `badge/item` set, whose only red variant is a solid fill with white

@@ -17,6 +17,8 @@ Read `README.md` and the page you are reviewing in `src/content/products/`. The 
 Two constraints that are not negotiable:
 
 - **Tokens only.** `tokens.css` is generated from the Figma export. Never introduce a hex value, a spacing number or a type size. Section and hero headings use the display scale (`.display-lg`, `.display-md`, `.display-sm`); everything else uses the generated token classes (`.heading-*`, `.body-*`, `.link-*`, `.label-xs`). `npm run lint` fails if you break this.
+- **Chips are not pills.** `Badge` uses the design system `default` shape at
+  `--radius-sm`. Fully rounded chips are not the Billease style.
 - **Red is for actions and emphasis only.** Never an icon colour, never a chip
   background, never a repeated eyebrow. `IconTile` has no red tone; `Badge`
   mirrors the Figma `badge/item` set, whose only red variant is a solid fill
@@ -80,7 +82,7 @@ Read only the hero. Can you answer what this is, who it is for, and what it cost
 ### 3. Scannability
 
 - Section order tells a story: what it is, how it works, why trust it, what it costs, what to do
-- No two adjacent sections share a `background` tone, otherwise the bands blur together
+- No two adjacent sections share a `background` tone. This is now structural, not just aesthetic: cards are flat and borderless, so a card on a band of its own fill colour becomes invisible
 - `features` items are parallel in grammar and roughly equal in length
 - Body copy sits under about 75 characters per line, which `t-lead` and `t-body` handle when you do not override the width
 

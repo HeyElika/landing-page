@@ -186,6 +186,14 @@ The display scale is an approved extension past the token scale, documented in D
 
 Never write `font-size`, `font-weight` or `line-height` in a component.
 
+### Surfaces
+
+Cards and tiles are **flat, borderless and separated by fill**, not by a line. That is what the reference pages do: measured on Klarna, card borders are `none` or `0` almost everywhere and `box-shadow` is reserved for focus rings. There are zero box-shadows on any page.
+
+The consequence is a rule to keep in mind: **a card needs a band tone different from its own fill.** White `c-card` on a tinted band, tinted `c-card--tinted` or tile on a white band. Two of the same tone and the card disappears. Section surfaces alternate for this reason — the Access Card page runs white, tinted, white, tinted, white, dark, tinted, brand, and `npm run dev` will make a mistake here obvious immediately.
+
+Radii: cards `--radius-xl` (16), large containers and media `--radius-2xl` (24), pills `--radius-full`. **Chips are not pills** — `Badge` defaults to the design system's `default` shape at `--radius-sm` (4px).
+
 ### Components
 
 Buttons are the Billease library Button (Figma node `16:182`) in `src/components/ds/`, used through `src/components/ui/Cta.jsx`. Do not build another button.

@@ -217,25 +217,26 @@ button { font: inherit; }
  * or icon-container component to reuse, so these follow the radius, border and
  * elevation rules rather than inventing a look. */
 
+/* Flat and borderless, separated from the band by fill rather than by a line.
+ * That is how the reference pages do it: measured on Klarna, card borders are
+ * `none` or `0` almost everywhere and box-shadow is reserved for focus rings.
+ * A card therefore needs a band tone different from its own fill — white cards
+ * belong on a tinted band, tinted tiles on a white one. */
 .c-card {
   background: var(--bg-base);
-  border: var(--border-width-xs) solid var(--border-subtle);
-  border-radius: var(--radius-lg);          /* 12, standard card */
+  border-radius: var(--radius-xl);          /* 16, top of the card range */
   padding: var(--space-600);                /* 24, within 16–24 guidance */
 }
-.c-card--flat { border-color: transparent; background: var(--bg-subtle); }
-.c-card--raised { box-shadow: var(--shadow-xs); }
+.c-card--tinted { background: var(--bg-subtle); }
 .c-card--on-dark {
   background: var(--alpha-white-10);
-  border-color: var(--alpha-white-20);
   color: var(--text-on-dark);
 }
 
 .c-media {
-  border-radius: var(--radius-xl);          /* 16, large promotional container */
+  border-radius: var(--radius-2xl);         /* 24, large container */
   overflow: hidden;
   background: var(--bg-subtle);
-  border: var(--border-width-xs) solid var(--border-subtle);
 }
 .c-media img { width: 100%; height: 100%; object-fit: cover; }
 
@@ -247,7 +248,7 @@ button { font: inherit; }
   aspect-ratio: var(--ratio, 4 / 3);
   background: var(--bg-subtle);
   border: var(--border-width-xs) dashed var(--border-bold);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-2xl);
   color: var(--text-disabled);
   text-align: center;
   padding: var(--space-400);

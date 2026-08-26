@@ -17,7 +17,9 @@ export default function Features({ eyebrow, title, description, items = [], colu
           {items.map((item) => (
             <li
               key={item.title}
-              className={variant === 'card' ? ['c-card', onDark ? 'c-card--on-dark' : ''].filter(Boolean).join(' ') : ''}
+              className={variant === 'card'
+                ? ['c-card', onDark ? 'c-card--on-dark' : '', background === 'default' ? 'c-card--tinted' : ''].filter(Boolean).join(' ')
+                : ''}
             >
               <div className="l-stack l-stack--300">
                 <IconTile icon={item.icon} tone={onDark ? 'onDark' : item.tone} />

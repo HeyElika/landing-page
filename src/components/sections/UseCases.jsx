@@ -9,7 +9,7 @@ import Icon from '../../assets/icons/Icon'
  * confirmed is actually supported; an unconfirmed case is a content
  * dependency, not a guess.
  */
-export default function UseCases({ eyebrow, title, description, items = [], background = 'subtle', note }) {
+export default function UseCases({ eyebrow, title, description, items = [], background = 'default', note }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
@@ -24,10 +24,9 @@ export default function UseCases({ eyebrow, title, description, items = [], back
                 gap: 'var(--space-400)',
                 alignItems: 'flex-start',
                 flexWrap: 'nowrap',
-                background: 'var(--bg-base)',
-                border: 'var(--border-width-xs) solid var(--border-subtle)',
-                borderRadius: 'var(--radius-lg)',
-                padding: 'var(--space-400)',
+                background: 'var(--bg-subtle)',
+                borderRadius: 'var(--radius-xl)',
+                padding: 'var(--space-500)',
               }}
             >
               <Icon name={item.icon || 'card'} size="md" color="var(--icon-base)" />

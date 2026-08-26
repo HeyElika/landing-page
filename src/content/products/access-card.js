@@ -17,6 +17,10 @@ import { brand, nav, footer } from '../brand'
  *    band they said the same thing twice.
  *  - "Important things to know" stays on the page, above the FAQ.
  *
+ * Surface rhythm alternates white, tinted, white, tinted, white, dark, tinted,
+ * brand. Cards are flat and borderless, so each one needs a band tone
+ * different from its own fill — that is the pattern the reference pages use.
+ *
  * CTA placement is exactly three: sticky header, hero, closing band, plus the
  * mobile sticky bar which carries the same action rather than adding a new one.
  *
@@ -53,7 +57,7 @@ export default {
     {
       type: 'hero',
       layout: 'split',
-      badge: { label: 'Access Card', type: 'secondary-subtle', size: 'md' },
+      badge: { label: 'Access Card', type: 'secondary-subtle', size: 'md', shape: 'default' },
       title: 'Your Billease limit, ready to spend',
       description:
         'Activate your Access Card and pay with the limit you already have. Your part takes a few minutes.',
@@ -73,6 +77,7 @@ export default {
       type: 'features',
       eyebrow: 'Why activate',
       title: 'What the card gives you',
+      background: 'subtle',   // white cards need a tinted band to sit on
       columns: 3,
       items: [
         {
@@ -124,6 +129,7 @@ export default {
       type: 'steps',
       eyebrow: 'How activation works',
       title: 'Your part takes just a few minutes',
+      background: 'subtle',
       description: 'Once verification is done, there is nothing else for you to do.',
       items: [
         {
