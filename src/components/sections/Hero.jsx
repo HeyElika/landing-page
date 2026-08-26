@@ -112,7 +112,7 @@ export default function Hero({
       {appLink && (
         <p className="body-md-regular t-subtle">
           {appLink.text}{' '}
-          <a className="c-link link-md" href={appLink.href}>{appLink.label}</a>
+          <a className="link-md" style={{ color: 'var(--text-base)' }} href={appLink.href}>{appLink.label}</a>
         </p>
       )}
 
