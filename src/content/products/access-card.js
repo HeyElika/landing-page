@@ -44,13 +44,15 @@ export default {
 
   brand,
   nav: {
-    ...nav,
-    links: [
-      { label: 'Why activate', href: '#benefits' },
-      { label: 'How it works', href: '#how-it-works' },
-      { label: 'FAQ', href: '#faq' },
-    ],
-    cta: { label: 'Open Billease app', href: 'https://app.billease.ph' },
+    // Header is the logo alone. The links and the action are kept here,
+    // commented, so restoring them is a matter of removing the slashes.
+    //
+    // links: [
+    //   { label: 'Why activate', href: '#benefits' },
+    //   { label: 'How it works', href: '#how-it-works' },
+    //   { label: 'FAQ', href: '#faq' },
+    // ],
+    // cta: { label: 'Open Billease app', href: 'https://app.billease.ph' },
   },
 
   // Mobile only, and the same action as the hero. Not a fourth CTA.

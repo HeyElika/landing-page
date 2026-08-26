@@ -86,6 +86,9 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
           {cta && <Cta {...cta} />}
         </div>
 
+        {/* Only when there is something behind it. With no links and no action
+            the menu opened onto an empty panel. */}
+        {(links.length > 0 || cta || secondaryCta) && (
         <button
           type="button"
           className="nav-mobile-toggle"
@@ -109,6 +112,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
         >
           <Icon name={open ? 'close' : 'burger-menu'} size="md" color="var(--icon-base)" />
         </button>
+        )}
       </div>
 
       {open && (
