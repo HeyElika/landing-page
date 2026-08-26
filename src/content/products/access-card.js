@@ -58,15 +58,15 @@ export default {
       type: 'hero',
       layout: 'split',
       fit: 'viewport',   // the card render must not be cut off at the fold
-      title: 'Your Billease limit, now on a card',
+      title: ['Your Billease limit,', 'now on a card'],
       description:
-        'Activate your Access Card to use your existing Billease limit for everyday spending, online and in store.',
+        'Activate your Access Card and use your existing Billease limit online and in store.',
       ctas: [{ label: 'Activate card', href: '#activate' }],
       // The activation-cost question is tracked in the FAQ, not in the hero:
       // an unresolved marker directly under the primary action undermines it.
       highlights: [
-        { label: 'No new application', icon: 'tick' },
-        { label: 'Ready in up to 24 hours', icon: 'clock' },
+        { label: 'No new application required', icon: 'tick' },
+        { label: 'Activation may take up to 24 hours', icon: 'clock' },
       ],
       media: {
         src: '/access-card.jpg',

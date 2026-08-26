@@ -11,6 +11,11 @@ import Icon from '../../assets/icons/Icon'
  * visual is never cut off at the fold. The image is bounded by height as well
  * as width, so it shrinks rather than crops.
  *
+ * `title` accepts a string, or an array of strings to control where the
+ * headline breaks. Each line renders as a block inside the single h1, so the
+ * heading stays one element. Text balancing is dropped for an authored break,
+ * since the browser would otherwise rebalance against the author's choice.
+ *
  * Per DESIGN-RULES.md the headline is heading-xl-bold and there is one
  * primary call to action. Any second action is visually subordinate.
  */
@@ -62,7 +67,20 @@ export default function Hero({
     <div className={['l-stack', 'l-stack--600', centered ? 'c-section-head--center' : ''].filter(Boolean).join(' ')}>
       <div className="l-stack l-stack--400">
         {badge && <span><Badge {...badge} /></span>}
-        {title && <h1 className={['display-lg', 't-balance', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{title}</h1>}
+        {title && (
+          <h1
+            className={[
+              'display-lg',
+              // An authored line break replaces balancing: the two would fight.
+              Array.isArray(title) ? '' : 't-balance',
+              onDark ? 't-on-dark' : '',
+            ].filter(Boolean).join(' ')}
+          >
+            {Array.isArray(title)
+              ? title.map((line) => <span key={line} style={{ display: 'block' }}>{line}</span>)
+              : title}
+          </h1>
+        )}
         {description && (
           <p className={['body-lg-regular', 'l-measure', onDark ? 't-on-dark-subtle' : ''].filter(Boolean).join(' ')}>
             {description}
