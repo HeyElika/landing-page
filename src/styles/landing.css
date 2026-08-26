@@ -634,9 +634,9 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
 }
 
 /* ── Security section ───────────────────────────────────────────────────────
- * An intro with a visual, a rule, then a row of supporting points. The rule is
- * the one place on this page a border earns its keep: it separates two parts
- * of the same section, where a change of fill would read as two sections.
+ * An intro with a visual, then a row of supporting points beneath it. They are
+ * separated by space alone — a rule between them read as a divider dropped
+ * into the middle of one section.
  */
 
 .c-security__intro {
@@ -649,11 +649,9 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
 .c-security__media .c-media,
 .c-security__media .c-placeholder { border-radius: var(--radius-2xl); }
 
-.c-security__items {
-  padding-top: var(--space-900);
-  border-top: var(--border-width-xs) solid var(--border-subtle);
-}
-.l-band--dark .c-security__items { border-top-color: var(--alpha-white-20); }
+/* No rule above the points: the spacing already separates them from the intro,
+ * and the line was the only border left on the page. */
+.c-security__items { padding-top: var(--space-900); }
 
 .c-security__icon {
   display: grid;
