@@ -32,6 +32,8 @@ const MAP = {
   'chevron-up': 'alt-arrow-up-linear',
   'chevron-down': 'alt-arrow-down-linear',
   'close': 'close-linear',
+  'plus': 'add-linear',
+  'minus': 'minus-linear',
   'burger-menu': 'hamburger-menu-linear',
   'tick': 'check-circle-linear',
 

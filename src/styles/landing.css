@@ -402,6 +402,44 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   .c-sticky-cta { transition: none; }
 }
 
+/* ── FAQ accordion ──────────────────────────────────────────────────────────
+ * Collapsed rows are quiet, separated by a hairline. The open one becomes a
+ * card: on a tinted band it fills with bg/base, so it lifts by fill rather
+ * than by a border, the same rule the rest of the page follows.
+ */
+
+.c-faq { border-bottom: var(--border-width-xs) solid var(--border-subtle); }
+.c-faq:first-child { border-top: var(--border-width-xs) solid var(--border-subtle); }
+
+.c-faq__q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-400);
+  padding: var(--space-500) 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text-base);
+}
+
+.c-faq__a { padding-bottom: var(--space-500); }
+
+/* Open state: the row becomes a card. */
+.c-faq--open {
+  background: var(--bg-base);
+  border-radius: var(--radius-2xl);
+  border-bottom-color: transparent;
+  padding-inline: var(--space-600);
+}
+.c-faq--open + .c-faq { border-top: var(--border-width-xs) solid var(--border-subtle); }
+.c-faq--open:first-child { border-top-color: transparent; }
+
+/* On a white band the open card tints instead, so it still separates by fill. */
+.l-band:not(.l-band--subtle):not(.l-band--sunken) .c-faq--open { background: var(--bg-subtle); }
+
 /* ── Section header ─────────────────────────────────────────────────────── */
 
 .c-section-head { display: flex; flex-direction: column; gap: var(--space-300); max-width: var(--measure); }

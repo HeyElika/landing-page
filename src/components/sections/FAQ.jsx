@@ -3,62 +3,63 @@ import SectionHead from '../ui/SectionHead'
 import Icon from '../../assets/icons/Icon'
 
 /**
- * Accordion. One panel open at a time, keyboard accessible through native
- * button semantics. The Billease library has no accordion component to reuse,
- * so this is composed from foundations. See DESIGN-RULES.md section 9.
+ * FAQ accordion.
  *
- * Important conditions must appear on the page BEFORE this section, never
- * only inside it.
+ * Follows the Klarna pattern: collapsed questions are quiet rows separated by
+ * hairlines with a plus on the right; the open one becomes a card, lifted off
+ * the band by fill rather than by a border, with the plus turning into a minus.
+ * That gives the open answer somewhere to sit instead of pushing the rows
+ * apart, which is what a plain accordion does.
+ *
+ * One open at a time, and it is keyboard accessible through native button
+ * semantics.
+ *
+ * The block spans the full content width as Klarna's does, but the answer text
+ * is capped at a readable measure — their answers run the full 1300px, which
+ * is a long line to track back from.
+ *
+ * Important conditions belong on the page before this section, never only
+ * inside it.
  */
-export default function FAQ({ title, description, items = [], background = 'default', footerLink }) {
+export default function FAQ({ title, description, items = [], background = 'subtle', footerLink }) {
   const [openIndex, setOpenIndex] = useState(0)
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
 
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
-      <div className="l-container l-container--narrow l-stack l-stack--900">
-        <SectionHead title={title} description={description} />
-        <ul className="l-stack">
+      <div className="l-container l-stack l-stack--900">
+        <SectionHead title={title} description={description} align="start" />
+
+        <ul className="l-stack l-stack--100">
           {items.map((item, i) => {
             const open = openIndex === i
             const panelId = `faq-panel-${i}`
             return (
-              <li key={item.question} style={{ borderTop: 'var(--border-width-xs) solid var(--border-subtle)' }}>
+              <li key={item.question} className={open ? 'c-faq c-faq--open' : 'c-faq'}>
                 <button
                   type="button"
                   onClick={() => setOpenIndex(open ? -1 : i)}
                   aria-expanded={open}
                   aria-controls={panelId}
-                  className="heading-md-semibold"
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    gap: 'var(--space-400)',
-                    padding: 'var(--space-500) 0',
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    color: 'var(--text-base)',
-                  }}
+                  className="c-faq__q heading-sm-semibold"
                 >
-                  {item.question}
-                  <Icon name={open ? 'chevron-up' : 'chevron-down'} size="sm" color="var(--icon-subtle)" />
+                  <span>{item.question}</span>
+                  <Icon name={open ? 'minus' : 'plus'} size="md" color="var(--icon-base)" />
                 </button>
+
                 {open && (
-                  <p id={panelId} className="body-md-regular" style={{ paddingBottom: 'var(--space-500)' }}>
+                  <div id={panelId} className="c-faq__a body-md-regular l-measure">
                     {item.answer}
-                  </p>
+                  </div>
                 )}
               </li>
             )
           })}
         </ul>
+
         {footerLink && (
-          <p className="body-sm-regular t-subtle t-center">
-            {footerLink.text} <a className="c-link link-sm" href={footerLink.href}>{footerLink.label}</a>
+          <p className="body-md-regular">
+            {footerLink.text} <a className="c-link link-md" href={footerLink.href}>{footerLink.label}</a>
           </p>
         )}
       </div>
