@@ -82,7 +82,7 @@ export default function Hero({
           </h1>
         )}
         {description && (
-          <p className={['body-lg-regular', 'l-measure', onDark ? 't-on-dark-subtle' : ''].filter(Boolean).join(' ')}>
+          <p className={['body-lg-regular', 'hero-lead', onDark ? 't-on-dark-subtle' : ''].filter(Boolean).join(' ')}>
             {description}
           </p>
         )}

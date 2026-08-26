@@ -200,6 +200,16 @@ button { font: inherit; }
 /* Prose never spans the full container. */
 .l-measure { max-width: var(--measure); }
 
+/* The hero lead sits directly under the headline, so it is measured against
+ * the headline rather than against the general reading measure. At 60px the
+ * headline's longest line is about 500px; the general 68ch measure let the
+ * lead run to 775px, half as wide again, and the block read lopsided.
+ * Balancing splits it into two even lines instead of a long one and a stub. */
+.hero-lead {
+  max-width: 44ch;
+  text-wrap: balance;
+}
+
 .l-stack { display: flex; flex-direction: column; }
 .l-stack--100 { gap: var(--space-100); }
 .l-stack--200 { gap: var(--space-200); }
