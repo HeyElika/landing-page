@@ -35,16 +35,19 @@ export default function Footer({
             <Logo src={brand.logo} name={brand.name} />
           </a>
 
-          {columns.map((col) => (
-            <nav key={col.title} className="l-stack l-stack--300" aria-label={col.title}>
-              {col.links.map((l) => (
-                <a key={l.label} href={l.href} className="body-sm-regular t-subtle">{l.label}</a>
-              ))}
-            </nav>
-          ))}
+          <div className="c-footer__links">
+            {columns.map((col) => (
+              <nav key={col.title} className="l-stack l-stack--300" aria-label={col.title}>
+                <p className="body-sm-semibold">{col.title}</p>
+                {col.links.map((l) => (
+                  <a key={l.label} href={l.href} className="body-sm-regular t-subtle">{l.label}</a>
+                ))}
+              </nav>
+            ))}
+          </div>
 
           {apps.length > 0 && (
-            <div className="l-stack l-stack--300">
+            <div className="c-footer__apps-block l-stack l-stack--300">
               {appsTitle && <p className="body-sm-semibold">{appsTitle}</p>}
               <ul className="c-footer__apps l-stack l-stack--200">
               {apps.map((app) => (
