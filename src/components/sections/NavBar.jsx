@@ -4,32 +4,23 @@ import Cta from '../ui/Cta'
 import Icon from '../../assets/icons/Icon'
 
 /**
- * Sticky top navigation. The bottom border appears only once the page is
- * scrolled, matching NavHeader behaviour in the Billease app.
+ * Sticky top navigation. It stays put for the whole page; only the bottom
+ * border changes, appearing once the page is scrolled, which matches
+ * NavHeader behaviour in the Billease app.
  */
 export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
   const [scrolled, setScrolled] = useState(false)
-  const [hidden, setHidden] = useState(false)
   const [open, setOpen] = useState(false)
 
-  // Hide on the way down, return on the way up. The header is where the
-  // primary action lives, so it comes back the moment the user looks for it.
+  // The only thing scroll changes is the border. Reads are throttled to a
+  // frame so a fast scroll cannot queue up work.
   useEffect(() => {
-    let last = window.scrollY
     let frame = 0
     const onScroll = () => {
       if (frame) return
       frame = window.requestAnimationFrame(() => {
         frame = 0
-        const y = window.scrollY
-        setScrolled(y > 0)
-        const delta = y - last
-        // Ignore jitter, and never hide while near the top or while the
-        // mobile menu is open.
-        if (Math.abs(delta) > 6) {
-          setHidden(delta > 0 && y > 160)
-          last = y
-        }
+        setScrolled(window.scrollY > 0)
       })
     }
     onScroll()
@@ -50,8 +41,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
       className="c-nav"
       style={{
         borderBottom: `var(--border-width-xs) solid ${scrolled ? 'var(--border-subtle)' : 'transparent'}`,
-        transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
-        transition: 'transform 260ms ease, border-color 160ms ease',
+        transition: 'border-color 160ms ease',
         // The gutter sits on the header, not on .l-container, so the nav shares
         // exactly the content box every l-band uses. Putting it inside the
         // container instead offsets the nav by one gutter above 1264px.
@@ -94,11 +84,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
           className="nav-mobile-toggle"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
-          onClick={() => {
-            // Opening the menu must never leave the header hidden.
-            setHidden(false)
-            setOpen((v) => !v)
-          }}
+          onClick={() => setOpen((v) => !v)}
           style={{
             alignItems: 'center',
             justifyContent: 'center',
