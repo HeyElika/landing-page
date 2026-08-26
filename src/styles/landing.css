@@ -485,9 +485,10 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
 .c-faq--open + .c-faq .c-faq__q { border-color: transparent; }
 .c-faq--open:first-child .c-faq__q { border-top-color: transparent; }
 
-/* Open row becomes a card. On a white band it tints; on a tinted band it goes
- * white. Either way it separates by fill, never by a border. */
-.c-faq--open { background: var(--bg-subtle); }
+/* On a white band the open group does not fill: the section stays one white
+ * surface and the hairlines plus the minus carry the open state. On a tinted
+ * band it fills white, so it still separates by fill rather than by a border. */
+.c-faq--open { background: transparent; }
 .l-band--subtle .c-faq--open,
 .l-band--sunken .c-faq--open { background: var(--bg-base); }
 

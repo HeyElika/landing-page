@@ -10,6 +10,9 @@ import Logo from '../ui/Logo'
  *
  * `legal` must be the approved regulatory wording. `badges` renders the
  * regulator marks (NPC, SEC, BSP) when their image files are supplied.
+ *
+ * No rules between the blocks: spacing separates them. On a white footer the
+ * hairlines were doing nothing the gaps were not already doing.
  */
 export default function Footer({
   brand = {},
@@ -24,7 +27,6 @@ export default function Footer({
       className="l-band l-band--tight"
       style={{
         background: 'var(--bg-base)',
-        borderTop: 'var(--border-width-xs) solid var(--border-subtle)',
       }}
     >
       <div className="l-container l-stack l-stack--600">
@@ -54,7 +56,7 @@ export default function Footer({
         {(legal.length > 0 || badges.length > 0) && (
           <div
             className="l-stack l-stack--400"
-            style={{ borderTop: 'var(--border-width-xs) solid var(--border-subtle)', paddingTop: 'var(--space-500)' }}
+            style={{ paddingTop: 'var(--space-500)' }}
           >
             {legal.map((p, i) => (
               <p key={i} className="body-xs-regular t-subtle">{p}</p>
@@ -79,7 +81,6 @@ export default function Footer({
           style={{
             justifyContent: 'space-between',
             gap: 'var(--space-400)',
-            borderTop: 'var(--border-width-xs) solid var(--border-subtle)',
             paddingTop: 'var(--space-400)',
           }}
         >
