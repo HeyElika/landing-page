@@ -30,7 +30,7 @@ export default function FAQ({ title, description, groups, items = [], background
   // its own panel expanded, and the reader lost their place. Here nothing above
   // the clicked row ever changes height, so the row stays exactly where it is
   // and the page only grows downward.
-  const [openIds, setOpenIds] = useState(() => new Set([0]))
+  const [openIds, setOpenIds] = useState(() => new Set())
   const toggle = (i) =>
     setOpenIds((prev) => {
       const next = new Set(prev)
