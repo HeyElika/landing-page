@@ -71,7 +71,9 @@ export default {
       media: {
         src: '/access-card.jpg',
         alt: 'Three Billease Access Cards',
-        ratio: '3 / 4',
+        // The source is 1060x1484. Matching it exactly rather than rounding to
+        // 3/4 avoids object-fit cropping roughly 5% off the sides.
+        ratio: '1060 / 1484',
       },
       // No tinted panel behind it: the photograph carries its own background,
       // and a tint would read as a box inside a box.
@@ -156,7 +158,6 @@ export default {
       id: 'conditions',
       type: 'conditions',
       title: 'Important things to know',
-      description: "Here's what to expect before you activate.",
       items: [
         {
           icon: 'clock',
