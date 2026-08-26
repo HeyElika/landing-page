@@ -243,7 +243,11 @@ export default {
       type: 'appDownload',
       title: 'Get the Billease app',
       description: 'Download Billease from the App Store or Google Play and sign in to get started.',
-      media: { src: null, label: 'App screen', ratio: '3 / 4' },
+      media: {
+        src: '/billease-app-icon.png',
+        alt: 'The Billease app icon',
+        ratio: '1 / 1',
+      },
       apps: [
         // Official badge artwork, taken from Apple's and Google's own brand
         // resources. Both stores require their own badge and forbid redrawing
