@@ -117,7 +117,11 @@ export default {
       reverse: true,   // visual first, steps beside it
       fit: 'viewport',   // hold the section to one screen, as the hero does
       title: 'Activate your card in a few steps',
-      media: { src: null, label: 'App screen', ratio: '1 / 1' },
+      media: {
+        src: '/card-in-hand.jpg',
+        alt: 'A Billease Access Card held up to the camera',
+        ratio: '1 / 1',
+      },
       steps: [
         {
           title: 'Open your Billease app',
