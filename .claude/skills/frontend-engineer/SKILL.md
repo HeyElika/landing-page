@@ -61,8 +61,10 @@ values are sums of `--space-*` tokens and `npm run check` fails on a raw px.
 
 **Hero fit.** A tall product visual can push the hero past the fold — a 3:4
 image in a 600px column is 800px tall before padding. `fit: 'viewport'` caps
-the hero to one screen on desktop and bounds the media by height, so the image
-shrinks instead of cropping. Check the maths before assuming an image fits:
+the media height so the section can never exceed one screen, and bounds the
+image by height so it shrinks instead of cropping. It deliberately sets no
+min-height: forcing a full-screen section when the content is shorter parks
+the difference as dead space above the copy. Check the maths before assuming an image fits:
 `viewport height - nav height - padding`.
 
 **Surfaces are flat.** No borders on cards, no box-shadows anywhere. Cards are

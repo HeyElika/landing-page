@@ -76,7 +76,7 @@ Two more are available outside the default narrative:
 
 If a `panel` carries a `cta` it must be the page's single primary action, worded identically to the hero. Use `link` for anything softer.
 
-`fit: 'viewport'` sizes the hero to one screen on desktop so the product visual is never cut off at the fold. The image is bounded by height as well as width, so it shrinks rather than crops — important for a card render, where cropping would cut the product. Mobile is unaffected: the hero stacks there, and forcing it into one screen would crush the copy.
+`fit: 'viewport'` guarantees the hero never exceeds one screen on desktop, so the product visual is not cut off at the fold. It does this by capping the media height rather than forcing the section to full height — forcing it parks the leftover height as empty space above the copy. The section is always exactly as tall as its content, and on a tall screen the next section peeks above the fold, which is a good thing. The image is bounded by height as well as width, so it shrinks rather than crops — important for a card render, where cropping would cut the product. Mobile is unaffected: the hero stacks there, and forcing it into one screen would crush the copy.
 
 ### Calls to action
 

@@ -152,13 +152,13 @@ button { font: inherit; }
 
 @media (min-width: 900px) {
   .l-band--viewport {
-    display: flex;
-    align-items: center;
     padding-block: var(--space-1000);
-    min-height: calc(100vh - var(--nav-h));
-    min-height: calc(100svh - var(--nav-h));
   }
-  .l-band--viewport > .l-container { width: 100%; }
+  /* No min-height. Forcing the section to a full screen when its content is
+   * shorter parks the difference as empty space above the copy. Capping the
+   * media height is enough on its own: the section can then never exceed one
+   * screen, and when the image is narrower than the cap the section simply
+   * ends, with no slack to distribute. */
   .l-band--viewport .c-media,
   .l-band--viewport .c-placeholder {
     max-height: calc(100vh - var(--nav-h) - var(--space-1000) * 2);
