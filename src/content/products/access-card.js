@@ -243,9 +243,16 @@ export default {
         // Official badge artwork, taken from Apple's and Google's own brand
         // resources. Both stores require their own badge and forbid redrawing
         // it, so these files are used as supplied.
-        // CONTENT DEPENDENCY: the store listing URLs.
-        { name: 'Download on the App Store', href: '#', src: '/badge-app-store.svg' },
-        { name: 'Get it on Google Play', href: '#', src: '/badge-google-play.png' },
+        {
+          name: 'Download on the App Store',
+          href: 'https://apps.apple.com/ph/app/billease-buy-now-pay-later/id1484485168',
+          src: '/badge-app-store.svg',
+        },
+        {
+          name: 'Get it on Google Play',
+          href: 'https://play.google.com/store/apps/details?id=ph.billeasev2.mobile&gl=ph',
+          src: '/badge-google-play.png',
+        },
       ],
     },
 
