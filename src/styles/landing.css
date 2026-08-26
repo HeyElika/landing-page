@@ -526,25 +526,17 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
     height: auto;
   }
 
-  /* Media-led items: the panel is sized from its width and holds the ratio
-   * the content declares, so the three read as one set of identical objects.
-   *
-   * Not from the leftover height. Giving the panel a height and a width cap
-   * makes both axes definite, which discards the ratio entirely — that is how
-   * a 1/1 panel rendered as a tall portrait box. The viewport cap belongs on
-   * the width, where it shrinks the square instead of distorting it.
-   */
-  .l-band--fit .l-grid:has(.c-feature__media) { flex: 0 0 auto; }
-  .l-band--fit .c-feature__media {
-    display: flex;
-    justify-content: center;
-  }
-  .l-band--fit .c-feature__media > * {
+  /* Media-led items: the card holds its portrait ratio and is capped so the
+   * row still fits one screen. The cap is on the width — capping the height
+   * as well would make both axes definite, which discards the ratio and
+   * stretches the card to whatever space is left. */
+  .l-band--fit .l-grid:has(.c-feature) { flex: 0 0 auto; }
+  .l-band--fit .c-feature {
     width: 100%;
-    height: auto;
-    max-width: min(100%, 40vh);
+    max-width: min(100%, 44vh);
     margin-inline: auto;
   }
+
   .l-band--fit .c-steps-split {
     flex: 1;
     min-height: 0;
@@ -569,27 +561,73 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
 }
 
 /* ── Media-led feature ──────────────────────────────────────────────────────
- * A tinted panel holding the visual, with the copy beneath it on the band.
- * The panel is the surface, so the copy does not get a second box around it —
- * nested surfaces read as clutter and flatten the hierarchy.
+ * One object rather than a panel with a caption under it: the image fills the
+ * card, the copy sits on it at the bottom over a scrim, and the whole card
+ * carries the corner radius.
+ *
+ * The card is dark underneath the image. A card whose image has not arrived
+ * still has to hold white copy, and a light placeholder behind white text
+ * reads as nothing at all.
  */
 
-.c-feature__media {
-  border-radius: var(--radius-2xl);
+.c-feature {
+  position: relative;
+  display: flex;
+  aspect-ratio: var(--ratio, 2 / 3);
   overflow: hidden;
-  background: var(--bg-subtle);
-}
-.l-band--subtle .c-feature__media,
-.l-band--sunken .c-feature__media { background: var(--bg-base); }
-.l-band--dark .c-feature__media { background: var(--alpha-white-10); }
-
-.c-feature__media .c-media { border-radius: var(--radius-2xl); border: none; }
-
-/* The placeholder keeps its outline: without it an empty panel on a tinted
- * band is invisible, and the layout gives no sign of where the image goes. */
-.c-feature__media .c-placeholder {
   border-radius: var(--radius-2xl);
+  background: var(--color-neutral-900);
+  isolation: isolate;
+}
+
+.c-feature__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  border-radius: 0;
+  border: none;
+}
+.c-feature__img img { width: 100%; height: 100%; object-fit: cover; }
+
+/* The placeholder covers the card, so its own outline would only trace the
+ * card edge. It keeps the label and drops the border. */
+.c-feature .c-placeholder {
   background: transparent;
+  border: none;
+  color: var(--text-on-dark-disabled);
+}
+
+.c-feature__copy {
+  position: relative;
+  z-index: 1;
+  align-self: flex-end;
+  width: 100%;
+  padding: var(--space-600);
+  padding-block-start: var(--space-1000);
+  /* The scrim is part of the copy block, so it is only as tall as the copy
+   * needs and never dims the middle of the image. */
+  background: linear-gradient(to top, var(--alpha-black-70), transparent);
+}
+
+.c-feature__arrow {
+  position: absolute;
+  z-index: 2;
+  inset-block-start: var(--space-400);
+  inset-inline-end: var(--space-400);
+  display: grid;
+  place-items: center;
+  width: var(--icon-size-xl);
+  height: var(--icon-size-xl);
+  border-radius: var(--radius-full);
+  border: var(--border-width-sm) solid var(--text-on-dark);
+}
+.c-feature__arrow:hover { background: var(--alpha-white-20); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .c-feature__img img { transition: transform 400ms ease; }
+  .c-feature:hover .c-feature__img img { transform: scale(1.04); }
 }
 
 /* ── Security section ───────────────────────────────────────────────────────
@@ -785,6 +823,10 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
  * then contact and the regulatory statement, then copyright.
  */
 
+/* A deep blue surface: the one section on the page that is not part of the
+ * reading flow, so it separates itself by tone rather than by a border. */
+.c-footer { background: var(--color-blue-700); }
+
 /* Logo, then the link columns, then the app links. A flex row rather than one
  * grid: the number of link columns is content-driven, and an auto-repeat track
  * cannot sit in the same template as the fixed tracks either side of it. */
@@ -816,11 +858,11 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   min-width: calc(var(--space-1000) * 3);
   padding-inline: var(--space-400);
   border-radius: var(--radius-md);
-  background: var(--color-neutral-900);
-  color: var(--text-on-dark);
+  background: var(--bg-base);
+  color: var(--text-base);
   white-space: nowrap;
 }
-.c-footer__app:hover { background: var(--color-neutral-800); }
+.c-footer__app:hover { background: var(--bg-subtle); }
 
 @media (min-width: 768px) {
   .c-footer__top {

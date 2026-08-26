@@ -1,6 +1,7 @@
 import SectionHead from '../ui/SectionHead'
 import IconTile from '../ui/IconTile'
 import Media from '../ui/Media'
+import Icon from '../../assets/icons/Icon'
 
 /**
  * Benefit grid. `columns` accepts 2, 3 or 4.
@@ -29,25 +30,39 @@ export default function Features({
         <SectionHead title={title} description={description} align={align} onDark={onDark} />
         <ul className={`l-grid l-grid--${columns}`}>
           {items.map((item) => {
-            // An item with a visual leads with it: panel on top, copy beneath.
-            // The panel is the surface, so the copy sits on the band rather
-            // than inside a second box — two nested surfaces read as clutter.
-            const mediaLed = Boolean(item.media)
+            // An item with a visual becomes one object: the image fills the
+            // card and the copy sits on it under a scrim. Copy beneath the
+            // panel made each item read as two things stacked.
+            if (item.media) {
+              const { ratio = '2 / 3', label, ...media } = item.media
+              return (
+                <li key={item.title} className="c-feature" style={{ '--ratio': ratio }}>
+                  <Media {...media} ratio={ratio} label={label || item.title} className="c-feature__img" />
+                  <div className="c-feature__copy l-stack l-stack--200">
+                    <h3 className="heading-lg-semibold t-on-dark">{item.title}</h3>
+                    {item.description && (
+                      <p className="body-md-regular t-on-dark-subtle">{item.description}</p>
+                    )}
+                  </div>
+                  {/* Only when the card actually leads somewhere. An arrow on a
+                    * card that does nothing promises a page that isn't there. */}
+                  {item.href && (
+                    <a className="c-feature__arrow" href={item.href} aria-label={item.title}>
+                      <Icon name="arrow-right" size="sm" color="var(--icon-on-dark)" />
+                    </a>
+                  )}
+                </li>
+              )
+            }
             return (
               <li
                 key={item.title}
-                className={!mediaLed && variant === 'card'
+                className={variant === 'card'
                   ? ['c-card', onDark ? 'c-card--on-dark' : '', background === 'default' ? 'c-card--tinted' : ''].filter(Boolean).join(' ')
                   : ''}
               >
                 <div className="l-stack l-stack--300">
-                  {mediaLed ? (
-                    <div className="c-feature__media">
-                      <Media {...item.media} ratio={item.media.ratio || '1 / 1'} label={item.media.label || item.title} />
-                    </div>
-                  ) : (
-                    <IconTile icon={item.icon} tone={onDark ? 'onDark' : item.tone} />
-                  )}
+                  <IconTile icon={item.icon} tone={onDark ? 'onDark' : item.tone} />
                   <h3 className={['heading-md-semibold', onDark ? 't-on-dark' : ''].filter(Boolean).join(' ')}>{item.title}</h3>
                   {item.description && (
                     <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : ''].filter(Boolean).join(' ')}>{item.description}</p>

@@ -26,21 +26,21 @@ export default function Footer({
   copyright,
 }) {
   return (
-    <footer className="l-band l-band--tight" style={{ background: 'var(--bg-base)' }}>
+    <footer className="l-band l-band--tight c-footer">
       <div className="l-container l-stack l-stack--900">
 
         {/* Identity, links, app stores */}
         <div className="c-footer__top">
           <a href={brand.href || '/'} aria-label={brand.name || 'Home'} style={{ display: 'flex' }}>
-            <Logo src={brand.logo} name={brand.name} />
+            <Logo src={brand.logoOnDark || brand.logo} name={brand.name} />
           </a>
 
           <div className="c-footer__links">
             {columns.map((col) => (
               <nav key={col.title} className="l-stack l-stack--300" aria-label={col.title}>
-                <p className="body-sm-semibold">{col.title}</p>
+                <p className="body-sm-semibold t-on-dark">{col.title}</p>
                 {col.links.map((l) => (
-                  <a key={l.label} href={l.href} className="body-sm-regular t-subtle">{l.label}</a>
+                  <a key={l.label} href={l.href} className="body-sm-regular t-on-dark-subtle">{l.label}</a>
                 ))}
               </nav>
             ))}
@@ -48,7 +48,7 @@ export default function Footer({
 
           {apps.length > 0 && (
             <div className="c-footer__apps-block l-stack l-stack--300">
-              {appsTitle && <p className="body-sm-semibold">{appsTitle}</p>}
+              {appsTitle && <p className="body-sm-semibold t-on-dark">{appsTitle}</p>}
               <ul className="c-footer__apps l-stack l-stack--200">
               {apps.map((app) => (
                 <li key={app.name}>
@@ -76,13 +76,13 @@ export default function Footer({
               <ul className="l-stack l-stack--100">
                 {contact.map((c) => (
                   <li key={c.label}>
-                    <a href={c.href} className="body-md-semibold">{c.label}</a>
+                    <a href={c.href} className="body-md-semibold t-on-dark">{c.label}</a>
                   </li>
                 ))}
               </ul>
             )}
             {legal.map((p, i) => (
-              <p key={i} className="body-xs-regular t-subtle">{p}</p>
+              <p key={i} className="body-xs-regular t-on-dark-subtle">{p}</p>
             ))}
             {badges.length > 0 && (
               <ul className="l-row" style={{ gap: 'var(--space-400)' }}>
@@ -90,7 +90,7 @@ export default function Footer({
                   <li key={b.name}>
                     {b.src
                       ? <img src={b.src} alt={b.name} style={{ height: 'var(--space-800)' }} loading="lazy" />
-                      : <span className="body-xxs-semibold t-subtle">{b.name}</span>}
+                      : <span className="body-xxs-semibold t-on-dark-subtle">{b.name}</span>}
                   </li>
                 ))}
               </ul>
@@ -101,7 +101,7 @@ export default function Footer({
             <ul className="l-row c-footer__social" style={{ gap: 'var(--space-400)' }}>
               {social.map((s) => (
                 <li key={s.name}>
-                  <a href={s.href} className="body-sm-regular t-subtle" target="_blank" rel="noreferrer noopener">
+                  <a href={s.href} className="body-sm-regular t-on-dark-subtle" target="_blank" rel="noreferrer noopener">
                     {s.name}
                   </a>
                 </li>
@@ -112,11 +112,11 @@ export default function Footer({
 
         {/* Copyright and legal links */}
         <div className="c-footer__bottom">
-          <p className="body-xs-regular t-subtle">{copyright}</p>
+          <p className="body-xs-regular t-on-dark-subtle">{copyright}</p>
           {bottomLinks.length > 0 && (
             <ul className="l-row" style={{ gap: 'var(--space-500)' }}>
               {bottomLinks.map((l) => (
-                <li key={l.label}><a href={l.href} className="body-xs-regular t-subtle">{l.label}</a></li>
+                <li key={l.label}><a href={l.href} className="body-xs-regular t-on-dark-subtle">{l.label}</a></li>
               ))}
             </ul>
           )}
