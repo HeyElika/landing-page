@@ -28,7 +28,7 @@ export default function AppDownload({ title, description, media, apps = [] }) {
 
           <div className="c-appcta__copy l-stack l-stack--600">
             <div className="l-stack l-stack--300">
-              {title && <h2 className="display-md t-on-dark">{title}</h2>}
+              {title && <h2 className="display-sm t-on-dark">{title}</h2>}
               {description && <p className="body-lg-regular t-on-dark-subtle">{description}</p>}
             </div>
 
