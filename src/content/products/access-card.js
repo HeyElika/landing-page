@@ -3,23 +3,26 @@ import { brand, nav, footer } from '../brand'
 /**
  * Access Card activation page.
  *
- * Structure follows DESIGN-RULES.md section 11, checked against how comparable
- * card pages are actually built (Wise, Atome, Salmon, monobank, Banco Plata):
+ * This is a decision page for an existing eligible Billease user, not an
+ * acquisition page. It answers, in order: why activate, where the card works,
+ * what activation involves, what to know first, what control you have, and how
+ * to activate.
  *
- *   hero        product named, one benefit-led claim, one action, card visual
- *   features    3-4 benefits as icon cards, the near-universal pattern
- *   useCases    where the card is accepted
- *   steps       activation in three steps, with honest timing
- *   panel x2    two contained moments: the app doing the thing
- *   conditions  fees, limits and timing ON the page, before the FAQ
- *   security    short reassurance, three points
- *   faq         real conversion blockers
- *   ctaBand     the same action, worded identically
+ * Architecture notes, so the trimming is not undone by accident:
+ *  - No trust or social-proof strip. Ratings and regulator marks belong on an
+ *    acquisition page; regulatory detail sits in the footer.
+ *  - No "inside the app" product tour. It does not affect the activation
+ *    decision.
+ *  - Control and security are one section, not two. Split across a panel and a
+ *    band they said the same thing twice.
+ *  - "Important things to know" stays on the page, above the FAQ.
  *
- * FINANCIAL GUARDRAIL: this page is for an existing eligible user, and section
- * 16 forbids inventing activation timing, fees, limits, acceptance or security
- * capabilities. Everything unconfirmed is marked CONTENT DEPENDENCY and is
- * meant to stay visible until Product, Risk or Legal supply real wording.
+ * CTA placement is exactly three: sticky header, hero, closing band, plus the
+ * mobile sticky bar which carries the same action rather than adding a new one.
+ *
+ * FINANCIAL GUARDRAIL: DESIGN-RULES.md section 16 forbids inventing activation
+ * timing, fees, limits, acceptance or security capabilities. Anything
+ * unconfirmed stays marked CONTENT DEPENDENCY and visible.
  */
 export default {
   slug: 'access-card',
@@ -27,14 +30,14 @@ export default {
 
   meta: {
     title: 'Activate your Billease Access Card',
-    description: 'Activate your Access Card and spend your Billease limit where you shop.',
+    description: 'Activate your Access Card and spend the Billease limit you already have.',
   },
 
   brand,
   nav: {
     ...nav,
     links: [
-      { label: 'Benefits', href: '#benefits' },
+      { label: 'Why activate', href: '#benefits' },
       { label: 'Where to use', href: '#use-cases' },
       { label: 'How it works', href: '#how-it-works' },
       { label: 'Good to know', href: '#conditions' },
@@ -43,10 +46,11 @@ export default {
     cta: { label: 'Activate card', href: '#activate' },
   },
 
+  // Mobile only, and the same action as the hero. Not a fourth CTA.
+  stickyCta: { label: 'Activate card', href: '#activate' },
+
   sections: [
     {
-      // Every reference page names the product, makes one benefit-led claim and
-      // shows the card. One action only: a second equal CTA splits intent.
       type: 'hero',
       layout: 'split',
       badge: { label: 'Access Card', type: 'secondary-subtle', size: 'md' },
@@ -64,41 +68,54 @@ export default {
     },
 
     {
+      // Reasons to act, not a restatement of the hero.
       id: 'benefits',
       type: 'features',
       eyebrow: 'Why activate',
       title: 'What the card gives you',
-      description: 'Three things it changes about how you spend.',
       columns: 3,
       items: [
         {
           icon: 'card',
-          title: 'One card, your existing limit',
-          description: 'CONTENT DEPENDENCY: confirm exactly how the card draws on the Billease limit.',
+          title: 'Use the limit you already have',
+          description: 'CONTENT DEPENDENCY: confirm with Product that no separate credit application is needed.',
         },
         {
           icon: 'store',
-          title: 'Pay in more places',
-          description: 'CONTENT DEPENDENCY: confirm where the card is accepted before making this claim.',
+          title: 'Spend in more places',
+          description: 'CONTENT DEPENDENCY: confirm where the card is accepted before describing wider acceptance.',
         },
         {
           icon: 'installment-outline',
-          title: 'The repayment you already know',
-          description: 'CONTENT DEPENDENCY: confirm repayment behaviour with Product.',
+          title: 'Keep repayment familiar',
+          description: 'CONTENT DEPENDENCY: confirm that repayment behaves like the existing Billease experience.',
         },
       ],
     },
 
     {
+      // Concrete acceptance, not product language. "In the app" was dropped:
+      // the card is not meaningfully used in the app, so it was filler.
       id: 'use-cases',
       type: 'useCases',
       eyebrow: 'Where you can use it',
       title: 'Online and in store',
-      description: 'Only what Product has confirmed the card actually supports.',
       items: [
-        { icon: 'store', title: 'In store', description: 'CONTENT DEPENDENCY: confirm in-store acceptance.' },
-        { icon: 'phone', title: 'Online', description: 'CONTENT DEPENDENCY: confirm online acceptance.' },
-        { icon: 'wallet', title: 'In the app', description: 'CONTENT DEPENDENCY: confirm in-app card use.' },
+        {
+          icon: 'store',
+          title: 'In store',
+          description: 'CONTENT DEPENDENCY: confirm in-store acceptance and whether contactless is supported.',
+        },
+        {
+          icon: 'phone',
+          title: 'Online',
+          description: 'CONTENT DEPENDENCY: confirm online acceptance.',
+        },
+        {
+          icon: 'card',
+          title: 'International use',
+          description: 'CONTENT DEPENDENCY: confirm whether the card works abroad and any currency or fee implications. Remove this card if it is not supported.',
+        },
       ],
     },
 
@@ -106,9 +123,8 @@ export default {
       id: 'how-it-works',
       type: 'steps',
       eyebrow: 'How activation works',
-      title: 'Three steps, then we take over',
-      description:
-        'You finish your part in a few minutes. We handle the rest and tell you when the card is ready.',
+      title: 'Your part takes just a few minutes',
+      description: 'Once verification is done, there is nothing else for you to do.',
       items: [
         {
           title: 'Complete verification',
@@ -116,61 +132,22 @@ export default {
         },
         {
           title: 'We process the activation',
-          description: 'This can take up to 24 hours. Confirm this timing before launch.',
+          description: 'This can take up to 24 hours.',
         },
         {
           title: 'We tell you it is ready',
-          description: 'Nothing else to do. We notify you the moment the card can be used.',
+          description: 'Nothing else to do. We notify you when the card can be used.',
         },
       ],
     },
 
     {
-      // A contained moment rather than another full-width band. Copy beside
-      // an image inside a tinted panel, the Monzo pattern: it breaks a long
-      // column of sections and gives one idea room to breathe.
-      type: 'panel',
-      tone: 'info',
-      eyebrow: 'Inside the app',
-      title: 'Your card and your spending, on one screen',
-      description:
-        'Card details, your limit and every transaction sit together, so you never have to go looking.',
-      bullets: [
-        'Card details when you need them',
-        'CONTENT DEPENDENCY: confirm what limit information is shown',
-        'Every transaction in one list',
-      ],
-      media: { src: null, label: 'Card screen', ratio: '4 / 3' },
-    },
-
-    {
-      // Reversed, and carrying the page's single action. Repeating the primary
-      // CTA mid-page is what Wise does with "Order your card"; the label must
-      // stay identical to the hero and closing band.
-      type: 'panel',
-      tone: 'subtle',
-      reverse: true,
-      eyebrow: 'Control',
-      title: 'Stay in control of every payment',
-      description:
-        'Notifications as you spend, and the controls to stop a card you no longer trust.',
-      bullets: [
-        'CONTENT DEPENDENCY: confirm which notifications exist',
-        'CONTENT DEPENDENCY: confirm whether freeze and unfreeze exist',
-      ],
-      cta: { label: 'Activate card', href: '#activate' },
-      media: { src: null, label: 'Card controls', ratio: '4 / 3' },
-    },
-
-    {
-      // The differentiator. Wise puts fee caveats inline, monobank puts them in
-      // the FAQ, Banco Plata puts the CAT in the footer. Rule 16 says on the
-      // page, before the FAQ, which is stricter than any of them.
+      // Stays on the page, above the FAQ. Section 16 requires it.
       id: 'conditions',
       type: 'conditions',
       eyebrow: 'Good to know',
       title: 'Important things to know',
-      description: 'These are here rather than in the FAQ, because you should see them before you activate.',
+      description: "Here's what to expect before you activate.",
       items: [
         {
           icon: 'clock',
@@ -193,12 +170,13 @@ export default {
           detail: 'CONTENT DEPENDENCY: confirm any per transaction or daily limits.',
         },
       ],
-      note: 'Do not move any of this into the FAQ. Section 16 requires important conditions to be visible on the page.',
     },
 
     {
+      // Control and security merged. No CTA here: the action belongs to the
+      // header, the hero and the closing band.
       type: 'security',
-      eyebrow: 'Security',
+      eyebrow: 'Security & control',
       title: 'Safe by default, and in your control',
       items: [
         {
@@ -208,13 +186,13 @@ export default {
         },
         {
           icon: 'lock',
-          title: 'Freeze it any time',
-          description: 'CONTENT DEPENDENCY: confirm whether card freeze exists before claiming it.',
+          title: 'Freeze your card',
+          description: 'CONTENT DEPENDENCY: confirm whether freeze and unfreeze exist before claiming it.',
         },
         {
           icon: 'chat-outline',
-          title: 'Reach a person fast',
-          description: 'Contact support in the app if something does not look right.',
+          title: 'Get help quickly',
+          description: 'Reach support in the app if something does not look right.',
         },
       ],
     },
@@ -224,10 +202,10 @@ export default {
       type: 'faq',
       eyebrow: 'FAQ',
       title: 'Before you activate',
-      background: 'default',
+      background: 'subtle',
       items: [
         { question: 'Does activating cost anything?', answer: 'CONTENT DEPENDENCY: confirm with Product and Legal, then state it plainly.' },
-        { question: 'How long until I can use the card?', answer: 'Activation can take up to 24 hours after you finish your steps. We notify you when it is ready. Confirm this timing before launch.' },
+        { question: 'How long until I can use the card?', answer: 'Activation can take up to 24 hours after you finish your steps. We notify you when it is ready.' },
         { question: 'Do I need to do anything while I wait?', answer: 'No. Once you have completed your steps there is nothing else to do.' },
         { question: 'What if my activation does not go through?', answer: 'CONTENT DEPENDENCY: confirm the failure path and what the user should do.' },
         { question: 'Can I use it abroad?', answer: 'CONTENT DEPENDENCY: confirm international acceptance and any related fees.' },
@@ -240,7 +218,7 @@ export default {
       type: 'ctaBand',
       background: 'brand',
       title: 'Ready to activate your card?',
-      description: 'A few minutes now. We will let you know as soon as it is ready to use.',
+      description: "A few minutes now. We'll let you know as soon as it's ready to use.",
       ctas: [{ label: 'Activate card', href: 'https://app.billease.ph' }],
       note: 'CONTENT DEPENDENCY: confirm any terms that must appear next to the activation action.',
     },

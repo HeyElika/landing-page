@@ -94,9 +94,14 @@ Sections follow DESIGN-RULES.md section 10, in this order:
 10. `faq` — genuine conversion blockers
 11. `ctaBand` — repeat the single primary action
 
-One primary action per page, worded identically everywhere it appears. Every
-reference page does this: Wise repeats "Order your card" three times and never
-introduces a competing label.
+One primary action per page, worded identically everywhere it appears, in
+exactly three places: sticky header, hero, closing band. `stickyCta` on the
+page object adds a mobile-only bar with the same action once the hero scrolls
+away; it is not a fourth CTA. Never put the primary action inside a mid-page
+section — that is CTA overload.
+
+An activation or decision page is not a marketing page. Prioritise clarity
+over persuasion, and cut any section that does not answer a real blocker.
 
 Do not add sections to pad a page. There is no logo strip or testimonial wall
 on purpose: rule 2 warns against generic marketing furniture.

@@ -76,6 +76,18 @@ Two more are available outside the default narrative:
 
 If a `panel` carries a `cta` it must be the page's single primary action, worded identically to the hero. Use `link` for anything softer.
 
+### Calls to action
+
+One primary action per page, worded identically everywhere. Exactly three placements:
+
+1. the sticky header
+2. the hero, above the fold
+3. the closing band
+
+Plus `stickyCta` on the page object, which adds a **mobile-only** bar carrying that same action once the hero scrolls out of view. It is not a fourth CTA — it replaces the habit of sprinkling buttons down the page. On desktop the sticky header already does this job, so the bar is hidden there.
+
+Do not put the primary action inside a mid-page section. It reads as CTA overload and pulls attention away from the content answering the user's question.
+
 Two rules that are not negotiable:
 
 - **`conditions` must come before `faq`.** Fees, limits and timing belong on the page, not buried in an accordion. Rule 16 puts transparency ahead of conversion.

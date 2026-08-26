@@ -1,20 +1,25 @@
 import { useEffect } from 'react'
 import NavBar from './components/sections/NavBar'
 import Footer from './components/sections/Footer'
+import StickyCta from './components/ui/StickyCta'
 import { SECTIONS } from './components/sections'
 
 /**
  * Renders a whole landing page from one content object.
  *
  * Page shape:
- *   { slug, meta, brand, nav, sections: [{ id, type, ...props }], footer }
+ *   { slug, meta, brand, nav, sections: [{ id, type, ...props }], footer,
+ *     stickyCta }
+ *
+ * `stickyCta` adds a mobile-only bar carrying the page's primary action once
+ * the hero scrolls away. It must use the same label as the hero CTA.
  *
  * Sections render in array order, so reordering the page is a matter of
  * moving an object. An unknown `type` renders a visible warning in dev
  * instead of failing silently.
  */
 export default function LandingPage({ page }) {
-  const { meta = {}, brand = {}, nav = {}, sections = [], footer = {} } = page
+  const { meta = {}, brand = {}, nav = {}, sections = [], footer = {}, stickyCta } = page
 
   useEffect(() => {
     if (meta.title) document.title = meta.title
@@ -55,6 +60,7 @@ export default function LandingPage({ page }) {
         })}
       </main>
       <Footer brand={brand} {...footer} />
+      {stickyCta && <StickyCta {...stickyCta} />}
     </>
   )
 }

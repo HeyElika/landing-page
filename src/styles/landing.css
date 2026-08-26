@@ -326,6 +326,34 @@ button { font: inherit; }
 }
 .c-link--on-dark { color: var(--text-on-dark); }
 
+/* ── Sticky mobile action bar ───────────────────────────────────────────────
+ * Mobile only. On desktop the sticky header already holds the action, so this
+ * would be a second fixed element competing with it. */
+
+.c-sticky-cta {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 60;
+  padding: var(--space-300) var(--page-gutter);
+  padding-bottom: max(var(--space-300), env(safe-area-inset-bottom));
+  background: var(--bg-base);
+  border-top: var(--border-width-xs) solid var(--border-subtle);
+  transform: translateY(100%);
+  transition: transform 200ms ease;
+}
+.c-sticky-cta.is-visible { transform: translateY(0); }
+
+body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
+
+@media (min-width: 900px) {
+  .c-sticky-cta { display: none; }
+  body.has-sticky-cta { padding-bottom: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-sticky-cta { transition: none; }
+}
+
 /* ── Section header ─────────────────────────────────────────────────────── */
 
 .c-section-head { display: flex; flex-direction: column; gap: var(--space-300); max-width: var(--measure); }
