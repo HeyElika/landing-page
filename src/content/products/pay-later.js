@@ -37,11 +37,7 @@ export default {
       description:
         'Shop at partner stores and pay over time. No credit card needed.',
       ctas: [{ label: 'Get started', href: '#get-started' }],
-      note: 'Subject to credit assessment.',
-      highlights: [
-        { label: 'No credit card', icon: 'tick' },
-        { label: 'Fixed monthly amount', icon: 'tick' },
-      ],
+      note: 'No credit card needed. Subject to credit assessment.',
       media: { src: null, label: 'App screen', ratio: '4 / 5' },
     },
 
