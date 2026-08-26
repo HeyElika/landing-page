@@ -95,6 +95,11 @@ export default {
       columns: 3,
       items: [
         {
+          media: { src: null, label: 'Card ready in the app', ratio: '2 / 3' },
+          title: 'Ready once activated',
+          description: 'Your card is ready to use as soon as Billease confirms activation.',
+        },
+        {
           media: { src: null, label: 'Card in the app', ratio: '2 / 3' },
           title: 'Use the limit you already have',
           description: 'No new limit to manage. Your Access Card uses the Credit Line you already have.',
@@ -107,11 +112,6 @@ export default {
           // us does not belong on the page, so it lives here. Confirm the
           // network with Product before this ships.
           description: 'Use your physical card wherever Mastercard is accepted.',
-        },
-        {
-          media: { src: null, label: 'Card ready in the app', ratio: '2 / 3' },
-          title: 'Ready once activated',
-          description: 'Your card is ready to use as soon as Billease confirms activation.',
         },
       ],
     },
