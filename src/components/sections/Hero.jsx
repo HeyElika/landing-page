@@ -1,7 +1,6 @@
 import Badge from '../ui/Badge'
 import Cta from '../ui/Cta'
 import Media from '../ui/Media'
-import Icon from '../../assets/icons/Icon'
 
 /**
  * Hero. `layout: 'split'` places the product visual beside the copy,
@@ -26,7 +25,6 @@ export default function Hero({
   description,
   ctas = [],
   note,
-  highlights = [],
   media,
   mediaBackdrop = 'none',   // 'none' | 'subtle' | 'sunken' | 'brand' | 'info'
   fit = 'auto',             // 'auto' | 'viewport' — fit the hero into one screen
@@ -96,18 +94,12 @@ export default function Hero({
         </div>
       )}
 
-      {note && <p className={['body-xs-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>{note}</p>}
-
-      {highlights.length > 0 && (
-        <ul className="l-row" style={{ gap: 'var(--space-600)', justifyContent: centered ? 'center' : 'flex-start' }}>
-          {highlights.map((h) => (
-            <li key={h.label} className="l-row body-sm-semibold" style={{ gap: 'var(--space-200)' }}>
-              <Icon name={h.icon || 'tick'} size="sm" color={onDark ? 'var(--icon-on-dark)' : 'var(--icon-success-bold)'} />
-              <span className={onDark ? 't-on-dark-subtle' : ''}>{h.label}</span>
-            </li>
-          ))}
-        </ul>
+      {note && (
+        <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].filter(Boolean).join(' ')}>
+          {note}
+        </p>
       )}
+
     </div>
   )
 

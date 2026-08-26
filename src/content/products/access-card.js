@@ -65,12 +65,7 @@ export default {
       description:
         'Activate your Access Card and use your existing Billease limit online and in store.',
       ctas: [{ label: 'Activate card', href: 'https://app.billease.ph' }],
-      // The activation-cost question is tracked in the FAQ, not in the hero:
-      // an unresolved marker directly under the primary action undermines it.
-      highlights: [
-        { label: 'No new application required', icon: 'tick' },
-        { label: 'Activation may take up to 24 hours', icon: 'clock' },
-      ],
+      note: 'No new application. Ready in up to 24 hours.',
       media: {
         src: '/access-card.jpg',
         alt: 'Three Billease Access Cards',

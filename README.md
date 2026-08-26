@@ -59,7 +59,7 @@ Sections follow the Billease narrative in DESIGN-RULES.md section 10. **Keep the
 
 | # | `type` | Answers | Main keys |
 |---|---|---|---|
-| 1 | `hero` | What is this, and what do I do? | `layout` (`split`/`centered`), `fit` (`auto`/`viewport`), `badge`, `title`, `description`, `ctas[]`, `note`, `highlights[]`, `media`, `mediaBackdrop` |
+| 1 | `hero` | What is this, and what do I do? | `layout` (`split`/`centered`), `fit` (`auto`/`viewport`), `badge`, `title`, `description`, `ctas[]`, `note`, `media`, `mediaBackdrop` |
 | 2 | `features` | Why should I care? | `columns` (2, 3, 4), `variant` (`card`/`plain`), `items[{ icon, title, description }]` |
 | 3 | `useCases` | Where can I use it? | `items[{ icon, title, description }]`, `note` |
 | 4 | `steps` | What happens next? | `items[{ title, description }]`, `cta` |

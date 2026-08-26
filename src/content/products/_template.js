@@ -36,7 +36,6 @@ export default {
       description: '',
       ctas: [{ label: '', href: '#get-started' }],   // one primary action
       note: '',
-      highlights: [{ label: '', icon: 'tick' }],
       media: { src: null, label: 'Product visual', ratio: '4 / 5' },
     },
 
