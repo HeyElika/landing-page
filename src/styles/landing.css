@@ -774,12 +774,15 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   padding: var(--space-500) 0;
   background: none;
   border: none;
-  border-bottom: var(--border-width-xs) solid var(--border-subtle);
+  /* Lighter than --border-subtle, for the same reason as the footer rule: a
+   * hairline that reads correctly at component scale reads heavy stretched
+   * across the full container. */
+  border-bottom: var(--border-width-xs) solid var(--alpha-black-10);
   cursor: pointer;
   text-align: left;
   color: var(--text-base);
 }
-.c-faq:first-child .c-faq__q { border-top: var(--border-width-xs) solid var(--border-subtle); }
+.c-faq:first-child .c-faq__q { border-top: var(--border-width-xs) solid var(--alpha-black-10); }
 .c-faq--open .c-faq__q,
 .c-faq--open + .c-faq .c-faq__q { border-color: transparent; }
 .c-faq--open:first-child .c-faq__q { border-top-color: transparent; }
