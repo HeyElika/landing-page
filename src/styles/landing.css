@@ -460,7 +460,7 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   flex-shrink: 0;
   border-radius: var(--radius-full);
   background: var(--bg-base);
-  border: var(--border-width-sm) solid var(--border-default);
+  border: var(--border-width-sm) solid var(--border-bold);
   color: var(--text-subtle);
 }
 
@@ -879,7 +879,16 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   overflow: hidden;
 }
 
-.c-appcta__media { align-self: end; }
+/* The icon's corners are transparent, so the slot must not paint a fill behind
+ * them: .c-media's default tint showed as a pale square around the icon. */
+.c-appcta__media .c-media { background: transparent; }
+
+/* On a small screen the icon is a badge, not the subject. Left unbounded it
+ * filled the column and dwarfed the copy under it. */
+.c-appcta__media .c-media,
+.c-appcta__media .c-placeholder {
+  width: calc(var(--space-1000) * 2);   /* 96 */
+}
 .c-appcta__media .c-media,
 .c-appcta__media .c-placeholder { border-radius: var(--radius-2xl); }
 
@@ -934,9 +943,7 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
     width: var(--appcta-visual);
     height: auto;
   }
-  /* The icon's corners are transparent, so the slot must not paint its own
-   * fill behind them — .c-media's default tint would ring the icon in grey. */
-  .c-appcta__media .c-media { background: transparent; }
+
 }
 
 /* ── Sticky header ──────────────────────────────────────────────────────────
