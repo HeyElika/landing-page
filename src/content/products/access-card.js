@@ -132,27 +132,6 @@ export default {
     },
 
     {
-      // Two routes, side by side. Cards are neutral surfaces for now; artwork
-      // drops into `media` when it exists.
-      type: 'choicePair',
-      title: 'Choose whatever fits you',
-      items: [
-        {
-          badge: 'Pay later',
-          title: 'Split a purchase into monthly payments',
-          description: 'CONTENT DEPENDENCY: confirm how this is positioned alongside the card.',
-          href: '/pay-later',
-        },
-        {
-          badge: 'Cash loan',
-          title: 'Borrow what you need, repay monthly',
-          description: 'CONTENT DEPENDENCY: confirm how this is positioned alongside the card.',
-          href: '/cash-loan',
-        },
-      ],
-    },
-
-    {
       // Control and security merged. No CTA here: the action belongs to the
       // header, the hero and the closing band.
       type: 'security',
