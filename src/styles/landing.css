@@ -448,7 +448,12 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
  * with the copy beside it.
  *
  * Neutral, not brand: red is for actions and emphasis. */
-.c-steps-split__list { --step-dot: var(--space-1000); }     /* 48 */
+/* 40, with a 16px numeral: the numeral fills two fifths of the circle, which
+ * is the proportion a numbered badge wants. At 48 with the same numeral it
+ * filled a third and the ring read as an outline with a number lost inside
+ * it; the fix is a smaller circle, not a bigger number, because the numeral
+ * already matches the step title beside it. */
+.c-steps-split__list { --step-dot: var(--space-900); }      /* 40 */
 
 .c-steps-split__num {
   position: relative;
