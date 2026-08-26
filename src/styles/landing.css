@@ -924,6 +924,9 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
     width: var(--appcta-visual);
     height: auto;
   }
+  /* The icon's corners are transparent, so the slot must not paint its own
+   * fill behind them — .c-media's default tint would ring the icon in grey. */
+  .c-appcta__media .c-media { background: transparent; }
 }
 
 /* ── Sticky header ──────────────────────────────────────────────────────────
