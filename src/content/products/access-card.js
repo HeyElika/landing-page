@@ -207,16 +207,29 @@ export default {
     },
 
     {
+      // Grouped, as Klarna does: a few scannable rows rather than a ladder of
+      // individual questions. Add questions to a group before adding a group.
       id: 'faq',
       type: 'faq',
-      title: 'Before you activate',
+      title: 'Frequently asked questions',
       background: 'subtle',
-      items: [
-        { question: 'Does activating cost anything?', answer: 'CONTENT DEPENDENCY: confirm with Product and Legal, then state it plainly.' },
-        { question: 'How long until I can use the card?', answer: 'Activation can take up to 24 hours after you finish your steps. We notify you when it is ready.' },
-        { question: 'Do I need to do anything while I wait?', answer: 'No. Once you have completed your steps there is nothing else to do.' },
-        { question: 'What if my activation does not go through?', answer: 'CONTENT DEPENDENCY: confirm the failure path and what the user should do.' },
-        { question: 'Can I use it abroad?', answer: 'CONTENT DEPENDENCY: confirm international acceptance and any related fees.' },
+      groups: [
+        {
+          label: 'Activating your card',
+          items: [
+            { question: 'Does activating cost anything?', answer: 'CONTENT DEPENDENCY: confirm with Product and Legal, then state it plainly.' },
+            { question: 'How long until I can use the card?', answer: 'Activation can take up to 24 hours after you finish your steps. We notify you when it is ready.' },
+            { question: 'Do I need to do anything while I wait?', answer: 'No. Once you have completed your steps there is nothing else to do.' },
+            { question: 'What if my activation does not go through?', answer: 'CONTENT DEPENDENCY: confirm the failure path and what the user should do.' },
+          ],
+        },
+        {
+          label: 'Using your card',
+          items: [
+            { question: 'Where is the card accepted?', answer: 'CONTENT DEPENDENCY: confirm the card network and where it is accepted online and in store.' },
+            { question: 'Can I use it abroad?', answer: 'CONTENT DEPENDENCY: confirm international acceptance and any related fees.' },
+          ],
+        },
       ],
       footerLink: { text: 'Still deciding?', label: 'Contact support', href: '#' },
     },

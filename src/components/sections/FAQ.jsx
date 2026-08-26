@@ -3,25 +3,25 @@ import SectionHead from '../ui/SectionHead'
 import Icon from '../../assets/icons/Icon'
 
 /**
- * FAQ accordion.
+ * FAQ accordion, following the Klarna pattern.
  *
- * Follows the Klarna pattern: collapsed questions are quiet rows separated by
- * hairlines with a plus on the right; the open one becomes a card, lifted off
- * the band by fill rather than by a border, with the plus turning into a minus.
- * That gives the open answer somewhere to sit instead of pushing the rows
- * apart, which is what a plain accordion does.
+ * Questions are organised into groups. A collapsed group is a quiet row with a
+ * plus; the open one becomes a card carrying the group label and its questions
+ * numbered inside, with the plus turning into a minus. Grouping is the point:
+ * it keeps the section to a few scannable rows however many questions sit
+ * behind them, instead of a long ladder of individual questions.
  *
- * One open at a time, and it is keyboard accessible through native button
- * semantics.
+ * Content shape:
+ *   groups: [{ label, items: [{ question, answer }] }]
  *
- * The block spans the full content width as Klarna's does, but the answer text
- * is capped at a readable measure — their answers run the full 1300px, which
- * is a long line to track back from.
+ * A flat `items` array is still accepted and is treated as a single unlabelled
+ * group, so existing pages keep working.
  *
  * Important conditions belong on the page before this section, never only
  * inside it.
  */
-export default function FAQ({ title, description, items = [], background = 'subtle', footerLink }) {
+export default function FAQ({ title, description, groups, items = [], background = 'subtle', footerLink }) {
+  const resolved = groups?.length ? groups : (items.length ? [{ label: null, items }] : [])
   const [openIndex, setOpenIndex] = useState(0)
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
 
@@ -31,25 +31,30 @@ export default function FAQ({ title, description, items = [], background = 'subt
         <SectionHead title={title} description={description} align="start" />
 
         <ul className="l-stack l-stack--100">
-          {items.map((item, i) => {
+          {resolved.map((group, i) => {
             const open = openIndex === i
             const panelId = `faq-panel-${i}`
             return (
-              <li key={item.question} className={open ? 'c-faq c-faq--open' : 'c-faq'}>
+              <li key={group.label ?? i} className={open ? 'c-faq c-faq--open' : 'c-faq'}>
                 <button
                   type="button"
                   onClick={() => setOpenIndex(open ? -1 : i)}
                   aria-expanded={open}
                   aria-controls={panelId}
-                  className="c-faq__q heading-sm-semibold"
+                  className="c-faq__q heading-md-semibold"
                 >
-                  <span>{item.question}</span>
+                  <span>{group.label ?? title}</span>
                   <Icon name={open ? 'minus' : 'plus'} size="md" color="var(--icon-base)" />
                 </button>
 
                 {open && (
-                  <div id={panelId} className="c-faq__a body-md-regular l-measure">
-                    {item.answer}
+                  <div id={panelId} className="c-faq__a l-stack l-stack--400">
+                    {group.items.map((item, n) => (
+                      <div key={item.question} className="l-stack l-stack--100">
+                        <p className="body-md-semibold">{`${n + 1}. ${item.question}`}</p>
+                        <p className="body-md-regular l-measure">{item.answer}</p>
+                      </div>
+                    ))}
                   </div>
                 )}
               </li>

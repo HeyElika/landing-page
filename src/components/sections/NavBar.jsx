@@ -9,13 +9,35 @@ import Icon from '../../assets/icons/Icon'
  */
 export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
   const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const [open, setOpen] = useState(false)
 
+  // Hide on the way down, return on the way up. The header is where the
+  // primary action lives, so it comes back the moment the user looks for it.
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 0)
+    let last = window.scrollY
+    let frame = 0
+    const onScroll = () => {
+      if (frame) return
+      frame = window.requestAnimationFrame(() => {
+        frame = 0
+        const y = window.scrollY
+        setScrolled(y > 0)
+        const delta = y - last
+        // Ignore jitter, and never hide while near the top or while the
+        // mobile menu is open.
+        if (Math.abs(delta) > 6) {
+          setHidden(delta > 0 && y > 160)
+          last = y
+        }
+      })
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
   }, [])
 
   useEffect(() => {
@@ -31,7 +53,8 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
         zIndex: 50,
         background: 'var(--bg-base)',
         borderBottom: `var(--border-width-xs) solid ${scrolled ? 'var(--border-subtle)' : 'transparent'}`,
-        transition: 'border-color 160ms ease',
+        transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
+        transition: 'transform 260ms ease, border-color 160ms ease',
         // The gutter sits on the header, not on .l-container, so the nav shares
         // exactly the content box every l-band uses. Putting it inside the
         // container instead offsets the nav by one gutter above 1264px.
@@ -68,7 +91,11 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
           className="nav-mobile-toggle"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => {
+            // Opening the menu must never leave the header hidden.
+            setHidden(false)
+            setOpen((v) => !v)
+          }}
           style={{
             alignItems: 'center',
             justifyContent: 'center',
