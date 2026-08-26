@@ -62,7 +62,8 @@ export default {
       description:
         'Activate your Access Card to use your existing Billease limit for everyday spending, online and in store.',
       ctas: [{ label: 'Activate card', href: '#activate' }],
-      note: 'CONTENT DEPENDENCY: confirm whether activation itself creates any charge.',
+      // The activation-cost question is tracked in the FAQ, not in the hero:
+      // an unresolved marker directly under the primary action undermines it.
       highlights: [
         { label: 'No new application', icon: 'tick' },
         { label: 'Ready in up to 24 hours', icon: 'clock' },
