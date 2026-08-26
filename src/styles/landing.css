@@ -643,31 +643,6 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   .c-feature:hover .c-feature__img img { transform: scale(1.04); }
 }
 
-/* ── Device shell ───────────────────────────────────────────────────────────
- * A screenshot sitting in a phone. The shell is a bezel and two radii, nothing
- * more: buttons and a notch drawn in CSS never match a real device and only
- * draw the eye away from the screen.
- *
- * The screen carries the image's own aspect ratio, and the image fills it
- * exactly, so nothing is stretched or cropped.
- */
-.c-device {
-  padding: var(--space-200);
-  border-radius: calc(var(--radius-2xl) + var(--space-200));
-  background: var(--color-neutral-900);
-  box-shadow: 0 var(--space-300) var(--space-600) var(--alpha-black-10);
-}
-
-.c-device__screen {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-2xl);
-  background: var(--bg-base);
-  display: grid;
-  place-items: center;
-}
-.c-device__screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
 /* ── Security section ───────────────────────────────────────────────────────
  * An intro with a visual, then a row of supporting points beneath it. They are
  * separated by space alone — a rule between them read as a divider dropped
@@ -683,13 +658,6 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
 
 .c-security__media .c-media,
 .c-security__media .c-placeholder { border-radius: var(--radius-2xl); }
-
-/* A phone is portrait and the column is half the page, so the shell is held to
- * a phone's width rather than the column's. */
-.c-security__media .c-device {
-  max-width: calc(var(--space-1000) * 6);   /* 288 */
-  margin-inline: auto;
-}
 
 /* No rule above the points: the spacing already separates them from the intro,
  * and the line was the only border left on the page. */

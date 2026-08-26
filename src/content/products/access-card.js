@@ -147,15 +147,7 @@ export default {
       background: 'subtle',
       title: 'Safe by default, and in your control',
       description: 'Get notified when your card is used, manage it from the Billease app, and act quickly if something doesn\u2019t look right.',
-      media: {
-        src: '/app-card-locked.png',
-        alt: 'The Billease app showing a locked Access Card',
-        // The screenshot's own ratio, 360x720. It has to match the file or the
-        // screen scales against the frame and the app inside comes out
-        // stretched.
-        ratio: '360 / 720',
-        device: 'phone',
-      },
+      media: { src: null, label: 'Security visual', ratio: '4 / 3' },
       items: [
         {
           // Was 'Protected transactions', which claimed a protection nobody had
