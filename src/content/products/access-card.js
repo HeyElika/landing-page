@@ -65,7 +65,7 @@ export default {
       layout: 'split',
       fit: 'viewport',   // the card render must not be cut off at the fold
       title: ['Your Access Card', 'is ready to activate.'],
-      description: 'Finish setting it up in just a minute.',
+      description: 'Finish setting it up in just a minute and start using your Billease limit with your card.',
       ctas: [{ label: 'Open Billease app', href: 'https://app.billease.ph', size: 'xl' }],
       note: 'No new application. Ready in up to 24 hours.',
       media: {
