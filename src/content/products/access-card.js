@@ -1,4 +1,4 @@
-import { brand, nav, footer } from '../brand'
+import { brand, footer } from '../brand'
 
 /**
  * Access Card activation page.
@@ -45,7 +45,8 @@ export default {
   brand,
   nav: {
     // Header is the logo alone. The links and the action are kept here,
-    // commented, so restoring them is a matter of removing the slashes.
+    // commented, so restoring them means uncommenting them (and re-importing
+    // `nav` from ../brand if the shared defaults are wanted instead).
     //
     // links: [
     //   { label: 'Why activate', href: '#benefits' },
@@ -70,9 +71,12 @@ export default {
       media: {
         src: '/access-card.jpg',
         alt: 'Three Billease Access Cards',
-        // The source is 1060x1484. Matching it exactly rather than rounding to
-        // 3/4 avoids object-fit cropping roughly 5% off the sides.
-        ratio: '1060 / 1484',
+        // The source is 1060x1484. The slot is deliberately a little wider than
+        // that: the box is sized from a fixed height, so a wider ratio is the
+        // only way to gain width without gaining height. object-fit takes the
+        // difference off the top and bottom, where the photograph has margin
+        // to spare.
+        ratio: '1060 / 1380',
       },
       // No tinted panel behind it: the photograph carries its own background,
       // and a tint would read as a box inside a box.
