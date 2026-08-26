@@ -28,10 +28,6 @@ export const footer = {
    * page, and repeating them here only made the footer a second page.
    */
 
-  /** CONTENT DEPENDENCY: confirm the public support address. */
-  contact: [
-    { label: 'support@billease.ph', href: 'mailto:support@billease.ph' },
-  ],
 
   /**
    * Regulatory statement, taken verbatim from the live billease.ph footer.

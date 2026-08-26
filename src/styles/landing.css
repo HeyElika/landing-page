@@ -833,9 +833,11 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
  */
 
 /* ── Footer ─────────────────────────────────────────────────────────────────
- * White and small: contact and the regulatory statement, then copyright and
- * the legal links.
+ * White and small: the regulatory statement, then copyright and the legal
+ * links, with a hairline marking where the page ends.
  */
+.c-footer { border-top: var(--border-width-xs) solid var(--border-subtle); }
+
 .c-footer__bottom {
   display: grid;
   gap: var(--space-400);
