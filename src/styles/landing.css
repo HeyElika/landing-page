@@ -402,104 +402,45 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
   .c-sticky-cta { transition: none; }
 }
 
-/* ── Step scroller ──────────────────────────────────────────────────────────
- * A tall track holding a sticky stage. The track's extra height is what the
- * reader scrolls through while the stage stays put and the step changes; the
- * page never stops moving, so scrolling is never hijacked.
- *
- * Mobile gets none of this. The track collapses to auto height, the stage
- * un-sticks and every step renders in flow, because a sticky sequence in a
- * short viewport hides content behind a gesture.
+/* ── Steps beside a visual ─────────────────────────────────────────────────
+ * Every step visible at once, next to one image. No sticky stage and no
+ * scroll-driven sequence: a reader deciding whether to start wants to see how
+ * many steps there are, not discover them one gesture at a time.
  */
 
-.c-steps { position: relative; }
-
-.c-steps__stage { display: grid; gap: var(--space-800); }
-
-.c-steps__step {
+.c-steps-split {
   display: grid;
-  gap: var(--space-600);
+  gap: var(--space-800);
   align-items: center;
+  grid-template-columns: 1fr;
 }
 
-.c-steps__num {
+.c-steps-split__num {
   display: grid;
   place-items: center;
   width: var(--icon-size-xl);
   height: var(--icon-size-xl);
+  flex-shrink: 0;
   border-radius: var(--radius-full);
   background: var(--bg-primary);
   color: var(--text-on-dark);
 }
 
 /* Same corner as the hero visual. */
-.c-steps__media .c-media,
-.c-steps__media .c-placeholder { border-radius: var(--radius-2xl); }
-
-.c-steps__progress { display: none; }
+.c-steps-split__media .c-media,
+.c-steps-split__media .c-placeholder { border-radius: var(--radius-2xl); }
 
 @media (min-width: 900px) {
-  .c-steps {
-    /* One screen of scroll per step, plus the screen the stage occupies. */
-    height: calc(var(--step-count, 4) * 80svh + 100svh);
-  }
-
-  .c-steps__stage {
-    position: sticky;
-    top: calc(var(--nav-h) + var(--space-800));
-    height: calc(100svh - var(--nav-h) - var(--space-1000) * 2);
-    display: block;
-  }
-
-  .c-steps__step {
-    position: absolute;
-    inset: 0;
+  .c-steps-split {
     grid-template-columns: 1fr 1fr;
     gap: var(--space-1000);
-    opacity: 0;
-    transform: translateY(var(--space-300));
-    transition: opacity 420ms ease, transform 420ms ease;
-    pointer-events: none;
   }
-  .c-steps__step.is-active {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-  }
-
-  .c-steps__media { height: 100%; display: flex; align-items: center; justify-content: center; }
-  .c-steps__media .c-media,
-  .c-steps__media .c-placeholder {
-    height: 100%;
-    width: auto;
-    max-width: 100%;
-    margin-inline: auto;
-  }
-
-  /* Progress marks, centred under the stage. */
-  .c-steps__progress {
-    position: sticky;
-    top: calc(100svh - var(--space-900));
-    display: flex;
-    justify-content: center;
-    gap: var(--space-200);
-    padding: 0;
-  }
-  .c-steps__progress li {
-    width: var(--space-200);
-    height: var(--space-200);
-    border-radius: var(--radius-full);
-    background: var(--border-default, var(--border-subtle));
-    transition: background-color 300ms ease, width 300ms ease;
-  }
-  .c-steps__progress li.is-active {
-    width: var(--space-600);
-    background: var(--bg-primary);
-  }
+  .c-steps-split--reverse .c-steps-split__list { order: 2; }
+  .c-steps-split--reverse .c-steps-split__media { order: 1; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .c-steps__step { transition: none; }
+@media (min-width: 1200px) {
+  .c-steps-split { gap: calc(var(--space-1000) + var(--space-600)); }
 }
 
 /* ── FAQ accordion ──────────────────────────────────────────────────────────
