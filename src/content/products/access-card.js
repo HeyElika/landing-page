@@ -96,23 +96,27 @@ export default {
       columns: 3,
       items: [
         {
-          media: { src: null, label: 'Card ready in the app', ratio: '2 / 3' },
-          title: 'Ready once activated',
-          description: 'Your card is ready to use as soon as Billease confirms activation.',
-        },
-        {
-          media: { src: null, label: 'Card in the app', ratio: '2 / 3' },
-          title: 'Use the limit you already have',
-          description: 'No new limit to manage. Your Access Card uses the Credit Line you already have.',
-        },
-        {
           media: { src: '/card-in-store.jpg', alt: 'Paying in store by tapping a Billease card on a card terminal', ratio: '2 / 3' },
-          title: 'Pay with chip or tap',
-          // CONTENT DEPENDENCY: the Mastercard acceptance claim. The supplied
-          // copy carried the caveat inside the sentence; a caveat addressed to
-          // us does not belong on the page, so it lives here. Confirm the
-          // network with Product before this ships.
-          description: 'Use your physical card wherever Mastercard is accepted.',
+          title: 'Spend in more places',
+          // CONTENT DEPENDENCY: the Mastercard acceptance claim, and that both
+          // online and in-store work from launch. Confirm with Product.
+          description: 'Use your Access Card online and in store wherever Mastercard is accepted.',
+        },
+        {
+          media: { src: null, label: 'Paying abroad', ratio: '2 / 3' },
+          title: 'Use it abroad',
+          // CONTENT DEPENDENCY: international acceptance and the conversion
+          // mechanism, including who sets the rate and whether a fee applies.
+          // Confirm with Product and Risk. The FAQ answer on overseas use is
+          // written to match this; the two must move together.
+          description: 'Pay internationally where supported, with purchases converted automatically to pesos.',
+        },
+        {
+          media: { src: null, label: 'Spending limit in the app', ratio: '2 / 3' },
+          title: 'Set your own spending limit',
+          // CONTENT DEPENDENCY: confirm the daily card limit exists, that it
+          // is user-settable, and that it is separate from the Credit Line.
+          description: 'Choose how much can be spent from your card each day without changing your total Credit Line limit.',
         },
       ],
     },
@@ -215,9 +219,9 @@ export default {
         },
         {
           question: 'Can I use it abroad?',
-          // Verify with Product and Risk: whether international use is enabled
-          // at launch, and how conversion is handled.
-          answer: 'The card is built for spending in the Philippines. If you need to pay a merchant based overseas, check the Billease app first. Support can tell you whether that purchase will go through.',
+          // Verify with Product and Risk, together with the 'Use it abroad'
+          // card above: these two make the same claim and must agree.
+          answer: 'Yes, at supported merchants outside the Philippines. Purchases in another currency are converted to pesos automatically, and you see the peso amount in your transactions.',
         },
         {
           question: 'Are there fees for using the card?',
