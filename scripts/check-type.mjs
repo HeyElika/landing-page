@@ -12,6 +12,8 @@ const css = readFileSync(join(root, 'src/styles/landing.css'), 'utf8')
 
 const TOKENS = { '--text-xl': 20, '--text-2xl': 24, '--text-3xl': 32 }
 const EXPECT = {
+  // A statement with a screen to itself; one step above the hero.
+  '--display-xl': { token: '--text-3xl', max: 80 },
   // 56, not 60: at 60 the hero's second line overruns its column and wraps.
   '--display-lg': { token: '--text-3xl', max: 56 },
   '--display-md': { token: '--text-2xl', max: 48 },

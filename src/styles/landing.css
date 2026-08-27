@@ -45,6 +45,10 @@
   /* Capped at 56 rather than 60: at 60 the hero's second line measures 534px
    * against a 528px column and wraps to a third line. */
   --display-lg: clamp(var(--text-3xl), 1.413rem + 2.609vw, 56px);
+  /* One step above the hero, for a statement that has a screen to itself and
+   * no column beside it. Solved through both endpoints: 32px at 360, 80px at
+   * 1280. */
+  --display-xl: clamp(var(--text-3xl), 0.826rem + 5.217vw, 80px);
   --display-md: clamp(var(--text-2xl), 0.913rem + 2.609vw, 48px);
   --display-sm: clamp(var(--text-xl), 0.956rem + 1.304vw, 32px);
 
@@ -209,9 +213,9 @@ button { font: inherit; }
 .l-container--narrow { max-width: 760px; }
 
 /* A column for a list of controls: wider than prose wants, narrower than the
- * page. The FAQ rows read as a stack rather than as lines running the full
- * width of the screen. */
-.l-container--list { max-width: 800px; }
+ * page. 976px matches the reference measured on vivid.money — a 1024px
+ * container less its 24px padding either side. */
+.l-container--list { max-width: 976px; }
 
 /* A reading column for text-only sections. 640px rather than the 600 it looks
  * like, for two measured reasons: at 48px the heading "Frequently asked
@@ -268,6 +272,13 @@ button { font: inherit; }
  * Line height tightens as size grows, which is what the reference pages do:
  * the token 125% is correct at 24px and too airy at 56px. */
 
+.display-xl {
+  font-family: var(--ds-font-family);
+  font-size: var(--display-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
 .display-lg {
   font-family: var(--ds-font-family);
   font-size: var(--display-lg);
@@ -282,6 +293,19 @@ button { font: inherit; }
   line-height: 1.15;
   letter-spacing: -0.01em;
 }
+/* 24px at regular weight. The token set has 24px only at 600 and 700, and a
+ * list of questions wants the size without the weight — at 600 six of them
+ * read as six headings competing with the section heading above.
+ *
+ * MISSING FROM THE LIBRARY: heading-lg-regular. Same shape as the generated
+ * classes so it drops in unchanged once the library carries it. */
+.heading-lg-regular {
+  font-family: var(--ds-font-family);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.25;
+}
+
 .display-sm {
   font-family: var(--ds-font-family);
   font-size: var(--display-sm);
@@ -1178,14 +1202,17 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
   --dir: -1;
   display: block;
   transform: translateX(calc(var(--dir) * (1 - var(--p)) * 14vw));
-  /* Pale at rest, full contrast once centred. */
+  /* Pale and soft until it settles: the line resolves as it arrives, which is
+   * what makes the movement read as focus rather than as a slide. */
   color: color-mix(in srgb, var(--text-base) calc(var(--p) * 100%), var(--text-disabled));
-  will-change: transform;
+  filter: blur(calc((1 - var(--p)) * var(--space-300)));
+  will-change: transform, filter;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .c-statement__line {
     transform: none;
+    filter: none;
     color: var(--text-base);
   }
 }

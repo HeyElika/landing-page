@@ -61,7 +61,7 @@ export default function Statement({ lines = [], ctas = [], background = 'default
   return (
     <section ref={ref} className={['l-band', 'c-statement', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container c-statement__inner">
-        <h2 className="c-statement__head display-lg">
+        <h2 className="c-statement__head display-xl">
           {lines.map((line, i) => (
             // Odd lines arrive from the left, even from the right.
             <span key={line} className="c-statement__line" style={{ '--dir': i % 2 === 0 ? -1 : 1 }}>

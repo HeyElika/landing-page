@@ -179,9 +179,15 @@ Colour, type, spacing, radius and component behaviour come from the token
 system and the Billease component library. A content file cannot change them,
 which is the point: a new page inherits every decision already made.
 
-The one place this template goes beyond the library is the display type scale
-(`--display-lg | md | sm`), because the token scale stops at 32px and landing
-page headlines need more. That was approved explicitly, and the guard in
-`scripts/check-type.mjs` holds it to its endpoints.
+Three things go beyond the library, each because a landing page needs a size
+the product UI never does. All are flagged in the code so they can be added
+upstream, and the guards hold them to their definitions:
+
+- **The display scale** (`--display-xl | lg | md | sm`) — the token scale stops
+  at 32px. `check-type.mjs` holds each step to its endpoints.
+- **`heading-lg-regular`** — the token set carries 24px only at 600 and 700, and
+  a list of questions wants the size without the weight.
+- **The `xl` button** (52px) — the Figma set stops at 48, which reads small
+  under display type.
 
 Read `DESIGN-RULES.md` before changing any of it.

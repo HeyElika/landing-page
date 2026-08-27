@@ -4,23 +4,46 @@ import Cta from '../ui/Cta'
 import Icon from '../../assets/icons/Icon'
 
 /**
- * Sticky top navigation. It stays put for the whole page; only the bottom
- * border changes, appearing once the page is scrolled, which matches
- * NavHeader behaviour in the Billease app.
+ * Sticky top navigation.
+ *
+ * Hides on the way down and returns on the way up, so the page has the whole
+ * screen while the reader is moving forward and the action is one gesture away
+ * the moment they look for it.
+ *
+ * It also returns at the foot of the page and stays there. Someone who has
+ * reached the end has finished reading, and the alternative is a footer with
+ * no way back to the action except scrolling up.
  */
 export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
   const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const [open, setOpen] = useState(false)
 
-  // The only thing scroll changes is the border. Reads are throttled to a
-  // frame so a fast scroll cannot queue up work.
+  // Reads are throttled to a frame so a fast scroll cannot queue up work.
   useEffect(() => {
+    let last = window.scrollY
     let frame = 0
     const onScroll = () => {
       if (frame) return
       frame = window.requestAnimationFrame(() => {
         frame = 0
-        setScrolled(window.scrollY > 0)
+        const y = window.scrollY
+        setScrolled(y > 0)
+
+        const doc = document.documentElement
+        // A couple of pixels of tolerance: sub-pixel layout and elastic
+        // scrolling mean the numbers rarely land exactly equal.
+        const atBottom = window.innerHeight + y >= doc.scrollHeight - 2
+
+        const delta = y - last
+        // Ignore jitter, and never hide near the top, at the foot of the
+        // page, or while the mobile menu is open.
+        if (Math.abs(delta) > 6) {
+          setHidden(delta > 0 && y > 160 && !atBottom)
+          last = y
+        } else if (atBottom) {
+          setHidden(false)
+        }
       })
     }
     onScroll()
@@ -41,7 +64,8 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
       className="c-nav"
       style={{
         borderBottom: `var(--border-width-xs) solid ${scrolled ? 'var(--border-subtle)' : 'transparent'}`,
-        transition: 'border-color 160ms ease',
+        transform: hidden ? 'translateY(-100%)' : 'translateY(0)',
+        transition: 'transform 260ms ease, border-color 160ms ease',
         // The gutter sits on the header, not on .l-container, so the nav shares
         // exactly the content box every l-band uses. Putting it inside the
         // container instead offsets the nav by one gutter above 1264px.
@@ -87,7 +111,11 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
           className="nav-mobile-toggle"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => {
+            // Opening the menu must never leave the header off-screen.
+            setHidden(false)
+            setOpen((v) => !v)
+          }}
           style={{
             alignItems: 'center',
             justifyContent: 'center',

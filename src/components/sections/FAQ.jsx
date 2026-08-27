@@ -70,7 +70,7 @@ export default function FAQ({ title, description, groups, items = [], background
                         onClick={() => toggle(key)}
                         aria-expanded={open}
                         aria-controls={panelId}
-                        className="c-faq__q heading-md-semibold"
+                        className="c-faq__q heading-lg-regular"
                       >
                         <span>{item.question}</span>
                         <span className="c-faq__icon">
