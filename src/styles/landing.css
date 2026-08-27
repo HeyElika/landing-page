@@ -228,9 +228,17 @@ button { font: inherit; }
  * headline's longest line is about 500px; the general 68ch measure let the
  * lead run to 775px, half as wide again, and the block read lopsided.
  * Balancing splits it into two even lines instead of a long one and a stub. */
-.hero-lead {
-  max-width: 44ch;
-  text-wrap: balance;
+/* On a phone the copy uses the full column: a 44ch cap is wider than the
+ * screen anyway, and balancing evens the line lengths, which leaves every line
+ * short of the edge and makes the block look narrower than it is. Both apply
+ * from 900px up, where the column is wide enough for them to help. */
+.hero-lead { max-width: none; }
+
+@media (min-width: 900px) {
+  .hero-lead {
+    max-width: 44ch;
+    text-wrap: balance;
+  }
 }
 
 .l-stack { display: flex; flex-direction: column; }
@@ -285,6 +293,7 @@ button { font: inherit; }
  * Colour and alignment only. Size, weight and line-height otherwise come from
  * a generated type style class in tokens.css. */
 
+.t-base { color: var(--text-base); }
 .t-subtle { color: var(--text-subtle); }
 .t-on-dark { color: var(--text-on-dark); }
 .t-on-dark-subtle { color: var(--text-on-dark-subtle); }

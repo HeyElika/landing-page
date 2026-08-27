@@ -106,13 +106,13 @@ export default function Hero({
         </div>
       )}
 
-      {/* For the reader who does not have the app yet. It sits directly under
-          the action rather than in the note below, because it is an
-          alternative route to the same goal, not a caveat about it. */}
+      {/* For the reader who does not have the app yet. Plain text, not a
+          link: the download panel at the foot of the page carries the store
+          badges, and a second underlined thing under the button made the
+          block look like it offered two actions. */}
       {appLink && (
         <p className="body-md-regular t-subtle">
-          {appLink.text}{' '}
-          <a className="link-md" style={{ color: 'var(--text-base)' }} href={appLink.href}>{appLink.label}</a>
+          {appLink.text} <span className="body-md-semibold t-base">{appLink.label}</span>
         </p>
       )}
 
