@@ -63,7 +63,7 @@ export default function Hero({
   }
 
   const copy = (
-    <div className={['l-stack', 'l-stack--600', centered ? 'c-section-head--center' : ''].filter(Boolean).join(' ')}>
+    <div className={['l-stack', 'l-stack--800', centered ? 'c-section-head--center' : ''].filter(Boolean).join(' ')}>
       <div className="l-stack l-stack--400">
         {badge && <span><Badge {...badge} /></span>}
         {/* Sits above the headline as a standfirst: the two facts that decide
@@ -98,26 +98,33 @@ export default function Hero({
         )}
       </div>
 
-      {ctas.length > 0 && (
-        <div className="l-row" style={{ justifyContent: centered ? 'center' : 'flex-start' }}>
-          {ctas.map((c, i) => (
-            <Cta key={c.label} {...c} type={c.type || (i === 0 ? 'primary' : 'ghost')} onDark={onDark} />
-          ))}
-        </div>
-      )}
+      {/* The action and the line under it are one group: the aside belongs to
+          the button, not to the copy above it, so it sits close to the button
+          while the group as a whole stands clear of the description. */}
+      {(ctas.length > 0 || appLink) && (
+        <div className="l-stack l-stack--300">
+          {ctas.length > 0 && (
+            <div className="l-row" style={{ justifyContent: centered ? 'center' : 'flex-start' }}>
+              {ctas.map((c, i) => (
+                <Cta key={c.label} {...c} type={c.type || (i === 0 ? 'primary' : 'ghost')} onDark={onDark} />
+              ))}
+            </div>
+          )}
 
       {/* A secondary route for a reader the main action does not suit.
           Content decides whether it links: give it an `href` and the label
           becomes a link, leave it out and the label is emphasised text.
           Plain is right when the destination is already on the page — a
           second underlined thing under the button reads as a second action. */}
-      {appLink && (
-        <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>
-          {appLink.text}{' '}
-          {appLink.href
-            ? <a className="link-md" style={{ color: onDark ? 'var(--text-on-dark)' : 'var(--text-base)' }} href={appLink.href}>{appLink.label}</a>
+          {appLink && (
+            <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>
+              {appLink.text}{' '}
+              {appLink.href
+                ? <a className="link-md" style={{ color: onDark ? 'var(--text-on-dark)' : 'var(--text-base)' }} href={appLink.href}>{appLink.label}</a>
             : <span className={['body-md-semibold', onDark ? 't-on-dark' : 't-base'].join(' ')}>{appLink.label}</span>}
-        </p>
+            </p>
+          )}
+        </div>
       )}
 
     </div>

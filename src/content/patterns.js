@@ -97,10 +97,10 @@ export const patterns = [
     variants: [
       {
         label: 'Converging lines',
-        note: 'Full screen, white. Each line slides in from alternating sides and darkens as the section centres, tracking the scroll in both directions. Two or three lines; it is a sentence, not a paragraph.',
+        note: 'Full screen, white. Each line arrives from its own angle and distance, resolving from blurred grey to sharp black as the section centres, and drifting back out as it leaves. Two or three lines; it is a sentence, not a paragraph.',
         props: {
           type: 'statement',
-          lines: ['A short statement', 'across two or three lines.'],
+          lines: ['A short statement', 'across two', 'or three lines.'],
           ctas: [{ label: 'The page\u2019s action', href: '#', size: 'xl' }],
         },
       },

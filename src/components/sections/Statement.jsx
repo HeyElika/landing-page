@@ -14,9 +14,28 @@ import Cta from '../ui/Cta'
  * does the rest, so the scroll handler touches one element per frame however
  * many lines there are.
  *
+ * Each line travels a different distance and a different angle, rather than
+ * alternating a single offset: in the reference no two lines arrive from the
+ * same place, which is what stops the movement reading as a mechanical slide.
+ * The offsets are a fixed sequence, not random, so the animation is identical
+ * on every load and every device.
+ *
  * Content shape:
  *   { lines: ['First line', 'Second line'], ctas: [{ label, href }] }
  */
+
+// Horizontal travel per line, in units of the CSS offset. Signs alternate so
+// consecutive lines come from opposite sides; magnitudes vary so they do not
+// arrive in step. Vertical travel is smaller — the block is already moving up
+// the screen, so a little is enough to break the alignment.
+const DRIFT = [
+  { x: -0.7, y: 0.5 },
+  { x: 1.15, y: -0.35 },
+  { x: -1.3, y: 0.7 },
+  { x: 0.85, y: -0.55 },
+  { x: -1.05, y: 0.4 },
+  { x: 1.25, y: -0.6 },
+]
 export default function Statement({ lines = [], ctas = [], background = 'default' }) {
   const ref = useRef(null)
 
@@ -63,8 +82,11 @@ export default function Statement({ lines = [], ctas = [], background = 'default
       <div className="l-container c-statement__inner">
         <h2 className="c-statement__head display-xl">
           {lines.map((line, i) => (
-            // Odd lines arrive from the left, even from the right.
-            <span key={line} className="c-statement__line" style={{ '--dir': i % 2 === 0 ? -1 : 1 }}>
+            <span
+              key={line}
+              className="c-statement__line"
+              style={{ '--dx': DRIFT[i % DRIFT.length].x, '--dy': DRIFT[i % DRIFT.length].y }}
+            >
               {line}
             </span>
           ))}

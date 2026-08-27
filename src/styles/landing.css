@@ -1197,11 +1197,15 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
 }
 
 .c-statement__line {
-  /* Direction of travel, set per line by the component. Declared here so the
-   * rule stands on its own if it is ever used without one. */
-  --dir: -1;
+  /* Travel per line, set by the component. Declared here so the rule stands on
+   * its own if it is ever used without them. */
+  --dx: -1;
+  --dy: 0;
   display: block;
-  transform: translateX(calc(var(--dir) * (1 - var(--p)) * 14vw));
+  transform: translate(
+    calc(var(--dx) * (1 - var(--p)) * 12vw),
+    calc(var(--dy) * (1 - var(--p)) * 5vh)
+  );
   /* Pale and soft until it settles: the line resolves as it arrives, which is
    * what makes the movement read as focus rather than as a slide. */
   color: color-mix(in srgb, var(--text-base) calc(var(--p) * 100%), var(--text-disabled));

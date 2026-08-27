@@ -122,7 +122,7 @@ export default {
       // screen, with the action under it. The lines converge as the section
       // centres, so scrolling into it feels like arriving somewhere.
       type: 'statement',
-      lines: ['Unlock a new way', 'to use your Billease funds.'],
+      lines: ['Unlock a new way', 'to use your', 'Billease funds.'],
       ctas: [{ label: 'Open Billease app', href: 'https://app.billease.ph', size: 'xl' }],
     },
 
