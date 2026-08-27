@@ -11,18 +11,9 @@ export default function Steps({ title, description, items = [], background = 'de
         <ol className={`l-grid l-grid--${Math.min(items.length, 4) || 3}`}>
           {items.map((item, i) => (
             <li key={item.title} className="l-stack l-stack--300">
-              <span
-                className="heading-sm-semibold"
-                style={{
-                  display: 'grid',
-                  placeItems: 'center',
-                  width: 'var(--icon-size-xl)',
-                  height: 'var(--icon-size-xl)',
-                  borderRadius: 'var(--radius-full)',
-                  background: 'var(--bg-primary)',
-                  color: 'var(--text-on-dark)',
-                }}
-              >
+              {/* Same marker as StepsSplit: outlined and neutral. Red is for
+                  actions and brand emphasis, not for numbering. */}
+              <span className="c-steps-split__num heading-sm-semibold">
                 {i + 1}
               </span>
               <h3 className="heading-md-semibold">{item.title}</h3>

@@ -25,7 +25,7 @@ export default function UseCases({ title, description, items = [], background = 
                 alignItems: 'flex-start',
                 flexWrap: 'nowrap',
                 background: 'var(--bg-subtle)',
-                borderRadius: 'var(--radius-xl)',
+                borderRadius: 'var(--radius-2xl)',
                 padding: 'var(--space-500)',
               }}
             >

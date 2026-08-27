@@ -461,6 +461,7 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
 .c-steps-split__list { --step-dot: var(--space-900); }      /* 40 */
 
 .c-steps-split__num {
+  --step-dot: var(--space-900);   /* default when used outside a steps list */
   position: relative;
   z-index: 1;
   display: grid;
@@ -715,6 +716,10 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
     grid-template-columns: 1fr 1fr;
     gap: var(--space-1000);
   }
+  /* Copy and media swap sides. Ordered rather than reversed, so the DOM keeps
+   * copy first and a small screen still reads copy, then image. */
+  .c-security__intro--reverse > *:first-child { order: 2; }
+  .c-security__intro--reverse > *:last-child { order: 1; }
 }
 
 /* ── Choice pair ────────────────────────────────────────────────────────────
@@ -959,6 +964,9 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
     gap: var(--space-1000);
     padding: var(--space-1000);
   }
+  .c-appcta--reverse { grid-template-columns: 1fr auto; }
+  .c-appcta--reverse .c-appcta__media { order: 2; }
+  .c-appcta--reverse .c-appcta__copy { order: 1; }
 
   /* An icon rather than a device: it sits at a fixed size and the copy beside
    * it decides how tall the block is. */
@@ -1110,4 +1118,32 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+
+/* ── Pattern gallery ────────────────────────────────────────────────────────
+ * Chrome for /patterns only: the labels and the collapsed content object above
+ * each rendered pattern. Scoped to c-spec so nothing here can reach a section.
+ */
+
+.c-spec__head { border-top: var(--border-width-sm) solid var(--text-base); }
+
+.c-spec__variant { border-top: var(--border-width-xs) solid var(--alpha-black-10); }
+
+.c-spec {
+  border: var(--border-width-xs) solid var(--alpha-black-10);
+  border-radius: var(--radius-md);
+  padding: var(--space-300) var(--space-400);
+  background: var(--bg-subtle);
+}
+.c-spec summary { cursor: pointer; }
+.c-spec code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+.c-spec__code {
+  margin-top: var(--space-300);
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--text-base);
 }

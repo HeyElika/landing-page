@@ -17,11 +17,11 @@ import Media from '../ui/Media'
  * white button around it would be a container the badge already has. Without
  * a `src` the entry falls back to a labelled button.
  */
-export default function AppDownload({ title, description, media, apps = [] }) {
+export default function AppDownload({ title, description, media, apps = [], reverse = false }) {
   return (
     <section className="l-band l-band--tight">
       <div className="l-container">
-        <div className="c-appcta">
+        <div className={['c-appcta', reverse ? 'c-appcta--reverse' : ''].filter(Boolean).join(' ')}>
           <div className="c-appcta__media">
             <Media {...(media || {})} ratio={media?.ratio || '3 / 4'} label={media?.label || 'App screen'} />
           </div>

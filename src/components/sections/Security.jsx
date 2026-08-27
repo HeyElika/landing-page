@@ -18,14 +18,14 @@ import Icon from '../../assets/icons/Icon'
  * Security claims are on the never-invent list. Anything unconfirmed stays
  * marked. See DESIGN-RULES.md section 16.
  */
-export default function Security({ title, description, media, link, items = [], background = 'default' }) {
+export default function Security({ title, description, media, link, items = [], reverse = false, background = 'default' }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken', dark: 'l-band--dark' }[background] || ''
   const onDark = background === 'dark'
 
   return (
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-stack l-stack--900">
-        <div className="c-security__intro">
+        <div className={['c-security__intro', reverse ? 'c-security__intro--reverse' : ''].filter(Boolean).join(' ')}>
           <div className="l-stack l-stack--400">
             <SectionHead title={title} description={description} align="start" onDark={onDark} />
             {link && (

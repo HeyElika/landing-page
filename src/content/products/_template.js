@@ -5,6 +5,10 @@ import { brand, nav, footer } from '../brand'
  * section 10. Copy this file, rename it, set a slug, fill in the copy, then
  * register it in `src/content/index.js`.
  *
+ * For the layouts available and the props that change them, see /patterns in
+ * the running app, or PATTERNS.md. Every variation there can be pasted
+ * straight into the sections array below.
+ *
  * Every section is optional, but keep the ORDER. It answers the user's
  * questions in the sequence they ask them: what is this, why should I care,
  * where can I use it, what happens next, what should I know, is it safe,

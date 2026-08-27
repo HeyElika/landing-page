@@ -1,5 +1,6 @@
 import { Routes, Route, useParams, Link } from 'react-router-dom'
 import LandingPage from './LandingPage'
+import PatternGallery from './PatternGallery'
 import Cta from './components/ui/Cta'
 import { pages, defaultPage, getPage } from './content'
 
@@ -43,6 +44,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<LandingPage page={defaultPage} />} />
       <Route path="/_pages" element={<PageIndex />} />
+      <Route path="/patterns" element={<PatternGallery />} />
       <Route path="/:slug" element={<ProductRoute />} />
     </Routes>
   )

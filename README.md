@@ -14,6 +14,14 @@ npm run lint
 npm run preview  # preview the production build
 ```
 
+## The pattern catalogue
+
+`/patterns` renders every layout this template can build, each one through the
+same component a product page uses, with the content object that produces it.
+Start there when building a page: choose patterns, copy their objects, replace
+the copy. `PATTERNS.md` is the same catalogue in writing, plus the rules about
+order, images and backgrounds.
+
 ## How it works
 
 One product equals one file in `src/content/products/`. That file exports an object describing the page, and `LandingPage.jsx` turns it into the rendered page. Section components read their content from that object and nothing else.
