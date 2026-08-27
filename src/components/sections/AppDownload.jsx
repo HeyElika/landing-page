@@ -12,16 +12,27 @@ import Media from '../ui/Media'
  *   { title, description, media: { src, alt, label, ratio },
  *     apps: [{ name, href, src }] }
  *
+ * `tone` picks the panel fill. All three are dark enough to carry white copy,
+ * which is what the copy inside assumes.
+ *
  * `apps[].src` is the official store badge. Apple and Google both supply the
  * artwork and forbid redrawing it, so a badge renders as the image alone — a
  * white button around it would be a container the badge already has. Without
  * a `src` the entry falls back to a labelled button.
  */
-export default function AppDownload({ title, description, media, apps = [], reverse = false }) {
+export default function AppDownload({
+  title,
+  description,
+  media,
+  apps = [],
+  reverse = false,
+  tone = 'secondary',   // 'secondary' (blue) | 'dark' | 'brand'
+}) {
+  const toneClass = { secondary: '', dark: 'c-appcta--dark', brand: 'c-appcta--brand' }[tone] || ''
   return (
     <section className="l-band l-band--tight">
       <div className="l-container">
-        <div className={['c-appcta', reverse ? 'c-appcta--reverse' : ''].filter(Boolean).join(' ')}>
+        <div className={['c-appcta', toneClass, reverse ? 'c-appcta--reverse' : ''].filter(Boolean).join(' ')}>
           <div className="c-appcta__media">
             <Media {...(media || {})} ratio={media?.ratio || '3 / 4'} label={media?.label || 'App screen'} />
           </div>

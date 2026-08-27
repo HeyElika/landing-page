@@ -106,13 +106,17 @@ export default function Hero({
         </div>
       )}
 
-      {/* For the reader who does not have the app yet. Plain text, not a
-          link: the download panel at the foot of the page carries the store
-          badges, and a second underlined thing under the button made the
-          block look like it offered two actions. */}
+      {/* A secondary route for a reader the main action does not suit.
+          Content decides whether it links: give it an `href` and the label
+          becomes a link, leave it out and the label is emphasised text.
+          Plain is right when the destination is already on the page — a
+          second underlined thing under the button reads as a second action. */}
       {appLink && (
-        <p className="body-md-regular t-subtle">
-          {appLink.text} <span className="body-md-semibold t-base">{appLink.label}</span>
+        <p className={['body-md-regular', onDark ? 't-on-dark-subtle' : 't-subtle'].join(' ')}>
+          {appLink.text}{' '}
+          {appLink.href
+            ? <a className="link-md" style={{ color: onDark ? 'var(--text-on-dark)' : 'var(--text-base)' }} href={appLink.href}>{appLink.label}</a>
+            : <span className={['body-md-semibold', onDark ? 't-on-dark' : 't-base'].join(' ')}>{appLink.label}</span>}
         </p>
       )}
 

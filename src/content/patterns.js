@@ -31,7 +31,7 @@ export const patterns = [
           description: 'One sentence saying what the reader gets. Not a feature list.',
           ctas: [{ label: 'Primary action', href: '#', size: 'xl' }],
           note: 'A short qualifier, set small and italic above the headline.',
-          appLink: { text: 'Secondary route?', label: 'Take this one instead', href: '#' },
+          appLink: { text: 'A secondary route?', label: 'Linked when it has an href', href: '#' },
           media: media('Product visual', '4 / 5'),
         },
       },
@@ -45,6 +45,7 @@ export const patterns = [
           title: 'A headline that centres well',
           description: 'Centred heroes want shorter copy than split ones.',
           ctas: [{ label: 'Primary action', href: '#' }],
+          appLink: { text: 'Without an href,', label: 'the label is plain emphasis' },
           media: media('Wide visual', '16 / 9'),
         },
       },
@@ -221,11 +222,27 @@ export const patterns = [
     variants: [
       {
         label: 'App download panel',
-        note: 'Contained blue block with the store badges. `reverse: true` puts the visual on the right.',
+        note: 'Contained block with the store badges. `reverse: true` puts the visual on the right; `tone: "dark" | "brand"` changes the fill from blue.',
         props: {
           type: 'appDownload',
           title: 'Get the app',
           description: 'One sentence telling the reader what to do next.',
+          media: media('App icon', '1 / 1'),
+          apps: [
+            { name: 'Download on the App Store', href: '#', src: '/badge-app-store.svg' },
+            { name: 'Get it on Google Play', href: '#', src: '/badge-google-play.png' },
+          ],
+        },
+      },
+      {
+        label: 'App download panel — dark, visual on the right',
+        note: 'The same pattern with `tone: "dark"` and `reverse: true`.',
+        props: {
+          type: 'appDownload',
+          tone: 'dark',
+          reverse: true,
+          title: 'The same panel, flipped and dark',
+          description: 'Tone and side are content decisions, not new components.',
           media: media('App icon', '1 / 1'),
           apps: [
             { name: 'Download on the App Store', href: '#', src: '/badge-app-store.svg' },

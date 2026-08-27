@@ -913,6 +913,11 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
   overflow: hidden;
 }
 
+/* Alternative fills. All carry white copy, so the copy inside needs no
+ * per-tone handling. */
+.c-appcta--dark { background: var(--color-neutral-900); }
+.c-appcta--brand { background: var(--bg-primary); }
+
 /* The icon's corners are transparent, so the slot must not paint a fill behind
  * them: .c-media's default tint showed as a pale square around the icon. */
 .c-appcta__media .c-media { background: transparent; }

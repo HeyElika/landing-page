@@ -65,9 +65,9 @@ export default {
       title: ['Your Access Card', 'is ready to activate.'],
       description: 'Finish setting it up in just a minute and start using your Billease limit with your card.',
       ctas: [{ label: 'Open Billease app', href: 'https://app.billease.ph', size: 'xl' }],
-      // Anchors to the download panel at the foot of the page, where both
-      // store links already are.
-      appLink: { text: 'Don\u2019t have the app?', label: 'Download Billease', href: '#get-app' },
+      // No href: the download panel further down the page carries the store
+      // badges, so this is a signpost rather than a second action.
+      appLink: { text: 'Don\u2019t have the app?', label: 'Download Billease' },
       note: 'No new application. Ready in up to 24 hours.',
       media: {
         src: '/access-card.jpg',

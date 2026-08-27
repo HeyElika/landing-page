@@ -98,6 +98,36 @@ the wrong shape" bug in this repo.
 
 ---
 
+## Variations are content, not code
+
+A pattern's variations live in the content file. If you find yourself editing a
+section component to make one page look right, that is the signal you are about
+to break every other page that uses it — add a prop instead, give it a sensible
+default, and show it in the catalogue.
+
+Worked example: the hero's secondary line under the action. Give `appLink` an
+`href` and the label is a link; leave the `href` out and it is emphasised text.
+The Access Card page uses the plain form because its download panel is a scroll
+away, so a second underlined thing under the button would read as a second
+action. Another page can link it. Same component, no fork.
+
+| Pattern | Variations available in content |
+|---|---|
+| `hero` | `layout`, `fit`, `background`, `badge`, `note`, `appLink` linked or plain |
+| `features` | image cards vs icon cards (per item), `columns`, `fit`, `background`, `variant` |
+| `stepsSplit` | `reverse`, `fit`, `background` |
+| `security` | `reverse`, `background`, `link` |
+| `panel` | `reverse`, `tone`, `background`, `bullets`, `cta`, `link` |
+| `spotlight` | per-row `reverse`, `bullets`, `link` |
+| `faq` | flat `items` or `groups`, string or array answers, `footerLink` |
+| `appDownload` | `reverse`, `tone` (blue, dark, brand) |
+| `ctaBand` | `background`, `media`, `stores`, `note` |
+
+Two things are deliberately **not** configurable, because changing them breaks
+the design rather than varying it: the corner radius, which is one value across
+every image and container; and the feature card's dark fill, which the white
+copy over the image depends on for legibility.
+
 ## Backgrounds
 
 Most sections take `background: 'default' | 'subtle' | 'sunken' | 'dark'`.
