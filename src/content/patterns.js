@@ -91,6 +91,23 @@ export const patterns = [
   },
 
   {
+    id: 'statement',
+    name: 'Statement',
+    job: 'A pause between two sections. One message on an empty screen, with the page\u2019s action under it.',
+    variants: [
+      {
+        label: 'Converging lines',
+        note: 'Full screen, white. Each line slides in from alternating sides and darkens as the section centres, tracking the scroll in both directions. Two or three lines; it is a sentence, not a paragraph.',
+        props: {
+          type: 'statement',
+          lines: ['A short statement', 'across two or three lines.'],
+          ctas: [{ label: 'The page\u2019s action', href: '#', size: 'xl' }],
+        },
+      },
+    ],
+  },
+
+  {
     id: 'steps',
     name: 'How it works',
     job: 'The sequence between deciding and finishing.',

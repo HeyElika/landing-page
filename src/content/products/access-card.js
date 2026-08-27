@@ -118,6 +118,15 @@ export default {
     },
 
     {
+      // A pause between the benefits and the process: one message on an empty
+      // screen, with the action under it. The lines converge as the section
+      // centres, so scrolling into it feels like arriving somewhere.
+      type: 'statement',
+      lines: ['Unlock a new way', 'to use your Billease funds.'],
+      ctas: [{ label: 'Open Billease app', href: 'https://app.billease.ph', size: 'xl' }],
+    },
+
+    {
       id: 'how-it-works',
       type: 'stepsSplit',
       reverse: true,   // visual first, steps beside it

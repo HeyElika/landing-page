@@ -1135,6 +1135,61 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
 }
 
 
+/* ── Statement ──────────────────────────────────────────────────────────────
+ * One message on an empty screen, with the lines converging as the section
+ * centres.
+ *
+ * Everything is driven by --p, which the component sets to 0..1 as the section
+ * approaches the middle of the viewport. At 0 the lines sit apart and pale; at
+ * 1 they are aligned and at full contrast. Doing it this way keeps the scroll
+ * handler to one style write per frame no matter how many lines there are.
+ *
+ * The offset is in vw so the travel stays proportional to the screen: the same
+ * gesture on a phone as on a monitor.
+ */
+
+.c-statement {
+  --p: 0;
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - var(--nav-h));
+  min-height: calc(100svh - var(--nav-h));
+  overflow: hidden;          /* the lines start outside the container */
+}
+
+.c-statement__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-800);
+  text-align: center;
+}
+
+.c-statement__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-wrap: balance;
+}
+
+.c-statement__line {
+  /* Direction of travel, set per line by the component. Declared here so the
+   * rule stands on its own if it is ever used without one. */
+  --dir: -1;
+  display: block;
+  transform: translateX(calc(var(--dir) * (1 - var(--p)) * 14vw));
+  /* Pale at rest, full contrast once centred. */
+  color: color-mix(in srgb, var(--text-base) calc(var(--p) * 100%), var(--text-disabled));
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-statement__line {
+    transform: none;
+    color: var(--text-base);
+  }
+}
+
 /* ── Pattern gallery ────────────────────────────────────────────────────────
  * Chrome for /patterns only: the labels and the collapsed content object above
  * each rendered pattern. Scoped to c-spec so nothing here can reach a section.

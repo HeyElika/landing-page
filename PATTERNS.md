@@ -35,6 +35,7 @@ sequence they ask them.
 | 1 | What is this, and what do I do? | `hero` |
 | 2 | Why should I care? | `features` |
 | 3 | Where does it work? | `useCases` |
+| – | *(optional pause)* | `statement` |
 | 4 | What happens if I start? | `stepsSplit` or `steps` |
 | 5 | What does it cost? | `pricing` |
 | 6 | What must I know first? | `conditions` |
@@ -84,6 +85,19 @@ Three or four items. This is not a feature inventory.
 
 ---
 
+## Statement
+
+A full-screen pause carrying one message and the page's action. Its lines
+converge as the section reaches the middle of the viewport — sliding in from
+alternating sides and darkening from grey to full contrast — and they drift
+back out as it leaves, because the animation is scrubbed by scroll position
+rather than fired once. That is what makes it feel attached to the reader's
+gesture rather than played at them.
+
+Use it between two sections that would otherwise run together, and give it a
+sentence rather than a paragraph. Under `prefers-reduced-motion` the lines are
+simply aligned and at full contrast from the start.
+
 ## Fitting a section to one screen
 
 `hero`, `features` and `stepsSplit` accept `fit: 'viewport'`, which holds the
@@ -115,6 +129,7 @@ action. Another page can link it. Same component, no fork.
 |---|---|
 | `hero` | `layout`, `fit`, `background`, `badge`, `note`, `appLink` linked or plain |
 | `features` | image cards vs icon cards (per item), `columns`, `fit`, `background`, `variant` |
+| `statement` | `lines` (2\u20133), `ctas`, `background` |
 | `stepsSplit` | `reverse`, `fit`, `background` |
 | `security` | `reverse`, `background`, `link` |
 | `panel` | `reverse`, `tone`, `background`, `bullets`, `cta`, `link` |

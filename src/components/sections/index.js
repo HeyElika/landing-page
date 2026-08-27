@@ -41,6 +41,7 @@ import Security from './Security'
 import FAQ from './FAQ'
 import CtaBand from './CtaBand'
 import AppDownload from './AppDownload'
+import Statement from './Statement'
 
 export const SECTIONS = {
   hero: Hero,
@@ -53,6 +54,7 @@ export const SECTIONS = {
   pricing: Pricing,
   conditions: Conditions,
   choicePair: ChoicePair,
+  statement: Statement,
   security: Security,
   appDownload: AppDownload,
   faq: FAQ,
