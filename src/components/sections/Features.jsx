@@ -6,6 +6,10 @@ import Icon from '../../assets/icons/Icon'
 /**
  * Benefit grid. `columns` accepts 2, 3 or 4.
  *
+ * `width: 'wide'` drops the 1200px content column and runs the row to the page
+ * gutters. Four cards inside the column are 276px each, which is narrower than
+ * their own copy wants; at full width they grow with the screen.
+ *
  * `fit: 'viewport'` holds the section to one screen and squares the cards, so
  * the row reads as one set of identical objects rather than three boxes of
  * whatever height their copy happened to need.
@@ -22,6 +26,7 @@ export default function Features({
   fit = 'auto',            // 'auto' | 'viewport' — hold the section to one screen
   background = 'default',
   variant = 'card',
+  width = 'default',      // 'default' | 'wide' — 'wide' runs to the page edges
 }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken', dark: 'l-band--dark' }[background] || ''
   const onDark = background === 'dark'
@@ -30,7 +35,7 @@ export default function Features({
       className={['l-band', fit === 'viewport' ? 'l-band--fit' : '', bandTone].filter(Boolean).join(' ')}
       aria-label={!title ? (label || undefined) : undefined}
     >
-      <div className="l-container l-stack l-stack--900">
+      <div className={['l-container', width === 'wide' ? 'l-container--wide' : '', 'l-stack', 'l-stack--900'].filter(Boolean).join(' ')}>
         <SectionHead title={title} description={description} align={align} onDark={onDark} />
         <ul className={`l-grid l-grid--${columns}`}>
           {items.map((item) => {

@@ -93,8 +93,9 @@ export default {
       // above them only ate the height the cards want. `label` still names the
       // section for screen readers and for the nav link that points here.
       label: 'What the card gives you',
-      fit: 'viewport',        // one screen, three identical cards
-      columns: 3,
+      fit: 'viewport',        // one screen, four identical cards
+      columns: 4,
+      width: 'wide',          // four cards need more than the content column
       items: [
         {
           media: { src: '/card-in-store.jpg', alt: 'Paying in store by tapping a Billease card on a card terminal', ratio: '2 / 3' },
@@ -118,6 +119,14 @@ export default {
           // CONTENT DEPENDENCY: confirm the daily card limit exists, that it
           // is user-settable, and that it is separate from the Credit Line.
           description: 'Choose how much can be spent from your card each day without changing your total Credit Line limit.',
+        },
+        {
+          media: { src: null, label: 'Card design', ratio: '2 / 3' },
+          title: 'Designed with less visible data',
+          // CONTENT DEPENDENCY: confirm the physical card really does omit the
+          // name and PAN from its face. This is a claim about the manufactured
+          // article, so it needs Product to confirm against the final artwork.
+          description: 'Your card keeps your name and card number off the surface, reducing exposed information if it\u2019s lost.',
         },
       ],
     },

@@ -59,7 +59,7 @@ export const patterns = [
     variants: [
       {
         label: 'Image cards — copy over the image',
-        note: 'Give each item a `media`. Portrait cards, copy over a scrim. Best when you have real photography.',
+        note: 'Give each item a `media`. Portrait cards, copy over a scrim. Best when you have real photography. Four cards want `width: \'wide\'` — inside the content column they are 276px each, narrower than their own copy.',
         props: {
           type: 'features',
           label: 'Section name for screen readers when there is no visible heading',

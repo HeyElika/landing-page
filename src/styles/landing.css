@@ -217,6 +217,10 @@ button { font: inherit; }
  * container less its 24px padding either side. */
 .l-container--list { max-width: 976px; }
 
+/* Runs to the page gutters instead of the content column. For a row of cards
+ * that gains more from width than the page gains from a shared measure. */
+.l-container--wide { max-width: none; }
+
 /* A reading column for text-only sections. 640px rather than the 600 it looks
  * like, for two measured reasons: at 48px the heading "Frequently asked
  * questions" is 610px and the longest answer is 624px, so 600 wraps both for

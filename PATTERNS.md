@@ -83,6 +83,11 @@ in a content file can change it.
 
 Three or four items. This is not a feature inventory.
 
+Four cards need `width: 'wide'`, which drops the 1200px content column and runs
+the row to the page gutters. Inside the column four cards are 276px each and
+their titles wrap to three lines; at full width they grow with the screen — 320
+at 1440, 440 at 1920.
+
 ---
 
 ## Statement
@@ -128,7 +133,7 @@ action. Another page can link it. Same component, no fork.
 | Pattern | Variations available in content |
 |---|---|
 | `hero` | `layout`, `fit`, `background`, `badge`, `note`, `appLink` linked or plain |
-| `features` | image cards vs icon cards (per item), `columns`, `fit`, `background`, `variant` |
+| `features` | image cards vs icon cards (per item), `columns`, `width`, `fit`, `background`, `variant` |
 | `statement` | `lines` (2\u20133), `ctas`, `background` |
 | `stepsSplit` | `reverse`, `fit`, `background` |
 | `security` | `reverse`, `background`, `link` |
