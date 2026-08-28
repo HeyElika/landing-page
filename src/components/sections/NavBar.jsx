@@ -92,7 +92,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
         <div className="nav-desktop" style={{ gap: 'var(--space-600)', alignItems: 'center' }}>
           <nav aria-label="Primary" className="l-row" style={{ gap: 'var(--space-600)', flexWrap: 'nowrap' }}>
             {links.map((l) => (
-              <a key={l.href} href={l.href} className="body-sm-semibold t-subtle">{l.label}</a>
+              <a key={l.href} href={l.href} className="body-md-regular t-subtle">{l.label}</a>
             ))}
           </nav>
 
