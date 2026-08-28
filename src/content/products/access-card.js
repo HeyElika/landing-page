@@ -47,6 +47,7 @@ export default {
     links: [
       { label: 'Why activate', href: '#benefits' },
       { label: 'How it works', href: '#how-it-works' },
+      { label: 'Security', href: '#security' },
       { label: 'FAQ', href: '#faq' },
     ],
     // lg, not the hero's xl: a 52px button in a 72px bar leaves almost no
@@ -165,6 +166,7 @@ export default {
       // Intro with a visual, then the supporting points below a rule. Control
       // and security stay one section: split in two they said the same thing
       // twice. No CTA here — the action belongs to the header and the hero.
+      id: 'security',
       type: 'security',
       title: 'Safe by default, and in your control.',
       description: 'Get notified when your card is used, manage it from the Billease app, and act quickly if something doesn\u2019t look right.',
