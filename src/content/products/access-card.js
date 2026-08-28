@@ -45,9 +45,9 @@ export default {
   brand,
   nav: {
     links: [
-      { label: 'Why activate', href: '#benefits' },
+      { label: 'Why activate', href: '#why-activate' },
+      { label: 'Card benefits', href: '#benefits' },
       { label: 'How it works', href: '#how-it-works' },
-      { label: 'Safety and control', href: '#security' },
       { label: 'FAQ', href: '#faq' },
     ],
     // lg, not the hero's xl: a 52px button in a 72px bar leaves almost no
@@ -126,6 +126,7 @@ export default {
       // A pause between the benefits and the process: one message on an empty
       // screen, with the action under it. The lines converge as the section
       // centres, so scrolling into it feels like arriving somewhere.
+      id: 'why-activate',
       type: 'statement',
       lines: ['Unlock a new way', 'to use your', 'Billease funds.'],
       ctas: [{ label: 'Open Billease app', href: 'https://app.billease.ph', size: 'xl' }],
