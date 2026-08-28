@@ -95,7 +95,6 @@ export default {
       label: 'What the card gives you',
       fit: 'viewport',        // one screen, four identical cards
       columns: 4,
-      width: 'wide',          // four cards need more than the content column
       items: [
         {
           media: { src: '/card-in-store.jpg', alt: 'Paying in store by tapping a Billease card on a card terminal', ratio: '2 / 3' },
