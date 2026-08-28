@@ -93,8 +93,8 @@ export default {
       // above them only ate the height the cards want. `label` still names the
       // section for screen readers and for the nav link that points here.
       label: 'What the card gives you',
-      fit: 'viewport',        // one screen, four identical cards
-      columns: 4,
+      fit: 'viewport',        // one screen, three identical cards
+      columns: 3,
       items: [
         {
           media: { src: '/card-in-store.jpg', alt: 'Paying in store by tapping a Billease card on a card terminal', ratio: '2 / 3' },
@@ -119,14 +119,18 @@ export default {
           // is user-settable, and that it is separate from the Credit Line.
           description: 'Choose how much can be spent from your card each day without changing your total Credit Line limit.',
         },
-        {
-          media: { src: null, label: 'Card design', ratio: '2 / 3' },
-          title: 'Designed with less visible data',
-          // CONTENT DEPENDENCY: confirm the physical card really does omit the
-          // name and PAN from its face. This is a claim about the manufactured
-          // article, so it needs Product to confirm against the final artwork.
-          description: 'Your card keeps your name and card number off the surface, reducing exposed information if it\u2019s lost.',
-        },
+        // Held out to keep the row at three, where the cards are 379px rather
+        // than 276. Swap it for any of the three above rather than adding it
+        // back as a fourth.
+        //
+        // CONTENT DEPENDENCY: confirm the physical card really does omit the
+        // name and PAN from its face — a claim about the manufactured article,
+        // so Product has to confirm it against the final artwork.
+        // {
+        //   media: { src: null, label: 'Card design', ratio: '2 / 3' },
+        //   title: 'Designed with less visible data',
+        //   description: 'Your card keeps your name and card number off the surface, reducing exposed information if it\u2019s lost.',
+        // },
       ],
     },
 
