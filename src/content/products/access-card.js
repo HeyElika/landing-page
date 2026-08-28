@@ -47,7 +47,7 @@ export default {
     links: [
       { label: 'Why activate', href: '#benefits' },
       { label: 'How it works', href: '#how-it-works' },
-      { label: 'Security', href: '#security' },
+      { label: 'Safety and control', href: '#security' },
       { label: 'FAQ', href: '#faq' },
     ],
     // lg, not the hero's xl: a 52px button in a 72px bar leaves almost no
