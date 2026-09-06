@@ -120,8 +120,9 @@ export default {
           description: 'Choose how much can be spent from your card each day without changing your total Credit Line limit.',
         },
         // Held out to keep the row at three, where the cards are 379px rather
-        // than 276. Swap it for any of the three above rather than adding it
-        // back as a fourth.
+        // than 276. This claim now lives in the safety section as 'Your
+        // details stay private', so restoring it here would say the same thing
+        // twice; if it comes back, take it out of that section.
         //
         // CONTENT DEPENDENCY: confirm the physical card really does omit the
         // name and PAN from its face — a claim about the manufactured article,
@@ -207,6 +208,14 @@ export default {
           icon: 'chat-outline',
           title: 'Get help quickly',
           description: 'Contact Billease support from the app if you don\u2019t recognize a payment or need help with your card.',
+        },
+        {
+          icon: 'user',
+          title: 'Your details stay private',
+          // CONTENT DEPENDENCY: confirm the printed card omits the name and
+          // the card number. A claim about the manufactured article, so it
+          // needs checking against the final artwork, not the design file.
+          description: 'Your name and card number aren\u2019t printed on the card, helping keep sensitive information private if it\u2019s lost or stolen.',
         },
       ],
     },

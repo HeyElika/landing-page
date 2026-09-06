@@ -44,7 +44,7 @@ export default function Security({ title, description, media, link, items = [], 
         </div>
 
         {items.length > 0 && (
-          <ul className={`c-security__items l-grid l-grid--${Math.min(items.length, 3) || 3}`}>
+          <ul className={`c-security__items l-grid l-grid--${Math.min(items.length, 4) || 3}`}>
             {items.map((item) => (
               <li key={item.title} className="l-stack l-stack--300">
                 <span className="c-security__icon">
