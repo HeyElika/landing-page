@@ -187,12 +187,19 @@ export default {
         alt: 'The Billease app showing a locked Access Card',
         ratio: '1 / 1',   // the file's own ratio, so nothing is cropped or stretched
       },
+      // Ordered by how much the reader has to do: private without lifting a
+      // finger, then visibility, then an action they can take, then the route
+      // to a person when the first three are not enough.
       items: [
         {
-          // Was 'Protected transactions', which claimed a protection nobody had
-          // confirmed. This says only what the app demonstrably does. If
-          // Engineering and Risk confirm a specific protection, the stronger
-          // title can come back with their wording.
+          icon: 'incognito',
+          title: 'Your details stay private',
+          // CONTENT DEPENDENCY: confirm the printed card omits the name and
+          // the card number. A claim about the manufactured article, so it
+          // needs checking against the final artwork, not the design file.
+          description: 'Your name and card number aren\u2019t printed on the card, helping keep sensitive information private if it\u2019s lost or stolen.',
+        },
+        {
           icon: 'document',
           title: 'Track every transaction',
           description: 'See your card activity in the Billease app and review payments whenever you need to.',
@@ -206,14 +213,6 @@ export default {
           icon: 'chat-outline',
           title: 'Get help quickly',
           description: 'Contact Billease support from the app if you don\u2019t recognize a payment or need help with your card.',
-        },
-        {
-          icon: 'incognito',
-          title: 'Your details stay private',
-          // CONTENT DEPENDENCY: confirm the printed card omits the name and
-          // the card number. A claim about the manufactured article, so it
-          // needs checking against the final artwork, not the design file.
-          description: 'Your name and card number aren\u2019t printed on the card, helping keep sensitive information private if it\u2019s lost or stolen.',
         },
       ],
     },
