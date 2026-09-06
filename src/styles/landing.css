@@ -322,6 +322,9 @@ button { font: inherit; }
  * a generated type style class in tokens.css. */
 
 .t-base { color: var(--text-base); }
+/* Underline without the link semantics: the plain form of the hero's aside
+ * reads as the same phrase whether or not it happens to link anywhere. */
+.t-underline { text-decoration: underline; }
 .t-subtle { color: var(--text-subtle); }
 .t-on-dark { color: var(--text-on-dark); }
 .t-on-dark-subtle { color: var(--text-on-dark-subtle); }

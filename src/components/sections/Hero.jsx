@@ -121,7 +121,7 @@ export default function Hero({
               {appLink.text}{' '}
               {appLink.href
                 ? <a className="link-md" style={{ color: onDark ? 'var(--text-on-dark)' : 'var(--text-base)' }} href={appLink.href}>{appLink.label}</a>
-            : <span className={['body-md-semibold', onDark ? 't-on-dark' : 't-base'].join(' ')}>{appLink.label}</span>}
+            : <span className={['body-md-semibold', 't-underline', onDark ? 't-on-dark' : 't-base'].join(' ')}>{appLink.label}</span>}
             </p>
           )}
         </div>
