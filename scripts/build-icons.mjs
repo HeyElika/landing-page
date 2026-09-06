@@ -51,6 +51,7 @@ const MAP = {
 
   // trust and support
   'security': 'shield-check-linear',
+  'incognito': 'incognito-linear',
   'lock': 'lock-keyhole-minimalistic-linear',
   'chat-outline': 'chat-round-dots-linear',
   'user': 'user-circle-linear',

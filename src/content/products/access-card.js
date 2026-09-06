@@ -208,7 +208,7 @@ export default {
           description: 'Contact Billease support from the app if you don\u2019t recognize a payment or need help with your card.',
         },
         {
-          icon: 'user',
+          icon: 'incognito',
           title: 'Your details stay private',
           // CONTENT DEPENDENCY: confirm the printed card omits the name and
           // the card number. A claim about the manufactured article, so it
