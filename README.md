@@ -14,6 +14,13 @@ npm run lint
 npm run preview  # preview the production build
 ```
 
+## Briefing image assets
+
+`ASSETS.md` is the brief for whoever makes the artwork: one export size per
+slot, the ratio, the format, and where copy sits over an image. The sizes are
+computed from the layout constants, and the widest render is usually a tablet
+rather than a desktop, which is the part a screenshot-based brief gets wrong.
+
 ## The pattern catalogue
 
 `/patterns` renders every layout this template can build, each one through the

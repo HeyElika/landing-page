@@ -73,12 +73,10 @@ export default {
       media: {
         src: '/access-card.jpg',
         alt: 'Three Billease Access Cards',
-        // The source is 1060x1484. The slot is deliberately a little wider than
-        // that: the box is sized from a fixed height, so a wider ratio is the
-        // only way to gain width without gaining height. object-fit takes the
-        // difference off the top and bottom, where the photograph has margin
-        // to spare.
-        ratio: '1060 / 1380',
+        // 3:4, so the slot is a round number to brief and to export against.
+        // The placeholder photo is 1060x1484 and crops a little top and bottom
+        // to fill it; the replacement will be made to this ratio.
+        ratio: '3 / 4',
       },
       // No tinted panel behind it: the photograph carries its own background,
       // and a tint would read as a box inside a box.
