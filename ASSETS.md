@@ -23,6 +23,42 @@ One export per slot covers every screen. The browser scales a single file down;
 there is no separate mobile crop to produce, and no `@2x` naming convention —
 the sizes above already are the 2× export.
 
+### How one file becomes the mobile version
+
+Nothing is re-cropped. A slot has the **same aspect ratio at every breakpoint** —
+no media query changes it — so the phone gets the identical picture, drawn
+smaller:
+
+| | Renders at | Ratio | Share of the file |
+|---|---|---|---|
+| Phone 390 | 350 × 466 | 3:4 | 49% |
+| Tablet 768 | 704 × 939 | 3:4 | 98% |
+| Laptop 1440 | 495 × 660 | 3:4 | 69% |
+| Large 1920 | 600 × 800 | 3:4 | 83% |
+
+That is why the composition rules matter more than a size list: whatever is in
+the frame is what a phone sees too, just smaller. There is no phone-specific
+crop where a tighter shot could be substituted.
+
+### Optional: a second size for phones
+
+The one real cost of a single file is bytes. A phone downloads the tablet-sized
+file — about **1.3 MB** of imagery on a page it renders at a third of that.
+
+If that matters, supply a **half-size export of the same crop** alongside each
+image, named `<file>@720.jpg`:
+
+| Slot | Full | Half |
+|---|---|---|
+| Hero | 1440 × 1920 | 720 × 960 |
+| Benefit card | 1200 × 1800 | 600 × 900 |
+| Steps / Safety | 1440 × 1440 | 720 × 720 |
+
+Set `srcSmall` on the slot in the content file and the browser picks whichever
+fits the screen. Same crop, same ratio, roughly a quarter of the bytes on a
+phone. Leave it out and everything still works — this is an optimisation, not a
+requirement.
+
 ---
 
 ## Why those sizes
