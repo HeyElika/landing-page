@@ -40,6 +40,11 @@ export default {
   meta: {
     title: 'Activate your Billease Access Card',
     description: 'Activate your Access Card and spend the Billease limit you already have.',
+    // Shown when the page is shared. 1200x630 is what every scraper crops to.
+    // CONTENT DEPENDENCY: a purpose-made share image; the hero photo is a
+    // stand-in and crops badly at that ratio.
+    ogImage: '/access-card.jpg',
+    ogImageAlt: 'Three Billease Access Cards',
   },
 
   brand,
