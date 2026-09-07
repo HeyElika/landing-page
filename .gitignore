@@ -26,3 +26,4 @@ dist-ssr
 
 # SSR smoke test scratch
 .ssr-tmp
+token-reference.html

@@ -12,6 +12,10 @@ four.
 
 ---
 
+**Seeing them.** `npm run tokens:page` builds `token-reference.html`: every
+value rendered as itself rather than described. It reads the same files the
+build does, so it is accurate by construction.
+
 ## Where tokens live
 
 | Layer | File | Editable? |

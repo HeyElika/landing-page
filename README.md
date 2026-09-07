@@ -16,6 +16,10 @@ npm run preview  # preview the production build
 
 ## Design tokens
 
+`npm run tokens:page` builds a visual reference — every colour as a swatch,
+every spacing step as a bar, every type style as a specimen, all 32 icons —
+generated from the token files so it cannot drift.
+
 `TOKENS.md` lists every value the template can use — type, spacing, radius,
 colour, icon sizes, layout constants and breakpoints — where each comes from,
 and which guard enforces it. It is the reference to hand someone before they
