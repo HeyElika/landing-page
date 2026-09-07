@@ -14,6 +14,7 @@
  *   3. It shares the page's content box, so its horizontal alignment does not
  *      come from a sibling.
  */
+import { readFileSync } from 'node:fs'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createElement } from 'react'
 import { SECTIONS } from '../src/components/sections/index.js'
@@ -55,8 +56,15 @@ for (const [label, list] of [['in order', cases], ['reversed', [...cases].revers
   if (bands < cases.length) fail(`${label}: ${bands} bands for ${cases.length} sections`)
 }
 
+// 4. Same-tone adjacency has a boundary rule, so any ordering stays legible.
+const css = readFileSync(new URL('../src/styles/landing.css', import.meta.url), 'utf8')
+for (const tone of ['subtle', 'sunken', 'dark', 'brand']) {
+  const rule = new RegExp(`\\[data-reveal\\]:has\\(> \\.l-band--${tone}\\) \\+ \\[data-reveal\\]:has\\(> \\.l-band--${tone}\\)`)
+  if (!rule.test(css)) fail(`no boundary rule for two adjacent .l-band--${tone} sections`)
+}
+
 if (failed) {
   console.error(`\nsection independence check failed: ${failed} issue(s)\n`)
   process.exit(1)
 }
-console.log(`section independence check passed: ${cases.length} sections, ${(cases.length - 1) * 2} pairings, 2 full orderings`)
+console.log(`section independence check passed: ${cases.length} sections, ${(cases.length - 1) * 2} pairings, 2 full orderings, 4 tone-adjacency rules`)

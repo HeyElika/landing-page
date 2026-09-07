@@ -70,10 +70,13 @@ Two consequences worth knowing:
 
 - **Order is content, not code.** Reordering a page means moving an object in
   the `sections` array. Nothing in a component knows what precedes it.
-- **The one thing order does affect is surface rhythm.** Two sections with the
-  same background tone sitting together read as one long section. That is a
-  composition decision, not a breakage — the page stays intact, it just loses a
-  boundary.
+- **Same-tone neighbours draw their own boundary.** Two tinted sections running
+  together used to read as one very tall section. A CSS rule now puts a
+  hairline between any two adjacent bands sharing a tint, so no ordering can
+  produce that. It is a line rather than a tone change: the page asked for that
+  fill, and swapping it would make a section look different depending on what
+  happened to precede it. White is exempt — consecutive white sections are this
+  page's normal state, and a rule between every pair would read as a table.
 
 ## The narrative order
 

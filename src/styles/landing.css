@@ -1173,6 +1173,33 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
 }
 
 
+/* ── Surface rhythm ─────────────────────────────────────────────────────────
+ * Two tinted sections running together lose their boundary and read as one
+ * very tall section. Reordering a page could produce that pairing at any time,
+ * so the boundary is restored automatically rather than left as something the
+ * author has to notice.
+ *
+ * A hairline, not a tone change: the page asked for that fill, and swapping it
+ * would make a section look different depending on what happened to precede
+ * it. The line only appears where two identical tints meet.
+ *
+ * Sections are wrapped by LandingPage for the reveal animation, so adjacency
+ * is tested on the wrappers.
+ *
+ * White is deliberately exempt. Consecutive white sections are this page's
+ * normal state, and their headings plus the band rhythm already separate them;
+ * a rule between every pair would read as a table.
+ */
+[data-reveal]:has(> .l-band--subtle) + [data-reveal]:has(> .l-band--subtle) > .l-band,
+[data-reveal]:has(> .l-band--sunken) + [data-reveal]:has(> .l-band--sunken) > .l-band {
+  border-top: var(--border-width-xs) solid var(--alpha-black-10);
+}
+
+[data-reveal]:has(> .l-band--dark) + [data-reveal]:has(> .l-band--dark) > .l-band,
+[data-reveal]:has(> .l-band--brand) + [data-reveal]:has(> .l-band--brand) > .l-band {
+  border-top: var(--border-width-xs) solid var(--alpha-white-20);
+}
+
 /* ── Statement ──────────────────────────────────────────────────────────────
  * One message on an empty screen, with the lines converging as the section
  * centres.

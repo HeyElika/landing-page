@@ -1,20 +1,16 @@
 /**
- * Builds the visual token reference.
+ * Builds the visual token reference for THIS project.
  *
- * Reads the generated token file, the generated icon file and the landing
- * layer's layout constants, and writes a standalone HTML page showing every
- * value as itself: colours as swatches, spacing as bars, type as specimens,
- * icons as icons.
+ * Two things only: the colours these pages use, as primitive → semantic pairs,
+ * and the typography they use, mapped onto the t-shirt scale. Not the whole
+ * design system export — the library carries 223 tokens and a landing page
+ * touches a third of them, so a reference showing everything hides the palette
+ * the pages actually share.
  *
- * It shows what THIS project uses, not everything the design system exports.
- * The library carries 223 tokens; a landing page touches about a third of
- * them, and a reference padded with 137 colours nobody has used is a reference
- * nobody reads. Usage is measured by scanning the source, and what is left
- * over is listed by name at the end so the rest stays discoverable.
+ * Generated from tokens.css and landing.css, so it cannot drift. Everything
+ * else — spacing, radius, icons, layout, breakpoints — is in TOKENS.md.
  *
- * Generated rather than written by hand for the same reason the tokens are:
- * a reference someone has to remember to update is a reference that lies.
- * Run `npm run tokens:page` after changing tokens.
+ * Run: npm run tokens:page
  */
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
@@ -25,108 +21,119 @@ const read = (p) => readFileSync(join(root, p), 'utf8')
 
 const tokensCss = read('src/styles/tokens.css')
 const landingCss = read('src/styles/landing.css')
-const iconsJs = read('src/assets/icons/icons.generated.js')
 const fontData = readFileSync(join(root, 'public/fonts/OverusedGrotesk-VF.woff2')).toString('base64')
 
 /* ── Parse ──────────────────────────────────────────────────────────────── */
 
-/** Every custom property declared at :root, in source order. */
-function customProps(css) {
+const props = (css) => {
   const out = new Map()
-  for (const m of css.matchAll(/^\s{2}(--[a-z0-9-]+):\s*([^;]+);/gim)) out.set(m[1], m[2].trim())
+  for (const m of css.matchAll(/^\s{2,4}(--[a-z0-9-]+):\s*([^;]+);/gm)) if (!out.has(m[1])) out.set(m[1], m[2].trim())
   return out
 }
+const tokens = props(tokensCss)
+const landing = props(landingCss)
+const all = new Map([...tokens, ...landing])
 
-const tokens = customProps(tokensCss)
+const resolve = (v, d = 0) => {
+  const m = v?.match(/^var\((--[a-z0-9-]+)\)$/)
+  return !m || d > 6 ? v : resolve(all.get(m[1]), d + 1)
+}
+/** The primitive a semantic token points at, if it points at one. */
+const backing = (v) => (v?.match(/^var\((--[a-z0-9-]+)\)$/) || [])[1]
 
-/* ── What this project actually uses ────────────────────────────────────── */
+/* ── Usage ──────────────────────────────────────────────────────────────── */
 
-/** Every source file that could reference a token, minus the generated ones. */
-const sources = ['src/styles/landing.css', 'src/App.jsx', 'src/LandingPage.jsx', 'src/PatternGallery.jsx']
-  .map(read)
-  .concat(
-    ['sections', 'ui', 'ds'].flatMap((dir) => {
-      const base = join(root, 'src/components', dir)
-      return readdirSync(base).filter((f) => f.endsWith('.jsx')).map((f) => readFileSync(join(base, f), 'utf8'))
-    }),
-    readdirSync(join(root, 'src/content/products'))
-      .filter((f) => f.endsWith('.js'))
-      .map((f) => readFileSync(join(root, 'src/content/products', f), 'utf8')),
-    [read('src/content/brand.js'), read('src/content/patterns.js')],
-  )
-const blob = sources.join('\n')
+const sources = [
+  read('src/styles/landing.css'), read('src/App.jsx'), read('src/LandingPage.jsx'), read('src/PatternGallery.jsx'),
+  ...['sections', 'ui', 'ds'].flatMap((d) =>
+    readdirSync(join(root, 'src/components', d)).filter((f) => f.endsWith('.jsx'))
+      .map((f) => readFileSync(join(root, 'src/components', d, f), 'utf8'))),
+  ...readdirSync(join(root, 'src/content/products')).filter((f) => f.endsWith('.js'))
+    .map((f) => readFileSync(join(root, 'src/content/products', f), 'utf8')),
+  read('src/content/brand.js'), read('src/content/patterns.js'),
+].join('\n')
 
-const referenced = new Set([...blob.matchAll(/var\((--[a-z0-9-]+)/g)].map((m) => m[1]))
-/** A semantic token in use pulls in the primitive behind it. */
+const referenced = new Set([...sources.matchAll(/var\((--[a-z0-9-]+)/g)].map((m) => m[1]))
 for (const name of [...referenced]) {
-  let value = tokens.get(name)
-  for (let i = 0; i < 6 && value; i++) {
-    const m = value.match(/^var\((--[a-z0-9-]+)\)$/)
-    if (!m) break
-    referenced.add(m[1])
-    value = tokens.get(m[1])
+  let v = all.get(name)
+  for (let i = 0; i < 6 && v; i++) {
+    const b = backing(v)
+    if (!b) break
+    referenced.add(b)
+    v = all.get(b)
   }
 }
-const isUsed = (name) => referenced.has(name)
-const unusedTokens = [...tokens.keys()].filter((n) => !isUsed(n))
-const layout = customProps(landingCss.slice(landingCss.indexOf(':root {'), landingCss.indexOf('\n}')))
 
-/** Follow var() references to the literal underneath. */
-function resolve(value, depth = 0) {
-  const m = value?.match(/^var\((--[a-z0-9-]+)\)$/)
-  if (!m || depth > 6) return value
-  return resolve(tokens.get(m[1]), depth + 1)
-}
+/* ── Colour ─────────────────────────────────────────────────────────────── */
 
-const group = (prefix, exclude = []) =>
-  [...tokens.entries()]
-    .filter(([k]) => k.startsWith(prefix) && isUsed(k) && !exclude.some((e) => k.startsWith(e)))
-    .map(([k, v]) => ({ name: k, raw: v, value: resolve(v) }))
+const COLOUR_GROUPS = [
+  ['Background', (k) => k.startsWith('--bg-') || k.startsWith('--canvas-')],
+  ['Text', (k) => k.startsWith('--text-') && !/^--text-(xs|sm|md|lg|xl|2xl|3xl)$/.test(k)],
+  ['Border', (k) => k.startsWith('--border-') && !k.startsWith('--border-width')],
+  ['Icon', (k) => k.startsWith('--icon-') && !k.startsWith('--icon-size')],
+  ['Transparency', (k) => k.startsWith('--alpha-')],
+]
+const semantic = COLOUR_GROUPS.map(([label, test]) => [
+  label,
+  [...tokens.keys()].filter((k) => test(k) && referenced.has(k)).map((k) => ({
+    name: k, primitive: backing(tokens.get(k)), hex: resolve(tokens.get(k)),
+  })),
+]).filter(([, items]) => items.length)
 
-/** Type style classes, with the declarations that define them. */
-const typeStyles = [...tokensCss.matchAll(/^\.([a-z0-9-]+)\s*\{([^}]+)\}/gim)]
-  .map(([, name, body]) => {
-    const get = (p) => (body.match(new RegExp(`${p}:\\s*([^;]+);`)) || [])[1]
-    return { name, size: get('font-size'), weight: get('font-weight'), lh: get('line-height') }
+/** Primitives reached through a semantic token, or used directly. */
+const primitives = [...tokens.keys()]
+  .filter((k) => k.startsWith('--color-') && referenced.has(k))
+  .map((k) => {
+    const usedVia = semantic.flatMap(([, items]) => items).filter((s) => s.primitive === k).map((s) => s.name)
+    return { name: k, hex: resolve(tokens.get(k)), usedVia, direct: new RegExp(`var\\(${k}\\)`).test(sources) }
   })
-  .filter((t) => t.size && new RegExp(`["'\\s]${t.name}["'\\s]`).test(blob))
 
-/** Display scale from the landing layer, which the token file does not carry. */
-const display = [...landingCss.matchAll(/^\s{2}(--display-[a-z]+):\s*(clamp\([^;]+\));/gim)]
-  .map(([, name, value]) => ({ name, value }))
+/* ── Typography ─────────────────────────────────────────────────────────── */
 
-const allIcons = [...iconsJs.matchAll(/'([a-z0-9-]+)':\s*\{"solar":"([^"]+)","body":"([\s\S]*?)","viewBox":"([^"]+)"\}/g)]
-  .map(([, name, solar, body, viewBox]) => ({ name, solar, body: body.replace(/\\"/g, '"'), viewBox }))
-// Matches a quoted name anywhere, so icons chosen in an expression
-// (`open ? 'close' : 'burger-menu'`) count as used.
-const icons = allIcons.filter((i) => new RegExp(`'${i.name}'`).test(blob))
-const unusedIcons = allIcons.filter((i) => !icons.includes(i))
+const scale = [...landing.keys()].filter((k) => k.startsWith('--font-size-'))
+  .map((k) => ({ name: k, px: resolve(landing.get(k)), from: landing.get(k) }))
+const byPx = Object.fromEntries(scale.map((s) => [s.px, s.name]))
 
-const breakpoints = [...new Set(
-  [...landingCss.matchAll(/@media \(min-width: (\d+)px\)/g)].map((m) => Number(m[1])),
-)].sort((a, b) => a - b)
+const styles = []
+for (const css of [tokensCss, landingCss]) {
+  for (const m of css.matchAll(/^\.((?:body|heading|link|display)-[a-z0-9-]+)\s*\{([^}]+)\}/gm)) {
+    const [, name, body] = m
+    const g = (p) => (body.match(new RegExp(`${p}:\\s*([^;]+);`)) || [])[1]?.trim()
+    const uses = (sources.match(new RegExp(`["'\\s]${name}["'\\s]`, 'g')) || []).length
+    if (!uses || styles.some((s) => s.name === name)) continue
+    const size = g('font-size')
+    styles.push({
+      name, uses,
+      size, px: resolve(size),
+      tshirt: byPx[resolve(size)],
+      weight: resolve(g('font-weight')),
+      lh: g('line-height'),
+      fluid: size?.startsWith('var(--display-'),
+    })
+  }
+}
+const fixed = styles.filter((s) => !s.fluid).sort((a, b) => parseInt(b.px) - parseInt(a.px))
+const responsive = styles.filter((s) => s.fluid)
+
+/** Display steps at each tier. */
+const tier = (label, css) => {
+  const out = {}
+  for (const m of css.matchAll(/(--display-[a-z]+):\s*var\((--font-size-[a-z0-9]+)\)/g)) out[m[1]] = m[2]
+  return { label, steps: out }
+}
+const base = landingCss.slice(0, landingCss.indexOf('@media'))
+const block = (w) => {
+  const i = landingCss.indexOf(`@media (min-width: ${w}px) {\n  :root {`)
+  return i < 0 ? '' : landingCss.slice(i, landingCss.indexOf('\n}', i))
+}
+const tiers = [tier('Phone', base), tier('Tablet 768+', block(768)), tier('Desktop 1200+', block(1200))]
 
 /* ── Render ─────────────────────────────────────────────────────────────── */
 
-const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
+const px = (v) => parseInt(v)
 
-const swatches = (items) => items.map((t) => `
-      <li class="swatch">
-        <span class="chip" style="background: ${t.value}"></span>
-        <span class="swatch__body">
-          <code>${t.name}</code>
-          <span class="muted mono">${esc(t.raw === t.value ? t.value : `${t.raw} → ${t.value}`)}</span>
-        </span>
-      </li>`).join('')
-
-const scaleBars = (items, prop) => items.map((t) => `
-      <li class="bar">
-        <code>${t.name}</code>
-        <span class="bar__viz"><span style="${prop}: ${t.value}"></span></span>
-        <span class="mono muted">${t.value}</span>
-      </li>`).join('')
-
-const html = `<title>Billease token reference</title>
+const html = `<title>Billease colour and type</title>
 <style>
   @font-face {
     font-family: 'Overused Grotesk';
@@ -134,234 +141,142 @@ const html = `<title>Billease token reference</title>
     font-weight: 300 900;
     font-display: swap;
   }
-
-  /* Light only, deliberately: a token reference is judged against the ground
-     the product actually ships on, and every swatch below is a light-surface
-     value. A dark rendering would misrepresent them. */
+  /* Light only, deliberately: every swatch below is a light-surface value, and
+     rendering them on a dark ground would misrepresent them. */
   :root {
-${[...tokens].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
-${[...layout].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
-    --ink: #16191D;
-    --ink-soft: #5C6672;
-    --ink-faint: #949DA6;
-    --ground: #FFFFFF;
-    --panel: #F7F8F9;
-    --hairline: #E4E7EA;
+${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
+    --ink: #16191D; --ink-soft: #5C6672; --ink-faint: #949DA6;
+    --ground: #FFFFFF; --panel: #F7F8F9; --hairline: #E4E7EA;
     --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
-    --doc: 'Overused Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --doc: 'Overused Grotesk', -apple-system, sans-serif;
   }
-
   body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--doc); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 56px 24px 96px; display: flex; flex-direction: column; gap: 56px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 56px 24px 96px; display: flex; flex-direction: column; gap: 56px; }
   h1, h2, h3 { margin: 0; text-wrap: balance; }
-  h1 { font-size: clamp(32px, 4.6vw, 48px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.08; }
-  h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
-  h3 { font-size: 15px; font-weight: 600; color: var(--ink-soft); }
+  h1 { font-size: 48px; font-weight: 700; letter-spacing: -.02em; line-height: 1.08; }
+  h2 { font-size: 24px; font-weight: 700; letter-spacing: -.01em; }
+  h3 { font-size: 14px; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .06em; }
   p { margin: 0; max-width: 70ch; }
   .lede { font-size: 19px; color: var(--ink-soft); }
   .muted { color: var(--ink-soft); }
-  .mono, code { font-family: var(--mono); font-size: 13px; }
-  code { color: var(--ink); }
-  section { display: flex; flex-direction: column; gap: 16px; }
+  .mono, code { font-family: var(--mono); font-size: 12.5px; }
+  section { display: flex; flex-direction: column; gap: 18px; }
   .sub { display: flex; flex-direction: column; gap: 10px; }
-  ul { list-style: none; margin: 0; padding: 0; }
   .note { font-size: 14px; color: var(--ink-soft); padding: 12px 16px; background: var(--panel); border-radius: 10px; border: 1px solid var(--hairline); }
-
-  .grid { display: grid; gap: 8px; grid-template-columns: 1fr; }
-  @media (min-width: 620px) { .grid { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 960px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }
-
-  .swatch { display: flex; align-items: center; gap: 12px; padding: 6px; border-radius: 10px; }
-  .chip { width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--hairline); flex: none; }
-  .swatch__body { display: flex; flex-direction: column; line-height: 1.35; min-width: 0; }
-  .swatch__body .mono { font-size: 11px; }
-
-  .bar { display: grid; grid-template-columns: 140px 1fr 60px; gap: 12px; align-items: center; padding: 4px 0; }
-  .bar__viz span { display: block; height: 18px; background: var(--bg-primary); border-radius: 3px; }
-  .radii { display: flex; flex-wrap: wrap; gap: 16px; }
-  .radii div { text-align: center; display: grid; gap: 6px; justify-items: center; }
-  .radii i { display: block; width: 72px; height: 56px; background: var(--bg-sunken); border: 1px solid var(--hairline); }
-
-  .type { display: grid; grid-template-columns: 1fr; gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--hairline); }
-  @media (min-width: 760px) { .type { grid-template-columns: 1fr 200px; align-items: baseline; } }
-  .type__meta { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); }
-
-  .icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 10px; }
-  .icon { display: grid; justify-items: center; gap: 8px; padding: 14px 6px; border: 1px solid var(--hairline); border-radius: 10px; text-align: center; }
-  .icon svg { width: 24px; height: 24px; color: var(--icon-base); }
-  .icon code { font-size: 11px; word-break: break-word; }
-
-  table { width: 100%; border-collapse: collapse; font-size: 15px; }
-  th, td { text-align: left; padding: 10px 16px 10px 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 14px 9px 0; border-bottom: 1px solid var(--hairline); vertical-align: middle; }
   th { font-family: var(--mono); font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500; }
-  td.n { font-family: var(--mono); }
-
-  .ruler { display: grid; gap: 6px; }
-  .ruler div { display: grid; grid-template-columns: 130px 1fr; gap: 12px; align-items: center; font-family: var(--mono); font-size: 12px; }
-  .ruler i { display: block; height: 14px; background: var(--bg-secondary); border-radius: 3px; opacity: .85; }
+  td.n, td.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .scroll { overflow-x: auto; }
+  .chip { display: inline-block; width: 34px; height: 34px; border-radius: 7px; border: 1px solid var(--hairline); vertical-align: middle; }
+  .spec { display: grid; grid-template-columns: 1fr; gap: 2px; padding: 14px 0; border-bottom: 1px solid var(--hairline); }
+  @media (min-width: 820px) { .spec { grid-template-columns: 1fr 260px; align-items: baseline; } }
+  .spec__meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); line-height: 1.7; }
+  .tag { display: inline-block; padding: 1px 7px; border-radius: 999px; background: var(--panel); border: 1px solid var(--hairline); font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
 </style>
 
 <div class="wrap">
-
   <header style="display:flex;flex-direction:column;gap:12px">
     <p class="mono muted">Billease · landing page template</p>
-    <h1>Token reference</h1>
-    <p class="lede">Every value the template can use, shown as itself. Generated from <code>tokens.css</code>, <code>landing.css</code> and the icon set, so it cannot drift from the code.</p>
-    <p class="note"><strong>${tokens.size - unusedTokens.length}</strong> tokens in use, of ${tokens.size} the library exports · <strong>${typeStyles.length}</strong> type styles · <strong>${icons.length}</strong> icons · <strong>${breakpoints.length}</strong> breakpoints. Everything below is used by this project; what is not is listed at the end.</p>
+    <h1>Colour and type</h1>
+    <p class="lede">Only what these pages use: ${semantic.reduce((n, [, i]) => n + i.length, 0)} semantic colours over ${primitives.length} primitives, and ${styles.length} type styles on an ${scale.length}-step scale. Generated from the stylesheets, so it cannot drift.</p>
   </header>
 
   <section>
-    <h2>Typography</h2>
-    <div class="sub">
-      <h3>Display scale — landing layer, fluid</h3>
-      <p class="muted" style="font-size:14px">Resize this page and these change; the rest of the scale does not.</p>
-      ${display.map((d) => `
-      <div class="type">
-        <span style="font-size: ${d.value}; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em">Activate your card</span>
-        <span class="type__meta">${d.name}<br>${esc(d.value)}</span>
-      </div>`).join('')}
-    </div>
-
-    <div class="sub">
-      <h3>Type styles — use these, never a raw font-size</h3>
-      ${typeStyles.map((t) => `
-      <div class="type">
-        <span style="font-size: ${t.size}; font-weight: ${t.weight}; line-height: ${t.lh}">Your Billease limit, now on a card</span>
-        <span class="type__meta">.${t.name}<br>${t.size} · ${t.weight}</span>
-      </div>`).join('')}
-    </div>
-
-    <div class="sub">
-      <h3>Size and weight tokens</h3>
-      <ul class="grid">${group('--text-').map((t) => `
-        <li class="swatch"><span class="swatch__body"><code>${t.name}</code><span class="mono muted">${t.value}</span></span></li>`).join('')}
-      ${group('--font-weight-').map((t) => `
-        <li class="swatch"><span class="swatch__body"><code>${t.name}</code><span class="mono muted">${t.value}</span></span></li>`).join('')}
-      </ul>
-    </div>
+    <h2>Type scale</h2>
+    <p class="muted" style="font-size:14px">T-shirt sizes. Every value a whole pixel — nothing resolves to 12.5 or 41.9.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Token</th><th>Value</th><th>Source</th><th>Specimen</th></tr></thead>
+      <tbody>${scale.map((s) => `
+        <tr>
+          <td class="mono">${s.name}</td>
+          <td class="n">${s.px}</td>
+          <td class="mono muted">${s.from.startsWith('var(') ? `library · ${esc(s.from)}` : 'landing layer'}</td>
+          <td style="font-size:${s.px}; line-height:1.1; font-weight:600">Aa</td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>
   </section>
 
   <section>
-    <h2>Spacing</h2>
-    <ul>${scaleBars(group('--space-'), 'width')}</ul>
-    <p class="note">Compose larger values from tokens — <code>calc(var(--space-1000) + var(--space-400))</code>, never <code>64px</code>. Use <code>.l-stack--*</code> and <code>.l-row</code> gaps rather than per-element margins.</p>
+    <h2>Display steps — the only responsive type</h2>
+    <p class="muted" style="font-size:14px">Four steps, each a t-shirt size at every tier. They step at breakpoints rather than scaling fluidly, which is what keeps every rendered size whole.</p>
+    <div class="scroll"><table>
+      <thead><tr><th>Style</th>${tiers.map((t) => `<th>${t.label}</th>`).join('')}<th>Weight</th><th>Used for</th></tr></thead>
+      <tbody>${['--display-sm', '--display-md', '--display-lg', '--display-xl'].map((step) => {
+        const style = responsive.find((s) => s.size === `var(${step})`)
+        const purpose = { '--display-sm': 'Card and sub-section headings', '--display-md': 'Section headings', '--display-lg': 'Hero headline', '--display-xl': 'Full-screen statement' }[step]
+        return `
+        <tr>
+          <td class="mono">.${style?.name ?? step.replace('--', '')}</td>
+          ${tiers.map((t) => {
+            const token = t.steps[step]
+            const value = token ? resolve(landing.get(`--${token.replace('--', '')}`)) : '—'
+            return `<td class="n">${value}<br><span class="muted" style="font-size:11px">${token ?? ''}</span></td>`
+          }).join('')}
+          <td class="n">${style?.weight ?? ''}</td>
+          <td class="muted">${purpose}</td>
+        </tr>`
+      }).join('')}
+      </tbody>
+    </table></div>
+    ${responsive.map((s) => `
+    <div class="spec">
+      <span style="font-size:${s.size}; font-weight:${s.weight}; line-height:${s.lh}; letter-spacing:-.02em">Your Access Card is ready</span>
+      <span class="spec__meta">.${s.name} · resize to see it step</span>
+    </div>`).join('')}
   </section>
 
   <section>
-    <h2>Radius</h2>
-    <div class="radii">${group('--radius-').map((t) => `
-      <div><i style="border-radius: ${t.value}"></i><code>${t.name}</code><span class="mono muted">${t.value}</span></div>`).join('')}
-    </div>
-    <p class="note"><strong>Every image and container uses <code>--radius-2xl</code>.</strong> <code>--radius-full</code> is for pills and circular markers, <code>--radius-md</code> for small controls.</p>
+    <h2>Fixed styles — ${fixed.length} in use</h2>
+    <p class="muted" style="font-size:14px">Same size at every breakpoint. Set type with these classes, never a raw font-size.</p>
+    ${fixed.map((s) => `
+    <div class="spec">
+      <span class="${s.name}" style="font-size:${s.px}; font-weight:${s.weight}; line-height:${s.lh}">Activate your Access Card in a minute</span>
+      <span class="spec__meta">.${s.name}<br>${s.px} · ${s.weight} · line-height ${s.lh} · <span class="tag">${s.tshirt ?? 'off-scale'}</span> · ${s.uses} uses</span>
+    </div>`).join('')}
   </section>
 
   <section>
     <h2>Colour — semantic</h2>
-    <p class="muted" style="font-size:14px">Use these. Reach for a primitive only when no semantic token exists.</p>
-    ${[['Background', '--bg-'], ['Text', '--text-base'], ['Border', '--border-'], ['Icon', '--icon-'], ['Canvas', '--canvas-']]
-      .map(([label, prefix]) => {
-        const items = prefix === '--text-base'
-          ? group('--text-').filter((t) => !/^--text-(xs|sm|md|lg|xl|2xl|3xl)$/.test(t.name))
-          : group(prefix, prefix === '--border-' ? ['--border-width'] : [])
-        if (!items.length) return ''
-        return `<div class="sub"><h3>${label}</h3><ul class="grid">${swatches(items)}</ul></div>`
-      }).join('')}
+    <p class="muted" style="font-size:14px">What components reference. Each one points at a primitive; that mapping is the design decision.</p>
+    ${semantic.map(([label, items]) => `
+    <div class="sub">
+      <h3>${label}</h3>
+      <div class="scroll"><table>
+        <thead><tr><th></th><th>Semantic token</th><th>Primitive</th><th>Value</th></tr></thead>
+        <tbody>${items.map((i) => `
+          <tr>
+            <td style="width:46px"><span class="chip" style="background:${i.hex}"></span></td>
+            <td class="mono">${i.name}</td>
+            <td class="mono muted">${i.primitive ?? '—'}</td>
+            <td class="n muted">${esc(i.hex)}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table></div>
+    </div>`).join('')}
   </section>
 
   <section>
     <h2>Colour — primitives</h2>
-    ${['neutral', 'red', 'blue', 'green', 'yellow', 'magenta', 'success', 'error', 'warning', 'info']
-      .map((family) => {
-        const items = group(`--color-${family}-`)
-        return items.length ? `<div class="sub"><h3>${family}</h3><ul class="grid">${swatches(items)}</ul></div>` : ''
-      }).join('')}
-    <div class="sub"><h3>Alpha</h3><ul class="grid">${swatches([...group('--alpha-black-'), ...group('--alpha-white-')])}</ul></div>
-  </section>
-
-  <section>
-    <h2>Icons — ${icons.length}, all Solar Linear</h2>
-    <div class="icons">${icons.map((i) => `
-      <div class="icon">
-        <svg viewBox="${i.viewBox}" fill="none" aria-hidden="true">${i.body}</svg>
-        <code>${i.name}</code>
-      </div>`).join('')}
-    </div>
-    <p class="note">Add one by mapping it in <code>scripts/build-icons.mjs</code> and running <code>npm run icons</code>. Never paste path data.</p>
-  </section>
-
-  <section>
-    <h2>Icon sizes</h2>
-    <ul>${scaleBars(group('--icon-size-'), 'width')}</ul>
-  </section>
-
-  <section>
-    <h2>Border widths</h2>
-    <ul>${scaleBars(group('--border-width-'), 'height')}</ul>
-  </section>
-
-  <section>
-    <h2>Layout constants</h2>
-    <div class="ruler">
-      ${['--page-max', '--column-list', '--column-narrow', '--column-reading']
-        .filter((k) => layout.has(k))
-        .map((k) => `<div><span>${k}</span><i style="width: min(100%, ${layout.get(k)})"></i></div>`).join('')}
-    </div>
-    <table>
-      <thead><tr><th>Token</th><th>Value</th><th>Governs</th></tr></thead>
-      <tbody>
-        ${[['--page-max', 'The content column every section shares'],
-           ['--page-gutter', 'Page margin: 20 on phones, 32 from 768px'],
-           ['--nav-h', 'Sticky header height'],
-           ['--measure', 'Maximum line length for prose'],
-           ['--column-reading', 'Prose-only sections'],
-           ['--column-narrow', 'Narrow content sections'],
-           ['--column-list', 'A list of controls, e.g. the FAQ'],
-           ['--band-y-tight', 'Section padding: footer, download panel'],
-           ['--band-y', 'Section padding: standard'],
-           ['--band-y-lg', 'Section padding: hero and emphasis']]
-          .filter(([k]) => layout.has(k))
-          .map(([k, what]) => `<tr><td class="n">${k}</td><td class="n">${esc(layout.get(k))}</td><td class="muted">${what}</td></tr>`).join('')}
+    <p class="muted" style="font-size:14px">The ${primitives.length} raw values these pages reach, through the semantic tokens above or directly.</p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>Primitive</th><th>Value</th><th>Reached through</th></tr></thead>
+      <tbody>${primitives.map((p) => `
+        <tr>
+          <td style="width:46px"><span class="chip" style="background:${p.hex}"></span></td>
+          <td class="mono">${p.name}</td>
+          <td class="n muted">${esc(p.hex)}</td>
+          <td class="mono muted">${p.usedVia.join(', ') || (p.direct ? 'used directly' : '—')}</td>
+        </tr>`).join('')}
       </tbody>
-    </table>
-    <p class="note">The gutter sits on the band, <strong>outside</strong> <code>.l-container</code>. Padding inside the container offsets that section by one gutter above 1264px — <code>check-layout.mjs</code> fails the build on it.</p>
+    </table></div>
+    <p class="note">A component should reference a semantic token, never a primitive. The few used directly are places where no semantic token exists — a dark card fill, the download panel's blue.</p>
   </section>
-
-  <section>
-    <h2>Breakpoints — the one thing not centralised</h2>
-    <p class="muted" style="font-size:14px">CSS custom properties do not work inside media queries, so these are literals.</p>
-    <table>
-      <thead><tr><th>Width</th><th>What changes</th></tr></thead>
-      <tbody>
-        ${[[640, 'Two-column grids appear'],
-           [768, 'Gutter 20 → 32, band rhythm steps up'],
-           [900, 'The main one. Split layouts go side by side, viewport-fitted sections activate, the card row stops being a carousel'],
-           [960, 'Three and four column grids appear'],
-           [1024, 'Band rhythm steps up again'],
-           [1200, 'Wider gaps between split columns']]
-          .filter(([w]) => breakpoints.includes(w))
-          .map(([w, what]) => `<tr><td class="n">${w}px</td><td class="muted">${what}</td></tr>`).join('')}
-      </tbody>
-    </table>
-    <p class="note"><strong>Known wart.</strong> 900 and 960 do nearly the same job, and 640 and 768 overlap. A future page should collapse these to four rather than adding a seventh.</p>
-  </section>
-
-  <section>
-    <h2>Available but unused</h2>
-    <p class="muted" style="font-size:14px">In the library and ready to use, but nothing on these pages references them yet. Names only — a swatch for a colour no page uses is noise.</p>
-    <div class="sub">
-      <h3>${unusedTokens.length} tokens</h3>
-      <p class="mono muted" style="font-size:12px; line-height:1.9">${unusedTokens.join(' · ')}</p>
-    </div>
-    ${unusedIcons.length ? `<div class="sub">
-      <h3>${unusedIcons.length} icons</h3>
-      <p class="mono muted" style="font-size:12px; line-height:1.9">${unusedIcons.map((i) => i.name).join(' · ')}</p>
-    </div>` : ''}
-  </section>
-
 </div>
 `
 
 const out = process.argv[2] || 'token-reference.html'
 writeFileSync(out, html)
-console.log(`token reference written: ${out}`)
-console.log(`  ${tokens.size - unusedTokens.length} of ${tokens.size} tokens in use · ${typeStyles.length} type styles · ${display.length} display steps · ${icons.length} of ${allIcons.length} icons · ${breakpoints.length} breakpoints`)
+console.log(`written: ${out}`)
+console.log(`  ${semantic.reduce((n, [, i]) => n + i.length, 0)} semantic colours · ${primitives.length} primitives · ${scale.length} type sizes · ${styles.length} styles`)
