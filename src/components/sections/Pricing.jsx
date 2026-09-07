@@ -2,6 +2,7 @@ import SectionHead from '../ui/SectionHead'
 import Cta from '../ui/Cta'
 import Badge from '../ui/Badge'
 import Icon from '../../assets/icons/Icon'
+import { gridColumns } from './columns'
 
 /**
  * Terms or plans.
@@ -16,7 +17,7 @@ export default function Pricing({ title, description, plans = [], note, backgrou
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-stack l-stack--900">
         <SectionHead title={title} description={description} />
-        <ul className={`l-grid l-grid--${Math.min(plans.length, 4) || 3}`} style={{ alignItems: 'stretch' }}>
+        <ul className={`l-grid l-grid--${gridColumns(plans.length)}`} style={{ alignItems: 'stretch' }}>
           {plans.map((plan) => (
             <li
               key={plan.name}

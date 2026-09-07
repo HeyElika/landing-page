@@ -1,5 +1,6 @@
 import SectionHead from '../ui/SectionHead'
 import Icon from '../../assets/icons/Icon'
+import { gridColumns } from './columns'
 
 /**
  * "Where and how you can use it" — step 3 of the narrative in
@@ -15,7 +16,7 @@ export default function UseCases({ title, description, items = [], background = 
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-stack l-stack--900">
         <SectionHead title={title} description={description} />
-        <ul className={`l-grid l-grid--${Math.min(items.length, 4) || 3}`}>
+        <ul className={`l-grid l-grid--${gridColumns(items.length)}`}>
           {items.map((item) => (
             <li
               key={item.title}

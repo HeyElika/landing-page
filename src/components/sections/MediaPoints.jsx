@@ -1,6 +1,7 @@
 import SectionHead from '../ui/SectionHead'
 import Media from '../ui/Media'
 import Icon from '../../assets/icons/Icon'
+import { gridColumns } from './columns'
 
 /**
  * Security and control, in two parts: an intro with a visual, then a rule, then
@@ -44,7 +45,7 @@ export default function MediaPoints({ title, description, media, link, items = [
         </div>
 
         {items.length > 0 && (
-          <ul className={`c-security__items l-grid l-grid--${Math.min(items.length, 4) || 3}`}>
+          <ul className={`c-security__items l-grid l-grid--${gridColumns(items.length)}`}>
             {items.map((item) => (
               <li key={item.title} className="l-stack l-stack--300">
                 <span className="c-security__icon">

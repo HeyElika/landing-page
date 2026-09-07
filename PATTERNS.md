@@ -164,6 +164,29 @@ Use it between two sections that would otherwise run together, and give it a
 sentence rather than a paragraph. Under `prefers-reduced-motion` the lines are
 simply aligned and at full contrast from the start.
 
+## Responsive behaviour
+
+Sections are fluid rather than fixed: they take a share of the screen, stack
+below 900px, and no component sets a height that content has to fit inside.
+`npm run stress` renders every pattern with deliberately awkward content —
+headings four times too long, unbreakable words, doubled item counts — and
+reports what strains.
+
+Two things it found, both now handled:
+
+- **Ragged rows.** Column count came from `min(items, 4)`, so six items became
+  a row of four and a row of two. `gridColumns()` picks the widest count that
+  divides the items evenly: six makes two rows of three. Seven still cannot be
+  even at any width, and falls back to four.
+- **Button labels cannot wrap.** The Figma spec sets `white-space: nowrap`, so
+  a long label pushes past its container instead of breaking. That is correct
+  for a button and wrong for a sentence: **keep CTA labels under about 25
+  characters.** "Open Billease app" is 17.
+
+What the tool cannot see is real layout — it renders markup, not a browser. It
+catches structural fragility, not a heading that happens to look cramped at
+820px.
+
 ## Fitting a section to one screen
 
 `hero`, `features` and `stepsSplit` accept `fit: 'viewport'`, which holds the

@@ -1,5 +1,6 @@
 import SectionHead from '../ui/SectionHead'
 import Icon from '../../assets/icons/Icon'
+import { gridColumns } from './columns'
 
 /** Numbered "how it works" row. Each item: { title, description }. */
 export default function Steps({ title, description, items = [], background = 'default', cta }) {
@@ -8,7 +9,7 @@ export default function Steps({ title, description, items = [], background = 'de
     <section className={['l-band', bandTone].filter(Boolean).join(' ')}>
       <div className="l-container l-stack l-stack--900">
         <SectionHead title={title} description={description} />
-        <ol className={`l-grid l-grid--${Math.min(items.length, 4) || 3}`}>
+        <ol className={`l-grid l-grid--${gridColumns(items.length)}`}>
           {items.map((item, i) => (
             <li key={item.title} className="l-stack l-stack--300">
               {/* Same marker as StepsSplit: outlined and neutral. Red is for
