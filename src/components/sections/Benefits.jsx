@@ -31,11 +31,12 @@ export default function Benefits({
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken', dark: 'l-band--dark' }[background] || ''
   const onDark = background === 'dark'
   return (
-    <section
-      className={['l-band', fit === 'viewport' ? 'l-band--fit' : '', bandTone].filter(Boolean).join(' ')}
-      aria-label={!title ? (label || undefined) : undefined}
-    >
+    <section className={['l-band', fit === 'viewport' ? 'l-band--fit' : '', bandTone].filter(Boolean).join(' ')}>
       <div className={['l-container', width === 'wide' ? 'l-container--wide' : '', 'l-stack', 'l-stack--900'].filter(Boolean).join(' ')}>
+        {/* A section with no visible heading still needs one in the outline:
+            without it the card titles are h3 sitting directly under the page
+            h1, which is a skipped level for anyone navigating by heading. */}
+        {!title && label && <h2 className="u-visually-hidden">{label}</h2>}
         <SectionHead title={title} description={description} align={align} onDark={onDark} />
         <ul className={`l-grid l-grid--${columns}`}>
           {items.map((item) => {

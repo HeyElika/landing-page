@@ -77,7 +77,21 @@ for (const c of cases) {
   }
 }
 
-// 5. Same-tone adjacency has a boundary rule, so any ordering stays legible.
+// 5. A section's own heading level is h2, so the page outline never jumps.
+//
+// A benefits row with no visible heading rendered card titles as h3 directly
+// under the page h1 — a skipped level for anyone navigating by heading. The
+// fix was a visually hidden h2; this keeps it fixed.
+for (const c of cases) {
+  const html = render([c])
+  const levels = [...html.matchAll(/<h([1-6])[\s>]/g)].map((m) => Number(m[1]))
+  if (!levels.length) continue
+  if (Math.min(...levels) > 2) {
+    fail(`${c.id}: starts at h${Math.min(...levels)}; a section's own heading should be h2`)
+  }
+}
+
+// 6. Same-tone adjacency has a boundary rule, so any ordering stays legible.
 const css = readFileSync(new URL('../src/styles/landing.css', import.meta.url), 'utf8')
 for (const tone of ['subtle', 'sunken', 'dark', 'brand']) {
   const rule = new RegExp(`\\[data-reveal\\]:has\\(> \\.l-band--${tone}\\) \\+ \\[data-reveal\\]:has\\(> \\.l-band--${tone}\\)`)
