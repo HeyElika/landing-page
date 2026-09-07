@@ -11,7 +11,7 @@
     "tokens": "node scripts/build-tokens.mjs",
     "check": "node scripts/check-tokens.mjs && node scripts/check-type.mjs && node scripts/check-layout.mjs",
     "icons": "node scripts/build-icons.mjs",
-    "tokens:page": "node scripts/build-token-page.mjs token-reference.html"
+    "tokens:page": "npx vite-node scripts/build-token-page.mjs token-reference.html"
   },
   "dependencies": {
     "react": "^19.2.6",

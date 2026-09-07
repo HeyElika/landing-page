@@ -43,15 +43,45 @@ const backing = (v) => (v?.match(/^var\((--[a-z0-9-]+)\)$/) || [])[1]
 
 /* ── Usage ──────────────────────────────────────────────────────────────── */
 
-const sources = [
-  read('src/styles/landing.css'), read('src/App.jsx'), read('src/LandingPage.jsx'), read('src/PatternGallery.jsx'),
-  ...['sections', 'ui', 'ds'].flatMap((d) =>
-    readdirSync(join(root, 'src/components', d)).filter((f) => f.endsWith('.jsx'))
-      .map((f) => readFileSync(join(root, 'src/components', d, f), 'utf8'))),
-  ...readdirSync(join(root, 'src/content/products')).filter((f) => f.endsWith('.js'))
-    .map((f) => readFileSync(join(root, 'src/content/products', f), 'utf8')),
-  read('src/content/brand.js'), read('src/content/patterns.js'),
-].join('\n')
+/**
+ * Usage, taken from what the pages actually render rather than from which
+ * files exist.
+ *
+ * Scanning source files counted colours that can never appear: a Button
+ * variant nobody uses, a dev-only "unknown section" warning, an IconTile tone
+ * no page passes. Rendering the pages and reading the result counts only what
+ * a visitor can see.
+ */
+const { pages } = await import('../src/content/index.js')
+const { default: LandingPage } = await import('../src/LandingPage.jsx')
+const { renderToStaticMarkup } = await import('react-dom/server')
+const { createElement } = await import('react')
+
+const rendered = pages.map((page) => renderToStaticMarkup(createElement(LandingPage, { page }))).join('\n')
+
+/** Classes the pages put in the DOM. */
+const classes = new Set(
+  [...rendered.matchAll(/class="([^"]+)"/g)].flatMap((m) => m[1].split(/\s+/)).filter(Boolean),
+)
+
+/** A CSS rule counts only if the page uses one of the classes it targets. */
+const ruleUsesRenderedClass = (rule) => {
+  const selector = rule.slice(0, rule.indexOf('{'))
+  const named = [...selector.matchAll(/\.([a-zA-Z][\w-]*)/g)].map((m) => m[1])
+  if (!named.length) return /:root|^html|^body|\[data-reveal\]/.test(selector)
+  return named.some((c) => classes.has(c))
+}
+
+const usedCss = landingCss
+  .replace(/\/\*[\s\S]*?\*\//g, '')
+  .split(/(?=^[.\[a-z@:*])/m)
+  .filter((rule) => rule.includes('{') && (rule.trimStart().startsWith('@') || ruleUsesRenderedClass(rule)))
+  .join('\n')
+
+/** Inline styles the components emit, which is where Button paints itself. */
+const inlineVars = [...rendered.matchAll(/var\((--[a-z0-9-]+)\)/g)].map((m) => m[0]).join(' ')
+
+const sources = [usedCss, inlineVars].join('\n')
 
 const referenced = new Set([...sources.matchAll(/var\((--[a-z0-9-]+)/g)].map((m) => m[1]))
 for (const name of [...referenced]) {
@@ -99,7 +129,9 @@ for (const css of [tokensCss, landingCss]) {
   for (const m of css.matchAll(/^\.((?:body|heading|link|display)-[a-z0-9-]+)\s*\{([^}]+)\}/gm)) {
     const [, name, body] = m
     const g = (p) => (body.match(new RegExp(`${p}:\\s*([^;]+);`)) || [])[1]?.trim()
-    const uses = (sources.match(new RegExp(`["'\\s]${name}["'\\s]`, 'g')) || []).length
+    // Counted from the rendered pages, so a class defined but never applied
+    // does not appear.
+    const uses = (rendered.match(new RegExp(`class="[^"]*\\b${name}\\b`, 'g')) || []).length
     if (!uses || styles.some((s) => s.name === name)) continue
     const size = g('font-size')
     styles.push({
@@ -127,6 +159,33 @@ const block = (w) => {
   return i < 0 ? '' : landingCss.slice(i, landingCss.indexOf('\n}', i))
 }
 const tiers = [tier('Phone', base), tier('Tablet 768+', block(768)), tier('Desktop 1200+', block(1200))]
+
+/* ── Icons ──────────────────────────────────────────────────────────────── */
+
+const iconSizes = [...tokens.keys()].filter((k) => k.startsWith('--icon-size-'))
+  .map((k) => ({ name: k, px: resolve(tokens.get(k)), used: new RegExp(`var\\(${k}\\)`).test(usedCss) }))
+const iconUses = { xs: 'Inline with text, e.g. a tick in a list', sm: 'Controls: FAQ chevron, link arrow', md: 'Standalone icons and the mobile menu', lg: 'Not used on these pages', xl: 'Mobile menu button', '2xl': 'Icon tiles' }
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+
+const buttonSrc = readFileSync(join(root, 'src/components/ds/Button.jsx'), 'utf8')
+const jsMap = (name) => {
+  const m = buttonSrc.match(new RegExp(`const ${name} = \\{([^}]+)\\}`))
+  return Object.fromEntries([...m[1].matchAll(/'?([a-z0-9]+)'?:\s*'?([^,'\n]+)'?/g)].map((x) => [x[1], x[2].trim()]))
+}
+const btnHeight = jsMap('HEIGHT')
+const btnPad = jsMap('PADDING_H')
+const variantSpec = (variant) => {
+  const block = buttonSrc.match(new RegExp(`  ${variant}: \\{[\\s\\S]*?\\n  \\},`))[0]
+  const def = block.match(/default:\s*\{([^}]+)\}/)[1]
+  const g = (k) => (def.match(new RegExp(`${k}:\\s*'([^']+)'`)) || [])[1]
+  return { bg: g('bg'), text: g('text') }
+}
+const buttons = [
+  { key: 'primary', label: 'Primary', spec: variantSpec('primary'), note: 'The page\u2019s one action. Header, hero and sticky bar all carry the same label.' },
+  { key: 'secondary', label: 'Secondary', spec: variantSpec('secondary'), note: 'An alternative action beside a primary one. Not used on the Access Card page.' },
+  { key: 'ghost', label: 'Text link', spec: variantSpec('ghost'), note: 'No fill, no radius. For a tertiary action that should not look like a button.' },
+]
 
 /* ── Render ─────────────────────────────────────────────────────────────── */
 
@@ -230,11 +289,83 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   <section>
     <h2>Fixed styles — ${fixed.length} in use</h2>
     <p class="muted" style="font-size:14px">Same size at every breakpoint. Set type with these classes, never a raw font-size.</p>
-    ${fixed.map((s) => `
-    <div class="spec">
-      <span class="${s.name}" style="font-size:${s.px}; font-weight:${s.weight}; line-height:${s.lh}">Activate your Access Card in a minute</span>
-      <span class="spec__meta">.${s.name}<br>${s.px} · ${s.weight} · line-height ${s.lh} · <span class="tag">${s.tshirt ?? 'off-scale'}</span> · ${s.uses} uses</span>
-    </div>`).join('')}
+    <div class="scroll"><table>
+      <thead><tr><th>Class</th><th>Size</th><th>Scale</th><th>Weight</th><th>Line height</th><th>Uses</th><th>Specimen</th></tr></thead>
+      <tbody>${fixed.map((s) => `
+        <tr>
+          <td class="mono">.${s.name}</td>
+          <td class="n">${s.px}</td>
+          <td class="mono muted">${s.tshirt?.replace('--font-size-', '') ?? '—'}</td>
+          <td class="n">${s.weight}</td>
+          <td class="n muted">${s.lh}</td>
+          <td class="n muted">${s.uses}</td>
+          <td style="font-size:${s.px}; font-weight:${s.weight}; line-height:1.2; max-width:280px">Activate your card</td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Icons</h2>
+    <p class="muted" style="font-size:14px">
+      <a href="https://www.streamlinehq.com/icons/solar" style="color:var(--text-active)">Solar Linear</a>, from Streamline.
+      One pack, one stroke weight, no exceptions — an icon from anywhere else is visible immediately at these sizes.
+      Path data is generated from <code>@iconify-json/solar</code>; never pasted in by hand.
+    </p>
+    <div class="scroll"><table>
+      <thead><tr><th></th><th>Token</th><th>Size</th><th>Where it is used</th></tr></thead>
+      <tbody>${iconSizes.filter((i) => i.used).map((i) => {
+        const key = i.name.replace('--icon-size-', '')
+        return `
+        <tr>
+          <td style="width:60px"><span style="display:inline-block;width:${i.px};height:${i.px};border-radius:4px;background:var(--bg-sunken)"></span></td>
+          <td class="mono">${i.name}</td>
+          <td class="n">${i.px}</td>
+          <td class="muted">${iconUses[key] ?? ''}</td>
+        </tr>`
+      }).join('')}
+      </tbody>
+    </table></div>
+    <p class="note">Sizes come from the Figma variables export unchanged: <code>xs 16 · sm 20 · md 24 · lg 32 · xl 40 · 2xl 48</code>. Nothing was added for this project, and nothing is missing.</p>
+  </section>
+
+  <section>
+    <h2>Buttons</h2>
+    <p class="muted" style="font-size:14px">
+      From the <a href="https://www.figma.com/design/qESeTFW1GEEosrYnm4Hu3b/Billease-Library--Native-app-?node-id=16-182" style="color:var(--text-active)">Billease library, node 16:182</a>.
+      Three of the five variants are used here; the gradient variant is deliberately not.
+    </p>
+    <div class="scroll"><table>
+      <thead><tr><th>Variant</th><th>Example</th><th>Fill</th><th>Label</th><th>When</th></tr></thead>
+      <tbody>${buttons.map((b) => `
+        <tr>
+          <td class="mono">${b.label}</td>
+          <td style="width:200px">
+            <span style="display:inline-flex;align-items:center;height:${btnHeight.lg}px;padding-inline:${b.key === 'ghost' ? 0 : btnPad.lg}px;border-radius:${b.key === 'ghost' ? '0' : '9999px'};background:${b.spec.bg};color:${b.spec.text};font-size:16px;font-weight:600;${b.key === 'ghost' ? 'text-decoration:underline;' : ''}">Open Billease app</span>
+          </td>
+          <td class="mono muted">${esc(b.spec.bg)}</td>
+          <td class="mono muted">${esc(b.spec.text)}</td>
+          <td class="muted">${b.note}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>
+
+    <div class="sub">
+      <h3>Sizes</h3>
+      <div class="scroll"><table>
+        <thead><tr><th>Size</th><th>Height</th><th>Padding</th><th>Example</th><th>Source</th></tr></thead>
+        <tbody>${['xl', 'lg', 'md', 'sm'].filter((k) => btnHeight[k]).map((k) => `
+          <tr>
+            <td class="mono">${k}</td>
+            <td class="n">${btnHeight[k]}px</td>
+            <td class="n muted">${btnPad[k]}px</td>
+            <td><span style="display:inline-flex;align-items:center;height:${btnHeight[k]}px;padding-inline:${btnPad[k]}px;border-radius:9999px;background:var(--bg-primary);color:var(--text-on-dark);font-size:${k === 'sm' ? 14 : 16}px;font-weight:600">Open app</span></td>
+            <td class="muted">${k === 'xl' ? '<strong>Added for landing pages.</strong> The library stops at 48, which reads small under display type.' : 'Figma library'}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table></div>
+      <p class="note">These pages use <code>xl</code> for the hero and sticky bar, and <code>lg</code> in the header, where a 52px button in a 72px bar leaves no clearance.</p>
+    </div>
   </section>
 
   <section>
