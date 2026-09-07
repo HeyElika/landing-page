@@ -14,6 +14,13 @@ npm run lint
 npm run preview  # preview the production build
 ```
 
+## Design tokens
+
+`TOKENS.md` lists every value the template can use — type, spacing, radius,
+colour, icon sizes, layout constants and breakpoints — where each comes from,
+and which guard enforces it. It is the reference to hand someone before they
+write CSS for a new page.
+
 ## Briefing image assets
 
 `ASSETS.md` is the brief for whoever makes the artwork: one export size per

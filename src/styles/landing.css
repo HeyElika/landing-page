@@ -16,8 +16,11 @@
 
 :root {
   /* Layout constants — see note above */
-  --page-max: 1200px;                                     /* readable desktop measure */
+  --page-max: 1200px;                                     /* the page's content column */
   --measure: 68ch;                                        /* max line length for prose */
+  --column-reading: 640px;                                /* prose-only sections */
+  --column-narrow: 760px;                                 /* narrow content sections */
+  --column-list: 976px;                                   /* a list of controls, e.g. the FAQ */
   --page-gutter: var(--space-500);                        /* 20, phones */
   --nav-h: calc(var(--space-900) + var(--space-800));      /* 40 + 32 = 72 */
 
@@ -210,12 +213,12 @@ button { font: inherit; }
 .l-band--brand { background: var(--bg-primary); color: var(--text-on-dark); }
 
 .l-container { width: 100%; max-width: var(--page-max); margin-inline: auto; }
-.l-container--narrow { max-width: 760px; }
+.l-container--narrow { max-width: var(--column-narrow); }
 
 /* A column for a list of controls: wider than prose wants, narrower than the
  * page. 976px matches the reference measured on vivid.money — a 1024px
  * container less its 24px padding either side. */
-.l-container--list { max-width: 976px; }
+.l-container--list { max-width: var(--column-list); }
 
 /* Runs to the page gutters instead of the content column. For a row of cards
  * that gains more from width than the page gains from a shared measure. */
@@ -226,7 +229,7 @@ button { font: inherit; }
  * questions" is 610px and the longest answer is 624px, so 600 wraps both for
  * the sake of 40px. At 640 the line runs about 70 characters, inside the
  * 60-75 that reads comfortably. */
-.l-container--reading { max-width: 640px; }
+.l-container--reading { max-width: var(--column-reading); }
 
 /* Prose never spans the full container. */
 .l-measure { max-width: var(--measure); }
