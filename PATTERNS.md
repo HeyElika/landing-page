@@ -70,6 +70,14 @@ Two consequences worth knowing:
 
 - **Order is content, not code.** Reordering a page means moving an object in
   the `sections` array. Nothing in a component knows what precedes it.
+- **Every section brings its own boundary.** A tinted section gets a hairline
+  when it meets another of the same tint. A white one gets nothing — a rule
+  between every pair of white sections would read as a table — so it has to
+  carry a section heading (`h1`/`h2`) or a visual with weight of its own: a
+  card row, a photograph, a full-screen statement, a coloured panel. The
+  checker fails a section that has neither, which is the case that would
+  otherwise merge with its neighbour and only be caught by eye.
+
 - **Same-tone neighbours draw their own boundary.** Two tinted sections running
   together used to read as one very tall section. A CSS rule now puts a
   hairline between any two adjacent bands sharing a tint, so no ordering can

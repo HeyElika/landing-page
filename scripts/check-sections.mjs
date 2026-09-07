@@ -56,7 +56,28 @@ for (const [label, list] of [['in order', cases], ['reversed', [...cases].revers
   if (bands < cases.length) fail(`${label}: ${bands} bands for ${cases.length} sections`)
 }
 
-// 4. Same-tone adjacency has a boundary rule, so any ordering stays legible.
+// 4. Every section carries its own boundary.
+//
+// Two sections of the same tone need something that says where one ends. A
+// tint gets a hairline (rule 5). White gets nothing, because a rule between
+// every pair of white sections would read as a table — so a white section has
+// to bring its own: a heading, or a visual of its own weight.
+//
+// This is the check that would have caught the case by hand: a section with
+// neither, sitting between two others, merges into whatever is around it.
+const ANCHORS = /c-media|c-placeholder|c-feature\b|c-statement|c-appcta|c-footer|c-security__icon|c-steps-split__num/
+for (const c of cases) {
+  const html = render([c])
+  // h1/h2 only: a section heading. Card and item titles are h3, and a row of
+  // those does not tell a reader where the section began.
+  const hasHeading = /<h[12][\s>]/.test(html)
+  const hasAnchor = ANCHORS.test(html)
+  if (!hasHeading && !hasAnchor) {
+    fail(`${c.id}: no heading and no visual of its own, so it has no boundary against a neighbour of the same tone`)
+  }
+}
+
+// 5. Same-tone adjacency has a boundary rule, so any ordering stays legible.
 const css = readFileSync(new URL('../src/styles/landing.css', import.meta.url), 'utf8')
 for (const tone of ['subtle', 'sunken', 'dark', 'brand']) {
   const rule = new RegExp(`\\[data-reveal\\]:has\\(> \\.l-band--${tone}\\) \\+ \\[data-reveal\\]:has\\(> \\.l-band--${tone}\\)`)
