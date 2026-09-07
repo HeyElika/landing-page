@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import SectionHead from '../ui/SectionHead'
 import Icon from '../../assets/icons/Icon'
+import { track, EVENTS } from '../../lib/track'
 
 /**
  * FAQ accordion, following the Klarna pattern.
@@ -38,11 +39,13 @@ export default function FAQ({ title, description, groups, items = [], background
   // the clicked row ever changes height, so the row stays exactly where it is
   // and the page only grows downward.
   const [openIds, setOpenIds] = useState(() => new Set())
-  const toggle = (key) =>
+  const toggle = (key, question) =>
     setOpenIds((prev) => {
       const next = new Set(prev)
-      if (next.has(key)) next.delete(key)
-      else next.add(key)
+      const opening = !next.has(key)
+      if (opening) next.add(key)
+      else next.delete(key)
+      track(opening ? EVENTS.faqOpen : EVENTS.faqClose, { question })
       return next
     })
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
@@ -67,7 +70,7 @@ export default function FAQ({ title, description, groups, items = [], background
                     <li key={item.question} className={open ? 'c-faq c-faq--open' : 'c-faq'}>
                       <button
                         type="button"
-                        onClick={() => toggle(key)}
+                        onClick={() => toggle(key, item.question)}
                         aria-expanded={open}
                         aria-controls={panelId}
                         className="c-faq__q heading-lg-regular"

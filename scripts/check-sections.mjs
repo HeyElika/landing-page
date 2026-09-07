@@ -14,7 +14,7 @@
  *   3. It shares the page's content box, so its horizontal alignment does not
  *      come from a sibling.
  */
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createElement } from 'react'
 import { SECTIONS } from '../src/components/sections/index.js'
@@ -91,7 +91,44 @@ for (const c of cases) {
   }
 }
 
-// 6. Same-tone adjacency has a boundary rule, so any ordering stays legible.
+// 6. Governance: a new section cannot appear without going through the
+//    catalogue.
+//
+// The failure mode this prevents: someone needs a layout, does not find it
+// because they did not look, and writes a second component that does what an
+// existing one already did with a prop. Two months later nobody knows which to
+// use. Requiring a catalogue entry forces the question "is this a variant of
+// something we have?" to be answered out loud.
+const sectionFiles = readdirSync(new URL('../src/components/sections', import.meta.url))
+  .filter((f) => f.endsWith('.jsx'))
+  .map((f) => f.replace('.jsx', ''))
+const CHROME = ['NavBar', 'Footer']          // not page sections
+const registered = new Set(Object.values(SECTIONS).map((c) => c.name))
+const catalogued = readFileSync(new URL('../src/content/patterns.js', import.meta.url), 'utf8')
+
+for (const name of sectionFiles) {
+  if (CHROME.includes(name)) continue
+  if (!registered.has(name)) {
+    fail(`${name}.jsx is not in the SECTIONS registry — no page can use it`)
+    continue
+  }
+  const key = Object.entries(SECTIONS).find(([, c]) => c.name === name)?.[0]
+  if (key && !new RegExp(`type: '${key}'`).test(catalogued)) {
+    fail(`${name} (type: '${key}') is not in the pattern catalogue — add it to patterns.js so the next person finds it instead of building it again`)
+  }
+}
+
+// 7. Versioning: every real page still renders, so a change to a shared
+//    section cannot quietly break a page that uses it.
+const { pages } = await import('../src/content/index.js')
+const { default: LandingPage } = await import('../src/LandingPage.jsx')
+for (const page of pages) {
+  const html = renderToStaticMarkup(createElement(LandingPage, { page }))
+  if (html.length < 3000) fail(`page /${page.slug} renders almost nothing`)
+  if (/Unknown section type/.test(html)) fail(`page /${page.slug} references a section type that does not exist`)
+}
+
+// 8. Same-tone adjacency has a boundary rule, so any ordering stays legible.
 const css = readFileSync(new URL('../src/styles/landing.css', import.meta.url), 'utf8')
 for (const tone of ['subtle', 'sunken', 'dark', 'brand']) {
   const rule = new RegExp(`\\[data-reveal\\]:has\\(> \\.l-band--${tone}\\) \\+ \\[data-reveal\\]:has\\(> \\.l-band--${tone}\\)`)
@@ -102,4 +139,4 @@ if (failed) {
   console.error(`\nsection independence check failed: ${failed} issue(s)\n`)
   process.exit(1)
 }
-console.log(`section independence check passed: ${cases.length} sections, ${(cases.length - 1) * 2} pairings, 2 full orderings, 4 tone-adjacency rules`)
+console.log(`section check passed: ${cases.length} sections, ${(cases.length - 1) * 2} pairings, ${sectionFiles.length - CHROME.length} components catalogued, ${pages.length} pages render`)

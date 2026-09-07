@@ -1,4 +1,5 @@
 import Media from '../ui/Media'
+import { track, EVENTS } from '../../lib/track'
 
 /**
  * App download block: one contained panel, image on one side and the copy with
@@ -52,6 +53,7 @@ export default function AppDownload({
                       className={app.src ? 'c-store-badge' : 'c-store-btn body-sm-semibold'}
                       target="_blank"
                       rel="noreferrer noopener"
+                      onClick={() => track(EVENTS.storeClick, { store: app.name })}
                     >
                       {app.src ? <img src={app.src} alt={app.name} loading="lazy" /> : app.name}
                     </a>

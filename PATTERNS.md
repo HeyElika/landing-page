@@ -50,6 +50,60 @@ about where the section sits, and `steps` is just as valid three sections
 later. The page role lives in the content file's `id`, which is what the nav
 links to.
 
+## Analytics
+
+Components report themselves; a page inherits tracking by existing. Nothing to
+wire up per product.
+
+| Event | Fired by | Carries |
+|---|---|---|
+| `cta_click` | every button, everywhere | label, href |
+| `faq_open` / `faq_close` | an FAQ row | the question |
+| `store_click` | an App Store or Google Play badge | which store |
+| `section_view` | any section, once, at 50% visible | section id or type |
+
+`src/lib/track.js` pushes to `window.dataLayer` and dispatches a
+`billease:track` DOM event. No vendor is baked in: point a tag manager at the
+data layer, or add a listener in `index.html`. With no consumer the call costs
+one array push — a landing page should not ship an analytics bundle to send
+four events.
+
+Event names live in `EVENTS` rather than being passed as strings, so two pages
+cannot send `cta_click` and `click_cta` for the same thing.
+
+## Governance: not building the same section twice
+
+The risk is someone needing a layout, not finding it because they did not look,
+and writing a second component that does what an existing one already did with
+a prop. Three things make that hard:
+
+1. **A section is unusable until it is registered**, and `check-sections.mjs`
+   fails the build if a component in `sections/` is missing from `SECTIONS`.
+2. **It must also appear in the catalogue.** The same check fails if a
+   registered type has no entry in `patterns.js` — which forces the question
+   "is this a variant of something we already have?" to be answered out loud
+   rather than skipped.
+3. **The rule is written down**: add a prop to an existing pattern before
+   adding a pattern. `mediaPoints` covers text-and-image; `benefits` covers
+   card rows; `panel` covers a contained block. If a new layout is genuinely
+   new — as `statement` was — it goes in the catalogue with the rest.
+
+## Versioning: improving a shared section
+
+Every page uses the same component, so an improvement lands everywhere at once.
+That is the point, and the risk: a change that assumes new content shape breaks
+a page written before it.
+
+Two things guard that. `check-sections.mjs` renders **every real page** as well
+as every catalogue variant, so a section that no longer works with an older
+content file fails the build rather than a visit. And a rename keeps its old
+name in `SECTION_ALIASES`, so a content file written months ago keeps resolving.
+
+The pattern to follow when changing a shared section: add an optional prop with
+a default that reproduces today's behaviour, rather than changing what the
+existing props mean. Both forms of the hero's `appLink` — linked and plain —
+exist for exactly that reason.
+
 ## Section independence
 
 Every section can be added, removed or reordered freely, and this is enforced

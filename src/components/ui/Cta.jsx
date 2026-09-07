@@ -1,4 +1,5 @@
 import DSButton from '../ds/Button'
+import { track, EVENTS } from '../../lib/track'
 
 /**
  * Maps a call-to-action content object onto the Billease design system Button.
@@ -24,7 +25,12 @@ export default function Cta({ label, href, type = 'primary', size = 'lg', icon, 
       size={size}
       label={label}
       href={href}
-      onClick={onClick}
+      onClick={(e) => {
+        // Every action on every page reports itself the same way, so a new
+        // page needs no tracking work at all.
+        track(EVENTS.ctaClick, { label, href })
+        onClick?.(e)
+      }}
       fullWidth={block}
       iconRight={Boolean(icon)}
       iconName={icon}

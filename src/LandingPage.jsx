@@ -3,6 +3,7 @@ import NavBar from './components/sections/NavBar'
 import Footer from './components/sections/Footer'
 import StickyCta from './components/ui/StickyCta'
 import Reveal from './components/ui/Reveal'
+import { observeSection } from './lib/track'
 import { SECTIONS } from './components/sections'
 
 /**
@@ -54,7 +55,13 @@ export default function LandingPage({ page }) {
             )
           }
           return (
-            <div key={id || `${type}-${i}`} id={id}>
+            <div
+              key={id || `${type}-${i}`}
+              id={id}
+              // Reports itself once when half on screen. A new page inherits
+              // this by existing; there is nothing to wire up.
+              ref={(el) => observeSection(el, id || type)}
+            >
               {/* The first section is never hidden: it holds the largest
                   contentful paint, and fading it in would delay it. */}
               <Reveal immediate={i === 0}>
