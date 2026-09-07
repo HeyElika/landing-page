@@ -6,11 +6,17 @@
  * value as itself: colours as swatches, spacing as bars, type as specimens,
  * icons as icons.
  *
+ * It shows what THIS project uses, not everything the design system exports.
+ * The library carries 223 tokens; a landing page touches about a third of
+ * them, and a reference padded with 137 colours nobody has used is a reference
+ * nobody reads. Usage is measured by scanning the source, and what is left
+ * over is listed by name at the end so the rest stays discoverable.
+ *
  * Generated rather than written by hand for the same reason the tokens are:
  * a reference someone has to remember to update is a reference that lies.
  * Run `npm run tokens:page` after changing tokens.
  */
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
@@ -32,6 +38,37 @@ function customProps(css) {
 }
 
 const tokens = customProps(tokensCss)
+
+/* ── What this project actually uses ────────────────────────────────────── */
+
+/** Every source file that could reference a token, minus the generated ones. */
+const sources = ['src/styles/landing.css', 'src/App.jsx', 'src/LandingPage.jsx', 'src/PatternGallery.jsx']
+  .map(read)
+  .concat(
+    ['sections', 'ui', 'ds'].flatMap((dir) => {
+      const base = join(root, 'src/components', dir)
+      return readdirSync(base).filter((f) => f.endsWith('.jsx')).map((f) => readFileSync(join(base, f), 'utf8'))
+    }),
+    readdirSync(join(root, 'src/content/products'))
+      .filter((f) => f.endsWith('.js'))
+      .map((f) => readFileSync(join(root, 'src/content/products', f), 'utf8')),
+    [read('src/content/brand.js'), read('src/content/patterns.js')],
+  )
+const blob = sources.join('\n')
+
+const referenced = new Set([...blob.matchAll(/var\((--[a-z0-9-]+)/g)].map((m) => m[1]))
+/** A semantic token in use pulls in the primitive behind it. */
+for (const name of [...referenced]) {
+  let value = tokens.get(name)
+  for (let i = 0; i < 6 && value; i++) {
+    const m = value.match(/^var\((--[a-z0-9-]+)\)$/)
+    if (!m) break
+    referenced.add(m[1])
+    value = tokens.get(m[1])
+  }
+}
+const isUsed = (name) => referenced.has(name)
+const unusedTokens = [...tokens.keys()].filter((n) => !isUsed(n))
 const layout = customProps(landingCss.slice(landingCss.indexOf(':root {'), landingCss.indexOf('\n}')))
 
 /** Follow var() references to the literal underneath. */
@@ -43,7 +80,7 @@ function resolve(value, depth = 0) {
 
 const group = (prefix, exclude = []) =>
   [...tokens.entries()]
-    .filter(([k]) => k.startsWith(prefix) && !exclude.some((e) => k.startsWith(e)))
+    .filter(([k]) => k.startsWith(prefix) && isUsed(k) && !exclude.some((e) => k.startsWith(e)))
     .map(([k, v]) => ({ name: k, raw: v, value: resolve(v) }))
 
 /** Type style classes, with the declarations that define them. */
@@ -52,14 +89,18 @@ const typeStyles = [...tokensCss.matchAll(/^\.([a-z0-9-]+)\s*\{([^}]+)\}/gim)]
     const get = (p) => (body.match(new RegExp(`${p}:\\s*([^;]+);`)) || [])[1]
     return { name, size: get('font-size'), weight: get('font-weight'), lh: get('line-height') }
   })
-  .filter((t) => t.size)
+  .filter((t) => t.size && new RegExp(`["'\\s]${t.name}["'\\s]`).test(blob))
 
 /** Display scale from the landing layer, which the token file does not carry. */
 const display = [...landingCss.matchAll(/^\s{2}(--display-[a-z]+):\s*(clamp\([^;]+\));/gim)]
   .map(([, name, value]) => ({ name, value }))
 
-const icons = [...iconsJs.matchAll(/'([a-z0-9-]+)':\s*\{"solar":"([^"]+)","body":"([\s\S]*?)","viewBox":"([^"]+)"\}/g)]
+const allIcons = [...iconsJs.matchAll(/'([a-z0-9-]+)':\s*\{"solar":"([^"]+)","body":"([\s\S]*?)","viewBox":"([^"]+)"\}/g)]
   .map(([, name, solar, body, viewBox]) => ({ name, solar, body: body.replace(/\\"/g, '"'), viewBox }))
+// Matches a quoted name anywhere, so icons chosen in an expression
+// (`open ? 'close' : 'burger-menu'`) count as used.
+const icons = allIcons.filter((i) => new RegExp(`'${i.name}'`).test(blob))
+const unusedIcons = allIcons.filter((i) => !icons.includes(i))
 
 const breakpoints = [...new Set(
   [...landingCss.matchAll(/@media \(min-width: (\d+)px\)/g)].map((m) => Number(m[1])),
@@ -166,7 +207,7 @@ ${[...layout].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
     <p class="mono muted">Billease · landing page template</p>
     <h1>Token reference</h1>
     <p class="lede">Every value the template can use, shown as itself. Generated from <code>tokens.css</code>, <code>landing.css</code> and the icon set, so it cannot drift from the code.</p>
-    <p class="note"><strong>${tokens.size}</strong> design tokens · <strong>${typeStyles.length}</strong> type styles · <strong>${icons.length}</strong> icons · <strong>${breakpoints.length}</strong> breakpoints</p>
+    <p class="note"><strong>${tokens.size - unusedTokens.length}</strong> tokens in use, of ${tokens.size} the library exports · <strong>${typeStyles.length}</strong> type styles · <strong>${icons.length}</strong> icons · <strong>${breakpoints.length}</strong> breakpoints. Everything below is used by this project; what is not is listed at the end.</p>
   </header>
 
   <section>
@@ -304,10 +345,23 @@ ${[...layout].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
     <p class="note"><strong>Known wart.</strong> 900 and 960 do nearly the same job, and 640 and 768 overlap. A future page should collapse these to four rather than adding a seventh.</p>
   </section>
 
+  <section>
+    <h2>Available but unused</h2>
+    <p class="muted" style="font-size:14px">In the library and ready to use, but nothing on these pages references them yet. Names only — a swatch for a colour no page uses is noise.</p>
+    <div class="sub">
+      <h3>${unusedTokens.length} tokens</h3>
+      <p class="mono muted" style="font-size:12px; line-height:1.9">${unusedTokens.join(' · ')}</p>
+    </div>
+    ${unusedIcons.length ? `<div class="sub">
+      <h3>${unusedIcons.length} icons</h3>
+      <p class="mono muted" style="font-size:12px; line-height:1.9">${unusedIcons.map((i) => i.name).join(' · ')}</p>
+    </div>` : ''}
+  </section>
+
 </div>
 `
 
 const out = process.argv[2] || 'token-reference.html'
 writeFileSync(out, html)
 console.log(`token reference written: ${out}`)
-console.log(`  ${tokens.size} tokens · ${typeStyles.length} type styles · ${display.length} display steps · ${icons.length} icons · ${breakpoints.length} breakpoints`)
+console.log(`  ${tokens.size - unusedTokens.length} of ${tokens.size} tokens in use · ${typeStyles.length} type styles · ${display.length} display steps · ${icons.length} of ${allIcons.length} icons · ${breakpoints.length} breakpoints`)

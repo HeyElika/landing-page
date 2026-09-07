@@ -16,6 +16,11 @@ four.
 value rendered as itself rather than described. It reads the same files the
 build does, so it is accurate by construction.
 
+It shows what **this project uses**, not the whole export — 82 of the 223
+tokens, 12 of the 17 type styles, 20 of the 32 icons. The rest are listed by
+name at the end. A reference padded with 141 colours no page has used is a
+reference nobody reads, and it hides the palette the pages actually share.
+
 ## Where tokens live
 
 | Layer | File | Editable? |
@@ -143,8 +148,8 @@ package updates.
 
 ## Colour
 
-223 tokens. Use the **semantic** layer, never a primitive, unless the semantic
-one genuinely does not exist:
+223 tokens exported; **31 in use** on these pages. Use the **semantic** layer,
+never a primitive, unless the semantic one genuinely does not exist:
 
 | Group | Examples |
 |---|---|
