@@ -13,8 +13,14 @@ import Icon from '../../assets/icons/Icon'
  * It also returns at the foot of the page and stays there. Someone who has
  * reached the end has finished reading, and the alternative is a footer with
  * no way back to the action except scrolling up.
+ *
+ * `mobileMenu: false` drops the burger. On a single-page layout the links are
+ * anchors to sections the reader reaches by scrolling anyway, and the sticky
+ * bar already carries the action — so the menu is a panel, an overlay, a focus
+ * trap and a scroll lock in service of four shortcuts. A page with genuinely
+ * separate destinations should keep it.
  */
-export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
+export default function NavBar({ brand = {}, links = [], cta, secondaryCta, mobileMenu = true }) {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [open, setOpen] = useState(false)
@@ -134,9 +140,8 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
           {cta && <Cta {...cta} />}
         </div>
 
-        {/* Only when there is something behind it. With no links and no action
-            the menu opened onto an empty panel. */}
-        {(links.length > 0 || cta || secondaryCta) && (
+        {/* Only when the page asked for it and there is something behind it. */}
+        {mobileMenu && (links.length > 0 || cta || secondaryCta) && (
         <button
           ref={toggleRef}
           type="button"
@@ -164,7 +169,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
         )}
       </div>
 
-      {open && (
+      {mobileMenu && open && (
         <div
           ref={panelRef}
           className="nav-mobile-panel"

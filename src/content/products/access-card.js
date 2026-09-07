@@ -49,6 +49,9 @@ export default {
 
   brand,
   nav: {
+    // No burger on mobile: these are anchors to sections a reader scrolls
+    // through anyway, and the sticky bar carries the action.
+    mobileMenu: false,
     links: [
       { label: 'Why activate', href: '#why-activate' },
       { label: 'Card benefits', href: '#benefits' },
