@@ -14,6 +14,21 @@ npm run lint
 npm run preview  # preview the production build
 ```
 
+## Checks
+
+`npm run lint` runs ESLint plus four guards, and CI runs the same on every push
+and pull request (`.github/workflows/ci.yml`):
+
+| Check | Catches |
+|---|---|
+| `check-tokens` | hex literals, undefined tokens, hardcoded font sizes |
+| `check-type` | a type step that is not a whole pixel, or uses fluid maths |
+| `check-layout` | a container setting its own horizontal padding |
+| `check-sections` | a section that cannot stand alone, is missing from the catalogue, or breaks a page |
+
+`npm run stress` renders every pattern with over-long headings, unbreakable
+words and doubled item counts.
+
 ## Design tokens
 
 `npm run tokens:page` builds a visual reference — every colour as a swatch,
@@ -198,6 +213,21 @@ The `gradient` variant from the Figma set is implemented in `Button.jsx` and ava
 ## Typeface
 
 Landing pages use **Overused Grotesk**, self-hosted from `public/fonts/` as a single variable file (92 kB, weights 300–900, SIL Open Font License 1.1, licence shipped alongside it). It is applied by overriding `--ds-font-family` once in `landing.css`; `tokens.css` stays generated and untouched, and Source Sans Pro remains the fallback. See DESIGN-RULES.md section 3 for the approval and how to revert.
+
+## Checks
+
+`npm run lint` runs ESLint plus four guards, and CI runs the same on every push
+and pull request (`.github/workflows/ci.yml`):
+
+| Check | Catches |
+|---|---|
+| `check-tokens` | hex literals, undefined tokens, hardcoded font sizes |
+| `check-type` | a type step that is not a whole pixel, or uses fluid maths |
+| `check-layout` | a container setting its own horizontal padding |
+| `check-sections` | a section that cannot stand alone, is missing from the catalogue, or breaks a page |
+
+`npm run stress` renders every pattern with over-long headings, unbreakable
+words and doubled item counts.
 
 ## Design tokens
 

@@ -334,6 +334,23 @@ button { font: inherit; }
  * A section whose design has no visible heading still needs one, or the
  * document outline jumps a level. Clip rather than display:none, which would
  * remove it from the accessibility tree as well. */
+/* The skip link stops being hidden the moment it is focused. */
+.c-skip:focus {
+  position: fixed;
+  top: var(--space-400);
+  left: var(--space-400);
+  z-index: 100;
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip-path: none;
+  padding: var(--space-300) var(--space-400);
+  border-radius: var(--radius-md);
+  background: var(--bg-base);
+  color: var(--text-base);
+  box-shadow: 0 var(--space-100) var(--space-400) var(--alpha-black-20);
+}
+
 .u-visually-hidden {
   position: absolute;
   width: 1px;

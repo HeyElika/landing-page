@@ -1,0 +1,29 @@
+# Runs the same checks a person runs locally, on every push and pull request.
+#
+# Without this the guards only protect whoever remembers to run them. Four
+# checks that catch a nav offset by one gutter, a headline resolving to 41.9px,
+# a colour typed as a hex, and a section that cannot survive being reordered —
+# all worth nothing if a push skips them.
+name: checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - name: Lint and guards
+        run: npm run lint
+      - name: Build, prerender, and check every page renders
+        run: npm run build
+      - name: Stress every pattern with awkward content
+        run: npm run stress

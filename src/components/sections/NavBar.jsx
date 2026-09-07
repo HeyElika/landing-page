@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Logo from '../ui/Logo'
 import Cta from '../ui/Cta'
 import Icon from '../../assets/icons/Icon'
@@ -18,6 +18,8 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [open, setOpen] = useState(false)
+  const toggleRef = useRef(null)
+  const panelRef = useRef(null)
 
   // Reads are throttled to a frame so a fast scroll cannot queue up work.
   useEffect(() => {
@@ -57,6 +59,35 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
+  }, [open])
+
+  // An open overlay has to be escapable and has to hold focus. Without this a
+  // keyboard user tabs straight past the panel into the page behind it, which
+  // is still there and still scrollable to a screen reader.
+  useEffect(() => {
+    if (!open) return
+    const panel = panelRef.current
+    const focusable = () => [...(panel?.querySelectorAll('a[href], button:not([disabled])') ?? [])]
+
+    focusable()[0]?.focus()
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        toggleRef.current?.focus()   // put the cursor back where it started
+        return
+      }
+      if (e.key !== 'Tab') return
+      const items = focusable()
+      if (!items.length) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus() }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus() }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
   }, [open])
 
   return (
@@ -107,6 +138,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
             the menu opened onto an empty panel. */}
         {(links.length > 0 || cta || secondaryCta) && (
         <button
+          ref={toggleRef}
           type="button"
           className="nav-mobile-toggle"
           aria-label={open ? 'Close menu' : 'Open menu'}
@@ -134,6 +166,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
 
       {open && (
         <div
+          ref={panelRef}
           className="nav-mobile-panel"
           style={{
             borderTop: 'var(--border-width-xs) solid var(--border-subtle)',

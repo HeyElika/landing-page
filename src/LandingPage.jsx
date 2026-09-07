@@ -40,8 +40,11 @@ export default function LandingPage({ page }) {
 
   return (
     <>
+      {/* First thing a keyboard or screen-reader user meets: a way past the
+          navigation. Visible only when focused. */}
+      <a className="c-skip u-visually-hidden" href="#main">Skip to content</a>
       <NavBar brand={brand} {...nav} />
-      <main>
+      <main id="main">
         {sections.map((section, i) => {
           const Component = SECTIONS[section.type]
           const { type, id, ...props } = section
