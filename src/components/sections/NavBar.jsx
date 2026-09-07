@@ -187,10 +187,6 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta }) {
               </a>
             ))}
           </nav>
-          <div className="l-container l-stack l-stack--200">
-            {cta && <Cta {...cta} block />}
-            {secondaryCta && <Cta {...secondaryCta} type="secondary" block />}
-          </div>
         </div>
       )}
     </header>
