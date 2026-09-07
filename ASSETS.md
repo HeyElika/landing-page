@@ -130,6 +130,22 @@ a placeholder crop rather than a 3:4 original.
 
 ---
 
+## Going live for real
+
+This deploy is **not indexable on purpose**. It serves `robots.txt` with
+`Disallow: /` and every page carries `noindex, nofollow`, because a
+`vercel.app` copy of Billease marketing copy would compete with billease.ph
+for its own product, with canonical URLs pointing at the wrong host.
+
+When it moves to its real home:
+
+```bash
+SITE_URL=https://billease.ph/access-card INDEXABLE=1 npm run build
+```
+
+That flips robots.txt to allow, drops the noindex, and rewrites every canonical
+and Open Graph URL to the real domain. Nothing else needs changing.
+
 ## Adding a page
 
 The slots above are this page's. Another product page uses the same patterns, so

@@ -27,6 +27,19 @@ const dist = join(root, 'dist')
 const template = readFileSync(join(dist, 'index.html'), 'utf8')
 
 const SITE = process.env.SITE_URL || 'https://landing-page-eight-opal-12.vercel.app'
+
+/**
+ * Indexable only when someone says so.
+ *
+ * This deploy lives on a vercel.app domain. Left crawlable it is a second copy
+ * of Billease marketing copy competing with billease.ph, with canonical URLs
+ * pointing at the wrong host — the classic way a staging site outranks the
+ * real one for its own product.
+ *
+ * Set INDEXABLE=1 (and SITE_URL to the real domain) when this goes live where
+ * it belongs.
+ */
+const INDEXABLE = process.env.INDEXABLE === '1'
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;')
 
 function head(page, path) {
@@ -46,6 +59,7 @@ function head(page, path) {
     `<title>${esc(m.title)}</title>`,
     `<meta name="description" content="${esc(m.description)}" />`,
     `<link rel="canonical" href="${esc(m.canonical || url)}" />`,
+    INDEXABLE ? null : '<meta name="robots" content="noindex, nofollow" />',
     `<meta property="og:type" content="website" />`,
     `<meta property="og:site_name" content="Billease" />`,
     `<meta property="og:title" content="${esc(m.ogTitle || m.title)}" />`,
@@ -78,6 +92,12 @@ function write(page, path) {
 
 const written = [write(pages[0], '/'), ...pages.map((p) => write(p, `/${p.slug}`))]
 for (const w of written) console.log(`  ${w.path.padEnd(14)} ${String(Math.round(w.bytes / 1024)).padStart(3)} KB  ${w.title}`)
+
+// robots.txt, matching whether this deploy is meant to be found at all.
+writeFileSync(join(dist, 'robots.txt'), INDEXABLE
+  ? `User-agent: *\nAllow: /\nSitemap: ${SITE}/sitemap.xml\n`
+  : 'User-agent: *\nDisallow: /\n')
+console.log(`  robots.txt     ${INDEXABLE ? 'allow all' : 'disallow all (set INDEXABLE=1 to publish)'}`)
 
 // A sitemap, since every page now has a stable URL of its own.
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
