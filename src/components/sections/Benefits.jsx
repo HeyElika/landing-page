@@ -16,7 +16,7 @@ import Icon from '../../assets/icons/Icon'
  * DESIGN-RULES.md caps benefits at three or four on an activation page, so
  * prefer a short list over a full grid when the page is conversion-focused.
  */
-export default function Features({
+export default function Benefits({
   title,
   label,
   description,

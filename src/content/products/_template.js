@@ -46,7 +46,7 @@ export default {
     {
       // 2. Key benefits — three or four at most
       id: 'benefits',
-      type: 'features',
+      type: 'benefits',
       title: '',
       columns: 3,                        // 2 | 3 | 4
       items: [{ icon: 'wallet', title: '', description: '' }],
@@ -101,7 +101,7 @@ export default {
 
     {
       // 7. Security and control — only capabilities that actually exist
-      type: 'security',
+      type: 'mediaPoints',
       title: '',
       items: [{ icon: 'security', title: '', description: '' }],
     },
@@ -119,7 +119,7 @@ export default {
     {
       // 9. Repeat the single primary action
       id: 'get-started',
-      type: 'ctaBand',
+      type: 'finalCta',
       background: 'brand',
       title: '',
       description: '',
@@ -144,7 +144,7 @@ export default {
     // }
     //
     // The same idea without the container, for several rows in sequence:
-    // { type: 'spotlight', rows: [{ title: '', description: '', bullets: [''], media: {} }] }
+    // { type: 'featureRows', rows: [{ title: '', description: '', bullets: [''], media: {} }] }
   ],
 
   footer,

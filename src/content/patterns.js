@@ -61,7 +61,7 @@ export const patterns = [
         label: 'Image cards — copy over the image',
         note: 'Give each item a `media`. Portrait cards, copy over a scrim. Best when you have real photography. Four cards want `width: \'wide\'` — inside the content column they are 276px each, narrower than their own copy.',
         props: {
-          type: 'features',
+          type: 'benefits',
           label: 'Section name for screen readers when there is no visible heading',
           columns: 3,
           items: [
@@ -75,7 +75,7 @@ export const patterns = [
         label: 'Icon cards',
         note: 'Give each item an `icon` instead of `media`. For pages with no photography yet.',
         props: {
-          type: 'features',
+          type: 'benefits',
           title: 'A heading above icon cards',
           background: 'subtle',
           columns: 4,
@@ -150,9 +150,9 @@ export const patterns = [
     variants: [
       {
         label: 'Intro plus supporting points — image right',
-        note: 'This is the `security` section, but nothing about it is security-specific. Add `reverse: true` for image left.',
+        note: '`mediaPoints`: an intro with a visual, then supporting points. Add `reverse: true` for image left.',
         props: {
-          type: 'security',
+          type: 'mediaPoints',
           title: 'A heading and a visual, then points beneath.',
           description: 'A paragraph introducing the idea, then three supporting points below it.',
           media: media('Supporting visual', '1 / 1'),
@@ -179,7 +179,7 @@ export const patterns = [
         label: 'Alternating rows',
         note: 'Rows flip automatically; set `reverse` on a row to override. For explaining several features in depth.',
         props: {
-          type: 'spotlight',
+          type: 'featureRows',
           title: 'Several ideas, alternating sides',
           rows: [
             {
@@ -271,7 +271,7 @@ export const patterns = [
         label: 'CTA band',
         note: 'Full-width colour. Use `background: "brand" | "dark" | "subtle"`. Only when the page has no other closing action.',
         props: {
-          type: 'ctaBand',
+          type: 'finalCta',
           background: 'dark',
           title: 'A closing line that repeats the offer',
           description: 'One sentence. The action must match the hero’s.',

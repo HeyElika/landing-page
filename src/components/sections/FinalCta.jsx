@@ -2,7 +2,7 @@ import Cta from '../ui/Cta'
 import Media from '../ui/Media'
 
 /** Closing call to action. Repeats the page's single primary action. */
-export default function CtaBand({ title, description, ctas = [], stores = [], media, background = 'brand', note }) {
+export default function FinalCta({ title, description, ctas = [], stores = [], media, background = 'brand', note }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', dark: 'l-band--dark', brand: 'l-band--brand' }[background] || ''
   const onDark = background === 'dark' || background === 'brand'
 

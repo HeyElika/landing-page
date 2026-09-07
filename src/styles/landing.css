@@ -24,53 +24,40 @@
   --page-gutter: var(--space-500);                        /* 20, phones */
   --nav-h: calc(var(--space-900) + var(--space-800));      /* 40 + 32 = 72 */
 
-  /* ── Marketing display scale ──────────────────────────────────────────
-   * DESIGN-RULES.md section 3 caps type at the token scale "unless explicitly
-   * approved". Approved by Eliso on 2026-08-25: the token scale stops at 32px
-   * because it is built for a 360px phone, and at desktop widths that leaves
-   * section headings at roughly half what comparable pages use. Measured from
-   * their shipped CSS: Salmon runs its hero 44px on mobile up to 72px at
-   * 1280px, Atome sets h1 at 72px and section headings at 48px and 36px.
+  /* ── Type scale ───────────────────────────────────────────────────────
+   * T-shirt sizes, every value a whole pixel.
    *
-   * The extension is deliberately one-sided. Each step STARTS on a real token
-   * at mobile width, so on a phone — where the design system actually
-   * applies — the page renders exact token sizes. Only the desktop end goes
-   * past the scale, where the design system has no opinion.
+   * The four display steps used to be fluid (`clamp()` with a vw term), which
+   * meant they resolved to fractional sizes at almost every real width: 32.8
+   * at 390, 42.6 at 768, 46.1 at 900. Fractional type renders on subpixel
+   * boundaries, so the same headline is fractionally blurrier on one screen
+   * than another and no size in the design file matches what ships.
    *
-   *   --display-lg  32 (--text-3xl) -> 60   hero headline
-   *   --display-md  24 (--text-2xl) -> 48   section heading
-   *   --display-sm  20 (--text-xl)  -> 32   subsection heading
+   * They step at breakpoints instead. Three values per step, all from the
+   * scale, all whole numbers.
    *
-   * Each curve is solved to pass exactly through the token size at 360px and
-   * the maximum at 1280px, so the mobile end is the token value and not an
-   * approximation of it. Verify with scripts/check-type.mjs after any change.
+   * 2xs–2xl come from the library. 3xl and up exist only here: the library
+   * stops at 32px because product UI never needs more, and a landing page
+   * headline does.
    */
-  /* Capped at 56 rather than 60: at 60 the hero's second line measures 534px
-   * against a 528px column and wraps to a third line. */
-  --display-lg: clamp(var(--text-3xl), 1.413rem + 2.609vw, 56px);
-  /* One step above the hero, for a statement that has a screen to itself and
-   * no column beside it. Solved through both endpoints: 32px at 360, 80px at
-   * 1280. */
-  --display-xl: clamp(var(--text-3xl), 0.826rem + 5.217vw, 80px);
-  --display-md: clamp(var(--text-2xl), 0.913rem + 2.609vw, 48px);
-  --display-sm: clamp(var(--text-xl), 0.956rem + 1.304vw, 32px);
+  --font-size-2xs: var(--text-xs);      /* 11 */
+  --font-size-xs: var(--text-sm);       /* 13 */
+  --font-size-sm: var(--text-md);       /* 14 */
+  --font-size-md: var(--text-lg);       /* 16 */
+  --font-size-lg: var(--text-xl);       /* 20 */
+  --font-size-xl: var(--text-2xl);      /* 24 */
+  --font-size-2xl: var(--text-3xl);     /* 32 */
+  --font-size-3xl: 40px;                /* landing only */
+  --font-size-4xl: 48px;                /* landing only */
+  --font-size-5xl: 56px;                /* landing only */
+  --font-size-6xl: 80px;                /* landing only */
 
-  /* Section rhythm.
-   *
-   * DESIGN-RULES.md section 5 asks for 40-48px minimum on mobile and "larger
-   * through layout composition on desktop". Measured from what comparable
-   * pages actually ship, a standard desktop band is 80-120px: Atome sits at
-   * 80-96, Salmon at 56-96 and Klarna at 120. An earlier 64px maximum here
-   * read as stacked, and the larger display type needs the extra room.
-   *
-   * Every value is a sum of spacing tokens, never a new number.
-   *   48  = --space-1000
-   *   56  = 1000 + 200
-   *   64  = 1000 + 400
-   *   80  = 1000 + 800
-   *   96  = 1000 x 2
-   *   128 = 1000 x 2 + 800
-   */
+  /* Display steps, phone. Each one is a t-shirt size, never a computed value. */
+  --display-sm: var(--font-size-lg);    /* 20 */
+  --display-md: var(--font-size-xl);    /* 24 */
+  --display-lg: var(--font-size-2xl);   /* 32 */
+  --display-xl: var(--font-size-2xl);   /* 32 */
+
   --band-y-tight: var(--space-800);                        /* 32 */
   --band-y: var(--space-1000);                             /* 48 */
   --band-y-lg: calc(var(--space-1000) + var(--space-200));  /* 56 */
@@ -78,6 +65,12 @@
 
 @media (min-width: 768px) {
   :root {
+    /* Tablet. */
+    --display-sm: var(--font-size-xl);    /* 24 */
+    --display-md: var(--font-size-2xl);   /* 32 */
+    --display-lg: var(--font-size-3xl);   /* 40 */
+    --display-xl: var(--font-size-4xl);   /* 48 */
+
     --page-gutter: var(--space-800);                        /* 32 */
     --band-y-tight: calc(var(--space-1000) - var(--space-200)); /* 40 */
     --band-y: calc(var(--space-1000) + var(--space-400));    /* 64 */
@@ -97,6 +90,17 @@
     --band-y-lg: calc(var(--space-1000) * 2 + var(--space-400)); /* 112 */
   }
 }
+/* Desktop type. The largest step is 80px, which only a statement with a screen
+ * to itself ever uses. */
+@media (min-width: 1200px) {
+  :root {
+    --display-sm: var(--font-size-2xl);   /* 32 */
+    --display-md: var(--font-size-4xl);   /* 48 */
+    --display-lg: var(--font-size-5xl);   /* 56 */
+    --display-xl: var(--font-size-6xl);   /* 80 */
+  }
+}
+
 
 /* ── Typeface ───────────────────────────────────────────────────────────────
  * Overused Grotesk, self-hosted as a single variable file (92 kB, weight axis

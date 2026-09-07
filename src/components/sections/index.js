@@ -28,37 +28,51 @@
  * document it in README.md.
  */
 import Hero from './Hero'
-import Features from './Features'
+import Benefits from './Benefits'
 import UseCases from './UseCases'
 import Steps from './Steps'
 import StepsSplit from './StepsSplit'
-import Spotlight from './Spotlight'
+import FeatureRows from './FeatureRows'
 import Panel from './Panel'
 import Pricing from './Pricing'
 import Conditions from './Conditions'
 import ChoicePair from './ChoicePair'
-import Security from './Security'
+import MediaPoints from './MediaPoints'
 import FAQ from './FAQ'
-import CtaBand from './CtaBand'
+import FinalCta from './FinalCta'
 import AppDownload from './AppDownload'
 import Statement from './Statement'
 
 export const SECTIONS = {
   hero: Hero,
-  features: Features,
+  benefits: Benefits,
   useCases: UseCases,
   steps: Steps,
   stepsSplit: StepsSplit,
-  spotlight: Spotlight,
+  featureRows: FeatureRows,
   panel: Panel,
   pricing: Pricing,
   conditions: Conditions,
   choicePair: ChoicePair,
   statement: Statement,
-  security: Security,
+  mediaPoints: MediaPoints,
   appDownload: AppDownload,
   faq: FAQ,
-  ctaBand: CtaBand,
+  finalCta: FinalCta,
 }
+
+/**
+ * Old names, kept so a content file written before the rename keeps working.
+ * Each described what one page put in the section rather than what the section
+ * does; see the naming rule in PATTERNS.md.
+ */
+export const SECTION_ALIASES = {
+  features: 'benefits',
+  security: 'mediaPoints',
+  ctaBand: 'finalCta',
+  spotlight: 'featureRows',
+}
+
+for (const [alias, target] of Object.entries(SECTION_ALIASES)) SECTIONS[alias] = SECTIONS[target]
 
 export const SECTION_TYPES = Object.keys(SECTIONS)

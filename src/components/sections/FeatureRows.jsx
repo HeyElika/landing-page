@@ -6,7 +6,7 @@ import SectionHead from '../ui/SectionHead'
  * Alternating media and copy rows. Rows flip sides automatically; set
  * `reverse: true` on a row to force it. On mobile copy always comes first.
  */
-export default function Spotlight({ title, description, rows = [], background = 'default' }) {
+export default function FeatureRows({ title, description, rows = [], background = 'default' }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken' }[background] || ''
   return (
     <section className={['l-band', 'l-band--lg', bandTone].filter(Boolean).join(' ')}>

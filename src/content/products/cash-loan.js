@@ -39,7 +39,7 @@ export default {
     },
     {
       id: 'benefits',
-      type: 'features',
+      type: 'benefits',
       title: 'What you get',
       columns: 3,
       variant: 'plain',
@@ -80,7 +80,7 @@ export default {
     },
     {
       id: 'get-started',
-      type: 'ctaBand',
+      type: 'finalCta',
       background: 'dark',
       title: 'Apply in a few minutes',
       description: 'You will need one valid ID and your bank or e-wallet details.',

@@ -25,6 +25,56 @@ Copy `src/content/products/_template.js`, register it in
 
 ---
 
+## Naming
+
+One name per pattern, in three places that always agree: the registry key
+(`benefits`), the component (`Benefits`), the file (`Benefits.jsx`).
+
+**The rule: name the layout, not the content one page put in it.** A name has
+to survive the second page using the pattern. Four failed that test and were
+renamed:
+
+| Was | Now | Why the old name failed |
+|---|---|---|
+| `features` | `benefits` | The rules cap this at three or four benefits, not a feature inventory. The name argued for the wrong content. |
+| `security` | `mediaPoints` | An intro with a visual and supporting points beneath. Nothing about it is security-specific — it is the page's general text-and-image workhorse. |
+| `ctaBand` | `finalCta` | Named its appearance (a band) rather than its job. |
+| `spotlight` | `featureRows` | Said nothing at all. |
+
+The old names still work: `SECTION_ALIASES` maps each to its replacement, so a
+content file written before the rename keeps rendering.
+
+Names describing a **page role** rather than a layout — `HowItWorks`,
+`PricingConditions` — were deliberately not used. A role name is a promise
+about where the section sits, and `steps` is just as valid three sections
+later. The page role lives in the content file's `id`, which is what the nav
+links to.
+
+## Section independence
+
+Every section can be added, removed or reordered freely, and this is enforced
+rather than assumed. `scripts/check-sections.mjs` runs in `npm run lint` and
+renders each section alone, every adjacent pair in both orders, and the whole
+set forwards and reversed — currently 19 sections, 36 pairings, 2 full
+orderings.
+
+It asserts the three things that make a section independent:
+
+1. **It renders alone**, with no dependence on a neighbour existing.
+2. **It carries its own vertical padding** via a band class, so deleting what
+   sat above it cannot collapse the gap.
+3. **It sits in the shared content box**, so its horizontal alignment comes
+   from the page rather than from a sibling.
+
+Two consequences worth knowing:
+
+- **Order is content, not code.** Reordering a page means moving an object in
+  the `sections` array. Nothing in a component knows what precedes it.
+- **The one thing order does affect is surface rhythm.** Two sections with the
+  same background tone sitting together read as one long section. That is a
+  composition decision, not a breakage — the page stays intact, it just loses a
+  boundary.
+
 ## The narrative order
 
 Sections are optional; the order is not. It answers a reader's questions in the

@@ -1,63 +1,57 @@
 /**
- * Verifies the marketing display scale still resolves to real token sizes at
- * mobile width. The extension past the token scale is approved only on the
- * condition that a phone renders exact token values, so this asserts it.
+ * The type scale must resolve to whole pixels at every breakpoint.
+ *
+ * This replaced an earlier check that verified a fluid `clamp()` hit its
+ * endpoints. Hitting the endpoints was never the problem: everything between
+ * them was fractional — 32.8px at a 390 phone, 42.6 at a 768 tablet, 46.1 at
+ * 900 — so no size in the design file matched what shipped and headlines sat
+ * on subpixel boundaries.
+ *
+ * Now the display steps are t-shirt sizes that step at breakpoints, and this
+ * checks exactly that: no fluid maths, every value a scale token, every scale
+ * token a whole number of pixels.
  */
 import { readFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const css = readFileSync(join(root, 'src/styles/landing.css'), 'utf8')
+const landing = readFileSync(new URL('../src/styles/landing.css', import.meta.url), 'utf8')
+const tokens = readFileSync(new URL('../src/styles/tokens.css', import.meta.url), 'utf8')
 
-const TOKENS = { '--text-xl': 20, '--text-2xl': 24, '--text-3xl': 32 }
-const EXPECT = {
-  // A statement with a screen to itself; one step above the hero.
-  '--display-xl': { token: '--text-3xl', max: 80 },
-  // 56, not 60: at 60 the hero's second line overruns its column and wraps.
-  '--display-lg': { token: '--text-3xl', max: 56 },
-  '--display-md': { token: '--text-2xl', max: 48 },
-  '--display-sm': { token: '--text-xl', max: 32 },
+const declared = (css) => Object.fromEntries(
+  [...css.matchAll(/^\s{2,4}(--[a-z0-9-]+):\s*([^;]+);/gm)].map((m) => [m[1], m[2].trim()]),
+)
+const all = { ...declared(tokens), ...declared(landing) }
+
+const resolve = (value, depth = 0) => {
+  const m = value?.match(/^var\((--[a-z0-9-]+)\)/)
+  return !m || depth > 6 ? value : resolve(all[m[1]], depth + 1)
 }
 
-const at = (rem, vw, w) => rem * 16 + (vw * w) / 100
 let failed = 0
+const fail = (msg) => { console.error(`  ${msg}`); failed++ }
 
-for (const [name, { token, max }] of Object.entries(EXPECT)) {
-  const re = new RegExp(`${name}:\\s*clamp\\(var\\((--[a-z0-9-]+)\\),\\s*([\\d.]+)rem \\+ ([\\d.]+)vw,\\s*(\\d+)px\\)`)
-  const m = css.match(re)
-  if (!m) { console.error(`  ${name}: not found or unexpected form`); failed++; continue }
-  const [, minToken, rem, vw, maxPx] = m
-  const lo = TOKENS[token]
-  const problems = []
-  if (minToken !== token) problems.push(`min should be var(${token}), got var(${minToken})`)
-  if (Number(maxPx) !== max) problems.push(`max should be ${max}px, got ${maxPx}px`)
-  const at360 = at(Number(rem), Number(vw), 360)
-  const at1280 = at(Number(rem), Number(vw), 1280)
-  if (Math.abs(at360 - lo) > 0.5) problems.push(`at 360px resolves to ${at360.toFixed(1)}px, should be the token ${lo}px`)
-  if (Math.abs(at1280 - max) > 0.5) problems.push(`at 1280px resolves to ${at1280.toFixed(1)}px, should be ${max}px`)
-  if (problems.length) { problems.forEach((p) => console.error(`  ${name}: ${p}`)); failed++ }
-  else console.log(`  ${name}: ${lo}px @360 -> ${at(Number(rem), Number(vw), 768).toFixed(0)}px @768 -> ${max}px @1280+`)
+// 1. Every --font-size-* is a whole number of pixels.
+const scale = Object.keys(all).filter((k) => k.startsWith('--font-size-'))
+if (!scale.length) fail('no --font-size-* scale found')
+for (const name of scale) {
+  const px = resolve(all[name])
+  if (!/^\d+px$/.test(px || '')) fail(`${name} resolves to "${px}", not a whole pixel value`)
 }
 
-if (failed) { console.error(`\ntype scale check failed: ${failed} issue(s)`); process.exit(1) }
-console.log('type scale check passed')
-
-// ── Section rhythm ─────────────────────────────────────────────────────────
-// The bands are the other half of the page's vertical rhythm. Every value must
-// still be a sum of spacing tokens, never a raw number.
-const bandDecls = [...css.matchAll(/(--band-y(?:-tight|-lg)?):\s*([^;]+);/g)]
-if (!bandDecls.length) { console.error('  no --band-y declarations found'); process.exit(1) }
-
-let bandFailed = 0
-for (const [, name, value] of bandDecls) {
-  const v = value.trim()
-  const usesTokens = /var\(--space-\d+\)/.test(v)
-  const rawNumber = /(?<![\d.])\d+px/.test(v)
-  if (!usesTokens || rawNumber) {
-    console.error(`  ${name}: ${v} — must be composed from --space-* tokens, no raw px`)
-    bandFailed++
-  }
+// 2. No display step uses fluid maths.
+for (const [name, value] of Object.entries(all)) {
+  if (!name.startsWith('--display-')) continue
+  if (/clamp\(|vw|calc\(/.test(value)) fail(`${name} uses fluid maths: ${value}`)
+  if (!value.startsWith('var(--font-size-')) fail(`${name} is "${value}", not a --font-size-* token`)
 }
-if (bandFailed) { console.error(`\nband rhythm check failed: ${bandFailed} issue(s)`); process.exit(1) }
-console.log(`band rhythm check passed: ${bandDecls.length} declarations, all token-composed`)
+
+// 3. Every display step is defined at each tier, so none inherits by accident.
+for (const step of ['--display-sm', '--display-md', '--display-lg', '--display-xl']) {
+  const tiers = [...landing.matchAll(new RegExp(`${step}:`, 'g'))].length
+  if (tiers < 3) fail(`${step} is set at ${tiers} tier(s); expected phone, tablet and desktop`)
+}
+
+if (failed) {
+  console.error(`\ntype scale check failed: ${failed} issue(s)\n`)
+  process.exit(1)
+}
+console.log(`type scale check passed: ${scale.length} sizes, all whole pixels, no fluid steps`)

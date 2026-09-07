@@ -43,7 +43,7 @@ export default {
 
     {
       id: 'benefits',
-      type: 'features',
+      type: 'benefits',
       title: 'Built for how Filipinos actually pay',
       columns: 4,
       items: [
@@ -124,7 +124,7 @@ export default {
     },
 
     {
-      type: 'security',
+      type: 'mediaPoints',
       title: 'You stay in control',
       items: [
         { icon: 'security', title: 'Encrypted end to end', description: 'CONTENT DEPENDENCY: confirm the exact security claim with Engineering.' },
@@ -149,7 +149,7 @@ export default {
 
     {
       id: 'get-started',
-      type: 'ctaBand',
+      type: 'finalCta',
       background: 'brand',
       title: 'Start with your first purchase',
       description: 'Download the app, get your limit and shop the same day.',

@@ -86,7 +86,7 @@ export default {
     {
       // Reasons to act, not a restatement of the hero.
       id: 'benefits',
-      type: 'features',
+      type: 'benefits',
       // No visible heading: the three cards say what they are, and a heading
       // above them only ate the height the cards want. `label` still names the
       // section for screen readers and for the nav link that points here.
@@ -179,7 +179,7 @@ export default {
       // and security stay one section: split in two they said the same thing
       // twice. No CTA here — the action belongs to the header and the hero.
       id: 'security',
-      type: 'security',
+      type: 'mediaPoints',
       title: 'Safe by default, and in your control.',
       description: 'Get notified when your card is used, manage it from the Billease app, and act quickly if something doesn\u2019t look right.',
       media: {
