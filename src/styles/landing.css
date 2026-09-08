@@ -1313,6 +1313,73 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
   }
 }
 
+/* ── Catalogue cards ────────────────────────────────────────────────────────
+ * The section grid and its schematics. Gallery chrome only: nothing here can
+ * reach a page, because a page never carries these classes.
+ */
+
+.c-pcard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  text-align: left;
+  background: var(--bg-base);
+  border: var(--border-width-xs) solid var(--alpha-black-10);
+  border-radius: var(--radius-2xl);
+  cursor: pointer;
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+.c-pcard:hover { border-color: var(--border-bold); transform: translateY(-2px); }
+.c-pcard:focus-visible { outline: var(--border-width-sm) solid var(--border-active); outline-offset: var(--space-050); }
+
+.c-pcard__art {
+  display: grid;
+  place-items: center;
+  padding: var(--space-800) var(--space-600);
+  background: var(--bg-subtle);
+}
+.c-pcard__body { display: flex; flex-direction: column; gap: var(--space-200); padding: var(--space-500); }
+
+/* Schematic: a frame and grey blocks in the shape of the section. */
+.c-tb {
+  display: flex;
+  gap: var(--space-100);
+  width: 132px;
+  height: 84px;
+  padding: var(--space-200);
+  box-sizing: border-box;
+  background: var(--bg-base);
+  border: var(--border-width-xs) solid var(--alpha-black-10);
+  border-radius: var(--radius-md);
+}
+.c-tb--row { display: flex; gap: var(--space-100); align-items: center; width: 100%; }
+.c-tb--col { flex-direction: column; }
+.c-tb--center { flex-direction: column; align-items: center; justify-content: center; }
+.c-tb__col { display: flex; flex-direction: column; gap: 3px; flex: 1; justify-content: center; }
+.c-tb i { display: block; background: var(--bg-sunken); border-radius: var(--radius-xs); }
+
+.c-version {
+  display: inline-block;
+  padding: 0 var(--space-200);
+  border-radius: var(--radius-full);
+  background: var(--bg-sunken);
+  font-family: var(--mono, ui-monospace), monospace;
+  font-size: var(--font-size-2xs);
+}
+
+.c-backlink {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-active);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 /* ── Pattern gallery ────────────────────────────────────────────────────────
  * Chrome for /patterns only: the labels and the collapsed content object above
  * each rendered pattern. Scoped to c-spec so nothing here can reach a section.

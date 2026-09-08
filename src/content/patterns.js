@@ -11,6 +11,10 @@
  *
  * To use a pattern: copy its `props` into a product file's `sections` array,
  * add `type`, and replace the copy.
+ *
+ * Each variant carries a `version`. Cite one as "hero v2" and it means the
+ * same layout later even if the list is reordered, which a position in an
+ * array does not.
  */
 
 const media = (label, ratio = '4 / 3') => ({ src: null, label, ratio })
@@ -22,6 +26,7 @@ export const patterns = [
     job: 'Say what this is and offer one action. Every page has exactly one.',
     variants: [
       {
+        version: 'v1',
         label: 'Split — copy left, image right',
         note: 'The default. Add `fit: "viewport"` to hold it to one screen.',
         props: {
@@ -36,6 +41,7 @@ export const patterns = [
         },
       },
       {
+        version: 'v2',
         label: 'Centred — no image',
         note: 'For a page whose subject has no single strong visual.',
         props: {
@@ -58,6 +64,7 @@ export const patterns = [
     job: 'Three or four reasons to act. Never a full feature inventory.',
     variants: [
       {
+        version: 'v1',
         label: 'Image cards — copy over the image',
         note: 'Give each item a `media`. Portrait cards, copy over a scrim. Best when you have real photography. Four cards want `width: \'wide\'` — inside the content column they are 276px each, narrower than their own copy.',
         props: {
@@ -72,6 +79,7 @@ export const patterns = [
         },
       },
       {
+        version: 'v2',
         label: 'Icon cards',
         note: 'Give each item an `icon` instead of `media`. For pages with no photography yet.',
         props: {
@@ -96,6 +104,7 @@ export const patterns = [
     job: 'A pause between two sections. One message on an empty screen, with the page\u2019s action under it.',
     variants: [
       {
+        version: 'v1',
         label: 'Converging lines',
         note: 'Full screen, white. Each line arrives from its own angle and distance, resolving from blurred grey to sharp black as the section centres, and drifting back out as it leaves. Two or three lines; it is a sentence, not a paragraph.',
         props: {
@@ -113,6 +122,7 @@ export const patterns = [
     job: 'The sequence between deciding and finishing.',
     variants: [
       {
+        version: 'v1',
         label: 'Split — steps beside one visual',
         note: 'Add `reverse: true` to put the visual on the left. `fit: "viewport"` holds it to one screen.',
         props: {
@@ -127,6 +137,7 @@ export const patterns = [
         },
       },
       {
+        version: 'v2',
         label: 'Row — steps across, no visual',
         note: 'For a process that needs no illustration.',
         props: {
@@ -149,6 +160,7 @@ export const patterns = [
     job: 'One idea explained beside a visual. The workhorse layout.',
     variants: [
       {
+        version: 'v1',
         label: 'Intro plus supporting points — image right',
         note: '`mediaPoints`: an intro with a visual, then supporting points. Add `reverse: true` for image left.',
         props: {
@@ -164,6 +176,7 @@ export const patterns = [
         },
       },
       {
+        version: 'v2',
         label: 'Contained panel — tinted block, image right',
         note: 'Use `reverse: true` to flip, `tone` to change the fill. Lifts one idea out of the page flow.',
         props: {
@@ -176,6 +189,7 @@ export const patterns = [
         },
       },
       {
+        version: 'v3',
         label: 'Alternating rows',
         note: 'Rows flip automatically; set `reverse` on a row to override. For explaining several features in depth.',
         props: {
@@ -205,6 +219,7 @@ export const patterns = [
     job: 'Genuine conversion blockers. Conditions belong on the page, not buried here.',
     variants: [
       {
+        version: 'v1',
         label: 'Flat list',
         note: 'One row per question. Answers accept a string or an array of paragraphs.',
         props: {
@@ -218,6 +233,7 @@ export const patterns = [
         },
       },
       {
+        version: 'v2',
         label: 'Grouped',
         note: 'Pass `groups` instead of `items` when a long list needs organising. Labels sit quietly above their rows.',
         props: {
@@ -238,6 +254,7 @@ export const patterns = [
     job: 'The last thing on the page, before the footer.',
     variants: [
       {
+        version: 'v1',
         label: 'App download panel',
         note: 'Contained block with the store badges. `reverse: true` puts the visual on the right; `tone: "dark" | "brand"` changes the fill from blue.',
         props: {
@@ -252,6 +269,7 @@ export const patterns = [
         },
       },
       {
+        version: 'v2',
         label: 'App download panel — dark, visual on the right',
         note: 'The same pattern with `tone: "dark"` and `reverse: true`.',
         props: {
@@ -268,6 +286,7 @@ export const patterns = [
         },
       },
       {
+        version: 'v3',
         label: 'CTA band',
         note: 'Full-width colour. Use `background: "brand" | "dark" | "subtle"`. Only when the page has no other closing action.',
         props: {
@@ -288,6 +307,7 @@ export const patterns = [
     job: 'Reach for these only when the product genuinely needs them.',
     variants: [
       {
+        version: 'v1',
         label: 'Conditions — things to know before deciding',
         note: 'Belongs BEFORE the FAQ. Anything a reader must know to decide goes here, never only in an answer.',
         props: {
@@ -300,6 +320,7 @@ export const patterns = [
         },
       },
       {
+        version: 'v2',
         label: 'Use cases — where it works',
         note: 'Short rows with an icon. Only list what Product has confirmed.',
         props: {
@@ -313,6 +334,7 @@ export const patterns = [
         },
       },
       {
+        version: 'v3',
         label: 'Two choices side by side',
         note: 'For a page whose job is a decision between two products.',
         props: {
@@ -325,6 +347,7 @@ export const patterns = [
         },
       },
       {
+        version: 'v4',
         label: 'Pricing / terms',
         note: 'Every figure here is a content dependency. Nothing ships without Risk and Legal.',
         props: {
