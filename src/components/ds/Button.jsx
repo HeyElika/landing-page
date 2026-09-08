@@ -253,7 +253,16 @@ export default function Button({
   // A button needs an id of its own so its hover rule cannot leak to another.
   const instanceId = `${type}-${size}-${String(label).replace(/[^a-z0-9]/gi, '').slice(0, 12).toLowerCase()}`
 
-  const overlayed = (spec) => (spec?.overlay ? `linear-gradient(${spec.overlay}, ${spec.overlay}), ${spec.bg}` : spec?.bg)
+  /**
+   * Darkens the button's own fill by a given overlay.
+   *
+   * Hover and press use the alpha tokens rather than the literals in SPECS.
+   * The Figma set darkens by 30% on active and 50% on pressed, which reads as
+   * a press on a phone and as a heavy state under a cursor — a pointer hover
+   * wants a lighter touch than a finger. 10% on hover, 30% on press, both from
+   * the token scale. SPECS still records the library values.
+   */
+  const withOverlay = (overlay) => `linear-gradient(${overlay}, ${overlay}), ${spec.bg}`
 
   const isGhost = type === 'ghost' || type === 'ghost-destructive'
   const isFilled = !isGhost
@@ -306,8 +315,8 @@ export default function Button({
    * which is what those states are for.
    */
   const interactiveCss = isDisabled || isLoading ? '' : `
-    [data-btn="${instanceId}"]:hover { background: ${overlayed(SPECS[type]?.active)} !important; }
-    [data-btn="${instanceId}"]:active { background: ${overlayed(SPECS[type]?.pressed)} !important; }
+    [data-btn="${instanceId}"]:hover { background: ${withOverlay('var(--alpha-black-10)')} !important; }
+    [data-btn="${instanceId}"]:active { background: ${withOverlay('var(--alpha-black-30)')} !important; }
     [data-btn="${instanceId}"]:focus-visible {
       outline: var(--border-width-sm) solid var(--border-active);
       outline-offset: var(--space-050);

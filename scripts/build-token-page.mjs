@@ -320,17 +320,27 @@ const jsMap = (name) => {
 }
 const btnHeight = jsMap('HEIGHT')
 const btnPad = jsMap('PADDING_H')
-const STATES = ['default', 'active', 'pressed', 'disabled']
+// What the web build actually paints. The Figma set records active at 30% and
+// pressed at 50%; a pointer hover wants a lighter touch than a finger, so the
+// page uses 10% on hover and 30% on press, both from the alpha token scale.
+const WEB_OVERLAY = { hover: 'var(--alpha-black-10)', pressed: 'var(--alpha-black-30)' }
+const STATES = ['default', 'hover', 'pressed', 'disabled']
 const variantSpec = (variant) => {
   const block = buttonSrc.match(new RegExp(`  ${variant}: \\{[\\s\\S]*?\\n  \\},`))[0]
+  const row = (state) => block.match(new RegExp(`${state}:\\s*\\{([^}]+)\\}`))?.[1] ?? ''
+  const field = (state, k) => (row(state).match(new RegExp(`${k}:\\s*'([^']+)'`)) || [])[1]
+  const base = field('default', 'bg')
+
   return Object.fromEntries(STATES.map((state) => {
-    const row = block.match(new RegExp(`${state}:\\s*\\{([^}]+)\\}`))?.[1] ?? ''
-    const g = (k) => (row.match(new RegExp(`${k}:\\s*'([^']+)'`)) || [])[1]
-    const overlay = g('overlay')
-    const bg = g('bg')
+    if (state === 'hover' || state === 'pressed') {
+      const o = WEB_OVERLAY[state]
+      return [state, { bg: `linear-gradient(${o}, ${o}), ${base}`, text: field('default', 'text') }]
+    }
+    const overlay = field(state, 'overlay')
+    const bg = field(state, 'bg')
     return [state, {
       bg: overlay && overlay !== 'null' ? `linear-gradient(${overlay}, ${overlay}), ${bg}` : bg,
-      text: g('text'),
+      text: field(state, 'text'),
     }]
   }))
 }
@@ -423,8 +433,8 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   .icon-sample svg { flex: none; color: var(--ink); }
 
   .btn-demo { transition: background .15s; cursor: pointer; }
-  .btn-demo:hover { background: linear-gradient(rgba(0,0,0,.30), rgba(0,0,0,.30)), var(--bg-primary) !important; }
-  .btn-demo:active { background: linear-gradient(rgba(0,0,0,.50), rgba(0,0,0,.50)), var(--bg-primary) !important; }
+  .btn-demo:hover { background: linear-gradient(var(--alpha-black-10), var(--alpha-black-10)), var(--bg-primary) !important; }
+  .btn-demo:active { background: linear-gradient(var(--alpha-black-30), var(--alpha-black-30)), var(--bg-primary) !important; }
 
   .spec { display: grid; grid-template-columns: 1fr; gap: 2px; padding: 14px 0; border-bottom: 1px solid var(--hairline); }
   @media (min-width: 820px) { .spec { grid-template-columns: 1fr 260px; align-items: baseline; } }
