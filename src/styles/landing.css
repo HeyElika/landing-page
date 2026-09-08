@@ -1370,6 +1370,23 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
   font-size: var(--font-size-2xs);
 }
 
+/* Version tabs in the catalogue. */
+.c-tabs { display: flex; gap: var(--space-200); flex-wrap: wrap; }
+.c-tab {
+  padding: var(--space-200) var(--space-400);
+  border: var(--border-width-xs) solid var(--alpha-black-10);
+  border-radius: var(--radius-full);
+  background: var(--bg-base);
+  color: var(--text-subtle);
+  font-family: var(--ds-font-family);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+.c-tab:hover { border-color: var(--border-bold); }
+.c-tab--on { background: var(--text-base); border-color: var(--text-base); color: var(--text-on-dark); }
+.c-tab:focus-visible { outline: var(--border-width-sm) solid var(--border-active); outline-offset: var(--space-050); }
+
 .c-backlink {
   padding: 0;
   border: 0;

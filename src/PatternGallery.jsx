@@ -13,35 +13,6 @@ import { patterns } from './content/patterns'
  * Each entry shows the props that produce it, so building a page is a matter
  * of copying the object into a product file and replacing the copy.
  */
-function PropsBlock({ props }) {
-  const { type, ...rest } = props
-  return (
-    <details className="c-spec">
-      <summary className="body-sm-semibold">
-        <code>type: '{type}'</code> — show the content object
-      </summary>
-      <pre className="c-spec__code"><code>{format({ type, ...rest })}</code></pre>
-    </details>
-  )
-}
-
-/** Renders a content object the way it would be written in a product file. */
-function format(value, depth = 1) {
-  const pad = '  '.repeat(depth)
-  const padEnd = '  '.repeat(depth - 1)
-  if (Array.isArray(value)) {
-    if (value.length === 0) return '[]'
-    return `[\n${value.map((v) => pad + format(v, depth + 1)).join(',\n')}\n${padEnd}]`
-  }
-  if (value && typeof value === 'object') {
-    const entries = Object.entries(value)
-    if (entries.length === 0) return '{}'
-    return `{\n${entries.map(([k, v]) => `${pad}${k}: ${format(v, depth + 1)}`).join(',\n')}\n${padEnd}}`
-  }
-  if (typeof value === 'string') return `'${value.replace(/'/g, "\\'")}'`
-  return String(value)
-}
-
 /** A schematic of the arrangement, drawn from grey blocks. */
 function Thumb({ id }) {
   const bar = (w, h = 5) => <i style={{ width: w, height: h }} />
@@ -72,6 +43,11 @@ export default function PatternGallery() {
   const selected = patterns.find((p) => p.id === selectedId)
 
   if (selected) {
+    const version = params.get('v') || selected.variants[0].version
+    const variant = selected.variants.find((v) => v.version === version) || selected.variants[0]
+    const { type, ...props } = variant.props
+    const Component = SECTIONS[type]
+
     return (
       <>
         <header className="l-band l-band--tight l-container l-stack l-stack--400">
@@ -80,24 +56,30 @@ export default function PatternGallery() {
           </p>
           <h1 className="display-md">{selected.name}</h1>
           <p className="body-lg-regular l-measure">{selected.job}</p>
+
+          {/* One version at a time. Stacking them made the page a scroll
+              through five layouts when the question is which one to pick. */}
+          {selected.variants.length > 1 && (
+            <div className="c-tabs" role="tablist" aria-label="Versions">
+              {selected.variants.map((v, i) => (
+                <button
+                  key={v.version}
+                  type="button"
+                  role="tab"
+                  aria-selected={v.version === variant.version}
+                  className={v.version === variant.version ? 'c-tab c-tab--on' : 'c-tab'}
+                  onClick={() => setParams({ section: selected.id, v: v.version })}
+                >
+                  Version {i + 1}
+                </button>
+              ))}
+            </div>
+          )}
+
+          <p className="body-sm-regular t-subtle l-measure">{variant.note}</p>
         </header>
 
-        {selected.variants.map((variant) => {
-          const { type, ...props } = variant.props
-          const Component = SECTIONS[type]
-          return (
-            <div key={variant.version} className="c-spec__variant">
-              <div className="l-band l-band--tight l-container l-stack l-stack--200">
-                <h2 className="heading-md-semibold">
-                  <span className="c-version">{variant.version}</span> {variant.label}
-                </h2>
-                {variant.note && <p className="body-sm-regular t-subtle l-measure">{variant.note}</p>}
-                <PropsBlock props={variant.props} />
-              </div>
-              {Component ? <Component {...props} /> : null}
-            </div>
-          )
-        })}
+        {Component ? <Component {...props} /> : null}
       </>
     )
   }
