@@ -365,6 +365,24 @@ button { font: inherit; }
 /* Underline without the link semantics: the plain form of the hero's aside
  * reads as the same phrase whether or not it happens to link anywhere. */
 .t-underline { text-decoration: underline; }
+
+/* Text links: the underline thickens rather than the colour changing. Blue
+ * would put a second accent next to the red action; weight says "interactive"
+ * without competing with it. */
+.link-md,
+.link-sm {
+  text-underline-offset: 0.15em;
+  transition: text-decoration-thickness 120ms ease;
+}
+.link-md:hover,
+.link-sm:hover { text-decoration-thickness: var(--border-width-sm); }
+
+.link-md:focus-visible,
+.link-sm:focus-visible {
+  outline: var(--border-width-sm) solid var(--border-active);
+  outline-offset: var(--space-050);
+  border-radius: var(--radius-xs);
+}
 .t-subtle { color: var(--text-subtle); }
 .t-on-dark { color: var(--text-on-dark); }
 .t-on-dark-subtle { color: var(--text-on-dark-subtle); }
