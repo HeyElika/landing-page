@@ -254,7 +254,15 @@ const SECTION_ORDER = [
 /** The catalogue groups a few sections together, so map key to its group. */
 const groupFor = (key) => patterns.find((g) => g.variants.some((v) => v.props.type === key))
 
-const sectionRows = SECTION_ORDER.map(([key, when]) => {
+/**
+ * What the page actually uses, read from its own content file rather than from
+ * the catalogue. A card for `pricing` on a page with no pricing section is a
+ * pattern someone has to ask about.
+ */
+const usedTypes = scope.flatMap((page) => page.sections.map((sec) => sec.type))
+const inUse = (key) => usedTypes.includes(key)
+
+const sectionRows = SECTION_ORDER.filter(([key]) => inUse(key)).map(([key, when]) => {
   const group = groupFor(key)
   const variants = (group?.variants ?? []).filter((v) => v.props.type === key)
   return {
@@ -466,6 +474,11 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
         </span>
       </a>`).join('')}
     </div>
+
+    ${(() => {
+      const rest = SECTION_ORDER.filter(([key]) => !inUse(key)).map(([key]) => key)
+      return rest.length ? `<p class="note">Also in the template, unused by this page: ${rest.map((k) => `<code>${k}</code>`).join(' · ')}. <a href="${SITE}/patterns">See them all</a>.</p>` : ''
+    })()}
   </section>
 
   <section>

@@ -1,29 +1,24 @@
 /**
- * The pattern catalogue.
+ * The pattern catalogue: one entry per section, each with its versions.
  *
- * Every layout this template can build, with the props that produce it. The
- * gallery at /patterns renders each entry through the real section component,
- * so what you see there is what a product page gets — this file cannot drift
- * from the components the way a static screenshot would.
+ * Grouped by section rather than by theme. Grouping thematically meant a
+ * version number counted across unrelated sections, so 'pricing' answered to
+ * v4 and 'steps' to v2 for no reason a reader could see. A version now counts
+ * within its own section: hero v1 and hero v2 are the two heroes.
+ *
+ * The gallery at /patterns renders each version through the real section
+ * component, so what is shown is what a page gets. Copy a variant's `props`
+ * into a product file's `sections` array and the layout is built.
  *
  * The sample copy describes what belongs in each slot. Read a hero title here
  * as instructions, not as words to ship.
- *
- * To use a pattern: copy its `props` into a product file's `sections` array,
- * add `type`, and replace the copy.
- *
- * Each variant carries a `version`. Cite one as "hero v2" and it means the
- * same layout later even if the list is reordered, which a position in an
- * array does not.
  */
-
-const media = (label, ratio = '4 / 3') => ({ src: null, label, ratio })
 
 export const patterns = [
   {
     id: 'hero',
     name: 'Hero',
-    job: 'Say what this is and offer one action. Every page has exactly one.',
+    job: 'What this is, and the one action to take.',
     variants: [
       {
         version: 'v1',
@@ -32,13 +27,30 @@ export const patterns = [
         props: {
           type: 'hero',
           layout: 'split',
-          title: ['A benefit-led headline', 'on two authored lines'],
+          title: [
+            'A benefit-led headline',
+            'on two authored lines'
+          ],
           description: 'One sentence saying what the reader gets. Not a feature list.',
-          ctas: [{ label: 'Primary action', href: '#', size: 'xl' }],
+          ctas: [
+            {
+              label: 'Primary action',
+              href: '#',
+              size: 'xl'
+            }
+          ],
           note: 'A short qualifier, set small and italic above the headline.',
-          appLink: { text: 'A secondary route?', label: 'Linked when it has an href', href: '#' },
-          media: media('Product visual', '4 / 5'),
-        },
+          appLink: {
+            text: 'A secondary route?',
+            label: 'Linked when it has an href',
+            href: '#'
+          },
+          media: {
+            src: null,
+            label: 'Product visual',
+            ratio: '4 / 5'
+          }
+        }
       },
       {
         version: 'v2',
@@ -50,18 +62,29 @@ export const patterns = [
           background: 'subtle',
           title: 'A headline that centres well',
           description: 'Centred heroes want shorter copy than split ones.',
-          ctas: [{ label: 'Primary action', href: '#' }],
-          appLink: { text: 'Without an href,', label: 'the label is plain emphasis' },
-          media: media('Wide visual', '16 / 9'),
-        },
-      },
-    ],
+          ctas: [
+            {
+              label: 'Primary action',
+              href: '#'
+            }
+          ],
+          appLink: {
+            text: 'Without an href,',
+            label: 'the label is plain emphasis'
+          },
+          media: {
+            src: null,
+            label: 'Wide visual',
+            ratio: '16 / 9'
+          }
+        }
+      }
+    ]
   },
-
   {
-    id: 'features',
+    id: 'benefits',
     name: 'Benefits',
-    job: 'Three or four reasons to act. Never a full feature inventory.',
+    job: 'Three or four reasons to act, never a feature list.',
     variants: [
       {
         version: 'v1',
@@ -72,11 +95,35 @@ export const patterns = [
           label: 'Section name for screen readers when there is no visible heading',
           columns: 3,
           items: [
-            { media: media('Visual one', '2 / 3'), title: 'Benefit as a claim', description: 'One sentence of evidence for it.' },
-            { media: media('Visual two', '2 / 3'), title: 'Second benefit', description: 'Keep these the same length.' },
-            { media: media('Visual three', '2 / 3'), title: 'Third benefit', description: 'Three reads better than four.' },
-          ],
-        },
+            {
+              media: {
+                src: null,
+                label: 'Visual one',
+                ratio: '2 / 3'
+              },
+              title: 'Benefit as a claim',
+              description: 'One sentence of evidence for it.'
+            },
+            {
+              media: {
+                src: null,
+                label: 'Visual two',
+                ratio: '2 / 3'
+              },
+              title: 'Second benefit',
+              description: 'Keep these the same length.'
+            },
+            {
+              media: {
+                src: null,
+                label: 'Visual three',
+                ratio: '2 / 3'
+              },
+              title: 'Third benefit',
+              description: 'Three reads better than four.'
+            }
+          ]
+        }
       },
       {
         version: 'v2',
@@ -88,20 +135,35 @@ export const patterns = [
           background: 'subtle',
           columns: 4,
           items: [
-            { icon: 'wallet', title: 'First benefit', description: 'A sentence of evidence.' },
-            { icon: 'clock', title: 'Second benefit', description: 'A sentence of evidence.' },
-            { icon: 'security', title: 'Third benefit', description: 'A sentence of evidence.' },
-            { icon: 'chat-outline', title: 'Fourth benefit', description: 'Four is the maximum.' },
-          ],
-        },
-      },
-    ],
+            {
+              icon: 'wallet',
+              title: 'First benefit',
+              description: 'A sentence of evidence.'
+            },
+            {
+              icon: 'clock',
+              title: 'Second benefit',
+              description: 'A sentence of evidence.'
+            },
+            {
+              icon: 'security',
+              title: 'Third benefit',
+              description: 'A sentence of evidence.'
+            },
+            {
+              icon: 'chat-outline',
+              title: 'Fourth benefit',
+              description: 'Four is the maximum.'
+            }
+          ]
+        }
+      }
+    ]
   },
-
   {
     id: 'statement',
     name: 'Statement',
-    job: 'A pause between two sections. One message on an empty screen, with the page\u2019s action under it.',
+    job: 'One message on an empty screen, with the page’s action under it.',
     variants: [
       {
         version: 'v1',
@@ -109,35 +171,65 @@ export const patterns = [
         note: 'Full screen, white. Each line arrives from its own angle and distance, resolving from blurred grey to sharp black as the section centres, and drifting back out as it leaves. Two or three lines; it is a sentence, not a paragraph.',
         props: {
           type: 'statement',
-          lines: ['A short statement', 'across two', 'or three lines.'],
-          ctas: [{ label: 'The page\u2019s action', href: '#', size: 'xl' }],
-        },
-      },
-    ],
+          lines: [
+            'A short statement',
+            'across two',
+            'or three lines.'
+          ],
+          ctas: [
+            {
+              label: 'The page’s action',
+              href: '#',
+              size: 'xl'
+            }
+          ]
+        }
+      }
+    ]
   },
-
   {
-    id: 'steps',
-    name: 'How it works',
-    job: 'The sequence between deciding and finishing.',
+    id: 'stepsSplit',
+    name: 'Steps beside a visual',
+    job: 'The steps to get started, next to one image.',
     variants: [
       {
         version: 'v1',
-        label: 'Split — steps beside one visual',
-        note: 'Add `reverse: true` to put the visual on the left. `fit: "viewport"` holds it to one screen.',
+        label: 'Visual left, steps right',
+        note: 'The arrangement the Access Card page uses. Drop `reverse` to put the visual on the right. `fit: "viewport"` holds the section to one screen.',
         props: {
           type: 'stepsSplit',
+          reverse: true,
           title: 'A heading that names the process.',
-          media: media('Process visual', '1 / 1'),
+          media: {
+            src: null,
+            label: 'Process visual',
+            ratio: '1 / 1'
+          },
           steps: [
-            { title: 'First step, as an instruction', description: 'What the reader does, and what they need to hand.' },
-            { title: 'Second step', description: 'Keep each step to one action.' },
-            { title: 'Third step', description: 'Four steps is the practical maximum.' },
-          ],
-        },
-      },
+            {
+              title: 'First step, as an instruction',
+              description: 'What the reader does, and what they need to hand.'
+            },
+            {
+              title: 'Second step',
+              description: 'Keep each step to one action.'
+            },
+            {
+              title: 'Third step',
+              description: 'Four steps is the practical maximum.'
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    id: 'steps',
+    name: 'Steps in a row',
+    job: 'The same steps across the page, with no image.',
+    variants: [
       {
-        version: 'v2',
+        version: 'v1',
         label: 'Row — steps across, no visual',
         note: 'For a process that needs no illustration.',
         props: {
@@ -145,19 +237,60 @@ export const patterns = [
           title: 'The same process without an image',
           background: 'subtle',
           items: [
-            { title: 'First step', description: 'What the reader does.' },
-            { title: 'Second step', description: 'What the reader does.' },
-            { title: 'Third step', description: 'What the reader does.' },
-          ],
-        },
-      },
-    ],
+            {
+              title: 'First step',
+              description: 'What the reader does.'
+            },
+            {
+              title: 'Second step',
+              description: 'What the reader does.'
+            },
+            {
+              title: 'Third step',
+              description: 'What the reader does.'
+            }
+          ]
+        }
+      }
+    ]
   },
-
   {
-    id: 'split',
-    name: 'Text and image',
-    job: 'One idea explained beside a visual. The workhorse layout.',
+    id: 'useCases',
+    name: 'Use cases',
+    job: 'Where the product can be used.',
+    variants: [
+      {
+        version: 'v1',
+        label: 'Use cases — where it works',
+        note: 'Short rows with an icon. Only list what Product has confirmed.',
+        props: {
+          type: 'useCases',
+          title: 'Where you can use it',
+          items: [
+            {
+              icon: 'store',
+              title: 'A place',
+              description: 'A sentence.'
+            },
+            {
+              icon: 'phone',
+              title: 'Another place',
+              description: 'A sentence.'
+            },
+            {
+              icon: 'cart',
+              title: 'A third',
+              description: 'A sentence.'
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    id: 'mediaPoints',
+    name: 'Media and points',
+    job: 'An intro with a visual, then supporting points beneath it.',
     variants: [
       {
         version: 'v1',
@@ -167,29 +300,71 @@ export const patterns = [
           type: 'mediaPoints',
           title: 'A heading and a visual, then points beneath.',
           description: 'A paragraph introducing the idea, then three supporting points below it.',
-          media: media('Supporting visual', '1 / 1'),
+          media: {
+            src: null,
+            label: 'Supporting visual',
+            ratio: '1 / 1'
+          },
           items: [
-            { icon: 'document', title: 'Supporting point', description: 'A sentence of detail.' },
-            { icon: 'lock', title: 'Second point', description: 'A sentence of detail.' },
-            { icon: 'chat-outline', title: 'Third point', description: 'A sentence of detail.' },
-          ],
-        },
-      },
+            {
+              icon: 'document',
+              title: 'Supporting point',
+              description: 'A sentence of detail.'
+            },
+            {
+              icon: 'lock',
+              title: 'Second point',
+              description: 'A sentence of detail.'
+            },
+            {
+              icon: 'chat-outline',
+              title: 'Third point',
+              description: 'A sentence of detail.'
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    id: 'panel',
+    name: 'Panel',
+    job: 'One idea lifted out of the flow into a contained block.',
+    variants: [
       {
-        version: 'v2',
+        version: 'v1',
         label: 'Contained panel — tinted block, image right',
         note: 'Use `reverse: true` to flip, `tone` to change the fill. Lifts one idea out of the page flow.',
         props: {
           type: 'panel',
           title: 'One idea in a contained panel',
-          paragraphs: ['A panel separates an idea from the page around it without a full-width colour band.'],
-          bullets: ['A supporting point', 'Another supporting point'],
-          cta: { label: 'Action', href: '#' },
-          media: media('Panel visual', '4 / 3'),
-        },
-      },
+          paragraphs: [
+            'A panel separates an idea from the page around it without a full-width colour band.'
+          ],
+          bullets: [
+            'A supporting point',
+            'Another supporting point'
+          ],
+          cta: {
+            label: 'Action',
+            href: '#'
+          },
+          media: {
+            src: null,
+            label: 'Panel visual',
+            ratio: '4 / 3'
+          }
+        }
+      }
+    ]
+  },
+  {
+    id: 'featureRows',
+    name: 'Feature rows',
+    job: 'Several ideas in alternating rows.',
+    variants: [
       {
-        version: 'v3',
+        version: 'v1',
         label: 'Alternating rows',
         note: 'Rows flip automatically; set `reverse` on a row to override. For explaining several features in depth.',
         props: {
@@ -199,24 +374,159 @@ export const patterns = [
             {
               title: 'First idea',
               description: 'The row starts with copy on the left.',
-              bullets: ['A supporting point', 'Another one'],
-              media: media('Visual one'),
+              bullets: [
+                'A supporting point',
+                'Another one'
+              ],
+              media: {
+                src: null,
+                label: 'Visual one',
+                ratio: '4 / 3'
+              }
             },
             {
               title: 'Second idea',
               description: 'The next row flips automatically.',
-              media: media('Visual two'),
-            },
-          ],
-        },
-      },
-    ],
+              media: {
+                src: null,
+                label: 'Visual two',
+                ratio: '4 / 3'
+              }
+            }
+          ]
+        }
+      }
+    ]
   },
-
+  {
+    id: 'choicePair',
+    name: 'Choice pair',
+    job: 'Two options side by side.',
+    variants: [
+      {
+        version: 'v1',
+        label: 'Two choices side by side',
+        note: 'For a page whose job is a decision between two products.',
+        props: {
+          type: 'choicePair',
+          title: 'Choose whatever fits you',
+          items: [
+            {
+              title: 'First option',
+              description: 'Who it suits and why.',
+              media: {
+                src: null,
+                label: 'Option one',
+                ratio: '4 / 3'
+              },
+              href: '#'
+            },
+            {
+              title: 'Second option',
+              description: 'Who it suits and why.',
+              tone: 'dark',
+              media: {
+                src: null,
+                label: 'Option two',
+                ratio: '4 / 3'
+              },
+              href: '#'
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    id: 'pricing',
+    name: 'Pricing',
+    job: 'Terms and what they cost.',
+    variants: [
+      {
+        version: 'v1',
+        label: 'Pricing / terms',
+        note: 'Every figure here is a content dependency. Nothing ships without Risk and Legal.',
+        props: {
+          type: 'pricing',
+          title: 'Terms',
+          plans: [
+            {
+              name: 'Shortest term',
+              price: '₱0,000',
+              unit: '/ month',
+              features: [
+                'Confirm with Product',
+                'Confirm with Legal'
+              ],
+              cta: {
+                label: 'Action',
+                href: '#'
+              }
+            },
+            {
+              name: 'Middle term',
+              price: '₱0,000',
+              unit: '/ month',
+              featured: true,
+              features: [
+                'Confirm with Product',
+                'Confirm with Legal'
+              ],
+              cta: {
+                label: 'Action',
+                href: '#'
+              }
+            },
+            {
+              name: 'Longest term',
+              price: '₱0,000',
+              unit: '/ month',
+              features: [
+                'Confirm with Product',
+                'Confirm with Legal'
+              ],
+              cta: {
+                label: 'Action',
+                href: '#'
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    id: 'conditions',
+    name: 'Conditions',
+    job: 'What a reader must know before deciding.',
+    variants: [
+      {
+        version: 'v1',
+        label: 'Conditions — things to know before deciding',
+        note: 'Belongs BEFORE the FAQ. Anything a reader must know to decide goes here, never only in an answer.',
+        props: {
+          type: 'conditions',
+          title: 'Important things to know',
+          items: [
+            {
+              icon: 'cash',
+              title: 'A condition',
+              detail: 'Stated plainly, in full, with no euphemism.'
+            },
+            {
+              icon: 'clock',
+              title: 'Another condition',
+              detail: 'Timing, cost and eligibility all belong here.'
+            }
+          ]
+        }
+      }
+    ]
+  },
   {
     id: 'faq',
     name: 'FAQ',
-    job: 'Genuine conversion blockers. Conditions belong on the page, not buried here.',
+    job: 'Genuine conversion blockers.',
     variants: [
       {
         version: 'v1',
@@ -226,11 +536,23 @@ export const patterns = [
           type: 'faq',
           title: 'Frequently asked questions',
           items: [
-            { question: 'A question in the reader’s words?', answer: 'A direct answer. First sentence carries it; detail follows.' },
-            { question: 'A second question?', answer: ['An answer in two paragraphs.', 'The second adds detail the first implied.'] },
-            { question: 'A third question?', answer: 'Six or so questions is the useful maximum.' },
-          ],
-        },
+            {
+              question: 'A question in the reader’s words?',
+              answer: 'A direct answer. First sentence carries it; detail follows.'
+            },
+            {
+              question: 'A second question?',
+              answer: [
+                'An answer in two paragraphs.',
+                'The second adds detail the first implied.'
+              ]
+            },
+            {
+              question: 'A third question?',
+              answer: 'Six or so questions is the useful maximum.'
+            }
+          ]
+        }
       },
       {
         version: 'v2',
@@ -240,18 +562,37 @@ export const patterns = [
           type: 'faq',
           title: 'Grouped questions',
           groups: [
-            { label: 'Getting started', items: [{ question: 'A question?', answer: 'An answer.' }, { question: 'Another?', answer: 'An answer.' }] },
-            { label: 'Using it', items: [{ question: 'A question?', answer: 'An answer.' }] },
-          ],
-        },
-      },
-    ],
+            {
+              label: 'Getting started',
+              items: [
+                {
+                  question: 'A question?',
+                  answer: 'An answer.'
+                },
+                {
+                  question: 'Another?',
+                  answer: 'An answer.'
+                }
+              ]
+            },
+            {
+              label: 'Using it',
+              items: [
+                {
+                  question: 'A question?',
+                  answer: 'An answer.'
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
   },
-
   {
-    id: 'conversion',
-    name: 'Closing the page',
-    job: 'The last thing on the page, before the footer.',
+    id: 'appDownload',
+    name: 'App download',
+    job: 'Get the app, with the store badges.',
     variants: [
       {
         version: 'v1',
@@ -261,12 +602,24 @@ export const patterns = [
           type: 'appDownload',
           title: 'Get the app',
           description: 'One sentence telling the reader what to do next.',
-          media: media('App icon', '1 / 1'),
+          media: {
+            src: null,
+            label: 'App icon',
+            ratio: '1 / 1'
+          },
           apps: [
-            { name: 'Download on the App Store', href: '#', src: '/badge-app-store.svg' },
-            { name: 'Get it on Google Play', href: '#', src: '/badge-google-play.png' },
-          ],
-        },
+            {
+              name: 'Download on the App Store',
+              href: '#',
+              src: '/badge-app-store.svg'
+            },
+            {
+              name: 'Get it on Google Play',
+              href: '#',
+              src: '/badge-google-play.png'
+            }
+          ]
+        }
       },
       {
         version: 'v2',
@@ -278,15 +631,34 @@ export const patterns = [
           reverse: true,
           title: 'The same panel, flipped and dark',
           description: 'Tone and side are content decisions, not new components.',
-          media: media('App icon', '1 / 1'),
+          media: {
+            src: null,
+            label: 'App icon',
+            ratio: '1 / 1'
+          },
           apps: [
-            { name: 'Download on the App Store', href: '#', src: '/badge-app-store.svg' },
-            { name: 'Get it on Google Play', href: '#', src: '/badge-google-play.png' },
-          ],
-        },
-      },
+            {
+              name: 'Download on the App Store',
+              href: '#',
+              src: '/badge-app-store.svg'
+            },
+            {
+              name: 'Get it on Google Play',
+              href: '#',
+              src: '/badge-google-play.png'
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    id: 'finalCta',
+    name: 'Final CTA',
+    job: 'Repeat the single action.',
+    variants: [
       {
-        version: 'v3',
+        version: 'v1',
         label: 'CTA band',
         note: 'Full-width colour. Use `background: "brand" | "dark" | "subtle"`. Only when the page has no other closing action.',
         props: {
@@ -294,74 +666,17 @@ export const patterns = [
           background: 'dark',
           title: 'A closing line that repeats the offer',
           description: 'One sentence. The action must match the hero’s.',
-          ctas: [{ label: 'Primary action', href: '#' }],
-          note: 'Any qualifier the action needs.',
-        },
-      },
-    ],
-  },
-
-  {
-    id: 'supporting',
-    name: 'Supporting sections',
-    job: 'Reach for these only when the product genuinely needs them.',
-    variants: [
-      {
-        version: 'v1',
-        label: 'Conditions — things to know before deciding',
-        note: 'Belongs BEFORE the FAQ. Anything a reader must know to decide goes here, never only in an answer.',
-        props: {
-          type: 'conditions',
-          title: 'Important things to know',
-          items: [
-            { icon: 'cash', title: 'A condition', detail: 'Stated plainly, in full, with no euphemism.' },
-            { icon: 'clock', title: 'Another condition', detail: 'Timing, cost and eligibility all belong here.' },
+          ctas: [
+            {
+              label: 'Primary action',
+              href: '#'
+            }
           ],
-        },
-      },
-      {
-        version: 'v2',
-        label: 'Use cases — where it works',
-        note: 'Short rows with an icon. Only list what Product has confirmed.',
-        props: {
-          type: 'useCases',
-          title: 'Where you can use it',
-          items: [
-            { icon: 'store', title: 'A place', description: 'A sentence.' },
-            { icon: 'phone', title: 'Another place', description: 'A sentence.' },
-            { icon: 'cart', title: 'A third', description: 'A sentence.' },
-          ],
-        },
-      },
-      {
-        version: 'v3',
-        label: 'Two choices side by side',
-        note: 'For a page whose job is a decision between two products.',
-        props: {
-          type: 'choicePair',
-          title: 'Choose whatever fits you',
-          items: [
-            { title: 'First option', description: 'Who it suits and why.', media: media('Option one'), href: '#' },
-            { title: 'Second option', description: 'Who it suits and why.', tone: 'dark', media: media('Option two'), href: '#' },
-          ],
-        },
-      },
-      {
-        version: 'v4',
-        label: 'Pricing / terms',
-        note: 'Every figure here is a content dependency. Nothing ships without Risk and Legal.',
-        props: {
-          type: 'pricing',
-          title: 'Terms',
-          plans: [
-            { name: 'Shortest term', price: '₱0,000', unit: '/ month', features: ['Confirm with Product', 'Confirm with Legal'], cta: { label: 'Action', href: '#' } },
-            { name: 'Middle term', price: '₱0,000', unit: '/ month', featured: true, features: ['Confirm with Product', 'Confirm with Legal'], cta: { label: 'Action', href: '#' } },
-            { name: 'Longest term', price: '₱0,000', unit: '/ month', features: ['Confirm with Product', 'Confirm with Legal'], cta: { label: 'Action', href: '#' } },
-          ],
-        },
-      },
-    ],
-  },
+          note: 'Any qualifier the action needs.'
+        }
+      }
+    ]
+  }
 ]
 
 export default patterns
