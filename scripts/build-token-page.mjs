@@ -251,11 +251,21 @@ const SECTION_ORDER = [
   ['finalCta', 'The page ends with no other action nearby to repeat.'],
 ]
 
-const sectionRows = SECTION_ORDER.map(([key, when]) => ({
-  key,
-  component: SECTIONS[key]?.name,
-  when,
-}))
+/** The catalogue groups a few sections together, so map key to its group. */
+const groupFor = (key) => patterns.find((g) => g.variants.some((v) => v.props.type === key))
+
+const sectionRows = SECTION_ORDER.map(([key, when]) => {
+  const group = groupFor(key)
+  const variants = (group?.variants ?? []).filter((v) => v.props.type === key)
+  return {
+    key,
+    when,
+    group: group?.id,
+    versions: variants.map((v) => v.version),
+  }
+})
+
+const SITE = process.env.SITE_URL || 'https://landing-page-eight-opal-12.vercel.app'
 
 /**
  * A small schematic per section: grey blocks in the arrangement the section
@@ -374,6 +384,21 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   /* The icon grid. An inline SVG with no size renders at whatever its
      container allows, which for a 24-unit viewBox in a grid cell is enormous —
      so every icon here is sized explicitly. */
+  .cards { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .cards { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1000px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+  .card {
+    display: flex; flex-direction: column; overflow: hidden; text-decoration: none;
+    border: 1px solid var(--hairline); border-radius: 14px; background: var(--ground);
+    color: inherit; transition: border-color .14s ease, transform .14s ease;
+  }
+  .card:hover { border-color: var(--ink-faint); transform: translateY(-2px); }
+  .card__art { display: grid; place-items: center; padding: 22px; background: var(--panel); }
+  .card__body { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px 18px; }
+  .card__name { font-size: 14px; color: var(--ink); }
+  .card__when { font-size: 13.5px; color: var(--ink-soft); line-height: 1.45; }
+  .card__v { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); }
+
   /* Section schematics: a frame and grey blocks, nothing content-specific. */
   .tb {
     width: 96px; height: 60px; padding: 6px; box-sizing: border-box;
@@ -418,18 +443,19 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
     <h2>Sections</h2>
     <p class="muted" style="font-size:14px">
       The vocabulary for briefing a page: name these in the order you want them and the page is assembled.
-      Each name is the same in three places: the content file, the component and its file.
+      Open one to see its variants rendered by the real components, each with the content object that produces it.
     </p>
-    <div class="scroll"><table>
-      <thead><tr><th></th><th>Name</th><th>Use it when</th></tr></thead>
-      <tbody>${sectionRows.map((r) => `
-        <tr>
-          <td style="width:112px">${THUMBS[r.key] ?? ''}</td>
-          <td class="mono key" style="width:140px">${r.key}</td>
-          <td>${r.when}</td>
-        </tr>`).join('')}
-      </tbody>
-    </table></div>
+
+    <div class="cards">${sectionRows.map((r) => `
+      <a class="card" href="${SITE}/patterns?section=${r.group}" target="_blank" rel="noreferrer">
+        <span class="card__art">${THUMBS[r.key] ?? ''}</span>
+        <span class="card__body">
+          <span class="card__name mono">${r.key}</span>
+          <span class="card__when">${r.when}</span>
+          ${r.versions.length ? `<span class="card__v">${r.versions.join(' · ')}</span>` : ''}
+        </span>
+      </a>`).join('')}
+    </div>
   </section>
 
   <section>
