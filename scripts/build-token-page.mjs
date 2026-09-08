@@ -322,6 +322,24 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   td.n, td.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
   .scroll { overflow-x: auto; }
   .chip { display: inline-block; width: 34px; height: 34px; border-radius: 7px; border: 1px solid var(--hairline); vertical-align: middle; }
+  /* The icon grid. An inline SVG with no size renders at whatever its
+     container allows, which for a 24-unit viewBox in a grid cell is enormous —
+     so every icon here is sized explicitly. */
+  .icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 10px; }
+  .icon {
+    display: grid; justify-items: center; gap: 8px; text-align: center;
+    padding: 14px 6px; border: 1px solid var(--hairline); border-radius: 10px;
+  }
+  .icon svg { width: 24px; height: 24px; color: var(--ink); }
+  .icon code { font-size: 11px; word-break: break-word; }
+
+  /* The size samples in the table set their own width and height inline. */
+  .icon-sample svg { flex: none; color: var(--ink); }
+
+  .btn-demo { transition: background .15s; cursor: pointer; }
+  .btn-demo:hover { background: linear-gradient(rgba(0,0,0,.30), rgba(0,0,0,.30)), var(--bg-primary) !important; }
+  .btn-demo:active { background: linear-gradient(rgba(0,0,0,.50), rgba(0,0,0,.50)), var(--bg-primary) !important; }
+
   .spec { display: grid; grid-template-columns: 1fr; gap: 2px; padding: 14px 0; border-bottom: 1px solid var(--hairline); }
   @media (min-width: 820px) { .spec { grid-template-columns: 1fr 260px; align-items: baseline; } }
   .spec__meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-faint); line-height: 1.7; }
@@ -438,7 +456,7 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
           <td class="mono">${i.tshirt}</td>
           <td class="n">${i.px}</td>
           <td>
-            <span style="display:inline-flex; gap:12px; align-items:center; color:var(--icon-base)">
+            <span class="icon-sample" style="display:inline-flex; gap:12px; align-items:center">
               ${sampleIcons.slice(0, 4).map((ic) => `<svg viewBox="${ic.viewBox}" fill="none" style="width:${i.px};height:${i.px}">${ic.body}</svg>`).join('')}
             </span>
           </td>
