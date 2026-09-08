@@ -101,8 +101,28 @@ name in `SECTION_ALIASES`, so a content file written months ago keeps resolving.
 
 The pattern to follow when changing a shared section: add an optional prop with
 a default that reproduces today's behaviour, rather than changing what the
-existing props mean. Both forms of the hero's `appLink` — linked and plain —
+existing props mean. Both forms of the hero's `appLink`, linked and plain,
 exist for exactly that reason.
+
+### What actually protects a page nobody has opened
+
+Rendering today's pages proves a change did not break what exists now. It says
+nothing about a content file written months ago and untouched since.
+
+`scripts/check-contract.mjs` holds the shapes each section has promised: an FAQ
+still passing `items` rather than `groups`, an answer as a string rather than an
+array, a hero title as one string rather than two lines, a page still using
+`type: 'features'` from before the rename. Nineteen promises, each tagged with
+the version it was made in, all rendered on every build.
+
+That turns a silent break into a failing build with a name on it. Removing a
+promise is then a deliberate act: delete the line, and record the break in
+`CHANGELOG.md` in the same commit.
+
+**So the answer to "will pages inherit an FAQ improvement safely" is yes, with
+one condition:** add to the component, do not redefine what it already accepts.
+If you must redefine, the contract check tells you exactly which pages will
+notice, before they do.
 
 ## Section independence
 

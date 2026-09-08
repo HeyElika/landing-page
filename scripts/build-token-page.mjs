@@ -252,6 +252,50 @@ const sectionRows = SECTION_ORDER.map(([key, what, when]) => ({
   variants: patterns.flatMap((g) => g.variants).filter((v) => v.props.type === key).length,
 }))
 
+/**
+ * A small schematic per section: grey blocks in the arrangement the section
+ * puts on the page. Faster to recognise than a sentence, and it cannot go out
+ * of date the way a screenshot would, because it describes the arrangement
+ * rather than the content.
+ */
+const b = (style) => `<i style="${style}"></i>`
+const THUMBS = {
+  hero: `<div class="tb tb-row">
+      <div class="tb-col">${b('height:5px;width:80%')}${b('height:5px;width:60%')}${b('height:4px;width:40%;opacity:.5')}${b('height:8px;width:34px;border-radius:99px;margin-top:2px')}</div>
+      ${b('flex:1;align-self:stretch')}</div>`,
+  benefits: `<div class="tb tb-row">${b('flex:1;align-self:stretch')}${b('flex:1;align-self:stretch')}${b('flex:1;align-self:stretch')}</div>`,
+  statement: `<div class="tb tb-center">${b('height:6px;width:70%')}${b('height:6px;width:50%')}${b('height:8px;width:30px;border-radius:99px;margin-top:4px')}</div>`,
+  stepsSplit: `<div class="tb tb-row">${b('flex:1;align-self:stretch')}
+      <div class="tb-col">${b('height:4px;width:90%')}${b('height:4px;width:70%')}${b('height:4px;width:80%')}${b('height:4px;width:60%')}</div></div>`,
+  steps: `<div class="tb tb-row tb-top">
+      <div class="tb-col">${b('height:8px;width:8px;border-radius:99px')}${b('height:4px;width:100%')}</div>
+      <div class="tb-col">${b('height:8px;width:8px;border-radius:99px')}${b('height:4px;width:100%')}</div>
+      <div class="tb-col">${b('height:8px;width:8px;border-radius:99px')}${b('height:4px;width:100%')}</div></div>`,
+  useCases: `<div class="tb tb-col">${b('height:12px;width:100%')}${b('height:12px;width:100%')}${b('height:12px;width:100%')}</div>`,
+  mediaPoints: `<div class="tb tb-col">
+      <div class="tb-row" style="flex:1"><div class="tb-col">${b('height:4px;width:90%')}${b('height:4px;width:70%')}</div>${b('flex:1;align-self:stretch')}</div>
+      <div class="tb-row">${b('flex:1;height:5px')}${b('flex:1;height:5px')}${b('flex:1;height:5px')}</div></div>`,
+  panel: `<div class="tb">${b('width:100%;height:100%;border-radius:6px;display:flex')}</div>`,
+  featureRows: `<div class="tb tb-col">
+      <div class="tb-row" style="flex:1">${b('flex:1;align-self:stretch')}<div class="tb-col">${b('height:4px;width:90%')}${b('height:4px;width:60%')}</div></div>
+      <div class="tb-row" style="flex:1"><div class="tb-col">${b('height:4px;width:90%')}${b('height:4px;width:60%')}</div>${b('flex:1;align-self:stretch')}</div></div>`,
+  choicePair: `<div class="tb tb-row">${b('flex:1;align-self:stretch;border-radius:6px')}${b('flex:1;align-self:stretch;border-radius:6px')}</div>`,
+  pricing: `<div class="tb tb-row tb-top">${b('flex:1;height:100%;border-radius:4px')}${b('flex:1;height:100%;border-radius:4px')}${b('flex:1;height:100%;border-radius:4px')}</div>`,
+  conditions: `<div class="tb tb-col">
+      <div class="tb-row">${b('width:6px;height:6px')}${b('flex:1;height:5px')}</div>
+      <div class="tb-row">${b('width:6px;height:6px')}${b('flex:1;height:5px')}</div>
+      <div class="tb-row">${b('width:6px;height:6px')}${b('flex:1;height:5px')}</div></div>`,
+  faq: `<div class="tb tb-col">
+      <div class="tb-row">${b('flex:1;height:5px')}${b('width:5px;height:5px')}</div>
+      <div class="tb-row">${b('flex:1;height:5px')}${b('width:5px;height:5px')}</div>
+      <div class="tb-row">${b('flex:1;height:5px')}${b('width:5px;height:5px')}</div>
+      <div class="tb-row">${b('flex:1;height:5px')}${b('width:5px;height:5px')}</div></div>`,
+  appDownload: `<div class="tb"><div class="tb-row" style="width:100%;height:100%;border-radius:6px;background:var(--panel);padding:6px;box-sizing:border-box">
+      ${b('width:18px;height:18px;border-radius:5px;align-self:center')}
+      <div class="tb-col">${b('height:4px;width:80%')}${b('height:3px;width:60%;opacity:.6')}${b('height:6px;width:70%')}</div></div></div>`,
+  finalCta: `<div class="tb tb-center">${b('height:5px;width:60%')}${b('height:4px;width:40%;opacity:.6')}${b('height:8px;width:28px;border-radius:99px;margin-top:2px')}</div>`,
+}
+
 /* ── Buttons ────────────────────────────────────────────────────────────── */
 
 const buttonSrc = readFileSync(join(root, 'src/components/ds/Button.jsx'), 'utf8')
@@ -325,6 +369,18 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   /* The icon grid. An inline SVG with no size renders at whatever its
      container allows, which for a 24-unit viewBox in a grid cell is enormous —
      so every icon here is sized explicitly. */
+  /* Section schematics: a frame and grey blocks, nothing content-specific. */
+  .tb {
+    width: 96px; height: 60px; padding: 6px; box-sizing: border-box;
+    border: 1px solid var(--hairline); border-radius: 6px; background: var(--ground);
+    display: flex; gap: 4px;
+  }
+  .tb-row { display: flex; gap: 4px; align-items: center; width: 100%; }
+  .tb-top { align-items: stretch; }
+  .tb-col { display: flex; flex-direction: column; gap: 3px; flex: 1; justify-content: center; }
+  .tb-center { flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+  .tb i { display: block; background: var(--hairline); border-radius: 2px; }
+
   .icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 10px; }
   .icon {
     display: grid; justify-items: center; gap: 8px; text-align: center;
@@ -357,29 +413,24 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
     <h2>Sections</h2>
     <p class="muted" style="font-size:14px">
       The vocabulary for briefing a page: name these in the order you want them and the page is assembled.
-      Each name is the same in three places — the content file, the component and its file.
+      Each name is the same in three places: the content file, the component and its file.
     </p>
     <div class="scroll"><table>
-      <thead><tr><th>Name</th><th>What it is</th><th>When</th><th>Variants</th></tr></thead>
+      <thead><tr><th></th><th>Name</th><th>What it is</th><th>When</th></tr></thead>
       <tbody>${sectionRows.map((r) => `
         <tr>
+          <td style="width:112px">${THUMBS[r.key] ?? ''}</td>
           <td class="mono key">${r.key}</td>
           <td>${r.what}</td>
           <td class="muted">${r.when}</td>
-          <td class="n muted">${r.variants || '—'}</td>
         </tr>`).join('')}
       </tbody>
     </table></div>
-    <p class="note">
-      Renamed, with the old names still resolving: ${Object.entries(SECTION_ALIASES).map(([a, t]) => `<code>${a}</code> → <code>${t}</code>`).join(' · ')}.
-      Each old name described what one page put in the section rather than what the section does.
-      A name has to survive the second page using it.
-    </p>
   </section>
 
   <section>
     <h2>Type scale</h2>
-    <p class="muted" style="font-size:14px">T-shirt sizes. Every value a whole pixel — nothing resolves to 12.5 or 41.9.</p>
+    <p class="muted" style="font-size:14px">T-shirt sizes. Every value is a whole pixel; nothing resolves to 12.5 or 41.9.</p>
     <div class="scroll"><table>
       <thead><tr><th>Token</th><th>Value</th><th>Source</th><th>Specimen</th></tr></thead>
       <tbody>${scale.map((s) => `
@@ -394,7 +445,7 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   </section>
 
   <section>
-    <h2>Display steps — the only responsive type</h2>
+    <h2>Display steps</h2>
     <p class="muted" style="font-size:14px">Four steps, each a t-shirt size at every tier. They step at breakpoints rather than scaling fluidly, which is what keeps every rendered size whole.</p>
     <div class="scroll"><table>
       <thead><tr><th>Style</th>${tiers.map((t) => `<th>${t.label}</th>`).join('')}<th>Weight</th><th>Used for</th></tr></thead>
@@ -423,7 +474,7 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   </section>
 
   <section>
-    <h2>Fixed styles — ${fixed.length} in use</h2>
+    <h2>Fixed styles</h2>
     <p class="muted" style="font-size:14px">Same size at every breakpoint. Set type with these classes, never a raw font-size.</p>
     <div class="scroll"><table>
       <thead><tr><th>Class</th><th>Size</th><th>Scale</th><th>Weight</th><th>Line height</th><th>Uses</th><th>Specimen</th></tr></thead>
@@ -444,8 +495,7 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   <section>
     <h2>Icons</h2>
     <p class="muted" style="font-size:14px">
-      <a href="https://www.streamlinehq.com/icons/solar">Solar Linear</a>, from Streamline. Path data is generated from
-      <code>@iconify-json/solar</code> — never pasted in by hand, so every icon keeps the same stroke weight and grid.
+      <a href="https://www.streamlinehq.com/icons/solar">Solar Linear</a>, from Streamline. Path data is generated from <code>@iconify-json/solar</code> rather than pasted in by hand, so every icon keeps the same stroke weight and grid.
     </p>
 
     <div class="scroll"><table>
@@ -465,7 +515,7 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
     </table></div>
 
     <div class="sub">
-      <h3>The set — ${icons.length} in use</h3>
+      <h3>The set</h3>
       <div class="icons">${icons.map((i) => `
         <div class="icon">
           <svg viewBox="${i.viewBox}" fill="none" aria-hidden="true">${i.body}</svg>
@@ -479,7 +529,7 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
     <h2>Buttons</h2>
     <p class="muted" style="font-size:14px">
       <a href="https://www.figma.com/design/qESeTFW1GEEosrYnm4Hu3b/Billease-Library--Native-app-?node-id=16-182">Billease library, node 16:182</a>.
-      Hover and press the examples — they carry the same overlays the page does.
+      Hover and press the examples. They carry the same overlays the page does.
     </p>
 
     <div class="scroll"><table>
@@ -513,7 +563,7 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   </section>
 
   <section>
-    <h2>Colour — semantic</h2>
+    <h2>Colour: semantic</h2>
     <p class="muted" style="font-size:14px">What components reference. Each one points at a primitive; that mapping is the design decision.</p>
     ${semantic.map(([label, items]) => `
     <div class="sub">
@@ -524,7 +574,7 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
           <tr>
             <td style="width:46px"><span class="chip" style="background:${i.hex}"></span></td>
             <td class="mono">${i.name}</td>
-            <td class="mono muted">${i.primitive ?? '—'}</td>
+            <td class="mono muted">${i.primitive ?? ''}</td>
             <td class="n muted">${esc(i.hex)}</td>
           </tr>`).join('')}
         </tbody>
@@ -533,7 +583,7 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   </section>
 
   <section>
-    <h2>Colour — primitives</h2>
+    <h2>Colour: primitives</h2>
     <p class="muted" style="font-size:14px">The ${primitives.length} raw values these pages reach, through the semantic tokens above or directly.</p>
     <div class="scroll"><table>
       <thead><tr><th></th><th>Primitive</th><th>Value</th><th>Reached through</th></tr></thead>
