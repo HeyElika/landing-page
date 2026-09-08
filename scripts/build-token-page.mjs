@@ -475,10 +475,6 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
       </a>`).join('')}
     </div>
 
-    ${(() => {
-      const rest = SECTION_ORDER.filter(([key]) => !inUse(key)).map(([key]) => key)
-      return rest.length ? `<p class="note">Also in the template, unused by this page: ${rest.map((k) => `<code>${k}</code>`).join(' · ')}. <a href="${SITE}/patterns">See them all</a>.</p>` : ''
-    })()}
   </section>
 
   <section>
