@@ -101,7 +101,7 @@ export default {
 
     {
       // 7. Security and control — only capabilities that actually exist
-      type: 'mediaPoints',
+      type: 'featureSplit',
       title: '',
       items: [{ icon: 'security', title: '', description: '' }],
     },

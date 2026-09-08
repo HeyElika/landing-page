@@ -288,16 +288,16 @@ export const patterns = [
     ]
   },
   {
-    id: 'mediaPoints',
+    id: 'featureSplit',
     name: 'Media and points',
     job: 'An intro with a visual, then supporting points beneath it.',
     variants: [
       {
         version: 'v1',
         label: 'Intro plus supporting points — image right',
-        note: '`mediaPoints`: an intro with a visual, then supporting points. Add `reverse: true` for image left.',
+        note: '`featureSplit`: an intro with a visual, then supporting points. Add `reverse: true` for image left.',
         props: {
-          type: 'mediaPoints',
+          type: 'featureSplit',
           title: 'A heading and a visual, then points beneath.',
           description: 'A paragraph introducing the idea, then three supporting points below it.',
           media: {

@@ -124,7 +124,7 @@ export default {
     },
 
     {
-      type: 'mediaPoints',
+      type: 'featureSplit',
       title: 'You stay in control',
       items: [
         { icon: 'security', title: 'Encrypted end to end', description: 'CONTENT DEPENDENCY: confirm the exact security claim with Engineering.' },

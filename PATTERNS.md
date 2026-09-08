@@ -37,7 +37,7 @@ renamed:
 | Was | Now | Why the old name failed |
 |---|---|---|
 | `features` | `benefits` | The rules cap this at three or four benefits, not a feature inventory. The name argued for the wrong content. |
-| `security` | `mediaPoints` | An intro with a visual and supporting points beneath. Nothing about it is security-specific — it is the page's general text-and-image workhorse. |
+| `security` | `featureSplit` | An intro with a visual and supporting points beneath. Nothing about it is security-specific — it is the page's general text-and-image workhorse. |
 | `ctaBand` | `finalCta` | Named its appearance (a band) rather than its job. |
 | `spotlight` | `featureRows` | Said nothing at all. |
 
@@ -84,7 +84,7 @@ a prop. Three things make that hard:
    "is this a variant of something we already have?" to be answered out loud
    rather than skipped.
 3. **The rule is written down**: add a prop to an existing pattern before
-   adding a pattern. `mediaPoints` covers text-and-image; `benefits` covers
+   adding a pattern. `featureSplit` covers text-and-image; `benefits` covers
    card rows; `panel` covers a contained block. If a new layout is genuinely
    new — as `statement` was — it goes in the catalogue with the rest.
 

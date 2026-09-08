@@ -240,7 +240,7 @@ const SECTION_ORDER = [
   ['stepsSplit', 'The process is easier to believe when you can see the app or product beside it.'],
   ['steps', 'The process is self-explanatory and an image would only decorate it.'],
   ['useCases', '\u201cWhere can I actually use this?\u201d is a question the product genuinely raises.'],
-  ['mediaPoints', 'One idea needs a visual, and three supporting points underneath it.'],
+  ['featureSplit', 'One idea needs a visual, and three supporting points underneath it.'],
   ['panel', 'One idea should read as separate from the page around it.'],
   ['featureRows', 'Several features each need a paragraph and an image of their own.'],
   ['choicePair', 'The page\u2019s job is choosing between two products rather than explaining one.'],

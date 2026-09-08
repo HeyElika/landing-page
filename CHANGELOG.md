@@ -7,6 +7,12 @@ One line per change, newest first. A change that breaks a promise in
 `scripts/check-contract.mjs` needs the promise deleted and the break written
 here, in the same commit.
 
+## 1.4
+
+- `featureSplit` replaces `mediaPoints`, which was a name I invented rather
+  than the conventional term for text one side and image the other. Old names
+  `mediaPoints` and `security` both still resolve.
+
 ## 1.3
 
 - `statement` added: a full-screen pause with converging lines.
@@ -19,8 +25,8 @@ here, in the same commit.
 ## 1.2
 
 - Renamed, old names kept as aliases: `features` to `benefits`, `security` to
-  `mediaPoints`, `ctaBand` to `finalCta`, `spotlight` to `featureRows`.
-- `mediaPoints` and `appDownload` accept `reverse`; `appDownload` accepts
+  `featureSplit`, `ctaBand` to `finalCta`, `spotlight` to `featureRows`.
+- `featureSplit` and `appDownload` accept `reverse`; `appDownload` accepts
   `tone`.
 - `faq` answers accept an array of paragraphs as well as a string.
 - `faq` rows are one question each rather than a group that expands into

@@ -187,7 +187,7 @@ export default {
       // and security stay one section: split in two they said the same thing
       // twice. No CTA here — the action belongs to the header and the hero.
       id: 'security',
-      type: 'mediaPoints',
+      type: 'featureSplit',
       title: 'Safe by default, and in your control.',
       description: 'Get notified when your card is used, manage it from the Billease app, and act quickly if something doesn\u2019t look right.',
       media: {

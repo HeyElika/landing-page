@@ -37,7 +37,7 @@ import Panel from './Panel'
 import Pricing from './Pricing'
 import Conditions from './Conditions'
 import ChoicePair from './ChoicePair'
-import MediaPoints from './MediaPoints'
+import FeatureSplit from './FeatureSplit'
 import FAQ from './FAQ'
 import FinalCta from './FinalCta'
 import AppDownload from './AppDownload'
@@ -55,7 +55,7 @@ export const SECTIONS = {
   conditions: Conditions,
   choicePair: ChoicePair,
   statement: Statement,
-  mediaPoints: MediaPoints,
+  featureSplit: FeatureSplit,
   appDownload: AppDownload,
   faq: FAQ,
   finalCta: FinalCta,
@@ -68,7 +68,8 @@ export const SECTIONS = {
  */
 export const SECTION_ALIASES = {
   features: 'benefits',
-  security: 'mediaPoints',
+  security: 'featureSplit',
+  mediaPoints: 'featureSplit',
   ctaBand: 'finalCta',
   spotlight: 'featureRows',
 }

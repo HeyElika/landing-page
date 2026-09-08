@@ -19,7 +19,7 @@ import { gridColumns } from './columns'
  * Security claims are on the never-invent list. Anything unconfirmed stays
  * marked. See DESIGN-RULES.md section 16.
  */
-export default function MediaPoints({ title, description, media, link, items = [], reverse = false, background = 'default' }) {
+export default function FeatureSplit({ title, description, media, link, items = [], reverse = false, background = 'default' }) {
   const bandTone = { default: '', subtle: 'l-band--subtle', sunken: 'l-band--sunken', dark: 'l-band--dark' }[background] || ''
   const onDark = background === 'dark'
 

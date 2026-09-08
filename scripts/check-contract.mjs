@@ -47,7 +47,7 @@ const CONTRACTS = [
   { since: '1.1', what: 'benefits: media items', type: 'benefits',
     props: { label: 'x', items: [{ media: { src: null, ratio: '2 / 3' }, title: 'A', description: 'b' }] } },
 
-  { since: '1.2', what: 'mediaPoints: reverse puts the media first', type: 'mediaPoints',
+  { since: '1.2', what: 'featureSplit: reverse puts the media first', type: 'featureSplit',
     props: { title: 'x', reverse: true, media: { src: null }, items: [{ icon: 'lock', title: 'A' }] } },
   { since: '1.2', what: 'appDownload: tone and reverse', type: 'appDownload',
     props: { title: 'x', tone: 'dark', reverse: true, media: { src: null }, apps: [{ name: 'App Store', href: '#' }] } },
@@ -57,6 +57,8 @@ const CONTRACTS = [
   // ── Names that older content files still use ──────────────────────────
   { since: '1.0', what: "alias: type 'features' still resolves", type: 'features',
     props: { title: 'x', items: [{ icon: 'wallet', title: 'A' }] } },
+  { since: '1.4', what: "alias: type 'mediaPoints' still resolves", type: 'mediaPoints',
+    props: { title: 'x', media: { src: null }, items: [{ icon: 'lock', title: 'A' }] } },
   { since: '1.0', what: "alias: type 'security' still resolves", type: 'security',
     props: { title: 'x', media: { src: null }, items: [{ icon: 'lock', title: 'A' }] } },
   { since: '1.0', what: "alias: type 'ctaBand' still resolves", type: 'ctaBand',
