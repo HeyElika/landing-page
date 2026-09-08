@@ -145,10 +145,12 @@ const primitives = [...tokens.keys()]
 
 /* ── Typography ─────────────────────────────────────────────────────────── */
 
-const scale = [...landing.keys()].filter((k) => k.startsWith('--font-size-'))
+const allScale = [...landing.keys()]
+  .filter((k) => k.startsWith('--font-size-'))
   .map((k) => ({ name: k, px: resolve(landing.get(k)), from: landing.get(k) }))
-const byPx = Object.fromEntries(scale.map((s) => [s.px, s.name]))
+const byPx = Object.fromEntries(allScale.map((s) => [s.px, s.name]))
 
+const typeClassesInUse = []
 const styles = []
 for (const css of [tokensCss, landingCss]) {
   for (const m of css.matchAll(/^\.((?:body|heading|link|display)-[a-z0-9-]+)\s*\{([^}]+)\}/gm)) {
@@ -159,6 +161,7 @@ for (const css of [tokensCss, landingCss]) {
     const uses = (rendered.match(new RegExp(`class="[^"]*\\b${name}\\b`, 'g')) || []).length
     if (!uses || styles.some((s) => s.name === name)) continue
     const size = g('font-size')
+    typeClassesInUse.push({ name, size })
     styles.push({
       name, uses,
       size, px: resolve(size),
@@ -184,6 +187,25 @@ const block = (w) => {
   return i < 0 ? '' : landingCss.slice(i, landingCss.indexOf('\n}', i))
 }
 const tiers = [tier('Phone', base), tier('Tablet 768+', block(768)), tier('Desktop 1200+', block(1200))]
+
+/**
+ * The scale, filtered to the sizes this page actually paints.
+ *
+ * A step is in use if a fixed style the page renders resolves to it, or if a
+ * display step lands on it at any of the three tiers. 11px is defined and
+ * nothing here uses it, so it is not listed — the same rule the colour tables
+ * follow.
+ */
+const paintedSizes = new Set()
+for (const cls of typeClassesInUse) {
+  const size = resolve(cls.size)
+  if (size) paintedSizes.add(size)
+}
+for (const t of tiers) {
+  for (const token of Object.values(t.steps)) paintedSizes.add(resolve(landing.get(`--${token.replace('--', '')}`)))
+}
+
+const scale = allScale.filter((step) => paintedSizes.has(step.px))
 
 /* ── Icons ──────────────────────────────────────────────────────────────── */
 
