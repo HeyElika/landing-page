@@ -187,9 +187,70 @@ const tiers = [tier('Phone', base), tier('Tablet 768+', block(768)), tier('Deskt
 
 /* ── Icons ──────────────────────────────────────────────────────────────── */
 
-const iconSizes = [...tokens.keys()].filter((k) => k.startsWith('--icon-size-'))
-  .map((k) => ({ name: k, px: resolve(tokens.get(k)), used: new RegExp(`var\\(${k}\\)`).test(usedCss) }))
-const iconUses = { xs: 'Inline with text, e.g. a tick in a list', sm: 'Controls: FAQ chevron, link arrow', md: 'Standalone icons and the mobile menu', lg: 'Not used on these pages', xl: 'Mobile menu button', '2xl': 'Icon tiles' }
+const iconsJs = read('src/assets/icons/icons.generated.js')
+
+const allIcons = [...iconsJs.matchAll(/'([a-z0-9-]+)':\s*\{"solar":"([^"]+)","body":"([\s\S]*?)","viewBox":"([^"]+)"\}/g)]
+  .map(([, name, solar, body, viewBox]) => ({ name, solar, body: body.replace(/\\"/g, '"'), viewBox }))
+
+// A quoted name anywhere counts, so an icon chosen in an expression
+// (`open ? 'close' : 'burger-menu'`) is not reported as unused.
+const componentSrc = ['sections', 'ui'].flatMap((d) =>
+  readdirSync(join(root, 'src/components', d)).filter((f) => f.endsWith('.jsx'))
+    .map((f) => readFileSync(join(root, 'src/components', d, f), 'utf8'))).join('\n')
+const contentSrc = readdirSync(join(root, 'src/content/products'))
+  .filter((f) => f.endsWith('.js')).map((f) => readFileSync(join(root, 'src/content/products', f), 'utf8')).join('\n')
+const iconHaystack = componentSrc + contentSrc
+
+const icons = allIcons.filter((i) => new RegExp(`'${i.name}'`).test(iconHaystack))
+
+/** A few real icons to show the size steps at. */
+const sampleIcons = ['chevron-down', 'lock', 'incognito', 'document', 'chat-outline']
+  .map((n) => allIcons.find((i) => i.name === n))
+  .filter(Boolean)
+
+// Icons set their size inline, so usage is read from the rendered pages.
+const iconSizes = [...tokens.keys()]
+  .filter((k) => k.startsWith('--icon-size-'))
+  .map((k) => ({
+    name: k,
+    tshirt: k.replace('--icon-size-', ''),
+    px: resolve(tokens.get(k)),
+    used: new RegExp(`var\\(${k}\\)`).test(rendered) || new RegExp(`var\\(${k}\\)`).test(usedCss),
+  }))
+  .filter((i) => i.used)
+
+
+/* ── Sections ───────────────────────────────────────────────────────────── */
+
+const { SECTIONS, SECTION_ALIASES } = await import('../src/components/sections/index.js')
+const { patterns } = await import('../src/content/patterns.js')
+
+/** What each section is for, in the order a page uses them. */
+const SECTION_ORDER = [
+  ['hero', 'What this is, and the one action to take', 'Every page. Exactly one.'],
+  ['benefits', 'Three or four reasons to act', 'Image cards when photography exists, icon cards when it does not'],
+  ['statement', 'One message on an empty screen', 'A pause between two sections that would otherwise run together'],
+  ['stepsSplit', 'The steps to get started, beside a visual', 'When the process needs illustrating'],
+  ['steps', 'The same steps, in a row, no visual', 'When it does not'],
+  ['useCases', 'Where the product works', 'Only what Product has confirmed'],
+  ['mediaPoints', 'An intro with a visual, then supporting points', 'The general text-and-image workhorse'],
+  ['panel', 'One idea in a contained, tinted block', 'To lift something out of the page flow'],
+  ['featureRows', 'Several ideas in alternating rows', 'Explaining features in depth'],
+  ['choicePair', 'Two options side by side', 'When the page\u2019s job is a choice'],
+  ['pricing', 'Terms and what they cost', 'Every figure needs Legal'],
+  ['conditions', 'What a reader must know to decide', 'Before the FAQ, never only inside it'],
+  ['faq', 'Genuine conversion blockers', 'Six or so questions is the useful maximum'],
+  ['appDownload', 'Get the app, with store badges', 'Closing a page whose action is in an app'],
+  ['finalCta', 'Repeat the single action', 'Closing a page that has no other closer'],
+]
+
+const sectionRows = SECTION_ORDER.map(([key, what, when]) => ({
+  key,
+  component: SECTIONS[key]?.name,
+  what,
+  when,
+  variants: patterns.flatMap((g) => g.variants).filter((v) => v.props.type === key).length,
+}))
 
 /* ── Buttons ────────────────────────────────────────────────────────────── */
 
@@ -200,16 +261,24 @@ const jsMap = (name) => {
 }
 const btnHeight = jsMap('HEIGHT')
 const btnPad = jsMap('PADDING_H')
+const STATES = ['default', 'active', 'pressed', 'disabled']
 const variantSpec = (variant) => {
   const block = buttonSrc.match(new RegExp(`  ${variant}: \\{[\\s\\S]*?\\n  \\},`))[0]
-  const def = block.match(/default:\s*\{([^}]+)\}/)[1]
-  const g = (k) => (def.match(new RegExp(`${k}:\\s*'([^']+)'`)) || [])[1]
-  return { bg: g('bg'), text: g('text') }
+  return Object.fromEntries(STATES.map((state) => {
+    const row = block.match(new RegExp(`${state}:\\s*\\{([^}]+)\\}`))?.[1] ?? ''
+    const g = (k) => (row.match(new RegExp(`${k}:\\s*'([^']+)'`)) || [])[1]
+    const overlay = g('overlay')
+    const bg = g('bg')
+    return [state, {
+      bg: overlay && overlay !== 'null' ? `linear-gradient(${overlay}, ${overlay}), ${bg}` : bg,
+      text: g('text'),
+    }]
+  }))
 }
 const buttons = [
-  { key: 'primary', label: 'Primary', spec: variantSpec('primary'), note: 'The page\u2019s one action. Header, hero and sticky bar all carry the same label.' },
-  { key: 'secondary', label: 'Secondary', spec: variantSpec('secondary'), note: 'An alternative action beside a primary one. Not used on the Access Card page.' },
-  { key: 'ghost', label: 'Text link', spec: variantSpec('ghost'), note: 'No fill, no radius. For a tertiary action that should not look like a button.' },
+  { key: 'primary', label: 'Primary', spec: variantSpec('primary') },
+  { key: 'secondary', label: 'Secondary', spec: variantSpec('secondary') },
+  { key: 'ghost', label: 'Text link', spec: variantSpec('ghost') },
 ]
 
 /* ── Render ─────────────────────────────────────────────────────────────── */
@@ -217,7 +286,7 @@ const buttons = [
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
 const px = (v) => parseInt(v)
 
-const html = `<title>Billease colour and type</title>
+const html = `<title>Patterns and tokens</title>
 <style>
   @font-face {
     font-family: 'Overused Grotesk';
@@ -262,9 +331,33 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
 <div class="wrap">
   <header style="display:flex;flex-direction:column;gap:12px">
     <p class="mono muted">Billease · landing page template</p>
-    <h1>Colour and type</h1>
-    <p class="lede">Only what the ${scope.length === 1 ? 'Access Card page uses' : 'pages use'}: ${semantic.reduce((n, [, i]) => n + i.length, 0)} semantic colours over ${primitives.length} primitives, and ${styles.length} type styles on an ${scale.length}-step scale. Generated from the stylesheets, so it cannot drift.</p>
+    <h1>Patterns and tokens</h1>
+    <p class="lede">The sections a page is built from, and the colour, type, icons and buttons they use. Generated from the components and stylesheets, so it cannot drift.</p>
   </header>
+
+  <section>
+    <h2>Sections</h2>
+    <p class="muted" style="font-size:14px">
+      The vocabulary for briefing a page: name these in the order you want them and the page is assembled.
+      Each name is the same in three places — the content file, the component and its file.
+    </p>
+    <div class="scroll"><table>
+      <thead><tr><th>Name</th><th>What it is</th><th>When</th><th>Variants</th></tr></thead>
+      <tbody>${sectionRows.map((r) => `
+        <tr>
+          <td class="mono key">${r.key}</td>
+          <td>${r.what}</td>
+          <td class="muted">${r.when}</td>
+          <td class="n muted">${r.variants || '—'}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table></div>
+    <p class="note">
+      Renamed, with the old names still resolving: ${Object.entries(SECTION_ALIASES).map(([a, t]) => `<code>${a}</code> → <code>${t}</code>`).join(' · ')}.
+      Each old name described what one page put in the section rather than what the section does.
+      A name has to survive the second page using it.
+    </p>
+  </section>
 
   <section>
     <h2>Type scale</h2>
@@ -333,44 +426,54 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   <section>
     <h2>Icons</h2>
     <p class="muted" style="font-size:14px">
-      <a href="https://www.streamlinehq.com/icons/solar" style="color:var(--text-active)">Solar Linear</a>, from Streamline.
-      One pack, one stroke weight, no exceptions — an icon from anywhere else is visible immediately at these sizes.
-      Path data is generated from <code>@iconify-json/solar</code>; never pasted in by hand.
+      <a href="https://www.streamlinehq.com/icons/solar">Solar Linear</a>, from Streamline. Path data is generated from
+      <code>@iconify-json/solar</code> — never pasted in by hand, so every icon keeps the same stroke weight and grid.
     </p>
+
     <div class="scroll"><table>
-      <thead><tr><th></th><th>Token</th><th>Size</th><th>Where it is used</th></tr></thead>
-      <tbody>${iconSizes.filter((i) => i.used).map((i) => {
-        const key = i.name.replace('--icon-size-', '')
-        return `
+      <thead><tr><th>Token</th><th>Scale</th><th>Size</th><th>Sample</th></tr></thead>
+      <tbody>${iconSizes.map((i) => `
         <tr>
-          <td style="width:60px"><span style="display:inline-block;width:${i.px};height:${i.px};border-radius:4px;background:var(--bg-sunken)"></span></td>
           <td class="mono">${i.name}</td>
+          <td class="mono">${i.tshirt}</td>
           <td class="n">${i.px}</td>
-          <td class="muted">${iconUses[key] ?? ''}</td>
-        </tr>`
-      }).join('')}
+          <td>
+            <span style="display:inline-flex; gap:12px; align-items:center; color:var(--icon-base)">
+              ${sampleIcons.slice(0, 4).map((ic) => `<svg viewBox="${ic.viewBox}" fill="none" style="width:${i.px};height:${i.px}">${ic.body}</svg>`).join('')}
+            </span>
+          </td>
+        </tr>`).join('')}
       </tbody>
     </table></div>
-    <p class="note">Sizes come from the Figma variables export unchanged: <code>xs 16 · sm 20 · md 24 · lg 32 · xl 40 · 2xl 48</code>. Nothing was added for this project, and nothing is missing.</p>
+
+    <div class="sub">
+      <h3>The set — ${icons.length} in use</h3>
+      <div class="icons">${icons.map((i) => `
+        <div class="icon">
+          <svg viewBox="${i.viewBox}" fill="none" aria-hidden="true">${i.body}</svg>
+          <code>${i.name}</code>
+        </div>`).join('')}
+      </div>
+    </div>
   </section>
 
   <section>
     <h2>Buttons</h2>
     <p class="muted" style="font-size:14px">
-      From the <a href="https://www.figma.com/design/qESeTFW1GEEosrYnm4Hu3b/Billease-Library--Native-app-?node-id=16-182" style="color:var(--text-active)">Billease library, node 16:182</a>.
-      Three of the five variants are used here; the gradient variant is deliberately not.
+      <a href="https://www.figma.com/design/qESeTFW1GEEosrYnm4Hu3b/Billease-Library--Native-app-?node-id=16-182">Billease library, node 16:182</a>.
+      Hover and press the examples — they carry the same overlays the page does.
     </p>
+
     <div class="scroll"><table>
-      <thead><tr><th>Variant</th><th>Example</th><th>Fill</th><th>Label</th><th>When</th></tr></thead>
+      <thead><tr><th>Variant</th>${STATES.map((st) => `<th>${st}</th>`).join('')}</tr></thead>
       <tbody>${buttons.map((b) => `
         <tr>
           <td class="mono">${b.label}</td>
-          <td style="width:200px">
-            <span style="display:inline-flex;align-items:center;height:${btnHeight.lg}px;padding-inline:${b.key === 'ghost' ? 0 : btnPad.lg}px;border-radius:${b.key === 'ghost' ? '0' : '9999px'};background:${b.spec.bg};color:${b.spec.text};font-size:16px;font-weight:600;${b.key === 'ghost' ? 'text-decoration:underline;' : ''}">Open Billease app</span>
-          </td>
-          <td class="mono muted">${esc(b.spec.bg)}</td>
-          <td class="mono muted">${esc(b.spec.text)}</td>
-          <td class="muted">${b.note}</td>
+          ${STATES.map((st) => {
+            const sp = b.spec[st] || {}
+            const ghost = b.key === 'ghost'
+            return `<td><span style="display:inline-flex;align-items:center;height:${btnHeight.lg}px;padding-inline:${ghost ? 0 : btnPad.lg}px;border-radius:${ghost ? '0' : '9999px'};background:${sp.bg || 'transparent'};color:${sp.text};font-size:14px;font-weight:600;${ghost ? 'text-decoration:underline;' : ''}white-space:nowrap">Open app</span></td>`
+          }).join('')}
         </tr>`).join('')}
       </tbody>
     </table></div>
@@ -378,18 +481,16 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
     <div class="sub">
       <h3>Sizes</h3>
       <div class="scroll"><table>
-        <thead><tr><th>Size</th><th>Height</th><th>Padding</th><th>Example</th><th>Source</th></tr></thead>
+        <thead><tr><th>Scale</th><th>Height</th><th>Padding</th><th>Example</th></tr></thead>
         <tbody>${['xl', 'lg', 'md', 'sm'].filter((k) => btnHeight[k]).map((k) => `
           <tr>
             <td class="mono">${k}</td>
             <td class="n">${btnHeight[k]}px</td>
             <td class="n muted">${btnPad[k]}px</td>
-            <td><span style="display:inline-flex;align-items:center;height:${btnHeight[k]}px;padding-inline:${btnPad[k]}px;border-radius:9999px;background:var(--bg-primary);color:var(--text-on-dark);font-size:${k === 'sm' ? 14 : 16}px;font-weight:600">Open app</span></td>
-            <td class="muted">${k === 'xl' ? '<strong>Added for landing pages.</strong> The library stops at 48, which reads small under display type.' : 'Figma library'}</td>
+            <td><span class="btn-demo" style="display:inline-flex;align-items:center;height:${btnHeight[k]}px;padding-inline:${btnPad[k]}px;border-radius:9999px;background:var(--bg-primary);color:var(--text-on-dark);font-size:${k === 'sm' ? 14 : 16}px;font-weight:600;cursor:pointer">Open app</span></td>
           </tr>`).join('')}
         </tbody>
       </table></div>
-      <p class="note">These pages use <code>xl</code> for the hero and sticky bar, and <code>lg</code> in the header, where a 52px button in a 72px bar leaves no clearance.</p>
     </div>
   </section>
 
@@ -427,7 +528,6 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
         </tr>`).join('')}
       </tbody>
     </table></div>
-    <p class="note">A component should reference a semantic token, never a primitive. The few used directly are places where no semantic token exists — a dark card fill, the download panel's blue.</p>
   </section>
 </div>
 `

@@ -250,6 +250,11 @@ export default function Button({
     return <MissingSpec label={`Unknown variant ${type}/${state}`} />
   }
 
+  // A button needs an id of its own so its hover rule cannot leak to another.
+  const instanceId = `${type}-${size}-${String(label).replace(/[^a-z0-9]/gi, '').slice(0, 12).toLowerCase()}`
+
+  const overlayed = (spec) => (spec?.overlay ? `linear-gradient(${spec.overlay}, ${spec.overlay}), ${spec.bg}` : spec?.bg)
+
   const isGhost = type === 'ghost' || type === 'ghost-destructive'
   const isFilled = !isGhost
   const height = HEIGHT[size]
@@ -294,9 +299,25 @@ export default function Button({
     userSelect: 'none',
   }
 
+  /**
+   * The Figma set defines active and pressed overlays, but they only applied
+   * when a caller passed `state`. On a page nobody does — so every button was
+   * inert under the cursor. These map the same specs onto :hover and :active,
+   * which is what those states are for.
+   */
+  const interactiveCss = isDisabled || isLoading ? '' : `
+    [data-btn="${instanceId}"]:hover { background: ${overlayed(SPECS[type]?.active)} !important; }
+    [data-btn="${instanceId}"]:active { background: ${overlayed(SPECS[type]?.pressed)} !important; }
+    [data-btn="${instanceId}"]:focus-visible {
+      outline: var(--border-width-sm) solid var(--border-active);
+      outline-offset: var(--space-050);
+    }
+  `
+
   return (
     <>
       <style>{`
+        ${interactiveCss}
         @keyframes btn-android-spin { to { transform: rotate(360deg); } }
         @keyframes ios-spoke {
           0%    { opacity: 1;    }
@@ -311,6 +332,7 @@ export default function Button({
       `}</style>
       {href ? (
       <a
+        data-btn={instanceId}
         style={buttonStyle}
         href={href}
         target={/^https?:/.test(href) ? '_blank' : undefined}
@@ -321,6 +343,7 @@ export default function Button({
       </a>
       ) : (
       <button
+        data-btn={instanceId}
         style={buttonStyle}
         disabled={isDisabled || isLoading}
         onClick={onClick}
