@@ -3,6 +3,10 @@
     {
       "source": "/((?!assets|fonts|.*\\.).*)",
       "destination": "/$1/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "cleanUrls": true

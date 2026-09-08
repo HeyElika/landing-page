@@ -90,7 +90,21 @@ function write(page, path) {
   return { path, bytes: html.length, title: page.meta?.title }
 }
 
-const written = [write(pages[0], '/'), ...pages.map((p) => write(p, `/${p.slug}`))]
+/**
+ * Internal routes get a file as well. The rewrite sends every path to its own
+ * index.html, so a route without one 404s — which is exactly what happened to
+ * /patterns the first time this ran.
+ */
+const internal = [
+  ['/patterns', { meta: { title: 'Sections', description: 'Every layout this template can build.' } }],
+  ['/_pages', { meta: { title: 'Pages', description: 'Every page in this project.' } }],
+]
+
+const written = [
+  write(pages[0], '/'),
+  ...pages.map((p) => write(p, `/${p.slug}`)),
+  ...internal.map(([path, page]) => write(page, path)),
+]
 for (const w of written) console.log(`  ${w.path.padEnd(14)} ${String(Math.round(w.bytes / 1024)).padStart(3)} KB  ${w.title}`)
 
 // robots.txt, matching whether this deploy is meant to be found at all.
