@@ -478,7 +478,7 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
     <h2>Display steps</h2>
     <p class="muted" style="font-size:14px">Four steps, each a t-shirt size at every tier. They step at breakpoints rather than scaling fluidly, which is what keeps every rendered size whole.</p>
     <div class="scroll"><table>
-      <thead><tr><th>Style</th>${tiers.map((t) => `<th>${t.label}</th>`).join('')}<th>Weight</th><th>Used for</th></tr></thead>
+      <thead><tr><th>Style</th>${tiers.map((t) => `<th>${t.label}</th>`).join('')}<th>Weight</th><th>Used for</th><th>At this width</th></tr></thead>
       <tbody>${['--display-sm', '--display-md', '--display-lg', '--display-xl'].map((step) => {
         const style = responsive.find((s) => s.size === `var(${step})`)
         const purpose = { '--display-sm': 'Card and sub-section headings', '--display-md': 'Section headings', '--display-lg': 'Hero headline', '--display-xl': 'Full-screen statement' }[step]
@@ -492,15 +492,11 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
           }).join('')}
           <td class="n">${style?.weight ?? ''}</td>
           <td class="muted">${purpose}</td>
+          <td style="font-size: var(${step}); font-weight: ${style?.weight ?? 700}; line-height: 1.1; letter-spacing: -0.02em; white-space: nowrap">Aa</td>
         </tr>`
       }).join('')}
       </tbody>
     </table></div>
-    ${responsive.map((s) => `
-    <div class="spec">
-      <span style="font-size:${s.size}; font-weight:${s.weight}; line-height:${s.lh}; letter-spacing:-.02em">Your Access Card is ready</span>
-      <span class="spec__meta">.${s.name} · resize to see it step</span>
-    </div>`).join('')}
   </section>
 
   <section>

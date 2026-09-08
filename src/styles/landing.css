@@ -271,7 +271,11 @@ button { font: inherit; }
 @media (min-width: 640px) {
   .l-grid--2, .l-grid--4 { grid-template-columns: repeat(2, 1fr); }
 }
-@media (min-width: 960px) {
+/* 900, the same width the split layouts stop stacking at. At 960 there was a
+ * dead zone: the card carousel had already ended, the columns had not yet
+ * begun, so a row of full-width cards sat inside a section pinned to viewport
+ * height and overflowed upward over the section above it. */
+@media (min-width: 900px) {
   .l-grid { gap: var(--space-800); }
   .l-grid--2 { grid-template-columns: repeat(2, 1fr); }
   .l-grid--3 { grid-template-columns: repeat(3, 1fr); }
@@ -611,8 +615,12 @@ body.has-sticky-cta { padding-bottom: var(--sticky-cta-height, 0); }
     display: flex;
     flex-direction: column;
     padding-block: var(--space-1000);
-    height: calc(100vh - var(--nav-h));
-    height: calc(100svh - var(--nav-h));
+    /* min-height, not height. A fixed height centres its content and lets
+     * anything taller overflow in both directions, which puts a card on top
+     * of the section above. A minimum grows instead: the section is still one
+     * screen when the content fits, and simply taller when it does not. */
+    min-height: calc(100vh - var(--nav-h));
+    min-height: calc(100svh - var(--nav-h));
   }
   .l-band--fit > .l-container {
     flex: 1;
