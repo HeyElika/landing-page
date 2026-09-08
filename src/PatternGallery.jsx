@@ -59,27 +59,51 @@ export default function PatternGallery() {
 
           {/* One version at a time. Stacking them made the page a scroll
               through five layouts when the question is which one to pick. */}
+          {/* A real tab set, not the look of one: roving tabindex, arrow keys,
+              and a panel that says which tab labels it. Half a pattern —
+              role="tab" with no panel and no keyboard model — tells a screen
+              reader user to expect behaviour that is not there. */}
           {selected.variants.length > 1 && (
             <div className="c-tabs" role="tablist" aria-label="Versions">
-              {selected.variants.map((v, i) => (
-                <button
-                  key={v.version}
-                  type="button"
-                  role="tab"
-                  aria-selected={v.version === variant.version}
-                  className={v.version === variant.version ? 'c-tab c-tab--on' : 'c-tab'}
-                  onClick={() => setParams({ section: selected.id, v: v.version })}
-                >
-                  Version {i + 1}
-                </button>
-              ))}
+              {selected.variants.map((v, i) => {
+                const current = v.version === variant.version
+                return (
+                  <button
+                    key={v.version}
+                    type="button"
+                    role="tab"
+                    id={`tab-${v.version}`}
+                    aria-selected={current}
+                    aria-controls="version-panel"
+                    tabIndex={current ? 0 : -1}
+                    className={current ? 'c-tab c-tab--on' : 'c-tab'}
+                    onClick={() => setParams({ section: selected.id, v: v.version })}
+                    onKeyDown={(e) => {
+                      const keys = { ArrowRight: 1, ArrowLeft: -1, Home: 'first', End: 'last' }
+                      const move = keys[e.key]
+                      if (move === undefined) return
+                      e.preventDefault()
+                      const last = selected.variants.length - 1
+                      const next = move === 'first' ? 0
+                        : move === 'last' ? last
+                        : Math.min(last, Math.max(0, i + move))
+                      setParams({ section: selected.id, v: selected.variants[next].version })
+                      document.getElementById(`tab-${selected.variants[next].version}`)?.focus()
+                    }}
+                  >
+                    Version {i + 1}
+                  </button>
+                )
+              })}
             </div>
           )}
 
           <p className="body-sm-regular t-subtle l-measure">{variant.note}</p>
         </header>
 
-        {Component ? <Component {...props} /> : null}
+        <div id="version-panel" role="tabpanel" aria-labelledby={`tab-${variant.version}`} tabIndex={-1}>
+          {Component ? <Component {...props} /> : null}
+        </div>
       </>
     )
   }

@@ -238,6 +238,32 @@ Use it between two sections that would otherwise run together, and give it a
 sentence rather than a paragraph. Under `prefers-reduced-motion` the lines are
 simply aligned and at full contrast from the start.
 
+## Accessibility
+
+What the components guarantee, checked on every build by rendering the pages
+and reading the result:
+
+- **One `h1` per page, no skipped levels.** A section with no visible heading
+  still carries one, hidden — the benefits row lost its heading to a design
+  change and left card titles sitting directly under the page `h1`.
+- **Every image has alt text**, and a slot with no image yet is `aria-hidden`
+  rather than announced as a blank image.
+- **Keyboard**: a skip link is the first focusable element, the FAQ rows are
+  real buttons with `aria-expanded` and `aria-controls`, the mobile menu traps
+  focus and closes on Escape returning focus to its trigger, and every control
+  has a visible focus ring.
+- **Landmarks**: `nav`, `main`, `footer`, and each section is a `section`.
+  Decorative icons are `aria-hidden`.
+- **Contrast**, measured rather than assumed: body 17.4:1, secondary 7.6:1,
+  white on the red button 4.6:1, link 5.6:1, copy on the blue panel 7.6:1. All
+  pass AA. Only `--text-disabled` fails, at 2.2:1, used for placeholders and
+  disabled states, which WCAG exempts.
+
+**Known limitation, internal tooling only.** Previewing the hero in the
+catalogue puts two `h1`s on that page: the catalogue's own and the hero's. The
+alternative is rendering previews in an iframe, which costs more than the
+problem is worth on a page only the team sees. No product page is affected.
+
 ## Responsive behaviour
 
 Sections are fluid rather than fixed: they take a share of the screen, stack
