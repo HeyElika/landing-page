@@ -225,31 +225,36 @@ const iconSizes = [...tokens.keys()]
 const { SECTIONS, SECTION_ALIASES } = await import('../src/components/sections/index.js')
 const { patterns } = await import('../src/content/patterns.js')
 
-/** What each section is for, in the order a page uses them. */
+/**
+ * When to reach for each section, in the order a page uses them.
+ *
+ * One column, not two: the schematic already shows the arrangement and the
+ * name already says what it is, so the only thing left worth writing is the
+ * decision — what has to be true about the page for this section to belong on
+ * it.
+ */
 const SECTION_ORDER = [
-  ['hero', 'What this is, and the one action to take', 'Every page. Exactly one.'],
-  ['benefits', 'Three or four reasons to act', 'Image cards when photography exists, icon cards when it does not'],
-  ['statement', 'One message on an empty screen', 'A pause between two sections that would otherwise run together'],
-  ['stepsSplit', 'The steps to get started, beside a visual', 'When the process needs illustrating'],
-  ['steps', 'The same steps, in a row, no visual', 'When it does not'],
-  ['useCases', 'Where the product works', 'Only what Product has confirmed'],
-  ['mediaPoints', 'An intro with a visual, then supporting points', 'The general text-and-image workhorse'],
-  ['panel', 'One idea in a contained, tinted block', 'To lift something out of the page flow'],
-  ['featureRows', 'Several ideas in alternating rows', 'Explaining features in depth'],
-  ['choicePair', 'Two options side by side', 'When the page\u2019s job is a choice'],
-  ['pricing', 'Terms and what they cost', 'Every figure needs Legal'],
-  ['conditions', 'What a reader must know to decide', 'Before the FAQ, never only inside it'],
-  ['faq', 'Genuine conversion blockers', 'Six or so questions is the useful maximum'],
-  ['appDownload', 'Get the app, with store badges', 'Closing a page whose action is in an app'],
-  ['finalCta', 'Repeat the single action', 'Closing a page that has no other closer'],
+  ['hero', 'Always. It carries the page\u2019s one action, and a page has exactly one.'],
+  ['benefits', 'The reader needs reasons before they will read a process. Three or four, never a feature list.'],
+  ['statement', 'Two sections would otherwise run into each other and the page needs a beat.'],
+  ['stepsSplit', 'The process is easier to believe when you can see the app or product beside it.'],
+  ['steps', 'The process is self-explanatory and an image would only decorate it.'],
+  ['useCases', '\u201cWhere can I actually use this?\u201d is a question the product genuinely raises.'],
+  ['mediaPoints', 'One idea needs a visual, and three supporting points underneath it.'],
+  ['panel', 'One idea should read as separate from the page around it.'],
+  ['featureRows', 'Several features each need a paragraph and an image of their own.'],
+  ['choicePair', 'The page\u2019s job is choosing between two products rather than explaining one.'],
+  ['pricing', 'Cost is the blocker, and there are terms worth comparing side by side.'],
+  ['conditions', 'Something must be known before deciding: cost, timing, eligibility. Never leave these to the FAQ.'],
+  ['faq', 'Real objections survive everything the page has already said.'],
+  ['appDownload', 'The action happens in an app, so the page ends by getting them there.'],
+  ['finalCta', 'The page ends with no other action nearby to repeat.'],
 ]
 
-const sectionRows = SECTION_ORDER.map(([key, what, when]) => ({
+const sectionRows = SECTION_ORDER.map(([key, when]) => ({
   key,
   component: SECTIONS[key]?.name,
-  what,
   when,
-  variants: patterns.flatMap((g) => g.variants).filter((v) => v.props.type === key).length,
 }))
 
 /**
@@ -416,13 +421,12 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
       Each name is the same in three places: the content file, the component and its file.
     </p>
     <div class="scroll"><table>
-      <thead><tr><th></th><th>Name</th><th>What it is</th><th>When</th></tr></thead>
+      <thead><tr><th></th><th>Name</th><th>Use it when</th></tr></thead>
       <tbody>${sectionRows.map((r) => `
         <tr>
           <td style="width:112px">${THUMBS[r.key] ?? ''}</td>
-          <td class="mono key">${r.key}</td>
-          <td>${r.what}</td>
-          <td class="muted">${r.when}</td>
+          <td class="mono key" style="width:140px">${r.key}</td>
+          <td>${r.when}</td>
         </tr>`).join('')}
       </tbody>
     </table></div>
