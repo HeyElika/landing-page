@@ -83,7 +83,15 @@ a prop. Three things make that hard:
    registered type has no entry in `patterns.js` — which forces the question
    "is this a variant of something we already have?" to be answered out loud
    rather than skipped.
-3. **The rule is written down**: add a prop to an existing pattern before
+3. **A copy of an existing section fails the build.** `check-duplicates.mjs`
+   compares every pair of section components by what they are made of — tags,
+   class names, props — and fails when two are more than 82% the same. The
+   realistic failure is not an invented layout but a copy: someone needs a
+   variation, copies the nearest component, changes three lines, and now two
+   files do one job. Today's closest genuine pair is Conditions and UseCases
+   at 75%; a copied component scores far higher.
+
+4. **The rule is written down**: add a prop to an existing pattern before
    adding a pattern. `featureSplit` covers text-and-image; `benefits` covers
    card rows; `panel` covers a contained block. If a new layout is genuinely
    new — as `statement` was — it goes in the catalogue with the rest.
