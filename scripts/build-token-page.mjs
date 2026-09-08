@@ -52,30 +52,55 @@ const backing = (v) => (v?.match(/^var\((--[a-z0-9-]+)\)$/) || [])[1]
  * no page passes. Rendering the pages and reading the result counts only what
  * a visitor can see.
  */
-const { pages } = await import('../src/content/index.js')
+const { pages, defaultPage } = await import('../src/content/index.js')
+
+/**
+ * Which pages count as "this project".
+ *
+ * The live product page by default. pay-later and cash-loan are template
+ * demonstrations carrying placeholder pricing, and their sections drag in
+ * colours — a success tick, a featured-plan border — that the real page never
+ * paints. Set PAGES=all to include them.
+ */
+const scope = process.env.PAGES === 'all' ? pages : [defaultPage]
 const { default: LandingPage } = await import('../src/LandingPage.jsx')
 const { renderToStaticMarkup } = await import('react-dom/server')
 const { createElement } = await import('react')
 
-const rendered = pages.map((page) => renderToStaticMarkup(createElement(LandingPage, { page }))).join('\n')
+const rendered = scope.map((page) => renderToStaticMarkup(createElement(LandingPage, { page }))).join('\n')
 
-/** Classes the pages put in the DOM. */
-const classes = new Set(
-  [...rendered.matchAll(/class="([^"]+)"/g)].flatMap((m) => m[1].split(/\s+/)).filter(Boolean),
-)
+/**
+ * A rule counts only if it actually matches something on a rendered page.
+ *
+ * Matching by class name alone was not enough: `.l-band--dark .c-security__icon`
+ * survived because both classes exist somewhere, even though no dark section
+ * ever contains that icon. Selectors are matched against a parsed document
+ * instead, so a variant that never occurs brings no colours with it.
+ */
+const { parse } = await import('node-html-parser')
+const docs = scope.map((page) => parse(renderToStaticMarkup(createElement(LandingPage, { page }))))
 
-/** A CSS rule counts only if the page uses one of the classes it targets. */
-const ruleUsesRenderedClass = (rule) => {
-  const selector = rule.slice(0, rule.indexOf('{'))
-  const named = [...selector.matchAll(/\.([a-zA-Z][\w-]*)/g)].map((m) => m[1])
-  if (!named.length) return /:root|^html|^body|\[data-reveal\]/.test(selector)
-  return named.some((c) => classes.has(c))
+const matches = (selector) => {
+  // Strip pseudo-classes a static document cannot satisfy, then ask whether
+  // the rest exists. :focus and :hover rules count — they are reachable.
+  const probe = selector
+    .replace(/:(?:hover|focus|focus-visible|active|first-child|last-child|nth-child\([^)]*\))/g, '')
+    .replace(/::[a-z-]+/g, '')
+    .split(',')[0]
+    .trim()
+  if (!probe || /^(?::root|html|body|\*)/.test(probe)) return true
+  try { return docs.some((d) => d.querySelector(probe)) } catch { return true }
 }
 
 const usedCss = landingCss
   .replace(/\/\*[\s\S]*?\*\//g, '')
   .split(/(?=^[.\[a-z@:*])/m)
-  .filter((rule) => rule.includes('{') && (rule.trimStart().startsWith('@') || ruleUsesRenderedClass(rule)))
+  .filter((rule) => {
+    if (!rule.includes('{')) return false
+    const selector = rule.slice(0, rule.indexOf('{'))
+    if (rule.trimStart().startsWith('@')) return true      // media wrappers: inspect contents below
+    return matches(selector)
+  })
   .join('\n')
 
 /** Inline styles the components emit, which is where Button paints itself. */
@@ -238,7 +263,7 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
   <header style="display:flex;flex-direction:column;gap:12px">
     <p class="mono muted">Billease · landing page template</p>
     <h1>Colour and type</h1>
-    <p class="lede">Only what these pages use: ${semantic.reduce((n, [, i]) => n + i.length, 0)} semantic colours over ${primitives.length} primitives, and ${styles.length} type styles on an ${scale.length}-step scale. Generated from the stylesheets, so it cannot drift.</p>
+    <p class="lede">Only what the ${scope.length === 1 ? 'Access Card page uses' : 'pages use'}: ${semantic.reduce((n, [, i]) => n + i.length, 0)} semantic colours over ${primitives.length} primitives, and ${styles.length} type styles on an ${scale.length}-step scale. Generated from the stylesheets, so it cannot drift.</p>
   </header>
 
   <section>
