@@ -111,7 +111,11 @@ export default function PatternGallery() {
   return (
     <div className="l-band l-container l-stack l-stack--900">
       <div className="l-stack l-stack--300">
-        <p className="body-sm-semibold t-subtle"><Link to="/" className="c-link">Back to the pages</Link></p>
+        <p className="body-sm-semibold t-subtle">
+          <Link to="/" className="c-link">Back to the pages</Link>
+          {' · '}
+          <a href="/tokens" className="c-link">Patterns and tokens reference</a>
+        </p>
         <h1 className="display-md">Sections</h1>
         <p className="body-lg-regular l-measure">
           Name these in the order you want them and the page is assembled. Open one to see its

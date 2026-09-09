@@ -12,7 +12,7 @@
  *
  * Run: npm run tokens:page
  */
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs'
+import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
@@ -668,6 +668,8 @@ ${[...all].map(([k, v]) => `    ${k}: ${v};`).join('\n')}
 `
 
 const out = process.argv[2] || 'token-reference.html'
+// The output may be a path inside dist that vite has just cleaned away.
+mkdirSync(dirname(out), { recursive: true })
 writeFileSync(out, html)
 console.log(`written: ${out}`)
 console.log(`  ${semantic.reduce((n, [, i]) => n + i.length, 0)} semantic colours · ${primitives.length} primitives · ${scale.length} type sizes · ${styles.length} styles`)
