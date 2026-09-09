@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { SECTIONS } from './components/sections'
 import { patterns } from './content/patterns'
 import TokenReference from './TokenReference'
@@ -112,9 +112,6 @@ export default function PatternGallery() {
   return (
     <div className="l-band l-container l-stack l-stack--900">
       <div className="l-stack l-stack--300">
-        <p className="body-sm-semibold t-subtle">
-          <Link to="/" className="c-link">Back to the pages</Link>
-        </p>
         <h1 className="display-md">Patterns and tokens</h1>
         <p className="body-lg-regular l-measure">
           The sections a page is built from, and what they are made of. Open a section to see its
