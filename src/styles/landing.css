@@ -23,6 +23,10 @@
   --column-list: 976px;                                   /* a list of controls, e.g. the FAQ */
   --page-gutter: var(--space-500);                        /* 20, phones */
   --nav-h: calc(var(--space-1000) + var(--space-400));     /* 48 button + 8 above and below = 64 */
+  /* Our wordmark has no padding inside its box; billease.ph's has ~2px. Sized
+     by ink rather than by box, 26px here renders 129px wide against their
+     130x28 - the same optical size, not a nominally equal one. */
+  --logo-h: 26px;
 
   /* ── Type scale ───────────────────────────────────────────────────────
    * T-shirt sizes, every value a whole pixel.
