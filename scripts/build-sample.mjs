@@ -12,7 +12,7 @@
  */
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createElement, Fragment } from 'react'
-import { readFileSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { SECTIONS, CHROME } from '../src/components/sections/index.js'
 import { patterns, chrome } from '../src/content/patterns.js'
 import { brand } from '../src/content/brand.js'
@@ -86,7 +86,11 @@ ${markup}
 </html>
 `
 
-writeFileSync(new URL('../public/sample.html', import.meta.url), html)
-console.log(`sample page written: public/sample.html`)
+// Written as a directory index, not sample.html: the host has cleanUrls on,
+// so /sample.html redirects to /sample, and /sample only resolves if there is
+// an index.html behind it.
+mkdirSync(new URL('../public/sample/', import.meta.url), { recursive: true })
+writeFileSync(new URL('../public/sample/index.html', import.meta.url), html)
+console.log(`sample page written: public/sample/index.html  ->  /sample`)
 console.log(`  ${list}`)
 console.log(`  ${(html.length / 1024).toFixed(0)} KB, no scripts, stylesheets inlined`)
