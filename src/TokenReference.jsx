@@ -35,6 +35,18 @@ export default function TokenReference() {
         </p>
 
         <Table
+          head={['Token', 'Value', 'Notes']}
+          rows={[[
+            <code key="t">--ds-font-family</code>,
+            <span key="v" style={{ fontWeight: 600 }}>Overused Grotesk</span>,
+            <span key="n" className="t-subtle">
+              Self-hosted variable file, weight axis 300&ndash;900, 92&nbsp;kB. Falls back to Source Sans
+              Pro, the design system face. SIL Open Font License 1.1.
+            </span>,
+          ]]}
+        />
+
+        <Table
           head={['Token', 'Value', 'Source', 'Specimen']}
           rows={scale.map((s) => [
             <code key="t">{s.name}</code>,
@@ -134,8 +146,6 @@ export default function TokenReference() {
       <section id="buttons" className="l-stack l-stack--400">
         <h2 className="display-sm">Buttons</h2>
         <p className="body-md-regular t-subtle l-measure">
-          From the{' '}
-          <a className="c-link link-md" href="https://www.figma.com/design/qESeTFW1GEEosrYnm4Hu3b/Billease-Library--Native-app-?node-id=16-182" target="_blank" rel="noreferrer">Billease library</a>.
           Hover and press the examples: they carry the overlays the page carries.
         </p>
         <Table

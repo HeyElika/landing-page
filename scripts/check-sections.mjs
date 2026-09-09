@@ -17,8 +17,8 @@
 import { readFileSync, readdirSync } from 'node:fs'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { createElement } from 'react'
-import { SECTIONS } from '../src/components/sections/index.js'
-import { patterns } from '../src/content/patterns.js'
+import { SECTIONS, CHROME } from '../src/components/sections/index.js'
+import { patterns, chrome } from '../src/content/patterns.js'
 
 const cases = patterns.flatMap((g) => g.variants.map((v) => ({ id: `${g.id}/${v.label}`, props: v.props })))
 
@@ -31,6 +31,23 @@ const render = (list) => renderToStaticMarkup(
 
 let failed = 0
 const fail = (msg) => { console.error(`  ${msg}`); failed++ }
+
+// 0. Chrome renders. It is not a section - it carries no band and is never
+// reordered - so it is not put through the independence checks below. It is
+// checked here because a catalogued variant that throws is still a broken
+// catalogue.
+for (const g of chrome) {
+  for (const v of g.variants) {
+    const { type, ...props } = v.props
+    const Component = CHROME[type]
+    if (!Component) { fail(`${g.id}/${v.version}: no chrome component named ${type}`); continue }
+    let html = ''
+    try { html = renderToStaticMarkup(createElement(Component, props)) }
+    catch (e) { fail(`${g.id}/${v.version}: throws - ${e.message}`); continue }
+    if (html.length < 60) fail(`${g.id}/${v.version}: renders empty`)
+    if (!/l-container/.test(html)) fail(`${g.id}/${v.version}: no container, so its alignment comes from elsewhere`)
+  }
+}
 
 // 1. Alone.
 for (const c of cases) {
@@ -102,12 +119,20 @@ for (const c of cases) {
 const sectionFiles = readdirSync(new URL('../src/components/sections', import.meta.url))
   .filter((f) => f.endsWith('.jsx'))
   .map((f) => f.replace('.jsx', ''))
-const CHROME = ['NavBar', 'Footer']          // not page sections
+// Not page sections: they belong to CHROME, not SECTIONS. They are still
+// required to be catalogued, so a header variant cannot appear on a page
+// without appearing in the catalogue too.
+const CHROME_FILES = ['NavBar', 'Footer']
 const registered = new Set(Object.values(SECTIONS).map((c) => c.name))
 const catalogued = readFileSync(new URL('../src/content/patterns.js', import.meta.url), 'utf8')
 
+for (const name of CHROME_FILES) {
+  if (!Object.values(CHROME).some((c) => c.name === name)) fail(`${name}.jsx is not in the CHROME registry`)
+  if (!catalogued.includes(`'${name === 'NavBar' ? 'navbar' : 'footer'}'`)) fail(`${name}.jsx has no catalogue entry`)
+}
+
 for (const name of sectionFiles) {
-  if (CHROME.includes(name)) continue
+  if (CHROME_FILES.includes(name)) continue
   if (!registered.has(name)) {
     fail(`${name}.jsx is not in the SECTIONS registry — no page can use it`)
     continue
@@ -139,4 +164,4 @@ if (failed) {
   console.error(`\nsection independence check failed: ${failed} issue(s)\n`)
   process.exit(1)
 }
-console.log(`section check passed: ${cases.length} sections, ${(cases.length - 1) * 2} pairings, ${sectionFiles.length - CHROME.length} components catalogued, ${pages.length} pages render`)
+console.log(`section check passed: ${cases.length} sections, ${(cases.length - 1) * 2} pairings, ${sectionFiles.length - CHROME_FILES.length} sections + ${CHROME_FILES.length} chrome catalogued, ${pages.length} pages render`)

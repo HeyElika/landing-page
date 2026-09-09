@@ -680,3 +680,122 @@ export const patterns = [
 ]
 
 export default patterns
+
+
+/**
+ * Page chrome: the header and the footer.
+ *
+ * Not sections. A page has exactly one of each, always in the same place, so
+ * they are never reordered and never repeated. They are catalogued because a
+ * page still has to pick a variant of each, and because the choice is a real
+ * one: a header with no action, a footer with no regulatory block.
+ *
+ * These render through NavBar and Footer, the same components LandingPage
+ * mounts, so the catalogue cannot drift from the page.
+ */
+export const chrome = [
+  {
+    id: 'navbar',
+    name: 'Header',
+    job: 'Where the reader is, where else they can go, and the one action.',
+    variants: [
+      {
+        version: 'v1',
+        label: 'Links and an action',
+        note: 'The default. Links sit next to the logo, the action at the far end. Under 900px it collapses to the burger.',
+        props: {
+          type: 'navbar',
+          links: [
+            { label: 'Section one', href: '#' },
+            { label: 'Section two', href: '#' },
+            { label: 'Section three', href: '#' },
+            { label: 'FAQ', href: '#' },
+          ],
+          cta: { label: 'Primary action', href: '#' },
+          mobileMenu: true,
+        },
+      },
+      {
+        version: 'v2',
+        label: 'Links only',
+        note: 'For a page whose action belongs to the content rather than the chrome, so the header never competes with the hero.',
+        props: {
+          type: 'navbar',
+          links: [
+            { label: 'Section one', href: '#' },
+            { label: 'Section two', href: '#' },
+            { label: 'Section three', href: '#' },
+          ],
+          mobileMenu: true,
+        },
+      },
+      {
+        version: 'v3',
+        label: 'Action only',
+        note: 'A one-screen page has nowhere to navigate to. Leave the links out rather than inventing anchors.',
+        props: {
+          type: 'navbar',
+          cta: { label: 'Primary action', href: '#' },
+          mobileMenu: false,
+        },
+      },
+      {
+        version: 'v4',
+        label: 'Logo only',
+        note: 'A page that must not be left, such as a step inside a flow. Nothing to click but the logo.',
+        props: {
+          type: 'navbar',
+          mobileMenu: false,
+        },
+      },
+    ],
+  },
+  {
+    id: 'footer',
+    name: 'Footer',
+    job: 'The small print, and nothing that belongs higher up the page.',
+    variants: [
+      {
+        version: 'v1',
+        label: 'Regulatory statement, copyright, legal links',
+        note: 'The default for anything regulated. `legal` takes the approved wording verbatim; it is never paraphrased or shortened to fit.',
+        props: {
+          type: 'footer',
+          legal: [
+            'The approved regulatory statement, exactly as Legal supplies it. Sample text only.',
+            'A second paragraph where the statement runs to one.',
+          ],
+          copyright: 'Copyright YEAR Company',
+          bottomLinks: [
+            { label: 'Privacy policy', href: '#' },
+            { label: 'Terms and conditions', href: '#' },
+            { label: 'Cookie policy', href: '#' },
+          ],
+        },
+      },
+      {
+        version: 'v2',
+        label: 'Copyright and links',
+        note: 'For a page carrying no regulated claim. Do not drop the regulatory block to save space on a page that needs it.',
+        props: {
+          type: 'footer',
+          copyright: 'Copyright YEAR Company',
+          bottomLinks: [
+            { label: 'Privacy policy', href: '#' },
+            { label: 'Terms and conditions', href: '#' },
+          ],
+        },
+      },
+      {
+        version: 'v3',
+        label: 'Statement and copyright',
+        note: 'Where the legal links live in the app rather than on the page.',
+        props: {
+          type: 'footer',
+          legal: ['The approved regulatory statement, exactly as Legal supplies it. Sample text only.'],
+          copyright: 'Copyright YEAR Company',
+        },
+      },
+    ],
+  },
+]

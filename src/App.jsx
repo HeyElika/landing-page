@@ -1,6 +1,7 @@
 import { Routes, Route, useParams, Link } from 'react-router-dom'
 import LandingPage from './LandingPage'
 import PatternGallery from './PatternGallery'
+import TokensPage from './TokensPage'
 import Cta from './components/ui/Cta'
 import { pages, defaultPage, getPage } from './content'
 
@@ -47,7 +48,7 @@ export default function App() {
       <Route path="/patterns" element={<PatternGallery />} />
       {/* The reference used to be a page of its own. Same content, same
           route now, so an existing link still lands on it. */}
-      <Route path="/tokens" element={<PatternGallery />} />
+      <Route path="/tokens" element={<TokensPage />} />
       <Route path="/:slug" element={<ProductRoute />} />
     </Routes>
   )

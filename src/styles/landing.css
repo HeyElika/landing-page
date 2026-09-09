@@ -1431,6 +1431,11 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
 .c-tb {
   display: flex;
   gap: var(--space-100);
+  /* A thumbnail is a fixed drawing, not a flexible one. As a plain flex item
+     it shrank to its content's min-content width, which for a schematic built
+     from flex:1 blocks is zero - so every such thumbnail collapsed to a sliver
+     and only the ones drawn from fixed-width bars survived. */
+  flex: none;
   width: 132px;
   height: 84px;
   padding: var(--space-200);
@@ -1439,7 +1444,11 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
   border: var(--border-width-xs) solid var(--alpha-black-10);
   border-radius: var(--radius-md);
 }
-.c-tb--row { display: flex; gap: var(--space-100); align-items: center; width: 100%; }
+/* No width here: the modifier is applied to the frame itself as well as to
+   rows inside it, and `width: 100%` on the frame overrode its own 132px and
+   resolved against the centred grid area, collapsing it. Inner rows stretch on
+   their own, being flex children of a column. */
+.c-tb--row { display: flex; gap: var(--space-100); align-items: center; }
 .c-tb--col { flex-direction: column; }
 .c-tb--center { flex-direction: column; align-items: center; justify-content: center; }
 .c-tb__col { display: flex; flex-direction: column; gap: 3px; flex: 1; justify-content: center; }

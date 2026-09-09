@@ -96,8 +96,8 @@ function write(page, path) {
  * /patterns the first time this ran.
  */
 const internal = [
-  ['/patterns', { meta: { title: 'Patterns and tokens', description: 'The sections a page is built from, and what they are made of.' } }],
-  ['/tokens', { meta: { title: 'Patterns and tokens', description: 'The sections a page is built from, and what they are made of.' } }],
+  ['/patterns', { meta: { title: 'Patterns', description: 'The sections and page chrome a landing page is built from.' } }],
+  ['/tokens', { meta: { title: 'Tokens', description: 'Type, colour, icons and buttons: every value the pages paint with.' } }],
   ['/_pages', { meta: { title: 'Pages', description: 'Every page in this project.' } }],
 ]
 

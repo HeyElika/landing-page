@@ -1,7 +1,7 @@
-import { useSearchParams } from 'react-router-dom'
-import { SECTIONS } from './components/sections'
-import { patterns } from './content/patterns'
-import TokenReference from './TokenReference'
+import { Link, useSearchParams } from 'react-router-dom'
+import { SECTIONS, CHROME } from './components/sections'
+import { patterns, chrome } from './content/patterns'
+import { brand } from './content/brand'
 
 /**
  * Every layout this template can build, rendered through the real section
@@ -27,8 +27,23 @@ function Thumb({ id }) {
     faq: <div className="c-tb c-tb--col">{[0, 1, 2, 3].map((i) => <div key={i} className="c-tb--row">{block({ height: 5, flex: 1, alignSelf: 'auto' })}{bar('5px', 5)}</div>)}</div>,
     conversion: <div className="c-tb c-tb--row"><i style={{ width: 18, height: 18, borderRadius: 5, alignSelf: 'center' }} /><div className="c-tb__col">{bar('80%', 4)}{bar('60%', 3)}{bar('70%', 7)}</div></div>,
     supporting: <div className="c-tb c-tb--col">{[0, 1, 2].map((i) => <div key={i} className="c-tb--row">{bar('6px', 6)}{block({ height: 5, flex: 1, alignSelf: 'auto' })}</div>)}</div>,
+    pair: <div className="c-tb c-tb--row">{block()}{block()}</div>,
+    rows: <div className="c-tb c-tb--col">{[0, 1].map((i) => <div key={i} className="c-tb--row" style={{ flex: 1, flexDirection: i ? 'row-reverse' : 'row' }}>{block()}<div className="c-tb__col">{bar('90%', 4)}{bar('60%', 4)}</div></div>)}</div>,
+    panel: <div className="c-tb"><i style={{ flex: 1, alignSelf: 'stretch', borderRadius: 8 }} /></div>,
+    centred: <div className="c-tb c-tb--center">{bar('60%', 5)}{bar('30px', 9)}</div>,
+    navbar: <div className="c-tb c-tb--col" style={{ justifyContent: 'flex-start' }}><div className="c-tb--row" style={{ alignItems: 'center', gap: 6 }}>{bar('22px', 7)}{bar('16px', 4)}{bar('16px', 4)}{bar('12px', 4)}<i style={{ marginInlineStart: 'auto', width: 30, height: 9, borderRadius: 5 }} /></div></div>,
+    footer: <div className="c-tb c-tb--col" style={{ justifyContent: 'flex-end' }}>{bar('90%', 3)}{bar('75%', 3)}<div className="c-tb--row" style={{ alignItems: 'center', gap: 6 }}>{bar('20px', 3)}<i style={{ marginInlineStart: 'auto', width: 14, height: 3 }} />{bar('14px', 3)}</div></div>,
   }
-  return layouts[id] ?? <div className="c-tb" />
+  // The schematics are keyed by section id. Ids that share an arrangement
+  // point at the same drawing rather than getting a near-identical copy; only
+  // an id with no drawing at all falls through to the empty frame.
+  const aliases = {
+    benefits: 'features', useCases: 'features', choicePair: 'pair',
+    stepsSplit: 'steps', featureSplit: 'split', featureRows: 'rows',
+    pricing: 'supporting', conditions: 'supporting',
+    appDownload: 'conversion', finalCta: 'centred', panel: 'panel',
+  }
+  return layouts[id] ?? layouts[aliases[id]] ?? <div className="c-tb" />
 }
 
 /**
@@ -41,13 +56,17 @@ function Thumb({ id }) {
 export default function PatternGallery() {
   const [params, setParams] = useSearchParams()
   const selectedId = params.get('section')
-  const selected = patterns.find((p) => p.id === selectedId)
+  const selected = [...patterns, ...chrome].find((p) => p.id === selectedId)
 
   if (selected) {
     const version = params.get('v') || selected.variants[0].version
     const variant = selected.variants.find((v) => v.version === version) || selected.variants[0]
     const { type, ...props } = variant.props
-    const Component = SECTIONS[type]
+    // Chrome renders through the same components a page mounts. The header
+    // needs the brand a page gives it, or it falls back to a text lockup and
+    // stops being the header this template ships.
+    const Component = SECTIONS[type] ?? CHROME[type]
+    const extra = CHROME[type] ? { brand } : {}
 
     return (
       <>
@@ -103,7 +122,7 @@ export default function PatternGallery() {
         </header>
 
         <div id="version-panel" role="tabpanel" aria-labelledby={`tab-${variant.version}`} tabIndex={-1}>
-          {Component ? <Component {...props} /> : null}
+          {Component ? <Component {...extra} {...props} /> : null}
         </div>
       </>
     )
@@ -112,16 +131,14 @@ export default function PatternGallery() {
   return (
     <div className="l-band l-container l-stack l-stack--900">
       <div className="l-stack l-stack--300">
-        <h1 className="display-md">Patterns and tokens</h1>
+        <h1 className="display-md">Patterns</h1>
         <p className="body-lg-regular l-measure">
-          The sections a page is built from, and what they are made of. Open a section to see its
-          versions rendered by the real components.
+          The sections a page is built from. Open one to see its versions rendered by the real
+          components. What they are made of lives in the token reference.
         </p>
-        <nav aria-label="On this page" className="l-row" style={{ gap: 'var(--space-400)' }}>
-          {[['sections', 'Sections'], ['type', 'Type'], ['colour', 'Colour'], ['icons', 'Icons'], ['buttons', 'Buttons']].map(([id, label]) => (
-            <a key={id} href={`#${id}`} className="body-sm-semibold c-link">{label}</a>
-          ))}
-        </nav>
+        <p className="body-sm-semibold">
+          <Link to="/tokens" className="c-link">Tokens</Link>
+        </p>
       </div>
 
       <h2 id="sections" className="u-visually-hidden">Sections</h2>
@@ -144,7 +161,32 @@ export default function PatternGallery() {
         ))}
       </ul>
 
-      <TokenReference />
+      {/* Chrome sits apart from the sections because the choice is a different
+          one: a page picks one header and one footer, it does not order them
+          among the sections. */}
+      <div className="l-stack l-stack--400">
+        <h2 id="chrome" className="display-sm">Page chrome</h2>
+        <p className="body-md-regular t-subtle l-measure">
+          One of each per page, always top and bottom. The variants differ in what they carry, not
+          where they sit.
+        </p>
+        <ul className="l-grid l-grid--3">
+          {chrome.map((group) => (
+            <li key={group.id}>
+              <button type="button" className="c-pcard" onClick={() => setParams({ section: group.id })}>
+                <span className="c-pcard__art"><Thumb id={group.id} /></span>
+                <span className="c-pcard__body">
+                  <span className="heading-sm-semibold">{group.name}</span>
+                  <span className="body-sm-regular t-subtle">{group.job}</span>
+                  <span className="body-xs-regular t-subtle">
+                    {group.variants.length} variants{' \u00b7 '}{group.variants.map((v) => v.version).join(', ')}
+                  </span>
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

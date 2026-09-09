@@ -42,6 +42,8 @@ import FAQ from './FAQ'
 import FinalCta from './FinalCta'
 import AppDownload from './AppDownload'
 import Statement from './Statement'
+import NavBar from './NavBar'
+import Footer from './Footer'
 
 export const SECTIONS = {
   hero: Hero,
@@ -77,3 +79,15 @@ export const SECTION_ALIASES = {
 for (const [alias, target] of Object.entries(SECTION_ALIASES)) SECTIONS[alias] = SECTIONS[target]
 
 export const SECTION_TYPES = Object.keys(SECTIONS)
+
+/**
+ * Page chrome. Not sections: a page has exactly one of each, always at the top
+ * and the bottom, so they are not orderable and not repeatable. They are
+ * catalogued all the same, because a page still has to choose a variant of
+ * each. Kept out of SECTIONS so a content file cannot put a header halfway
+ * down a page.
+ */
+export const CHROME = {
+  navbar: NavBar,
+  footer: Footer,
+}
