@@ -126,7 +126,13 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta, mobi
         {/* The links sit next to the logo and the action at the far end, as
             billease.ph does. Grouping them all on the right left the bar
             lopsided: a logo alone against a cluster. */}
-        <div className="nav-desktop" style={{ flex: 1, gap: 'var(--space-600)', alignItems: 'center' }}>
+        {/* A header carrying an action and no links has nothing to collapse
+            into a burger, so it must not hide below the breakpoint: doing that
+            left the phone with a logo and no way to act. */}
+        <div
+          className={links.length ? 'nav-desktop' : 'nav-actions'}
+          style={{ flex: 1, gap: 'var(--space-600)', alignItems: 'center' }}
+        >
           <nav aria-label="Primary" className="l-row" style={{ gap: 'var(--space-500)', flexWrap: 'nowrap' }}>
             {links.map((l) => (
               <a key={l.href} href={l.href} className="body-md-regular t-subtle">{l.label}</a>
