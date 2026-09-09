@@ -16,17 +16,19 @@
 
 :root {
   /* Layout constants — see note above */
-  --page-max: 1200px;                                     /* the page's content column */
+  --page-max: 1180px;                                     /* the page's content column, as billease.ph */
   --measure: 68ch;                                        /* max line length for prose */
   --column-reading: 640px;                                /* prose-only sections */
   --column-narrow: 760px;                                 /* narrow content sections */
   --column-list: 976px;                                   /* a list of controls, e.g. the FAQ */
   --page-gutter: var(--space-500);                        /* 20, phones */
   --nav-h: calc(var(--space-1000) + var(--space-400));     /* 48 button + 8 above and below = 64 */
-  /* Our wordmark has no padding inside its box; billease.ph's has ~2px. Sized
-     by ink rather than by box, 26px here renders 129px wide against their
-     130x28 - the same optical size, not a nominally equal one. */
-  --logo-h: 26px;
+  /* The header logo occupies exactly the box billease.ph gives it, 130x28.
+     Our export carries no padding inside its own box, so the artwork is fitted
+     into that box rather than stretched to it: it lands at 130x26.2, which is
+     the size billease.ph's artwork actually draws at. */
+  --logo-w: 130px;
+  --logo-h: 28px;
 
   /* ── Type scale ───────────────────────────────────────────────────────
    * T-shirt sizes, every value a whole pixel.
@@ -75,7 +77,7 @@
     --display-lg: var(--font-size-3xl);   /* 40 */
     --display-xl: var(--font-size-4xl);   /* 48 */
 
-    --page-gutter: var(--space-800);                        /* 32 */
+    --page-gutter: var(--space-700);                        /* 28, as billease.ph */
     --band-y-tight: calc(var(--space-1000) - var(--space-200)); /* 40 */
     --band-y: calc(var(--space-1000) + var(--space-400));    /* 64 */
     --band-y-lg: calc(var(--space-1000) + var(--space-800)); /* 80 */
@@ -1132,6 +1134,9 @@ a.l-band--subtle .c-choice__card:hover { background: var(--bg-subtle); }
 .nav-desktop { display: none !important; }
 .nav-mobile-toggle { display: inline-flex; }
 
+/* billease.ph hands over to a burger at 980 because it carries seven nav
+ * items. Four fit here with room to spare at 900, and a page that opts out of
+ * the burger would otherwise lose its links between 900 and 980. */
 @media (min-width: 900px) {
   .nav-desktop { display: flex !important; }
   .nav-mobile-toggle { display: none; }

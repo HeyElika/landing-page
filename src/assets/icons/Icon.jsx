@@ -45,13 +45,15 @@ export default function Icon({ name, size = 'sm', color = 'currentColor', style,
 
   return (
     <svg
-      width={px}
-      height={px}
       viewBox={icon.viewBox}
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
       focusable="false"
-      style={{ flexShrink: 0, display: 'block', color, ...style }}
+      // The size is a token, so it has to be set in CSS. An SVG width/height
+      // *attribute* is a plain length and cannot read var(), so `width="var(
+      // --icon-size-sm)"` is invalid and the icon falls back to the replaced
+      // element default: 300x300.
+      style={{ width: px, height: px, flexShrink: 0, display: 'block', color, ...style }}
       dangerouslySetInnerHTML={{ __html: icon.body }}
       {...rest}
     />

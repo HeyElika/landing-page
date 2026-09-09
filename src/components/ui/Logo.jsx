@@ -5,9 +5,10 @@
  *   15235:1707  wordmark with the mascot  -> billease-logo.svg
  *   193:6448    on dark                   -> billease-logo-on-dark.svg
  *
- * Vector, 119x24 natural, no padding inside the box. Rendered at --logo-h so
- * the artwork measures the same as billease.ph's, which sits padded inside a
- * 130x28 box. Do not redraw, recolour or re-letter it; re-export instead.
+ * Vector, 119x24 natural, no padding inside the box. The header gives it the
+ * same 130x28 box billease.ph uses and fits the artwork inside it, so the box
+ * matches and the artwork is never stretched. Do not redraw, recolour or
+ * re-letter it; re-export instead.
  *
  * The text lockup below is only a fallback for a page that sets no logo.
  */
@@ -19,7 +20,7 @@ export default function Logo({ src, name = 'Billease', onDark = false }) {
         alt={name}
         width={119}
         height={24}
-        style={{ height: 'var(--logo-h)', width: 'auto', display: 'block' }}
+        style={{ width: 'var(--logo-w)', height: 'var(--logo-h)', objectFit: 'contain', objectPosition: 'left center', display: 'block' }}
       />
     )
   }
