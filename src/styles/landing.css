@@ -22,7 +22,7 @@
   --column-narrow: 760px;                                 /* narrow content sections */
   --column-list: 976px;                                   /* a list of controls, e.g. the FAQ */
   --page-gutter: var(--space-500);                        /* 20, phones */
-  --nav-h: calc(var(--space-900) + var(--space-800));      /* 40 + 32 = 72 */
+  --nav-h: calc(var(--space-700) + var(--space-300) * 2);  /* 28 logo + 12 above and below = 52 */
 
   /* ── Type scale ───────────────────────────────────────────────────────
    * T-shirt sizes, every value a whole pixel.

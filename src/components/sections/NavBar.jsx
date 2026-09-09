@@ -123,21 +123,25 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta, mobi
           <Logo src={brand.logo} name={brand.name} />
         </a>
 
-        {/* Links and the action are one group at the right, rather than links
-            floating in the middle of the bar. Read as a set, the links are
-            clearly the routes and the button the destination. */}
-        <div className="nav-desktop" style={{ gap: 'var(--space-600)', alignItems: 'center' }}>
-          <nav aria-label="Primary" className="l-row" style={{ gap: 'var(--space-600)', flexWrap: 'nowrap' }}>
+        {/* The links sit next to the logo and the action at the far end, as
+            billease.ph does. Grouping them all on the right left the bar
+            lopsided: a logo alone against a cluster. */}
+        <div className="nav-desktop" style={{ flex: 1, gap: 'var(--space-600)', alignItems: 'center' }}>
+          <nav aria-label="Primary" className="l-row" style={{ gap: 'var(--space-500)', flexWrap: 'nowrap' }}>
             {links.map((l) => (
               <a key={l.href} href={l.href} className="body-md-regular t-subtle">{l.label}</a>
             ))}
           </nav>
 
-          {/* Same size as every other primary action on the page. The header
-              was the only place using md, so the button changed shape when the
-              reader scrolled past the hero. */}
-          {secondaryCta && <Cta {...secondaryCta} type="secondary" />}
-          {cta && <Cta {...cta} />}
+          {/* Actions ride to the far end. Keeping them in their own group means
+              a page with two of them stays a pair, rather than one drifting
+              into the middle of the bar. Same size as every other primary
+              action on the page, so the button does not change shape when the
+              reader scrolls past the hero. */}
+          <div className="l-row" style={{ marginInlineStart: 'auto', gap: 'var(--space-300)', alignItems: 'center', flexWrap: 'nowrap' }}>
+            {secondaryCta && <Cta {...secondaryCta} type="secondary" />}
+            {cta && <Cta {...cta} />}
+          </div>
         </div>
 
         {/* Only when the page asked for it and there is something behind it. */}

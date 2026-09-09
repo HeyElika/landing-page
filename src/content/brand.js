@@ -6,7 +6,7 @@
 export const brand = {
   name: 'Billease',
   href: '/',
-  logo: '/billease-logo.svg',              // official wordmark, exported from Figma
+  logo: '/billease-logo.svg',              // wordmark, Figma node 15235:1707
   logoOnDark: '/billease-logo-on-dark.svg',
   tagline: 'Buy now, pay later for everyday Filipinos.',
 }
