@@ -45,6 +45,9 @@ export default function App() {
       <Route path="/" element={<LandingPage page={defaultPage} />} />
       <Route path="/_pages" element={<PageIndex />} />
       <Route path="/patterns" element={<PatternGallery />} />
+      {/* The reference used to be a page of its own. Same content, same
+          route now, so an existing link still lands on it. */}
+      <Route path="/tokens" element={<PatternGallery />} />
       <Route path="/:slug" element={<ProductRoute />} />
     </Routes>
   )

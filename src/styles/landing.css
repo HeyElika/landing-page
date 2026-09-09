@@ -1321,6 +1321,73 @@ html { scroll-padding-top: calc(var(--nav-h) + var(--space-400)); }
   }
 }
 
+/* ── Reference tables ───────────────────────────────────────────────────────
+ * The token half of the catalogue. Gallery chrome: a page never carries these.
+ */
+
+.c-doc__scroll { overflow-x: auto; }
+.c-doc__table { width: 100%; border-collapse: collapse; font-size: var(--font-size-sm); }
+.c-doc__table th,
+.c-doc__table td {
+  text-align: left;
+  padding: var(--space-300) var(--space-400) var(--space-300) 0;
+  border-bottom: var(--border-width-xs) solid var(--alpha-black-10);
+  vertical-align: middle;
+}
+.c-doc__table th {
+  font-family: var(--ds-font-family);
+  font-size: var(--font-size-2xs);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+.c-doc__table code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: var(--font-size-xs); }
+.c-doc__num { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; font-size: var(--font-size-xs); }
+
+.c-doc__chip {
+  display: inline-block;
+  width: var(--space-800);
+  height: var(--space-800);
+  border-radius: var(--radius-sm);
+  border: var(--border-width-xs) solid var(--alpha-black-10);
+}
+
+.c-doc__samples { display: inline-flex; align-items: center; gap: var(--space-300); color: var(--icon-base); }
+
+.c-doc__icons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  gap: var(--space-200);
+}
+.c-doc__icon {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-200);
+  padding: var(--space-400) var(--space-200);
+  border: var(--border-width-xs) solid var(--alpha-black-10);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+/* An inline SVG with no size fills whatever its cell allows. */
+.c-doc__icon svg { width: var(--icon-size-md); height: var(--icon-size-md); color: var(--icon-base); }
+.c-doc__icon code { font-family: ui-monospace, monospace; font-size: var(--font-size-2xs); word-break: break-word; }
+
+.c-doc__btn {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--bg-primary);
+  color: var(--text-on-dark);
+  font-family: var(--ds-font-family);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.c-doc__btn:hover { background: linear-gradient(var(--alpha-black-10), var(--alpha-black-10)), var(--bg-primary); }
+.c-doc__btn:active { background: linear-gradient(var(--alpha-black-30), var(--alpha-black-30)), var(--bg-primary); }
+
 /* ── Catalogue cards ────────────────────────────────────────────────────────
  * The section grid and its schematics. Gallery chrome only: nothing here can
  * reach a page, because a page never carries these classes.

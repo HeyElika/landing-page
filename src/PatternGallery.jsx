@@ -1,6 +1,7 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { SECTIONS } from './components/sections'
 import { patterns } from './content/patterns'
+import TokenReference from './TokenReference'
 
 /**
  * Every layout this template can build, rendered through the real section
@@ -113,15 +114,20 @@ export default function PatternGallery() {
       <div className="l-stack l-stack--300">
         <p className="body-sm-semibold t-subtle">
           <Link to="/" className="c-link">Back to the pages</Link>
-          {' · '}
-          <a href="/tokens" className="c-link">Patterns and tokens reference</a>
         </p>
-        <h1 className="display-md">Sections</h1>
+        <h1 className="display-md">Patterns and tokens</h1>
         <p className="body-lg-regular l-measure">
-          Name these in the order you want them and the page is assembled. Open one to see its
-          variants rendered by the real components, each with the content object that produces it.
+          The sections a page is built from, and what they are made of. Open a section to see its
+          versions rendered by the real components.
         </p>
+        <nav aria-label="On this page" className="l-row" style={{ gap: 'var(--space-400)' }}>
+          {[['sections', 'Sections'], ['type', 'Type'], ['colour', 'Colour'], ['icons', 'Icons'], ['buttons', 'Buttons']].map(([id, label]) => (
+            <a key={id} href={`#${id}`} className="body-sm-semibold c-link">{label}</a>
+          ))}
+        </nav>
       </div>
+
+      <h2 id="sections" className="u-visually-hidden">Sections</h2>
 
       <ul className="l-grid l-grid--3">
         {patterns.map((group) => (
@@ -140,6 +146,8 @@ export default function PatternGallery() {
           </li>
         ))}
       </ul>
+
+      <TokenReference />
     </div>
   )
 }

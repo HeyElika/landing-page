@@ -5,13 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npx vite-node scripts/prerender.mjs && npx vite-node scripts/build-token-page.mjs dist/tokens/index.html",
+    "build": "npx vite-node scripts/build-token-data.mjs && vite build && npx vite-node scripts/prerender.mjs",
     "lint": "eslint . && node scripts/check-tokens.mjs && node scripts/check-type.mjs && node scripts/check-layout.mjs && npx vite-node scripts/check-sections.mjs && npx vite-node scripts/check-contract.mjs && npx vite-node scripts/check-alignment.mjs && npx vite-node scripts/check-duplicates.mjs",
     "preview": "vite preview",
-    "tokens": "node scripts/build-tokens.mjs",
+    "tokens": "node scripts/build-tokens.mjs && npx vite-node scripts/build-token-data.mjs",
     "check": "node scripts/check-tokens.mjs && node scripts/check-type.mjs && node scripts/check-layout.mjs",
     "icons": "node scripts/build-icons.mjs",
-    "tokens:page": "npx vite-node scripts/build-token-page.mjs token-reference.html",
     "stress": "npx vite-node scripts/stress-render.mjs"
   },
   "dependencies": {

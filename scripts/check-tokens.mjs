@@ -27,7 +27,10 @@ const files = []
   for (const entry of readdirSync(dir)) {
     const p = join(dir, entry)
     if (statSync(p).isDirectory()) walk(p)
-    else if (['.jsx', '.js', '.css'].includes(extname(p))) files.push(p)
+    // Generated files are records of the token values, not uses of them:
+    // tokens.generated.js lists every hex so the reference can show it. It is
+    // produced from the same tokens this check protects.
+    else if (['.jsx', '.js', '.css'].includes(extname(p)) && !p.endsWith('.generated.js')) files.push(p)
   }
 })(join(root, 'src'))
 
