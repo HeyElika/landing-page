@@ -75,7 +75,7 @@ const html = `<!doctype html>
 <meta name="robots" content="noindex">
 <title>Sample page — ${chosen.length} patterns</title>
 <meta name="description" content="${list}">
-<link rel="preload" href="/fonts/OverusedGrotesk-VF.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Geist-VF.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 ${css}
 </style>

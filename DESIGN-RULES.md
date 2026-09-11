@@ -66,10 +66,15 @@ Use:
 
 Do not substitute another font unless explicitly requested.
 
-> **Approved trial, 2026-08-26 (Eliso).** Landing pages use **Overused
-> Grotesk**, self-hosted as one variable file (92 kB, weight axis 300-900,
-> SIL Open Font License 1.1). It is a closer match to the display-led look of
-> comparable card pages than Source Sans Pro, which was drawn for app UI.
+> **Approved trial, 2026-08-26 (Eliso), changed to Geist 2026-09-11 (Eliso).**
+> Landing pages use **Geist**, self-hosted as one variable file (29 kB latin
+> subset, weight axis 100-900, SIL Open Font License 1.1). It replaces Overused
+> Grotesk, which ran as the approved trial from 2026-08-26. Both were chosen
+> over Source Sans Pro for the same reason: Source Sans Pro was drawn for app
+> UI and does not carry a display-led landing page.
+>
+> Taken from Google Fonts and served from this origin rather than linked, so
+> no second connection blocks the first paint of text.
 >
 > Applied by overriding `--ds-font-family` once in `landing.css`, so
 > `tokens.css` stays generated from Figma and untouched. Source Sans Pro
@@ -167,9 +172,14 @@ Do not create oversized marketing typography outside the current type scale unle
 >
 > Sized against Klarna (hero 66px, sections 52/35), Atome (72px, 48/36) and
 > Salmon (44px scaling to 72px). The hero maximum is held at 60px rather than
-> 72px so an authored headline break stays on one line: measured in Overused
-> Grotesk Bold, the longest line is 498px at 60px and 598px at 72px, and the
-> split hero leaves roughly 530-650px of column.
+> 72px so an authored headline break stays on one line, and the split hero
+> leaves roughly 530-650px of column.
+>
+> Re-measured in Geist Bold on 2026-09-11, the Access Card headline's longest
+> line runs 577px at 60px and 693px at 72px. Geist is the wider face: the same
+> line measured 498px and 598px in Overused Grotesk. 60px still fits the wide
+> end of the column and 72px would not, so the ceiling stands. The page itself
+> renders that headline at 56px, where the line is about 539px.
 >
 > Each curve passes exactly through the token value at 360px, so on a phone —
 > where this design system actually applies — the page renders token sizes and

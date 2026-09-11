@@ -212,7 +212,7 @@ The `gradient` variant from the Figma set is implemented in `Button.jsx` and ava
 
 ## Typeface
 
-Landing pages use **Overused Grotesk**, self-hosted from `public/fonts/` as a single variable file (92 kB, weights 300–900, SIL Open Font License 1.1, licence shipped alongside it). It is applied by overriding `--ds-font-family` once in `landing.css`; `tokens.css` stays generated and untouched, and Source Sans Pro remains the fallback. See DESIGN-RULES.md section 3 for the approval and how to revert.
+Landing pages use **Geist**, self-hosted from `public/fonts/` as a single variable file (29 kB latin subset, weights 100–900, SIL Open Font License 1.1, licence shipped alongside it). It comes from Google Fonts but is served from this origin, so there is no second connection before text can paint and the standalone sample page renders its own type offline. It is applied by overriding `--ds-font-family` once in `landing.css`; `tokens.css` stays generated and untouched, and Source Sans Pro remains the fallback. See DESIGN-RULES.md section 3 for the approval and how to revert.
 
 ## Checks
 

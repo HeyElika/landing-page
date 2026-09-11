@@ -38,10 +38,11 @@ export default function TokenReference() {
           head={['Token', 'Value', 'Notes']}
           rows={[[
             <code key="t">--ds-font-family</code>,
-            <span key="v" style={{ fontWeight: 600 }}>Overused Grotesk</span>,
+            <span key="v" style={{ fontWeight: 600 }}>Geist</span>,
             <span key="n" className="t-subtle">
-              Self-hosted variable file, weight axis 300&ndash;900, 92&nbsp;kB. Falls back to Source Sans
-              Pro, the design system face. SIL Open Font License 1.1.
+              Self-hosted variable file, weight axis 100&ndash;900, 29&nbsp;kB. From Google Fonts, served
+              from this origin rather than linked. Falls back to Source Sans Pro, the design system
+              face. SIL Open Font License 1.1.
             </span>,
           ]]}
         />

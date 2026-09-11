@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <title>Sample page — 7 patterns</title>
 <meta name="description" content="Header v3 · Hero v1 · Benefits v2 · Steps in a row v1 · Feature rows v1 · Final CTA v1 · Footer v2">
-<link rel="preload" href="/fonts/OverusedGrotesk-VF.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Geist-VF.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* GENERATED FILE — do not edit. Run `npm run tokens` to regenerate. */
 /* Source: tokens/variables.json (Figma export v1.0.4) */
@@ -502,9 +502,14 @@
 
 
 /* ── Typeface ───────────────────────────────────────────────────────────────
- * Overused Grotesk, self-hosted as a single variable file (92 kB, weight axis
- * 300-900). SIL Open Font License 1.1; the licence ships alongside it in
+ * Geist, self-hosted as a single variable file (29 kB latin subset, weight
+ * axis 100-900). SIL Open Font License 1.1; the licence ships alongside it in
  * public/fonts/.
+ *
+ * Taken from Google Fonts but served from this origin rather than linked. A
+ * linked stylesheet costs a second connection before any text can paint, and
+ * it would leave the standalone sample page unable to render its own type
+ * offline.
  *
  * This overrides --ds-font-family for landing pages only. tokens.css is
  * untouched and still regenerates from Figma; this line is the single point of
@@ -512,15 +517,15 @@
  * the @font-face above it.
  */
 @font-face {
-  font-family: 'Overused Grotesk';
-  src: url('/fonts/OverusedGrotesk-VF.woff2') format('woff2-variations');
-  font-weight: 300 900;
+  font-family: 'Geist';
+  src: url('/fonts/Geist-VF.woff2') format('woff2-variations');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
-  --ds-font-family: 'Overused Grotesk', 'Source Sans Pro', sans-serif;
+  --ds-font-family: 'Geist', 'Source Sans Pro', sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; }

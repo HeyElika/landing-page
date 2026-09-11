@@ -7,6 +7,22 @@ One line per change, newest first. A change that breaks a promise in
 `scripts/check-contract.mjs` needs the promise deleted and the break written
 here, in the same commit.
 
+## 1.5
+
+- Typeface is **Geist**, replacing Overused Grotesk. Self-hosted from Google
+  Fonts as one variable file, 29 kB against the previous 92. It is the wider
+  face: the Access Card headline's longest line grows from 498px to 577px at
+  60px bold, which still fits the hero column, so no size ceiling moved.
+- `navbar` and `footer` join the catalogue as page chrome, four and three
+  variants. They stay out of `SECTIONS`, so a content file cannot place a
+  header mid-page.
+- `/tokens` is its own page again; `/patterns` links to it.
+- A header with an action and no links keeps that action below 900px. It used
+  to hide with the links, leaving a phone with no way to act.
+- Icon sizes moved from SVG width/height attributes to CSS. Attributes cannot
+  read `var()`, so every icon had been falling back to 300x300 wherever
+  nothing else constrained it.
+
 ## 1.4
 
 - `featureSplit` replaces `mediaPoints`, which was a name I invented rather

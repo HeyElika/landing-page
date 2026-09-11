@@ -42,7 +42,7 @@ Linear icons. Editing either by hand is lost on the next regeneration.
 **Weights** — `--font-weight-regular 400 · semibold 600 · bold 700`
 
 **Family** — `--ds-font-family` (Source Sans Pro). The landing pages render in
-Overused Grotesk, self-hosted, mapped onto the same variable.
+Geist, self-hosted, mapped onto the same variable.
 
 Never set `font-size` directly. Use one of the 20 generated classes:
 
