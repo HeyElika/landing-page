@@ -1,5 +1,14 @@
 # Billease landing page template
 
+> **This project has moved to GitLab.**
+>
+> It now lives in `clc/design` under `landing-app/`, at
+> `git@gitlab.fdfc.io:clc/design.git`, and deploys to
+> `https://web2.fdfc.io/biz-reports/design/landing/app/`.
+>
+> This repository is kept for history. Do not make changes here: they will not
+> deploy, and they will diverge from the copy people are working on.
+
 A content-driven landing page template in the Billease visual language. The layout, spacing, colour and typography are fixed. Launching a new product page means writing one content file, not writing CSS.
 
 **`DESIGN-RULES.md` is the authoritative guardrail for this repo.** Read it before changing any UI. Where it conflicts with anything here, it wins; where the Billease component library conflicts with it, the library wins.
