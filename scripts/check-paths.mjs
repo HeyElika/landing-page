@@ -36,13 +36,32 @@ if (!files.length) {
 // Root-relative only. Anchors, external URLs and relative paths are fine.
 const ATTR = /(?:src|href)="(\/[^"]*)"/g
 const offenders = []
+const empty = []
 
 for (const file of files) {
   const text = readFileSync(file, 'utf8')
+  const name = file.slice(dist.length + 1)
+
+  /**
+   * An empty page passes every other check here, because markup that was
+   * never rendered has no bad URLs in it. That is not hypothetical: a router
+   * mounted under a prefix and handed a location without it matched nothing,
+   * wrote seven valid, empty files, and this guard called them clean.
+   */
+  const root = text.match(/<div id="root">([\s\S]*?)<\/div>\s*<script/)
+  if (root && root[1].trim().length < 500) empty.push(name)
+
   for (const [, url] of text.matchAll(ATTR)) {
     if (url.startsWith(base)) continue
-    offenders.push({ file: file.slice(dist.length + 1), url })
+    offenders.push({ file: name, url })
   }
+}
+
+if (empty.length) {
+  console.error(`\ncheck-paths FAILED: ${empty.length} page(s) rendered empty\n`)
+  for (const name of empty) console.error(`  ${name}`)
+  console.error('\nThe file was written, so the build reported success. Check that the\nprerenderer gives the router a location that includes its basename.\n')
+  process.exit(1)
 }
 
 if (offenders.length) {

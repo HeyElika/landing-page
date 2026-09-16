@@ -78,7 +78,10 @@ function head(page, path) {
 
 function write(page, path) {
   const markup = renderToStaticMarkup(
-    createElement(StaticRouter, { location: path, basename }, createElement(App)),
+    // The location has to carry the basename too. Given only the route, a
+    // router mounted under a prefix matches nothing and renders an empty
+    // page — which still writes a valid file, so it fails silently.
+    createElement(StaticRouter, { location: basename + path, basename }, createElement(App)),
   )
   const html = template
     // Replace the template's own title and description rather than adding a second one.
