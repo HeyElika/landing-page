@@ -315,7 +315,16 @@ Both encode the rules above, so an agent working in this repo will not invent to
 
 The repo is set up for Vercel. `vercel.json` rewrites all paths to `index.html` so client-side routes work on refresh.
 
-Vercel settings: framework Vite, build command `npm run build`, output directory `dist`. Pushing to `main` deploys production; every other branch gets a preview URL, which is the easiest way to review new product copy before it goes live.
+Vercel settings: framework Vite, build command `npm run build`, output directory `dist`.
+
+**Deploys are not automatic.** The Vercel GitHub App is not authorised for the
+`HeyElika` account, and that authorisation is browser-only (project Settings >
+Git). Until someone does it, a push to `main` deploys nothing and there are no
+preview URLs. Ship with:
+
+```sh
+vercel deploy --prod --yes
+```
 
 ## Financial content
 
