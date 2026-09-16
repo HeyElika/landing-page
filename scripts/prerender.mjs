@@ -21,6 +21,7 @@ import { createElement } from 'react'
 import { StaticRouter } from 'react-router-dom'
 import App from '../src/App.jsx'
 import { pages } from '../src/content/index.js'
+import { basename } from '../src/lib/paths.js'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const dist = join(root, 'dist')
@@ -77,7 +78,7 @@ function head(page, path) {
 
 function write(page, path) {
   const markup = renderToStaticMarkup(
-    createElement(StaticRouter, { location: path }, createElement(App)),
+    createElement(StaticRouter, { location: path, basename }, createElement(App)),
   )
   const html = template
     // Replace the template's own title and description rather than adding a second one.

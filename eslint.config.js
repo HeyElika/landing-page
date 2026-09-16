@@ -23,4 +23,11 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
+  {
+    // Build configuration runs in Node, not the browser, and reads the
+    // environment to pick a base path. The guards under scripts/ are .mjs and
+    // fall outside the pattern above, so this is only about the config files.
+    files: ['*.config.js'],
+    languageOptions: { globals: globals.node },
+  },
 ])

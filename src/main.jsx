@@ -5,6 +5,7 @@ import App from './App'
 import './styles/tokens.css'
 import './styles/landing.css'
 import { setConsent, hasConsent } from './lib/track'
+import { basename } from './lib/paths'
 
 // The consent switch a cookie banner calls. Kept on window rather than wired
 // to a banner here, because which banner this page uses is not this template's
@@ -15,7 +16,7 @@ const container = document.getElementById('root')
 
 const app = (
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <App />
     </BrowserRouter>
   </StrictMode>

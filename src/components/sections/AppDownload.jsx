@@ -1,5 +1,6 @@
 import Media from '../ui/Media'
 import { track, EVENTS } from '../../lib/track'
+import { withBase } from '../../lib/paths'
 
 /**
  * App download block: one contained panel, image on one side and the copy with
@@ -55,7 +56,7 @@ export default function AppDownload({
                       rel="noreferrer noopener"
                       onClick={() => track(EVENTS.storeClick, { store: app.name })}
                     >
-                      {app.src ? <img src={app.src} alt={app.name} loading="lazy" /> : app.name}
+                      {app.src ? <img src={withBase(app.src)} alt={app.name} loading="lazy" /> : app.name}
                     </a>
                   </li>
                 ))}

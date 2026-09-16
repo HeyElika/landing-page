@@ -1,3 +1,4 @@
+import { withBase } from '../../lib/paths'
 /**
  * Image slot. A product file with no image yet renders an empty box at the
  * expected ratio, so the layout holds where the image will go.
@@ -41,8 +42,8 @@ export default function Media({
   return (
     <div className={['c-media', className].filter(Boolean).join(' ')} style={{ aspectRatio: ratio }}>
       <img
-        src={src}
-        srcSet={srcSmall ? `${srcSmall} 720w, ${src} 1440w` : undefined}
+        src={withBase(src)}
+        srcSet={srcSmall ? `${withBase(srcSmall)} 720w, ${withBase(src)} 1440w` : undefined}
         sizes={srcSmall ? sizes : undefined}
         alt={alt}
         loading={priority ? 'eager' : 'lazy'}

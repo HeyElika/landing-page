@@ -1,4 +1,5 @@
 import DSButton from '../ds/Button'
+import { withBase } from '../../lib/paths'
 import { track, EVENTS } from '../../lib/track'
 
 /**
@@ -24,7 +25,7 @@ export default function Cta({ label, href, type = 'primary', size = 'lg', icon, 
       type={resolvedType}
       size={size}
       label={label}
-      href={href}
+      href={withBase(href)}
       onClick={(e) => {
         // Every action on every page reports itself the same way, so a new
         // page needs no tracking work at all.

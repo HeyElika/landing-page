@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Logo from '../ui/Logo'
 import Cta from '../ui/Cta'
 import Icon from '../../assets/icons/Icon'
+import { withBase } from '../../lib/paths'
 
 /**
  * Sticky top navigation.
@@ -119,7 +120,7 @@ export default function NavBar({ brand = {}, links = [], cta, secondaryCta, mobi
           gap: 'var(--space-600)',
         }}
       >
-        <a href={brand.href || '#top'} aria-label={brand.name || 'Home'} style={{ display: 'flex' }}>
+        <a href={withBase(brand.href) || '#top'} aria-label={brand.name || 'Home'} style={{ display: 'flex' }}>
           <Logo src={brand.logo} name={brand.name} />
         </a>
 

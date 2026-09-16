@@ -75,7 +75,7 @@ const html = `<!doctype html>
 <meta name="robots" content="noindex">
 <title>Sample page — ${chosen.length} patterns</title>
 <meta name="description" content="${list}">
-<link rel="preload" href="/fonts/Geist-VF.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/Geist-VF.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 ${css}
 </style>
@@ -89,8 +89,20 @@ ${markup}
 // Written as a directory index, not sample.html: the host has cleanUrls on,
 // so /sample.html redirects to /sample, and /sample only resolves if there is
 // an index.html behind it.
+/**
+ * Root-relative becomes relative.
+ *
+ * This file is written when someone runs `npm run sample`, not when the
+ * project is built, so it cannot know the base the deploy will use: it would
+ * bake in whatever was current the day it was generated. It always sits one
+ * level down at <base>sample/, so `../` resolves against any base and needs
+ * to know nothing. check-paths.mjs holds the rest of the output to the same
+ * standard.
+ */
+const relative = html.replace(/(\s(?:src|href)=")\/(?!\/)/g, '$1../')
+
 mkdirSync(new URL('../public/sample/', import.meta.url), { recursive: true })
-writeFileSync(new URL('../public/sample/index.html', import.meta.url), html)
+writeFileSync(new URL('../public/sample/index.html', import.meta.url), relative)
 console.log(`sample page written: public/sample/index.html  ->  /sample`)
 console.log(`  ${list}`)
 console.log(`  ${(html.length / 1024).toFixed(0)} KB, no scripts, stylesheets inlined`)

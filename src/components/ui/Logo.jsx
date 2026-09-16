@@ -12,11 +12,13 @@
  *
  * The text lockup below is only a fallback for a page that sets no logo.
  */
+import { withBase } from '../../lib/paths'
+
 export default function Logo({ src, name = 'Billease', onDark = false }) {
   if (src) {
     return (
       <img
-        src={src}
+        src={withBase(src)}
         alt={name}
         width={119}
         height={24}

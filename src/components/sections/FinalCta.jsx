@@ -1,5 +1,6 @@
 import Cta from '../ui/Cta'
 import Media from '../ui/Media'
+import { withBase } from '../../lib/paths'
 
 /** Closing call to action. Repeats the page's single primary action. */
 export default function FinalCta({ title, description, ctas = [], stores = [], media, background = 'brand', note }) {
@@ -25,7 +26,7 @@ export default function FinalCta({ title, description, ctas = [], stores = [], m
             <li key={s.name}>
               <a href={s.href} target="_blank" rel="noreferrer noopener" aria-label={s.name}>
                 {s.src
-                  ? <img src={s.src} alt={s.name} style={{ height: 'var(--space-900)' }} />
+                  ? <img src={withBase(s.src)} alt={s.name} style={{ height: 'var(--space-900)' }} />
                   : (
                     <span
                       className="body-sm-semibold"
